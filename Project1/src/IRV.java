@@ -2,8 +2,14 @@ import java.util.ArrayList;
 
 public class IRV extends VotingSystem {
 	private IRVBallot[] _voterPool;
-	public ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
-	public ArrayList<IRVCandidate> _unnamed_IRVCandidate_ = new ArrayList<IRVCandidate>();
+	private ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
+	private ArrayList<IRVCandidate> _candidates = new ArrayList<IRVCandidate>();
+	
+	IRV(String ballotFile) {
+		super(ballotFile);
+		throw new UnsupportedOperationException();
+
+	}
 
 	private void calculateQuota(int numBallots) {
 		throw new UnsupportedOperationException();
@@ -37,7 +43,7 @@ public class IRV extends VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	public void auditResults(String results) {
+	protected void auditResults(String results) {
 		throw new UnsupportedOperationException();
 	}
 }

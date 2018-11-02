@@ -1,9 +1,8 @@
 public class OPLVCandidate extends Candidate {
-	public OPLV _candidates;
-	public OPLV _ballots;
+	private Party _party;
 
 	public Party getParty() {
-		throw new UnsupportedOperationException();
+		return this._party;
 	}
 
 	public void castVote() {

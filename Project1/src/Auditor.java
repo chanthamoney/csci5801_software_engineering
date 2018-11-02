@@ -1,9 +1,8 @@
 public class Auditor {
 	private String _auditProcess = "";
 	private String _auditResult = "";
-	public VotingSystem _unnamed_VotingSystem_;
 
-	public Auditor() {
+	Auditor() {
 		throw new UnsupportedOperationException();
 	}
 

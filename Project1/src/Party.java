@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public class Party {
 	private String _name;
 	private int _numCandidates = 0;
 	private int _numSeats = 0;
 	private int _numVotes = 0;
-	public OPLV _parties;
+	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
 
 	public void addCandidate(OPLVCandidate candidate) {
 		throw new UnsupportedOperationException();

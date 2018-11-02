@@ -2,10 +2,9 @@ import java.util.ArrayList;
 
 public class IRVCandidate extends Candidate {
 	private boolean _eliminated = false;
-	public IRV _unnamed_IRV_;
 	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
 
-	public void addBallot(IRVBallot aBallot) {
+	public void addBallot(IRVBallot ballot) {
 		throw new UnsupportedOperationException();
 	}
 

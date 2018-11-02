@@ -7,6 +7,11 @@ public class OPLV extends VotingSystem {
 	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 
+	OPLV(String ballotFile) {
+		super(ballotFile);
+		throw new UnsupportedOperationException();
+	}
+	
 	private int calculateQuota(int numBallots, int numSeats) {
 		throw new UnsupportedOperationException();
 	}
@@ -31,7 +36,7 @@ public class OPLV extends VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	public void auditResults(String results) {
+	protected void auditResults(String results) {
 		throw new UnsupportedOperationException();
 	}
 }
