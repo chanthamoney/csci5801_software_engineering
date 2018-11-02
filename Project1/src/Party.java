@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 public class Party {
 	private String _name;
 	private int _numCandidates = 0;
@@ -7,12 +9,17 @@ public class Party {
 	private int _numVotes = 0;
 	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
 
+	Party(String name) {
+		this._name = name;
+	}
+	
 	public void addCandidate(OPLVCandidate candidate) {
-		throw new UnsupportedOperationException();
+		this._candidates.add(candidate);
+		this._numCandidates += 1;
 	}
 
 	public void addVote() {
-		throw new UnsupportedOperationException();
+		this._numVotes += 1;
 	}
 
 	public String getName() {
@@ -35,7 +42,11 @@ public class Party {
 		throw new UnsupportedOperationException();
 	}
 
-	public OPLVCandidate[] getWinningCandidates() {
-		throw new UnsupportedOperationException();
+	public ArrayList<OPLVCandidate> getWinningCandidates() {
+		ArrayList<OPLVCandidate> winners = new ArrayList<OPLVCandidate>();
+		for (int i = 0; i < this._numSeats && i < this._numCandidates; i++) {
+			winners.add(this._candidates.get(i));
+		}
+		return winners;
 	}
 }

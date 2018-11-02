@@ -1,6 +1,10 @@
 abstract public class Candidate {
-	private String _name = "";
-	private int _numVotes = 0;
+	protected String _name = "";
+	protected int _numVotes = 0;
+	
+	Candidate(String name) {
+		this._name = name;
+	}
 
 	public String getName() {
 		return this._name;
