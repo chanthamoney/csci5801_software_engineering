@@ -1,7 +1,7 @@
 abstract public class VotingSystem {
 	protected Auditor _auditor;
 	protected int _numBallots;
-	protected int numCandidates;
+	protected int _numCandidates;
 	protected int _quota;
 	
 	VotingSystem(String ballotFile) {

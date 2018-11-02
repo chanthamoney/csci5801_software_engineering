@@ -15,12 +15,12 @@ public class IRVCandidate extends Candidate {
 		this._numVotes += 1;
 	}
 
-	private ArrayList<IRVBallot> eliminate() {
+	public ArrayList<IRVBallot> eliminate() {
 		this._eliminated = true;
 		return this._elimBallots;
 	}
 
-	private boolean isEliminated() {
+	public boolean isEliminated() {
 		return this._eliminated;
 	}
 }
