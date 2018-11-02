@@ -12,7 +12,11 @@ public class IRV extends VotingSystem {
 	}
 
 	private void calculateQuota(int numBallots) {
-		throw new UnsupportedOperationException();
+		if ((numBallots % 2) == 0)
+			this._quota = (numBallots / 2) + 1;
+		else
+			this._quota = (int) Math.ceil(numBallots * 0.5);
+			
 	}
 
 	private IRVCandidate findCandidate(int index) {
