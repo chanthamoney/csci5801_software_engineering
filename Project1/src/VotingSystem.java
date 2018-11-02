@@ -1,6 +1,6 @@
-public interface VotingSystem {
+abstract public class VotingSystem {
 
-	public String runElection();
+	abstract public String runElection();
 
-	public void auditResults(String aResults);
+	abstract public void auditResults(String results);
 }

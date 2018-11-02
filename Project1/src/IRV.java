@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
-public class IRV implements VotingSystem {
+public class IRV extends VotingSystem {
 	private IRVBallot[] _voterPool;
 	public ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
 	public ArrayList<IRVCandidate> _unnamed_IRVCandidate_ = new ArrayList<IRVCandidate>();
 
-	private void calculateQuota(int aNumBallots) {
+	private void calculateQuota(int numBallots) {
 		throw new UnsupportedOperationException();
 	}
 
-	private IRVCandidate findCandidate(int aIndex) {
+	private IRVCandidate findCandidate(int index) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -17,8 +17,8 @@ public class IRV implements VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	private void setVoterPool(IRVBallot[] aVoterPool) {
-		this._voterPool = aVoterPool;
+	private void setVoterPool(IRVBallot[] voterPool) {
+		this._voterPool = voterPool;
 	}
 
 	private String processVoterPool() {
@@ -29,7 +29,7 @@ public class IRV implements VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	private boolean isMajority(int aNumVotes) {
+	private boolean isMajority(int numVotes) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -37,7 +37,7 @@ public class IRV implements VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	public void auditResults(String aResults) {
+	public void auditResults(String results) {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -5,7 +5,7 @@ public class Party {
 	private int _numVotes = 0;
 	public OPLV _parties;
 
-	public void addCandidate(OPLVCandidate aCandidate) {
+	public void addCandidate(OPLVCandidate candidate) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -21,8 +21,8 @@ public class Party {
 		return this._numVotes;
 	}
 
-	public void setNumSeats(int aNum) {
-		this._numSeats = aNum;
+	public void setNumSeats(int num) {
+		this._numSeats = num;
 	}
 
 	public int getNumSeats() {

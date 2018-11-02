@@ -1,4 +1,4 @@
-public class OPLVCandidate implements Candidate {
+public class OPLVCandidate extends Candidate {
 	public OPLV _candidates;
 	public OPLV _ballots;
 
@@ -8,13 +8,5 @@ public class OPLVCandidate implements Candidate {
 
 	public void castVote() {
 		throw new UnsupportedOperationException();
-	}
-
-	public String getName() {
-		return this._name;
-	}
-
-	public int getNumVotes() {
-		return this._numVotes;
 	}
 }

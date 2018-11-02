@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class IRVCandidate implements Candidate {
-	private boolean _eliminated = False;
+public class IRVCandidate extends Candidate {
+	private boolean _eliminated = false;
 	public IRV _unnamed_IRV_;
 	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
 
@@ -15,13 +15,5 @@ public class IRVCandidate implements Candidate {
 
 	private boolean isEliminated() {
 		return this._eliminated;
-	}
-
-	public String getName() {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getNumVotes() {
-		throw new UnsupportedOperationException();
 	}
 }
