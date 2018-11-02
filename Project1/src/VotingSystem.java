@@ -10,5 +10,5 @@ abstract public class VotingSystem {
 
 	abstract protected String runElection();
 
-	abstract protected void auditResults(String results);
+	abstract protected String auditResults();
 }

@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 public class Party {
 	private String _name;
 	private int _numCandidates = 0;

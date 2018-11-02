@@ -35,7 +35,7 @@ public class IRV extends VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	private String popularVote__() {
+	private String popularVote() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -47,7 +47,11 @@ public class IRV extends VotingSystem {
 		throw new UnsupportedOperationException();
 	}
 
-	protected void auditResults(String results) {
+	protected String auditResults() {
 		throw new UnsupportedOperationException();
+		// Collect results and send to auditor
+		// NOTE: ONLY RESULTS (WINNERS & # VOTES), NOT PROCESS!
+//		String res = "";
+//		return res;
 	}
 }

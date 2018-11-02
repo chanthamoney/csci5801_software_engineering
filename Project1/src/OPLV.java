@@ -75,7 +75,7 @@ public class OPLV extends VotingSystem {
 		return wasRandom;
 	}
 
-	private void assignPartySeats() {
+	private void assignSeats() {
 		for (int i = 0; i < this._numParties; i++) {
 			this._seats.addAll(this._parties.get(i).getWinningCandidates());
 		}
@@ -86,10 +86,23 @@ public class OPLV extends VotingSystem {
 	}
 
 	public String runElection() {
-		throw new UnsupportedOperationException();
+		for (int i = 0; i < this._numBallots; i++) {
+			OPLVBallot bal = this._ballots.get(i);
+			OPLVCandidate can = findCandidate(bal.getVote());
+			can.castVote();
+			this._auditor.ballot(bal.getID(), can.getName(), can.getParty().getName());
+		}
+		rankPartyCandidates();
+		calculatePartySeats();
+		assignSeats();
+		return auditResults();
 	}
 
-	protected void auditResults(String results) {
+	protected String auditResults() {
 		throw new UnsupportedOperationException();
+		// Collect results and send to auditor
+		// NOTE: ONLY RESULTS (WINNERS & # VOTES), NOT PROCESS!
+//		String res = "";
+//		return res;
 	}
 }
