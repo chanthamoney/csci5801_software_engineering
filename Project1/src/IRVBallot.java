@@ -10,10 +10,10 @@ public class IRVBallot extends Ballot {
 		this._votes.addAll(votes);
 		this._numVotes = votes.size();
 	}
-	
+
 	public int getNextVote() {
 		this._curVoteIndex += 1;
-		return this._votes.get(this._curVoteIndex -1);
+		return this._votes.get(this._curVoteIndex - 1);
 	}
 
 	public boolean isExhausted() {

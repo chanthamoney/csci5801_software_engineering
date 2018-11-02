@@ -11,7 +11,7 @@ public class Auditor {
 	public void ballot(int id, String candidate, String party) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public void ballot(int id, String candidate) {
 		throw new UnsupportedOperationException();
 	}
@@ -19,7 +19,7 @@ public class Auditor {
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public void processVoterPool(ArrayList<Integer> ballotIDs) {
 		throw new UnsupportedOperationException();
 	}

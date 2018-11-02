@@ -13,7 +13,7 @@ public class OPLV extends VotingSystem {
 		super(ballotFile);
 		throw new UnsupportedOperationException();
 	}
-	
+
 	private void calculateQuota(int numBallots, int numSeats) {
 		this._quota = -Math.floorDiv(-numBallots, numSeats);
 	}
@@ -35,7 +35,7 @@ public class OPLV extends VotingSystem {
 			seatsLeft -= curPartySeats;
 			remainders[i] = curParty.getNumVotes() % this._quota;
 		}
-		while(seatsLeft > 0) {
+		while (seatsLeft > 0) {
 			int maxVal = 0;
 			ArrayList<Integer> largest = new ArrayList<Integer>();
 			for (int i = 0; i < this._numParties; i++) {
@@ -47,7 +47,7 @@ public class OPLV extends VotingSystem {
 					largest.add(i);
 				}
 			}
-			
+
 			// If there are enough seats for all largest: add all.
 			if (seatsLeft > largest.size()) {
 				for (int i = 0; i < largest.size(); i++) {

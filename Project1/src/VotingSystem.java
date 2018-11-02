@@ -3,7 +3,7 @@ abstract public class VotingSystem {
 	protected int _numBallots;
 	protected int _numCandidates;
 	protected int _quota;
-	
+
 	VotingSystem(String ballotFile) {
 		throw new UnsupportedOperationException();
 	}

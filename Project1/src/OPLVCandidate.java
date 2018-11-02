@@ -5,7 +5,7 @@ public class OPLVCandidate extends Candidate {
 		super(name);
 		this._party = party;
 	}
-	
+
 	public Party getParty() {
 		return this._party;
 	}

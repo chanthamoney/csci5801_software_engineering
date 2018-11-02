@@ -10,7 +10,7 @@ public class Party {
 	Party(String name) {
 		this._name = name;
 	}
-	
+
 	public void addCandidate(OPLVCandidate candidate) {
 		this._candidates.add(candidate);
 		this._numCandidates += 1;
