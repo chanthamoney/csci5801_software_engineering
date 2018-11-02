@@ -1,4 +1,4 @@
-public class OPLVBallot implements Ballot {
+public class OPLVBallot extends Ballot {
 	private int _vote;
 	public OPLV _ballots;
 

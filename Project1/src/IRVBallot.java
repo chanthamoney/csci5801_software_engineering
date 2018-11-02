@@ -1,4 +1,4 @@
-public class IRVBallot implements Ballot {
+public class IRVBallot extends Ballot {
 	private int[] _votes;
 	private Object _curVoteIndex = 0;
 	private int _numVotes;

@@ -1,4 +1,7 @@
-public interface Ballot {
+abstract public class Ballot {
+	private int _id;
 
-	public int getID();
+	public int getID() {
+		return this._id;
+	}
 }
