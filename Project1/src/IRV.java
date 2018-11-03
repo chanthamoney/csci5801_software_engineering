@@ -138,12 +138,4 @@ public class IRV extends VotingSystem {
 			}
 		}
 	}
-
-	protected String auditResults() {
-		throw new UnsupportedOperationException();
-		// Collect results and send to auditor
-		// NOTE: ONLY RESULTS (WINNERS & # VOTES), NOT PROCESS!
-//		String res = "";
-//		return res;
-	}
 }

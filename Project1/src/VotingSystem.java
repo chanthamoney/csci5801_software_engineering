@@ -13,6 +13,4 @@ abstract public class VotingSystem {
 	}
 
 	abstract protected String runElection() throws IOException;
-
-	abstract protected String auditResults();
 }

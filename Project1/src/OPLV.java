@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,11 +10,25 @@ public class OPLV extends VotingSystem {
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
 
-	OPLV(int numBallots, int numCandidates, int numSeats, String candidates, ArrayList<String> ballots) {
+	OPLV(int numBallots, int numCandidates, int numSeats, ArrayList<String> candidates, ArrayList<String> parties, ArrayList<Integer> ballots) {
 		super(numBallots, numCandidates);
+		this._numParties = 0;
 		this._numSeats = numSeats;
-		throw new UnsupportedOperationException();
-		// Set up ballots, candidates and parties
+		for (int i = 0; i < numCandidates; i++) {
+			Party canParty = findParty(parties.get(i));
+			if (canParty == null) {
+				canParty = new Party(parties.get(i));
+				this._parties.add(canParty);
+				this._numParties++;	
+			}
+			OPLVCandidate newCan = new OPLVCandidate(candidates.get(i), canParty);
+			this._candidates.add(newCan);
+			canParty.addCandidate(newCan);
+		}
+		for (int i = 0; i < numBallots; i++) {
+			this._ballots.add(new OPLVBallot(ballots.get(i), i));
+		}
+		calculateQuota(numBallots, numSeats);
 	}
 
 	private void calculateQuota(int numBallots, int numSeats) {
@@ -86,8 +101,17 @@ public class OPLV extends VotingSystem {
 	private OPLVCandidate findCandidate(int index) {
 		return this._candidates.get(index);
 	}
+	
+	private Party findParty(String name) {
+		for (int i = 0; i < this._numParties; i++) {
+			if (this._parties.get(i).getName().equals(name)) {
+				return this._parties.get(i);
+			}
+		}
+		return null;
+	}
 
-	public String runElection() {
+	public String runElection() throws IOException {
 		for (int i = 0; i < this._numBallots; i++) {
 			OPLVBallot bal = this._ballots.get(i);
 			OPLVCandidate can = findCandidate(bal.getVote());
@@ -97,14 +121,8 @@ public class OPLV extends VotingSystem {
 		rankPartyCandidates();
 		calculatePartySeats();
 		assignSeats();
-		return auditResults();
-	}
-
-	protected String auditResults() {
-		throw new UnsupportedOperationException();
-		// Collect results and send to auditor
-		// NOTE: ONLY RESULTS (WINNERS & # VOTES), NOT PROCESS!
-//		String res = "";
-//		return res;
+		this._auditor.result("tbd");
+		this._auditor.createAuditFile("auditFile");
+		return "TODO";
 	}
 }

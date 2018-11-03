@@ -37,7 +37,7 @@ public class Party {
 	}
 
 	public String rankCandidates() {
-		throw new UnsupportedOperationException();
+		return "fake";
 	}
 
 	public ArrayList<OPLVCandidate> getWinningCandidates() {

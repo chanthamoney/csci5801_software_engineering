@@ -45,19 +45,25 @@ public class Driver {
 			ArrayList<String> candidates = new ArrayList<String>();
 			ArrayList<String> parties = new ArrayList<String>();
 			for (int i = 0; i < in_NumCandidates; i++) {
-				String[] pair = cpPairs[i].split("[\\\\(\\\\)]");
+				String[] pair = cpPairs[i].substring(1, cpPairs[i].length()-1).split(", *");
 				candidates.add(pair[0]);
 				parties.add(pair[1]);
 			}
 			
-			
 			int in_NumSeats = Integer.valueOf(fileReader.nextLine());
 			int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-			ArrayList<String> in_Ballots = new ArrayList<String>();
+			ArrayList<Integer> in_Ballots = new ArrayList<Integer>();
 			for (int i = 0; i < in_NumBallots; i++) {
-				in_Ballots.add(fileReader.nextLine());
+				String[] ballotInfo = fileReader.nextLine().split(", *");
+				for (int j = 0; j < ballotInfo.length; j++) {
+					if (!ballotInfo[j].equals("")) {
+						in_Ballots.add(j);
+						break;
+					}
+				}
+				
 			}
-			vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, in_Candidates, in_Ballots);
+			vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
 		}
 		
 		vs.runElection();
