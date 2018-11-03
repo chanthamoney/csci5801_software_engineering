@@ -24,10 +24,14 @@ public class Auditor {
 	}
 
 	public void processVoterPool(ArrayList<Integer> ballotIDs) {
-		this._auditProcess += "Processing the following ballots:\n";
-		int numBallots = ballotIDs.size();
-		for (int i = 0; i < numBallots; i++) {
-			this._auditProcess += String.format("\t%d\n", ballotIDs.get(i));
+		if (ballotIDs.size() > 0) {
+			this._auditProcess += "Processing the following ballots:\n";
+			int numBallots = ballotIDs.size();
+			this._auditProcess += "\t";
+			for (int i = 0; i < numBallots - 1; i++) {
+				this._auditProcess += String.format("%d, ", ballotIDs.get(i));
+			}
+			this._auditProcess += String.format("%d\n", ballotIDs.get(numBallots - 1));
 		}
 	}
 

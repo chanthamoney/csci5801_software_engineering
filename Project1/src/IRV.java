@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -6,10 +7,16 @@ public class IRV extends VotingSystem {
 	private ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
 	private ArrayList<IRVCandidate> _candidates = new ArrayList<IRVCandidate>();
 
-	IRV(int numBallots, int numCandidates, String candidates, ArrayList<String> ballots) {
+	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<int[]> ballots) {
 		super(numBallots, numCandidates);
-		// Set up ballots and candidates
-		throw new UnsupportedOperationException();
+		for (int i = 0; i < numCandidates; i++) {
+			this._candidates.add(new IRVCandidate(candidates[i]));
+		}
+		for (int i = 0; i < numBallots; i++) {
+			this._ballots.add(new IRVBallot(ballots.get(i), i));
+		}
+		this._voterPool = this._ballots;
+		calculateQuota(numBallots);
 	}
 
 	private void calculateQuota(int numBallots) {
@@ -55,10 +62,6 @@ public class IRV extends VotingSystem {
 		}
 	}
 
-	private void setVoterPool(ArrayList<IRVBallot> voterPool) {
-		this._voterPool = voterPool;
-	}
-
 	private String processVoterPool() {
 		for (int i = 0; i < this._voterPool.size(); i++) {
 			IRVBallot bal = this._voterPool.get(i);
@@ -101,7 +104,7 @@ public class IRV extends VotingSystem {
 		return numVotes >= this._quota;
 	}
 
-	public String runElection() {
+	public String runElection() throws IOException {
 		while (true) {
 			ArrayList<Integer> ids = new ArrayList<Integer>();
 			for (int i = 0; i < this._voterPool.size(); i++) {
@@ -118,12 +121,16 @@ public class IRV extends VotingSystem {
 			}
 
 			if (allBallotsExhausted) {
-				return popularVote();
+				this._auditor.result(popularVote());
+				this._auditor.createAuditFile("auditFile");
+				return "TODO";
 			}
 
 			String winner = processVoterPool();
 
 			if (winner != "") {
+				this._auditor.result(winner);
+				this._auditor.createAuditFile("auditFile");
 				return winner;
 			} else {
 				IRVCandidate can = findMinimumCandidate();
