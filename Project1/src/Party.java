@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Party {
 	private String _name;
@@ -39,6 +40,10 @@ public class Party {
 
 	public String rankCandidates() {
 		String ret = String.format("Party %s Sort\n", this._name);
+		
+		// Shuffle to dispute ties.
+		Collections.shuffle(this._candidates, new Random(System.currentTimeMillis()));
+		
 		this._candidates.sort((o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 		
 		// Randomize candidates with the minimum number of votes to be elected
@@ -47,8 +52,8 @@ public class Party {
 			int firstIndx = -1, lastIndx = -1;
 			for (int i = 0; i < this._numCandidates; i++) {
 				OPLVCandidate can = this._candidates.get(i);
+				ret += String.format("\t%d) %s\n", i + 1, this._candidates.get(i).getName());
 				int numVotes = can.getNumVotes();
-				ret += String.format("\t%d) %s\n", i + 1, can.getName());
 				if (firstIndx == -1 && numVotes == minVotes) {
 					firstIndx = i;
 				}
@@ -56,10 +61,10 @@ public class Party {
 					lastIndx = i;
 				}
 			}
-			// If more than one, shuffle all!
+			
+			// If more than one minimum relay that there was a shuffle decision.
 			if (firstIndx != lastIndx) {
-				Collections.shuffle(this._candidates.subList(firstIndx, lastIndx + 1));
-				ret += String.format("Randomly sorted candidates ranked %d to %d.]n", firstIndx + 1, lastIndx + 1);
+				ret += String.format("\tRandomly sorted candidates ranked %d to %d.\n", firstIndx + 1, lastIndx + 1);
 			}
 		}
 		return ret;
