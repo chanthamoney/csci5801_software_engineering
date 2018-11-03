@@ -1,17 +1,19 @@
+import java.util.ArrayList;
+
 public class IRVBallot extends Ballot {
-	private int[] _votes;
+	private ArrayList<Integer> _votes;
 	private int _curVoteIndex = 0;
 	private int _numVotes;
 
-	IRVBallot(int[] votes, int id) {
+	IRVBallot(ArrayList<Integer> votes, int id) {
 		super(id);
 		this._votes = votes;
-		this._numVotes = votes.length;
+		this._numVotes = votes.size();
 	}
 
 	public int getNextVote() {
 		this._curVoteIndex += 1;
-		return this._votes[this._curVoteIndex - 1];
+		return this._votes.get(this._curVoteIndex - 1);
 	}
 
 	public boolean isExhausted() {

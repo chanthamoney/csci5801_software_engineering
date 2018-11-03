@@ -26,7 +26,7 @@ public class OPLV extends VotingSystem {
 			canParty.addCandidate(newCan);
 		}
 		for (int i = 0; i < numBallots; i++) {
-			this._ballots.add(new OPLVBallot(ballots.get(i), i));
+			this._ballots.add(new OPLVBallot(ballots.get(i), i + 1));
 		}
 		calculateQuota(numBallots, numSeats);
 	}

@@ -23,14 +23,20 @@ public class Driver {
 			String in_Candidates = fileReader.nextLine();
 			String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");			
 			int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-			ArrayList<int[]> in_Ballots = new ArrayList<int[]>();
+			ArrayList<ArrayList<Integer>> in_Ballots = new ArrayList<ArrayList<Integer>>();
 			for (int i = 0; i < in_NumBallots; i++) {
-				int[] balVotes = new int[in_NumCandidates];
+				int[] balVotesOrg = new int[in_NumCandidates];
 				String[] ballotInfo = fileReader.nextLine().split(", *");
+				int numVotes = 0;
 				for (int j = 0; j < ballotInfo.length; j++) {
 					if (!ballotInfo[j].equals("")) {
-						balVotes[Integer.parseInt(ballotInfo[j]) - 1] = j;
+						balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
+						numVotes++;
 					}
+				}
+				ArrayList<Integer> balVotes = new ArrayList<Integer>();
+				for (int j = 0; j < numVotes; j++) {
+					balVotes.add(balVotesOrg[j]);
 				}
 				in_Ballots.add(balVotes);
 			}

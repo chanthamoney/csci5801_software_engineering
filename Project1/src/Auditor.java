@@ -10,7 +10,11 @@ public class Auditor {
 	public void ballot(int id, String candidate, String party) {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s in party %s\n", id, candidate, party);
 	}
-
+	
+	public void ballotExhausted(int id) {
+		this._auditProcess += String.format("Ballot %d has exhausted all of its votes.\n", id);
+	}
+	
 	public void ballot(int id, String candidate) {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s\n", id, candidate);
 	}
@@ -42,11 +46,15 @@ public class Auditor {
 	public void result(String results) {
 		this._auditResult += results;
 	}
+	
+	public void majorityOPLV(String name, int quota) {
+		this._auditProcess += String.format("Processing Complete!\nCandidate %s has a majority of votes (>= %d).", name, quota);		
+	}
 
 	public void createAuditFile(String name) throws IOException {
 		File file = new File(name);
 		FileWriter writer = new FileWriter(file);
-		writer.write(this._auditProcess + "\nElection Results:\n" + this._auditResult);
+		writer.write(this._auditProcess + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
 		writer.close();
 	}
 }

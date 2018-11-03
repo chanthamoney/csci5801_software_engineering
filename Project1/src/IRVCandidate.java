@@ -9,9 +9,7 @@ public class IRVCandidate extends Candidate {
 	}
 	
 	public void addBallot(IRVBallot ballot) {
-		if (!ballot.isExhausted()) {
-			this._elimBallots.add(ballot);
-		}
+		this._elimBallots.add(ballot);
 		this._numVotes += 1;
 	}
 
