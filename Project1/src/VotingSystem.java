@@ -4,8 +4,9 @@ abstract public class VotingSystem {
 	protected int _numCandidates;
 	protected int _quota;
 
-	VotingSystem(String ballotFile) {
-		throw new UnsupportedOperationException();
+	VotingSystem(int numBallots, int numCandidates) {
+		this._numBallots = numBallots;
+		this._numCandidates = numCandidates;
 	}
 
 	abstract protected String runElection();

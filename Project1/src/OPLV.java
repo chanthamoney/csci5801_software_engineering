@@ -9,9 +9,11 @@ public class OPLV extends VotingSystem {
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
 
-	OPLV(String ballotFile) {
-		super(ballotFile);
+	OPLV(int numBallots, int numCandidates, int numSeats, String candidates, ArrayList<String> ballots) {
+		super(numBallots, numCandidates);
+		this._numSeats = numSeats;
 		throw new UnsupportedOperationException();
+		// Set up ballots, candidates and parties
 	}
 
 	private void calculateQuota(int numBallots, int numSeats) {

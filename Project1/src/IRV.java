@@ -6,8 +6,9 @@ public class IRV extends VotingSystem {
 	private ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
 	private ArrayList<IRVCandidate> _candidates = new ArrayList<IRVCandidate>();
 
-	IRV(String ballotFile) {
-		super(ballotFile);
+	IRV(int numBallots, int numCandidates, String candidates, ArrayList<String> ballots) {
+		super(numBallots, numCandidates);
+		// Set up ballots and candidates
 		throw new UnsupportedOperationException();
 	}
 
