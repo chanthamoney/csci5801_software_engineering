@@ -14,9 +14,7 @@ public class IRV extends VotingSystem {
 		}
 		for (int i = 0; i < numBallots; i++) {
 			for (int j = 0; j < ballots.get(i).size(); j++) {
-				System.out.print(ballots.get(i).get(j) + "\t");
 			}
-			System.out.print("\n");
 			this._ballots.add(new IRVBallot(ballots.get(i), i + 1));
 		}
 		this._voterPool = this._ballots;
@@ -45,10 +43,8 @@ public class IRV extends VotingSystem {
 				int numVotes = can.getNumVotes();
 				if (can.getNumVotes() == minimum) {
 					minCandidates.add(can);
-					System.out.print(String.format("Candidate %s also has %d votes\n", can.getName(), can.getNumVotes()));
 				} else if (numVotes < minimum) {
 					minCandidates.clear();
-					System.out.print(String.format("Candidate %s has %d votes\n", can.getName(), can.getNumVotes()));
 					minCandidates.add(can);
 					minimum = numVotes;
 				}
@@ -76,7 +72,6 @@ public class IRV extends VotingSystem {
 			boolean wasExhausted = true;
 			while (!bal.isExhausted()) {
 				IRVCandidate can = findCandidate(bal.getNextVote());
-				System.out.print(String.format("Candidate %s eliminated?: %b\n", can.getName(), can.isEliminated()));
 				if (!can.isEliminated()) {
 					can.addBallot(bal);
 					this._auditor.ballot(bal.getID(), can.getName());
@@ -136,6 +131,7 @@ public class IRV extends VotingSystem {
 				}
 			}
 			if (numCandidatesRemaining < 2) {
+				this._auditor.oneCandidateRemaining();
 				this._auditor.result("Election Winner: " + lastCan);
 				this._auditor.createAuditFile("auditFile");
 				return "TODO";

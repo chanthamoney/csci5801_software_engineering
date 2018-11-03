@@ -48,7 +48,11 @@ public class Auditor {
 	}
 	
 	public void majorityOPLV(String name, int quota) {
-		this._auditProcess += String.format("Processing Complete!\nCandidate %s has a majority of votes (>= %d).", name, quota);		
+		this._auditProcess += String.format("\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n", name, quota);		
+	}
+	
+	public void oneCandidateRemaining() {
+		this._auditProcess += String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n");				
 	}
 
 	public void createAuditFile(String name) throws IOException {
