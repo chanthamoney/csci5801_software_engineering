@@ -1,38 +1,48 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Auditor {
 	private String _auditProcess = "";
 	private String _auditResult = "";
 
-	Auditor() {
-		throw new UnsupportedOperationException();
-	}
-
 	public void ballot(int id, String candidate, String party) {
-		throw new UnsupportedOperationException();
+		this._auditProcess += String.format("Ballot %d cast a vote for %s in party %s\n", id, candidate, party);
 	}
 
 	public void ballot(int id, String candidate) {
-		throw new UnsupportedOperationException();
+		this._auditProcess += String.format("Ballot %d cast a vote for %s\n", id, candidate);
 	}
 
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
-		throw new UnsupportedOperationException();
+		if (wasRandom) {
+			this._auditProcess += String.format("Candidate %s is eliminated from a random toss with only %d votes.\n", candidate, numVotes);
+		} else {
+			this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
+		}
 	}
 
 	public void processVoterPool(ArrayList<Integer> ballotIDs) {
-		throw new UnsupportedOperationException();
+		this._auditProcess += "Processing the following ballots:\n";
+		int numBallots = ballotIDs.size();
+		for (int i = 0; i < numBallots; i++) {
+			this._auditProcess += String.format("\t%d\n", ballotIDs.get(i));
+		}
 	}
 
 	public void rankOPLV(String rankMsg) {
-		throw new UnsupportedOperationException();
+		this._auditProcess += rankMsg;
 	}
 
 	public void result(String results) {
-		throw new UnsupportedOperationException();
+		this._auditResult += results;
 	}
 
-	public void createAuditFile(String name) {
-		throw new UnsupportedOperationException();
+	public void createAuditFile(String name) throws IOException {
+		File file = new File(name);
+		FileWriter writer = new FileWriter(file);
+		writer.write(this._auditProcess + "\nElection Results:\n" + this._auditResult);
+		writer.close();
 	}
 }
