@@ -76,7 +76,7 @@ public class IRV extends VotingSystem {
 					can.addBallot(bal);
 					this._auditor.ballot(bal.getID(), can.getName());
 					if (isMajority(can.getNumVotes())) {
-						this._auditor.majorityOPLV(can.getName(), this._quota);
+						this._auditor.majorityIRV(can.getName(), this._quota);
 						return can.getName();
 					}
 					wasExhausted = false;

@@ -47,7 +47,7 @@ public class Auditor {
 		this._auditResult += results;
 	}
 	
-	public void majorityOPLV(String name, int quota) {
+	public void majorityIRV(String name, int quota) {
 		this._auditProcess += String.format("\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n", name, quota);		
 	}
 	

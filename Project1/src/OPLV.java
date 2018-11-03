@@ -118,8 +118,8 @@ public class OPLV extends VotingSystem {
 			can.castVote();
 			this._auditor.ballot(bal.getID(), can.getName(), can.getParty().getName());
 		}
-		rankPartyCandidates();
 		calculatePartySeats();
+		rankPartyCandidates();
 		assignSeats();
 		this._auditor.result("tbd");
 		this._auditor.createAuditFile("auditFile");
