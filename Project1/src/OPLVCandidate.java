@@ -11,6 +11,7 @@ public class OPLVCandidate extends Candidate {
 	}
 
 	public void castVote() {
+		this._party.addVote();
 		this._numVotes += 1;
 	}
 }

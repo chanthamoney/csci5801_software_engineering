@@ -36,9 +36,11 @@ public class OPLV extends VotingSystem {
 	}
 
 	private void rankPartyCandidates() {
+		String rankings = "Party Rankings [* - Allocated Party Seat]\n";
 		for (int i = 0; i < this._numParties; i++) {
-			this._auditor.rankOPLV(this._parties.get(i).rankCandidates());
+			rankings += this._parties.get(i).rankCandidates();
 		}
+		this._auditor.rankOPLV(rankings);
 	}
 
 	private String calculatePartySeats() {
@@ -51,6 +53,7 @@ public class OPLV extends VotingSystem {
 			curParty.setNumSeats(curPartySeats);
 			seatsLeft -= curPartySeats;
 			remainders[i] = curParty.getNumVotes() % this._quota;
+			System.out.print(String.format("%s - %d - %d\n", curParty.getName(), curParty.getNumVotes(), this._quota));
 		}
 		while (seatsLeft > 0) {
 			int maxVal = 0;
