@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class OPLV extends VotingSystem {
 	private int _numParties;
@@ -29,6 +30,27 @@ public class OPLV extends VotingSystem {
 			this._ballots.add(new OPLVBallot(ballots.get(i), i + 1));
 		}
 		calculateQuota(numBallots, numSeats);
+		
+		String setup = "";
+		setup += "Voting System:\t" + "Open Party List Voting\n";
+		setup += "\nParties:\n";
+		for (int i = 0; i < this._numParties; i++) {
+			Party curPar = this._parties.get(i);
+			setup += String.format("\n%s\n\tCandidates:\n", curPar.getName());
+			for (int j = 0; j < curPar.getNumCandidates(); j++) {
+				ArrayList<OPLVCandidate> cans = curPar.getCandidates();
+				setup += String.format("\t\t- %s\n", cans.get(j).getName());
+			}
+		}
+		setup += String.format("\nTotal Number of Candidates: %s\n", this._numCandidates);
+		setup += String.format("\nNumber of Ballots: %s\n", this._numBallots);
+		setup += String.format("\nBallots: %s\n", ballots);
+		setup += String.format("\nBallot Candidates Key:\n", ballots);
+		for (int i = 0; i < this._numCandidates; i++) {
+			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
+		}
+		setup += String.format("\nNumber of Seats: %s\n", this._numSeats);
+		this._auditor.setup(setup);
 	}
 
 	private void calculateQuota(int numBallots, int numSeats) {
@@ -43,56 +65,53 @@ public class OPLV extends VotingSystem {
 		this._auditor.rankOPLV(rankings);
 	}
 
-	private String calculatePartySeats() {
-		String wasRandom = "";
+	private void calculatePartySeats() {		
+		String seatAllocations = "\nSeat Allocation Calculation:\n";
 		int seatsLeft = this._numSeats;
-		int[] remainders = new int[this._numParties];
+		seatAllocations += String.format("%d Seats Remaining\n", seatsLeft);
+		seatAllocations += String.format("Allocating Initial Seats [Floor(Number of Votes / Quota {%d}) with Max as Number of Candidates]:\n", this._quota);
+
 		for (int i = 0; i < this._numParties; i++) {
 			Party curParty = this._parties.get(i);
 			int curPartySeats = Math.floorDiv(curParty.getNumVotes(), this._quota);
+			curPartySeats = curPartySeats > curParty.getNumCandidates() ? curParty.getNumCandidates() : curPartySeats;
 			curParty.setNumSeats(curPartySeats);
 			seatsLeft -= curPartySeats;
-			remainders[i] = curParty.getNumVotes() % this._quota;
-			System.out.print(String.format("%s - %d - %d\n", curParty.getName(), curParty.getNumVotes(), this._quota));
+			seatAllocations += String.format("\t[Party: %s, Votes: %d, Number of Candidates: %d, Initial Seats: %d, Remainder: %d]\n", curParty.getName(), curParty.getNumVotes(), curParty.getNumCandidates(), curPartySeats, curParty.getNumVotes() % this._quota);
 		}
 		while (seatsLeft > 0) {
-			int maxVal = 0;
-			ArrayList<Integer> largest = new ArrayList<Integer>();
+			seatAllocations += String.format("%d Seats Remaining\n", seatsLeft);
+			int maxVal = -1;
+			ArrayList<Party> rankedRemainders = new ArrayList<Party>();
+			// Retrieve Parties that do not have all seats filled
 			for (int i = 0; i < this._numParties; i++) {
-				if (remainders[i] > maxVal) {
-					maxVal = remainders[i];
-					largest.clear();
-					largest.add(i);
-				} else if (remainders[i] == maxVal) {
-					largest.add(i);
+				Party curParty = this._parties.get(i);
+				// If party has not exhausted all candidates in filling seats
+				if (curParty.getNumCandidates() > curParty.getNumSeats()) {
+					rankedRemainders.add(curParty);
 				}
 			}
-
+			
+			Random random = new Random(System.currentTimeMillis());
+			rankedRemainders.sort((o1, o2) -> Integer.compare(o2.getNumVotes() % this._quota, o1.getNumVotes() % this._quota) == 0 ? (random.nextBoolean() ? -1 : 1) : Integer.compare(o2.getNumVotes() % this._quota, o1.getNumVotes() % this._quota));
+			
+			seatAllocations += String.format("Allocating Additional Seats to Largest Remainders:\n", seatsLeft);
 			// If there are enough seats for all largest: add all.
-			if (seatsLeft > largest.size()) {
-				for (int i = 0; i < largest.size(); i++) {
-					Party curParty = this._parties.get(largest.get(i));
+			int newSeats;
+			for (newSeats = 0; newSeats < rankedRemainders.size() && newSeats < seatsLeft; newSeats++) {
+					Party curParty = rankedRemainders.get(newSeats);
 					curParty.setNumSeats(curParty.getNumSeats() + 1);
-					remainders[largest.get(i)] = -1;
-					seatsLeft--;
-				}
-			} else {
-				// We must randomly decide, return decision was random.
-				wasRandom = "There was a random decision in allocating seats based using the largest remainder theorem between the following parties:\n";
-				for (int i = 0; i < largest.size(); i++) {
-					Party curParty = this._parties.get(largest.get(i));
-					wasRandom += curParty.getName() + "\n";
-				}
-				Collections.shuffle(largest);
-				for (int i = 0; i < seatsLeft; i++) {
-					Party curParty = this._parties.get(largest.get(i));
-					curParty.setNumSeats(curParty.getNumSeats() + 1);
-					remainders[largest.get(i)] = -1;
-					seatsLeft--;
-				}
+					seatAllocations += String.format("\tAllocating Additional Seat to %s [%d Seats]\n", curParty.getName(), curParty.getNumSeats());
 			}
+			seatsLeft -= newSeats;
 		}
-		return wasRandom;
+		seatAllocations += "\nFinal Seat Allocations:\n";
+		for (int i = 0; i < this._numParties; i++) {
+			Party curParty = this._parties.get(i);
+			seatAllocations += String.format("\t%s - %d\n", curParty.getName(), curParty.getNumSeats());
+		}
+		
+		this._auditor.seatAllocations(seatAllocations + "\n");
 	}
 
 	private void assignSeats() {
@@ -124,8 +143,14 @@ public class OPLV extends VotingSystem {
 		calculatePartySeats();
 		rankPartyCandidates();
 		assignSeats();
-		this._auditor.result("tbd");
+		
+		String res = "Election Winners:\n";
+		for (int i = 0; i < this._numSeats; i++) {
+			OPLVCandidate curCan = this._seats.get(i);
+			res += "\t"+ curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
+		}
+		this._auditor.result(res);
 		this._auditor.createAuditFile("auditFile");
-		return "TODO";
+		return res;
 	}
 }

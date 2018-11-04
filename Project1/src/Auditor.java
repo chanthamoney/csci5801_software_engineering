@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Auditor {
+	private String _auditSetup = "";
 	private String _auditProcess = "";
 	private String _auditResult = "";
 
@@ -11,19 +12,19 @@ public class Auditor {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s in party %s\n", id, candidate, party);
 	}
 	
-	public void ballotExhausted(int id) {
-		this._auditProcess += String.format("Ballot %d has exhausted all of its votes.\n", id);
-	}
-	
 	public void ballot(int id, String candidate) {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s\n", id, candidate);
 	}
+	
+	public void ballotExhausted(int id) {
+		this._auditProcess += String.format("Ballot %d has exhausted all of its votes.\n", id);
+	}
 
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
+		this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
+
 		if (wasRandom) {
-			this._auditProcess += String.format("Candidate %s is eliminated from a random toss with only %d votes.\n", candidate, numVotes);
-		} else {
-			this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
+			this._auditProcess += "NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\n";
 		}
 	}
 
@@ -42,6 +43,18 @@ public class Auditor {
 	public void rankOPLV(String rankMsg) {
 		this._auditProcess += rankMsg;
 	}
+	
+	public void curPartyVotes(String curPartyVotes) {
+		this._auditProcess += curPartyVotes;
+	}
+	
+	public void seatAllocations(String seatAllocations) {
+		this._auditProcess += seatAllocations;
+	}
+	
+	public void setup(String setup) {
+		this._auditSetup += setup;
+	}
 
 	public void result(String results) {
 		this._auditResult += results;
@@ -58,7 +71,7 @@ public class Auditor {
 	public void createAuditFile(String name) throws IOException {
 		File file = new File(name);
 		FileWriter writer = new FileWriter(file);
-		writer.write(this._auditProcess + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
+		writer.write(this._auditSetup + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditProcess + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
 		writer.close();
 	}
 }
