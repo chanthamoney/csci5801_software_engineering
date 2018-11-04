@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class OPLV extends VotingSystem {
 	private int _numParties;
@@ -43,28 +44,30 @@ public class OPLV extends VotingSystem {
 		this._auditor.rankOPLV(rankings);
 	}
 
-	private String calculatePartySeats() {
-		String wasRandom = "";
+	private void calculatePartySeats() {
 		int seatsLeft = this._numSeats;
 		int[] remainders = new int[this._numParties];
 		for (int i = 0; i < this._numParties; i++) {
 			Party curParty = this._parties.get(i);
 			int curPartySeats = Math.floorDiv(curParty.getNumVotes(), this._quota);
+			curPartySeats = curPartySeats > curParty.getNumCandidates() ? curParty.getNumCandidates() : curPartySeats;
 			curParty.setNumSeats(curPartySeats);
 			seatsLeft -= curPartySeats;
 			remainders[i] = curParty.getNumVotes() % this._quota;
-			System.out.print(String.format("%s - %d - %d\n", curParty.getName(), curParty.getNumVotes(), this._quota));
 		}
 		while (seatsLeft > 0) {
-			int maxVal = 0;
+			int maxVal = -1;
 			ArrayList<Integer> largest = new ArrayList<Integer>();
 			for (int i = 0; i < this._numParties; i++) {
-				if (remainders[i] > maxVal) {
-					maxVal = remainders[i];
-					largest.clear();
-					largest.add(i);
-				} else if (remainders[i] == maxVal) {
-					largest.add(i);
+				// If party has not exhausted all candidates in filling seats
+				if (this._parties.get(i).getNumCandidates() > this._parties.get(i).getNumSeats()) {
+					if (remainders[i] > maxVal) {
+						maxVal = remainders[i];
+						largest.clear();
+						largest.add(i);
+					} else if (remainders[i] == maxVal) {
+						largest.add(i);
+					}
 				}
 			}
 
@@ -78,21 +81,21 @@ public class OPLV extends VotingSystem {
 				}
 			} else {
 				// We must randomly decide, return decision was random.
-				wasRandom = "There was a random decision in allocating seats based using the largest remainder theorem between the following parties:\n";
+				ArrayList<String> randomParties = new ArrayList<String>();
 				for (int i = 0; i < largest.size(); i++) {
 					Party curParty = this._parties.get(largest.get(i));
-					wasRandom += curParty.getName() + "\n";
+					randomParties.add(curParty.getName());
 				}
-				Collections.shuffle(largest);
+				Collections.shuffle(largest, new Random(System.currentTimeMillis()));
 				for (int i = 0; i < seatsLeft; i++) {
 					Party curParty = this._parties.get(largest.get(i));
 					curParty.setNumSeats(curParty.getNumSeats() + 1);
 					remainders[largest.get(i)] = -1;
 					seatsLeft--;
 				}
+				this._auditor.randomLargestRemainderTie(randomParties);
 			}
 		}
-		return wasRandom;
 	}
 
 	private void assignSeats() {
@@ -124,7 +127,13 @@ public class OPLV extends VotingSystem {
 		calculatePartySeats();
 		rankPartyCandidates();
 		assignSeats();
-		this._auditor.result("tbd");
+		
+		String res = "Election Winners:\n";
+		for (int i = 0; i < this._numSeats; i++) {
+			OPLVCandidate curCan = this._seats.get(i);
+			res += "\t"+ curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
+		}
+		this._auditor.result(res);
 		this._auditor.createAuditFile("auditFile");
 		return "TODO";
 	}

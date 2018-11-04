@@ -29,6 +29,10 @@ public class Party {
 	public int getNumVotes() {
 		return this._numVotes;
 	}
+	
+	public int getNumCandidates() {
+		return this._numCandidates;
+	}
 
 	public void setNumSeats(int num) {
 		this._numSeats = num;
@@ -46,32 +50,34 @@ public class Party {
 		
 		this._candidates.sort((o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 		
-		// Randomize candidates with the minimum number of votes to be elected
-		if (this._numSeats > 0) {
-			int minVotes = this._candidates.get(this._numSeats - 1).getNumVotes();
-			int firstIndx = -1, lastIndx = -1;
-			for (int i = 0; i < this._numCandidates; i++) {
-				OPLVCandidate can = this._candidates.get(i);
-				ret += String.format("\t\t%d)", i + 1);
-				if (i < this._numSeats) {
-					ret += "*\t";
-				} else {
-					ret += "\t";
-				}
-				ret += String.format("%s\n", this._candidates.get(i).getName());
-				int numVotes = can.getNumVotes();
-				if (firstIndx == -1 && numVotes == minVotes) {
-					firstIndx = i;
-				}
-				if (numVotes == minVotes) {
-					lastIndx = i;
-				}
+		int minVotes;
+		if (this._numSeats <= this._numCandidates && this._numSeats > 0) {
+			minVotes = this._candidates.get(this._numSeats - 1).getNumVotes();
+		} else {
+			minVotes = Integer.MAX_VALUE;
+		}
+		int firstIndx = -1, lastIndx = -1;
+		for (int i = 0; i < this._numCandidates; i++) {
+			OPLVCandidate can = this._candidates.get(i);
+			ret += String.format("\t\t%d)", i + 1);
+			if (i < this._numSeats) {
+				ret += "*\t";
+			} else {
+				ret += "\t";
 			}
+			ret += String.format("%s\n", this._candidates.get(i).getName());
+			int numVotes = can.getNumVotes();
+			if (firstIndx == -1 && numVotes == minVotes) {
+				firstIndx = i;
+			}
+			if (numVotes == minVotes) {
+				lastIndx = i;
+			}
+		}
 			
-			// If more than one minimum relay that there was a shuffle decision.
-			if (firstIndx != lastIndx) {
-				ret += String.format("\tRandomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.\n", firstIndx + 1, lastIndx + 1);
-			}
+		// If more than one minimum relay that there was a shuffle decision.
+		if (firstIndx != lastIndx && lastIndx >= this._numSeats) {
+			ret += String.format("\t\tNOTE: Randomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.\n", firstIndx + 1, lastIndx + 1);
 		}
 		return ret;
 	}

@@ -21,7 +21,7 @@ public class Auditor {
 
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
 		if (wasRandom) {
-			this._auditProcess += String.format("Candidate %s is eliminated from a random toss with only %d votes.\n", candidate, numVotes);
+			this._auditProcess += String.format("Candidate %s is eliminated from a random toss due to a tie in least amount of votes with only %d votes.\n", candidate, numVotes);
 		} else {
 			this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
 		}
@@ -53,6 +53,13 @@ public class Auditor {
 	
 	public void oneCandidateRemaining() {
 		this._auditProcess += String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n");				
+	}
+	
+	public void randomLargestRemainderTie(ArrayList<String> randomParties) {
+		this._auditProcess += "There was a random decision in allocating seats due to a consequential tie in largest remainders between the following parties:\n";
+		for (int i = 0; i < randomParties.size(); i++) {
+			this._auditProcess += "\t" + randomParties.get(i) + "\n";
+		}
 	}
 
 	public void createAuditFile(String name) throws IOException {
