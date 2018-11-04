@@ -22,13 +22,13 @@ public class IRV extends VotingSystem {
 		
 		String setup = "";
 		setup += "Voting System:\t" + "Instant Runoff Voting\n";
-		setup += String.format("Number of Candidates: %s\n", this._numCandidates);
-		setup += "Candidates:\n";
+		setup += String.format("\nNumber of Candidates: %s\n", this._numCandidates);
+		setup += "\nCandidates:\n";
 		for (int i = 0; i < this._numCandidates; i++) {
 			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
 		}
-		setup += String.format("Number of Ballots: %s\n", this._numBallots);
-		setup += String.format("Ballots: %s\n", ballots);
+		setup += String.format("\nNumber of Ballots: %s\n", this._numBallots);
+		setup += String.format("\nBallots: %s\n", ballots);
 		this._auditor.setup(setup);
 	}
 

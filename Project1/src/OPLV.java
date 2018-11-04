@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class OPLV extends VotingSystem {
@@ -81,7 +80,6 @@ public class OPLV extends VotingSystem {
 		}
 		while (seatsLeft > 0) {
 			seatAllocations += String.format("%d Seats Remaining\n", seatsLeft);
-			int maxVal = -1;
 			ArrayList<Party> rankedRemainders = new ArrayList<Party>();
 			// Retrieve Parties that do not have all seats filled
 			for (int i = 0; i < this._numParties; i++) {
