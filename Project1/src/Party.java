@@ -25,6 +25,10 @@ public class Party {
 	public String getName() {
 		return this._name;
 	}
+	
+	public ArrayList<OPLVCandidate> getCandidates() {
+		return this._candidates;
+	}
 
 	public int getNumVotes() {
 		return this._numVotes;
@@ -59,13 +63,18 @@ public class Party {
 		int firstIndx = -1, lastIndx = -1;
 		for (int i = 0; i < this._numCandidates; i++) {
 			OPLVCandidate can = this._candidates.get(i);
-			ret += String.format("\t\t%d)", i + 1);
 			if (i < this._numSeats) {
-				ret += "*\t";
+				ret += "\t\t* ";
 			} else {
-				ret += "\t";
+				ret += "\t\t- ";
 			}
-			ret += String.format("%s\n", this._candidates.get(i).getName());
+			OPLVCandidate curCan = this._candidates.get(i);
+			ret += String.format("%s [%d vote", curCan.getName(), curCan.getNumVotes());
+			if (curCan.getNumVotes() == 1) {
+				ret += "]\n";
+			} else {
+				ret += "s]\n";
+			}
 			int numVotes = can.getNumVotes();
 			if (firstIndx == -1 && numVotes == minVotes) {
 				firstIndx = i;

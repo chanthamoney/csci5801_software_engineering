@@ -30,6 +30,27 @@ public class OPLV extends VotingSystem {
 			this._ballots.add(new OPLVBallot(ballots.get(i), i + 1));
 		}
 		calculateQuota(numBallots, numSeats);
+		
+		String setup = "";
+		setup += "Voting System:\t" + "Open Party List Voting\n";
+		setup += "Parties:\n";
+		for (int i = 0; i < this._numParties; i++) {
+			Party curPar = this._parties.get(i);
+			setup += String.format("%s\n\tCandidates:\n", curPar.getName());
+			for (int j = 0; j < curPar.getNumCandidates(); j++) {
+				ArrayList<OPLVCandidate> cans = curPar.getCandidates();
+				setup += String.format("\t\t%s\n", cans.get(j).getName());
+			}
+		}
+		setup += String.format("Total Number of Candidates: %s\n", this._numCandidates);
+		setup += String.format("Number of Ballots: %s\n", this._numBallots);
+		setup += String.format("Ballots: %s\n", ballots);
+		setup += String.format("Ballot Candidates Key:\n", ballots);
+		for (int i = 0; i < this._numCandidates; i++) {
+			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
+		}
+		setup += String.format("Number of Seats: %s\n", this._numSeats);
+		this._auditor.setup(setup);
 	}
 
 	private void calculateQuota(int numBallots, int numSeats) {
@@ -135,6 +156,6 @@ public class OPLV extends VotingSystem {
 		}
 		this._auditor.result(res);
 		this._auditor.createAuditFile("auditFile");
-		return "TODO";
+		return res;
 	}
 }

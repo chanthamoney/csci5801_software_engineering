@@ -134,7 +134,7 @@ public class IRV extends VotingSystem {
 				this._auditor.oneCandidateRemaining();
 				this._auditor.result("Election Winner: " + lastCan);
 				this._auditor.createAuditFile("auditFile");
-				return "TODO";
+				return "Election Winner: " + lastCan;
 			}
 
 			boolean allBallotsExhausted = true;

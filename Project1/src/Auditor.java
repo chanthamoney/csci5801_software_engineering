@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Auditor {
+	private String _auditSetup = "";
 	private String _auditProcess = "";
 	private String _auditResult = "";
 
@@ -42,6 +43,10 @@ public class Auditor {
 	public void rankOPLV(String rankMsg) {
 		this._auditProcess += rankMsg;
 	}
+	
+	public void setup(String setup) {
+		this._auditSetup += setup;
+	}
 
 	public void result(String results) {
 		this._auditResult += results;
@@ -65,7 +70,7 @@ public class Auditor {
 	public void createAuditFile(String name) throws IOException {
 		File file = new File(name);
 		FileWriter writer = new FileWriter(file);
-		writer.write(this._auditProcess + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
+		writer.write(this._auditSetup + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditProcess + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
 		writer.close();
 	}
 }
