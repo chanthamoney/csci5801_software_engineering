@@ -48,7 +48,7 @@ public class OPLV extends VotingSystem {
 		for (int i = 0; i < this._numCandidates; i++)
 			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
 		setup += String.format("\nNumber of Seats: %s\n", this._numSeats);
-		this._auditor.setup(setup);
+		this._auditor.auditSetup(setup);
 	}
 
 	private void assignSeats() {
@@ -109,7 +109,7 @@ public class OPLV extends VotingSystem {
 			seatAllocations += String.format("\t%s - %d\n", curParty.getName(), curParty.getNumSeats());
 		}
 
-		this._auditor.seatAllocations(seatAllocations + "\n");
+		this._auditor.auditProcess(seatAllocations + "\n");
 	}
 
 	private void calculateQuota(int numBallots, int numSeats) {
@@ -131,7 +131,7 @@ public class OPLV extends VotingSystem {
 		String rankings = "Party Rankings [* - Allocated Party Seat]\n";
 		for (int i = 0; i < this._numParties; i++)
 			rankings += this._parties.get(i).rankCandidates();
-		this._auditor.rankOPLV(rankings);
+		this._auditor.auditProcess(rankings);
 	}
 
 	public void runElection() throws IOException {
@@ -140,7 +140,8 @@ public class OPLV extends VotingSystem {
 				final OPLVBallot bal = this._ballots.get(i);
 				final OPLVCandidate can = findCandidate(bal.getVote());
 				can.castVote();
-				this._auditor.ballot(bal.getID(), can.getName(), can.getParty().getName());
+				this._auditor.auditProcess(String.format("Ballot %d cast a vote for %s in party %s\n", bal.getID(),
+						can.getName(), can.getParty().getName()));
 			}
 			calculatePartySeats();
 			rankPartyCandidates();
@@ -151,7 +152,7 @@ public class OPLV extends VotingSystem {
 				final OPLVCandidate curCan = this._seats.get(i);
 				res += "\t" + curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
 			}
-			this._auditor.result(res);
+			this._auditor.auditResult(res);
 			this._auditor.createAuditFile("auditFile");
 			System.out.print(res);
 		} else
