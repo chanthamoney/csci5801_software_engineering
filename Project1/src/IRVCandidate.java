@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class IRVCandidate extends Candidate {
-	private boolean _eliminated = false;
 	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
+	private boolean _eliminated = false;
 
 	IRVCandidate(String name) {
 		super(name);
 	}
-	
+
 	public void addBallot(IRVBallot ballot) {
 		this._elimBallots.add(ballot);
 		this._numVotes += 1;
