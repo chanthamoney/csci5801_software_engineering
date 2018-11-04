@@ -39,7 +39,7 @@ public class OPLV extends VotingSystem {
 			setup += String.format("%s\n\tCandidates:\n", curPar.getName());
 			for (int j = 0; j < curPar.getNumCandidates(); j++) {
 				ArrayList<OPLVCandidate> cans = curPar.getCandidates();
-				setup += String.format("\t\t%s\n", cans.get(j).getName());
+				setup += String.format("\t\t- %s\n", cans.get(j).getName());
 			}
 		}
 		setup += String.format("Total Number of Candidates: %s\n", this._numCandidates);
@@ -93,11 +93,10 @@ public class OPLV extends VotingSystem {
 			}
 
 			// If there are enough seats for all largest: add all.
-			if (seatsLeft > largest.size()) {
+			if (seatsLeft >= largest.size()) {
 				for (int i = 0; i < largest.size(); i++) {
 					Party curParty = this._parties.get(largest.get(i));
 					curParty.setNumSeats(curParty.getNumSeats() + 1);
-					remainders[largest.get(i)] = -1;
 					seatsLeft--;
 				}
 			} else {
@@ -111,7 +110,6 @@ public class OPLV extends VotingSystem {
 				for (int i = 0; i < seatsLeft; i++) {
 					Party curParty = this._parties.get(largest.get(i));
 					curParty.setNumSeats(curParty.getNumSeats() + 1);
-					remainders[largest.get(i)] = -1;
 					seatsLeft--;
 				}
 				this._auditor.randomLargestRemainderTie(randomParties);
