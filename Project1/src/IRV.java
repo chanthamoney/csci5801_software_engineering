@@ -19,6 +19,17 @@ public class IRV extends VotingSystem {
 		}
 		this._voterPool = this._ballots;
 		calculateQuota(numBallots);
+		
+		String setup = "";
+		setup += "Voting System:\t" + "Instant Runoff Voting\n";
+		setup += String.format("Number of Candidates: %s\n", this._numCandidates);
+		setup += "Candidates:\n";
+		for (int i = 0; i < this._numCandidates; i++) {
+			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
+		}
+		setup += String.format("Number of Ballots: %s\n", this._numBallots);
+		setup += String.format("Ballots: %s\n", ballots);
+		this._auditor.setup(setup);
 	}
 
 	private void calculateQuota(int numBallots) {
@@ -33,8 +44,6 @@ public class IRV extends VotingSystem {
 	}
 
 	private IRVCandidate findMinimumCandidate() {
-		// NEEDS TO RETURN STRING AS WELL INDICATING IF IT WAS RANDOM
-		// OR AT LEAST COMMUNICATE TO AUDITOR
 		ArrayList<IRVCandidate> minCandidates = new ArrayList<IRVCandidate>();
 		int minimum = Integer.MAX_VALUE;
 		for (int i = 0; i < this._numCandidates; i++) {
@@ -56,13 +65,11 @@ public class IRV extends VotingSystem {
 			IRVCandidate mcan = minCandidates.get(0);
 			this._auditor.eliminateCandidateIRV(mcan.getName(), mcan.getNumVotes(), false);
 			return mcan;
-		} else if (minCandidates.size() > 1) {
+		} else {
 			Random randomizer = new Random();
 			IRVCandidate rcan = minCandidates.get(randomizer.nextInt(minCandidates.size()));
 			this._auditor.eliminateCandidateIRV(rcan.getName(), rcan.getNumVotes(), true);
 			return rcan;
-		} else {
-			return null;
 		}
 	}
 
@@ -90,31 +97,6 @@ public class IRV extends VotingSystem {
 		return "";
 	}
 
-	private String popularVote() {
-		int maximum = 0;
-		ArrayList<String> winners = new ArrayList<String>();
-		for (int i = 0; i < this._numCandidates; i++) {
-			IRVCandidate can = this._candidates.get(i);
-			if (!can.isEliminated()) {
-				int numVotes = can.getNumVotes();
-				if (numVotes > maximum) {
-					maximum = numVotes;
-					winners.clear();
-					winners.add(can.getName());
-				} else if (numVotes == maximum) {
-					winners.add(can.getName());
-				}
-			}
-		}
-		if (winners.size() == 1) {
-			return winners.get(0);
-		} else {
-			Random randomizer = new Random();
-			return "Tie in popular vote: winner was chosen at random.\n"
-					+ winners.get(randomizer.nextInt(winners.size()));
-		}
-	}
-
 	private boolean isMajority(int numVotes) {
 		return numVotes >= this._quota;
 	}
@@ -137,19 +119,6 @@ public class IRV extends VotingSystem {
 				return "Election Winner: " + lastCan;
 			}
 
-			boolean allBallotsExhausted = true;
-			for (int i = 0; i < this._numBallots; i++) {
-				if (!this._ballots.get(i).isExhausted()) {
-					allBallotsExhausted = false;
-					break;
-				}
-			}
-			if (allBallotsExhausted) {
-				this._auditor.result(popularVote());
-				this._auditor.createAuditFile("auditFile");
-				return "TODO";
-			}
-
 			ArrayList<Integer> ids = new ArrayList<Integer>();
 			for (int i = 0; i < this._voterPool.size(); i++) {
 				ids.add(_voterPool.get(i).getID());
@@ -163,12 +132,16 @@ public class IRV extends VotingSystem {
 				this._auditor.createAuditFile("auditFile");
 				return winner;
 			} else {
-				IRVCandidate can = findMinimumCandidate();
-				if (can != null) {
-					this._voterPool = can.eliminate();
-				} else {
-					this._voterPool.clear();
+				String curPartyVotes = "Remaining Candidate - Votes:\n";
+				for (int i = 0; i < this._numCandidates; i++) {
+					IRVCandidate curCan = this._candidates.get(i);
+					if (!curCan.isEliminated()) {
+						curPartyVotes += String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes());
+					}
 				}
+				this._auditor.curPartyVotes(curPartyVotes);
+				IRVCandidate can = findMinimumCandidate();
+				this._voterPool = can.eliminate();
 			}
 		}
 	}

@@ -21,10 +21,10 @@ public class Auditor {
 	}
 
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
+		this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
+
 		if (wasRandom) {
-			this._auditProcess += String.format("Candidate %s is eliminated from a random toss due to a tie in least amount of votes with only %d votes.\n", candidate, numVotes);
-		} else {
-			this._auditProcess += String.format("Candidate %s is eliminated with only %d votes.\n", candidate, numVotes);
+			this._auditProcess += "NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\n";
 		}
 	}
 
@@ -42,6 +42,10 @@ public class Auditor {
 
 	public void rankOPLV(String rankMsg) {
 		this._auditProcess += rankMsg;
+	}
+	
+	public void curPartyVotes(String curPartyVotes) {
+		this._auditProcess += curPartyVotes;
 	}
 	
 	public void setup(String setup) {
