@@ -118,6 +118,7 @@ public class IRV extends VotingSystem {
 					this._auditor.result("Election Winner: " + lastCan);
 					this._auditor.createAuditFile("auditFile");
 					System.out.print("Election Winner: " + lastCan);
+					break;
 				}
 
 				ArrayList<Integer> ids = new ArrayList<Integer>();
@@ -132,6 +133,7 @@ public class IRV extends VotingSystem {
 					this._auditor.result("Election Winner: " + winner);
 					this._auditor.createAuditFile("auditFile");
 					System.out.print(winner);
+					break;
 				} else {
 					String curPartyVotes = "Remaining Candidate - Votes:\n";
 					for (int i = 0; i < this._numCandidates; i++) {
@@ -144,7 +146,7 @@ public class IRV extends VotingSystem {
 					IRVCandidate can = findMinimumCandidate();
 					this._voterPool = can.eliminate();
 				}
-			}	
+			}
 		} else {
 			System.out.print("ERROR: An election can only be run once for a given voting system.\n");
 		}
