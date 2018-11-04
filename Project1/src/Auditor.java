@@ -12,12 +12,12 @@ public class Auditor {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s in party %s\n", id, candidate, party);
 	}
 	
-	public void ballotExhausted(int id) {
-		this._auditProcess += String.format("Ballot %d has exhausted all of its votes.\n", id);
-	}
-	
 	public void ballot(int id, String candidate) {
 		this._auditProcess += String.format("Ballot %d cast a vote for %s\n", id, candidate);
+	}
+	
+	public void ballotExhausted(int id) {
+		this._auditProcess += String.format("Ballot %d has exhausted all of its votes.\n", id);
 	}
 
 	public void eliminateCandidateIRV(String candidate, int numVotes, boolean wasRandom) {
@@ -48,6 +48,10 @@ public class Auditor {
 		this._auditProcess += curPartyVotes;
 	}
 	
+	public void seatAllocations(String seatAllocations) {
+		this._auditProcess += seatAllocations;
+	}
+	
 	public void setup(String setup) {
 		this._auditSetup += setup;
 	}
@@ -62,13 +66,6 @@ public class Auditor {
 	
 	public void oneCandidateRemaining() {
 		this._auditProcess += String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n");				
-	}
-	
-	public void randomLargestRemainderTie(ArrayList<String> randomParties) {
-		this._auditProcess += "There was a random decision in allocating seats due to a consequential tie in largest remainders between the following parties:\n";
-		for (int i = 0; i < randomParties.size(); i++) {
-			this._auditProcess += "\t" + randomParties.get(i) + "\n";
-		}
 	}
 
 	public void createAuditFile(String name) throws IOException {

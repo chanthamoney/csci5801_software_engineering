@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class Party {
@@ -49,10 +48,9 @@ public class Party {
 	public String rankCandidates() {
 		String ret = String.format("\tParty %s:\n", this._name);
 		
-		// Shuffle to dispute ties.
-		Collections.shuffle(this._candidates, new Random(System.currentTimeMillis()));
-		
-		this._candidates.sort((o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
+		// Randomly decide between ties by using random.
+		Random random = new Random(System.currentTimeMillis());
+		this._candidates.sort((o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()) == 0 ? (random.nextBoolean() ? -1 : 1) : Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 		
 		int minVotes;
 		if (this._numSeats <= this._numCandidates && this._numSeats > 0) {
