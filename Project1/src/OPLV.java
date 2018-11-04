@@ -131,24 +131,28 @@ public class OPLV extends VotingSystem {
 		return null;
 	}
 
-	public String runElection() throws IOException {
-		for (int i = 0; i < this._numBallots; i++) {
-			OPLVBallot bal = this._ballots.get(i);
-			OPLVCandidate can = findCandidate(bal.getVote());
-			can.castVote();
-			this._auditor.ballot(bal.getID(), can.getName(), can.getParty().getName());
+	public void runElection() throws IOException {
+		if (!wasRun.getAndSet(true)) {
+			for (int i = 0; i < this._numBallots; i++) {
+				OPLVBallot bal = this._ballots.get(i);
+				OPLVCandidate can = findCandidate(bal.getVote());
+				can.castVote();
+				this._auditor.ballot(bal.getID(), can.getName(), can.getParty().getName());
+			}
+			calculatePartySeats();
+			rankPartyCandidates();
+			assignSeats();
+			
+			String res = "Election Winners:\n";
+			for (int i = 0; i < this._numSeats; i++) {
+				OPLVCandidate curCan = this._seats.get(i);
+				res += "\t"+ curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
+			}
+			this._auditor.result(res);
+			this._auditor.createAuditFile("auditFile");
+			System.out.print(res);
+		} else {
+			System.out.print("ERROR: An election can only be run once for a given voting system.\n");
 		}
-		calculatePartySeats();
-		rankPartyCandidates();
-		assignSeats();
-		
-		String res = "Election Winners:\n";
-		for (int i = 0; i < this._numSeats; i++) {
-			OPLVCandidate curCan = this._seats.get(i);
-			res += "\t"+ curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
-		}
-		this._auditor.result(res);
-		this._auditor.createAuditFile("auditFile");
-		return res;
 	}
 }

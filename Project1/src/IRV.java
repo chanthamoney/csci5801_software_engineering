@@ -101,48 +101,52 @@ public class IRV extends VotingSystem {
 		return numVotes >= this._quota;
 	}
 
-	public String runElection() throws IOException {
-		while (true) {
-			int numCandidatesRemaining = 0;
-			String lastCan = "";
-			for (int i = 0; i < this._numCandidates; i++) {
-				IRVCandidate curCan = this._candidates.get(i);
-				if (!curCan.isEliminated()) {
-					numCandidatesRemaining++;
-					lastCan = curCan.getName();
-				}
-			}
-			if (numCandidatesRemaining < 2) {
-				this._auditor.oneCandidateRemaining();
-				this._auditor.result("Election Winner: " + lastCan);
-				this._auditor.createAuditFile("auditFile");
-				return "Election Winner: " + lastCan;
-			}
-
-			ArrayList<Integer> ids = new ArrayList<Integer>();
-			for (int i = 0; i < this._voterPool.size(); i++) {
-				ids.add(_voterPool.get(i).getID());
-			}
-			this._auditor.processVoterPool(ids);
-			
-			String winner = processVoterPool();
-
-			if (winner != "") {
-				this._auditor.result("Election Winner: " + winner);
-				this._auditor.createAuditFile("auditFile");
-				return winner;
-			} else {
-				String curPartyVotes = "Remaining Candidate - Votes:\n";
+	public void runElection() throws IOException {
+		if (!wasRun.getAndSet(true)) {
+			while (true) {
+				int numCandidatesRemaining = 0;
+				String lastCan = "";
 				for (int i = 0; i < this._numCandidates; i++) {
 					IRVCandidate curCan = this._candidates.get(i);
 					if (!curCan.isEliminated()) {
-						curPartyVotes += String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes());
+						numCandidatesRemaining++;
+						lastCan = curCan.getName();
 					}
 				}
-				this._auditor.curPartyVotes(curPartyVotes);
-				IRVCandidate can = findMinimumCandidate();
-				this._voterPool = can.eliminate();
-			}
+				if (numCandidatesRemaining < 2) {
+					this._auditor.oneCandidateRemaining();
+					this._auditor.result("Election Winner: " + lastCan);
+					this._auditor.createAuditFile("auditFile");
+					System.out.print("Election Winner: " + lastCan);
+				}
+
+				ArrayList<Integer> ids = new ArrayList<Integer>();
+				for (int i = 0; i < this._voterPool.size(); i++) {
+					ids.add(_voterPool.get(i).getID());
+				}
+				this._auditor.processVoterPool(ids);
+				
+				String winner = processVoterPool();
+
+				if (winner != "") {
+					this._auditor.result("Election Winner: " + winner);
+					this._auditor.createAuditFile("auditFile");
+					System.out.print(winner);
+				} else {
+					String curPartyVotes = "Remaining Candidate - Votes:\n";
+					for (int i = 0; i < this._numCandidates; i++) {
+						IRVCandidate curCan = this._candidates.get(i);
+						if (!curCan.isEliminated()) {
+							curPartyVotes += String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes());
+						}
+					}
+					this._auditor.curPartyVotes(curPartyVotes);
+					IRVCandidate can = findMinimumCandidate();
+					this._voterPool = can.eliminate();
+				}
+			}	
+		} else {
+			System.out.print("ERROR: An election can only be run once for a given voting system.\n");
 		}
 	}
 }

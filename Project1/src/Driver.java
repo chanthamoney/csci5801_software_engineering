@@ -71,7 +71,6 @@ public class Driver {
 			}
 			vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
 		}
-		
 		vs.runElection();
 		fileReader.close();
 	}
