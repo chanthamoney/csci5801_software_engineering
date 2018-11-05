@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class IRVCandidate extends Candidate {
-	private boolean _eliminated = false;
 	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
+	private boolean _eliminated = false;
 
 	IRVCandidate(String name) {
 		super(name);
@@ -13,9 +13,10 @@ public class IRVCandidate extends Candidate {
 		this._numVotes += 1;
 	}
 
-	public ArrayList<IRVBallot> eliminate() {
+	public IRVBallot[] eliminate() {
 		this._eliminated = true;
-		return this._elimBallots;
+		final IRVBallot[] elimBallots = new IRVBallot[this._elimBallots.size()];
+		return this._elimBallots.toArray(elimBallots);
 	}
 
 	public boolean isEliminated() {

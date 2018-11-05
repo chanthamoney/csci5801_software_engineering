@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class IRVBallot extends Ballot {
-	private ArrayList<Integer> _votes;
 	private int _curVoteIndex = 0;
-	private int _numVotes;
+	private final int _numVotes;
+	private final ArrayList<Integer> _votes;
 
 	IRVBallot(ArrayList<Integer> votes, int id) {
 		super(id);

@@ -1,5 +1,5 @@
 public class OPLVBallot extends Ballot {
-	private int _vote;
+	private final int _vote;
 
 	OPLVBallot(int vote, int id) {
 		super(id);

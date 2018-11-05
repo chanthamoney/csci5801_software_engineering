@@ -1,5 +1,5 @@
 abstract public class Ballot {
-	private int _id;
+	private final int _id;
 
 	Ballot(int id) {
 		this._id = id;
