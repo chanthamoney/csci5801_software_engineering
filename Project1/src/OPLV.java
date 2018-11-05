@@ -48,8 +48,8 @@ public class OPLV extends VotingSystem {
 	}
 
 	private void assignSeats() {
-		for (final Party curPart : this._parties)
-			this._seats.addAll(curPart.getWinningCandidates());
+		for (final Party curParty : this._parties)
+			this._seats.addAll(curParty.getWinningCandidates());
 	}
 
 	private void calculatePartySeats() {
