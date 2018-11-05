@@ -87,8 +87,4 @@ public class TestIRVCandidate {
     // check num votes is as expected
     assertEquals(1, testCandidate.getNumVotes());
   }
-
-
-
-
 }
