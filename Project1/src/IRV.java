@@ -3,18 +3,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class IRV extends VotingSystem {
-	private final ArrayList<IRVBallot> _ballots = new ArrayList<IRVBallot>();
-	private final ArrayList<IRVCandidate> _candidates = new ArrayList<IRVCandidate>();
-	private ArrayList<IRVBallot> _voterPool;
+	private final IRVBallot[] _ballots;
+	private final IRVCandidate[] _candidates;
+	private IRVBallot[] _voterPool;
 
 	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots) {
 		super(numBallots, numCandidates);
+		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
-			this._candidates.add(new IRVCandidate(candidates[i]));
+			this._candidates[i] = new IRVCandidate(candidates[i]);
+		this._ballots = new IRVBallot[numBallots];
 		for (int i = 0; i < numBallots; i++) {
 			for (int j = 0; j < ballots.get(i).size(); j++) {
 			}
-			this._ballots.add(new IRVBallot(ballots.get(i), i + 1));
+			this._ballots[i] = new IRVBallot(ballots.get(i), i + 1);
 		}
 		this._voterPool = this._ballots;
 		calculateQuota(numBallots);
@@ -24,7 +26,7 @@ public class IRV extends VotingSystem {
 		setup += String.format("\nNumber of Candidates: %s\n", this._numCandidates);
 		setup += "\nCandidates:\n";
 		for (int i = 0; i < this._numCandidates; i++)
-			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
+			setup += String.format("\t%d - %s\n", i, candidates[i]);
 		setup += String.format("\nNumber of Ballots: %s\n", this._numBallots);
 		setup += String.format("\nBallots: %s\n", ballots);
 		this._auditor.auditSetup(setup);
@@ -39,18 +41,16 @@ public class IRV extends VotingSystem {
 
 	private void eliminateAllNoVoteCandidates() {
 		final ArrayList<String> eliminatedCandidates = new ArrayList<String>();
-		for (int i = 0; i < this._numCandidates; i++) {
-			final IRVCandidate curCan = this._candidates.get(i);
+		for (final IRVCandidate curCan : this._candidates)
 			if (curCan.getNumVotes() == 0) {
 				curCan.eliminate();
 				eliminatedCandidates.add(curCan.getName());
 			}
-		}
 		if (eliminatedCandidates.size() > 0) {
 			String eliminatedCandidateNames = "";
 			eliminatedCandidateNames += "Eliminated the following candidates who received no votes:\n";
-			for (int i = 0; i < eliminatedCandidates.size(); i++)
-				eliminatedCandidateNames += String.format("\t%s\n", eliminatedCandidates.get(i));
+			for (final String curCanName : eliminatedCandidates)
+				eliminatedCandidateNames += String.format("\t%s\n", curCanName);
 			this._auditor.auditProcess(eliminatedCandidateNames);
 		}
 	}
@@ -58,19 +58,17 @@ public class IRV extends VotingSystem {
 	private IRVCandidate findMinimumCandidate() {
 		final ArrayList<IRVCandidate> minCandidates = new ArrayList<IRVCandidate>();
 		int minimum = Integer.MAX_VALUE;
-		for (int i = 0; i < this._numCandidates; i++) {
-			final IRVCandidate can = this._candidates.get(i);
-			if (!can.isEliminated()) {
-				final int numVotes = can.getNumVotes();
-				if (can.getNumVotes() == minimum)
-					minCandidates.add(can);
+		for (final IRVCandidate curCan : this._candidates)
+			if (!curCan.isEliminated()) {
+				final int numVotes = curCan.getNumVotes();
+				if (curCan.getNumVotes() == minimum)
+					minCandidates.add(curCan);
 				else if (numVotes < minimum) {
 					minCandidates.clear();
-					minCandidates.add(can);
+					minCandidates.add(curCan);
 					minimum = numVotes;
 				}
 			}
-		}
 
 		// Determines if random decision is needed.
 		if (minCandidates.size() == 1) {
@@ -94,11 +92,10 @@ public class IRV extends VotingSystem {
 
 	private String processVoterPool() {
 		String processedBallots = "";
-		for (int i = 0; i < this._voterPool.size(); i++) {
-			final IRVBallot bal = this._voterPool.get(i);
+		for (final IRVBallot bal : this._voterPool) {
 			boolean wasExhausted = true;
 			while (!bal.isExhausted()) {
-				final IRVCandidate can = this._candidates.get(bal.getNextVote());
+				final IRVCandidate can = this._candidates[bal.getNextVote()];
 				if (!can.isEliminated()) {
 					can.addBallot(bal);
 					processedBallots += String.format("Ballot %d cast a vote for %s\n", bal.getID(), can.getName());
@@ -125,13 +122,11 @@ public class IRV extends VotingSystem {
 			while (true) {
 				int numCandidatesRemaining = 0;
 				String lastCan = "";
-				for (int i = 0; i < this._numCandidates; i++) {
-					final IRVCandidate curCan = this._candidates.get(i);
+				for (final IRVCandidate curCan : this._candidates)
 					if (!curCan.isEliminated()) {
 						numCandidatesRemaining++;
 						lastCan = curCan.getName();
 					}
-				}
 				if (numCandidatesRemaining < 2) {
 					this._auditor.auditProcess(
 							String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n"));
@@ -143,9 +138,8 @@ public class IRV extends VotingSystem {
 
 				String processVoterPool = "";
 				processVoterPool += "Processing the following ballots:\n\t";
-				final int numBallots = this._voterPool.size();
-				for (int i = 0; i < numBallots; i++)
-					processVoterPool += String.format("%d, ", this._voterPool.get(i).getID());
+				for (final IRVBallot curBallot : this._voterPool)
+					processVoterPool += String.format("%d, ", curBallot.getID());
 				this._auditor.auditProcess(processVoterPool + "\n");
 
 				final String winner = processVoterPool();
@@ -157,11 +151,9 @@ public class IRV extends VotingSystem {
 					break;
 				} else {
 					String curPartyVotes = "Remaining Candidate - Votes:\n";
-					for (int i = 0; i < this._numCandidates; i++) {
-						final IRVCandidate curCan = this._candidates.get(i);
+					for (final IRVCandidate curCan : this._candidates)
 						if (!curCan.isEliminated())
 							curPartyVotes += String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes());
-					}
 					this._auditor.auditProcess(curPartyVotes);
 					if (firstRun)
 						eliminateAllNoVoteCandidates();

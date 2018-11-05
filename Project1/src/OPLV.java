@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OPLV extends VotingSystem {
-	public ArrayList<OPLVBallot> _ballots = new ArrayList<OPLVBallot>();
-	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
-	private int _numParties;
+	public OPLVBallot[] _ballots;
+	public OPLVCandidate[] _candidates;
 	private final int _numSeats;
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
@@ -13,47 +12,44 @@ public class OPLV extends VotingSystem {
 	OPLV(int numBallots, int numCandidates, int numSeats, ArrayList<String> candidates, ArrayList<String> parties,
 			ArrayList<Integer> ballots) {
 		super(numBallots, numCandidates);
-		this._numParties = 0;
 		this._numSeats = numSeats;
+		this._candidates = new OPLVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
 			Party canParty = findParty(parties.get(i));
 			if (canParty == null) {
 				canParty = new Party(parties.get(i));
 				this._parties.add(canParty);
-				this._numParties++;
 			}
 			final OPLVCandidate newCan = new OPLVCandidate(candidates.get(i), canParty);
-			this._candidates.add(newCan);
+			this._candidates[i] = newCan;
 			canParty.addCandidate(newCan);
 		}
+		this._ballots = new OPLVBallot[numBallots];
 		for (int i = 0; i < numBallots; i++)
-			this._ballots.add(new OPLVBallot(ballots.get(i), i + 1));
+			this._ballots[i] = new OPLVBallot(ballots.get(i), i + 1);
 		calculateQuota(numBallots, numSeats);
 
 		String setup = "";
 		setup += "Voting System:\t" + "Open Party List Voting\n";
 		setup += "\nParties:\n";
-		for (int i = 0; i < this._numParties; i++) {
-			final Party curPar = this._parties.get(i);
-			setup += String.format("\n%s\n\tCandidates:\n", curPar.getName());
-			for (int j = 0; j < curPar.getNumCandidates(); j++) {
-				final ArrayList<OPLVCandidate> cans = curPar.getCandidates();
-				setup += String.format("\t\t- %s\n", cans.get(j).getName());
-			}
+		for (final Party curParty : this._parties) {
+			setup += String.format("\n%s\n\tCandidates:\n", curParty.getName());
+			for (final OPLVCandidate curCan : curParty.getCandidates())
+				setup += String.format("\t\t- %s\n", curCan.getName());
 		}
 		setup += String.format("\nTotal Number of Candidates: %s\n", this._numCandidates);
 		setup += String.format("\nNumber of Ballots: %s\n", this._numBallots);
 		setup += String.format("\nBallots: %s\n", ballots);
 		setup += String.format("\nBallot Candidates Key:\n", ballots);
-		for (int i = 0; i < this._numCandidates; i++)
-			setup += String.format("\t%d - %s\n", i, this._candidates.get(i).getName());
+		for (int i = 0; i < numCandidates; i++)
+			setup += String.format("\t%d - %s\n", i, this._candidates[i].getName());
 		setup += String.format("\nNumber of Seats: %s\n", this._numSeats);
 		this._auditor.auditSetup(setup);
 	}
 
 	private void assignSeats() {
-		for (int i = 0; i < this._numParties; i++)
-			this._seats.addAll(this._parties.get(i).getWinningCandidates());
+		for (final Party curPart : this._parties)
+			this._seats.addAll(curPart.getWinningCandidates());
 	}
 
 	private void calculatePartySeats() {
@@ -64,8 +60,7 @@ public class OPLV extends VotingSystem {
 				"Allocating Initial Seats [Floor(Number of Votes / Quota {%d}) with Max as Number of Candidates]:\n",
 				this._quota);
 
-		for (int i = 0; i < this._numParties; i++) {
-			final Party curParty = this._parties.get(i);
+		for (final Party curParty : this._parties) {
 			int curPartySeats = Math.floorDiv(curParty.getNumVotes(), this._quota);
 			curPartySeats = curPartySeats > curParty.getNumCandidates() ? curParty.getNumCandidates() : curPartySeats;
 			curParty.setNumSeats(curPartySeats);
@@ -79,12 +74,10 @@ public class OPLV extends VotingSystem {
 			seatAllocations += String.format("%d Seats Remaining\n", seatsLeft);
 			final ArrayList<Party> rankedRemainders = new ArrayList<Party>();
 			// Retrieve Parties that do not have all seats filled
-			for (int i = 0; i < this._numParties; i++) {
-				final Party curParty = this._parties.get(i);
+			for (final Party curParty : this._parties)
 				// If party has not exhausted all candidates in filling seats
 				if (curParty.getNumCandidates() > curParty.getNumSeats())
 					rankedRemainders.add(curParty);
-			}
 
 			final Random random = new Random(System.currentTimeMillis());
 			rankedRemainders.sort(
@@ -104,10 +97,8 @@ public class OPLV extends VotingSystem {
 			seatsLeft -= newSeats;
 		}
 		seatAllocations += "\nFinal Seat Allocations:\n";
-		for (int i = 0; i < this._numParties; i++) {
-			final Party curParty = this._parties.get(i);
+		for (final Party curParty : this._parties)
 			seatAllocations += String.format("\t%s - %d\n", curParty.getName(), curParty.getNumSeats());
-		}
 
 		this._auditor.auditProcess(seatAllocations + "\n");
 	}
@@ -116,31 +107,26 @@ public class OPLV extends VotingSystem {
 		this._quota = -Math.floorDiv(-numBallots, numSeats);
 	}
 
-	private OPLVCandidate findCandidate(int index) {
-		return this._candidates.get(index);
-	}
-
 	private Party findParty(String name) {
-		for (int i = 0; i < this._numParties; i++)
-			if (this._parties.get(i).getName().equals(name))
-				return this._parties.get(i);
+		for (final Party curParty : this._parties)
+			if (curParty.getName().equals(name))
+				return curParty;
 		return null;
 	}
 
 	private void rankPartyCandidates() {
 		String rankings = "Party Rankings [* - Allocated Party Seat]\n";
-		for (int i = 0; i < this._numParties; i++)
-			rankings += this._parties.get(i).rankCandidates();
+		for (final Party curParty : this._parties)
+			rankings += curParty.rankCandidates();
 		this._auditor.auditProcess(rankings);
 	}
 
 	public void runElection() throws IOException {
 		if (!this.wasRun.getAndSet(true)) {
-			for (int i = 0; i < this._numBallots; i++) {
-				final OPLVBallot bal = this._ballots.get(i);
-				final OPLVCandidate can = findCandidate(bal.getVote());
+			for (final OPLVBallot curBal : this._ballots) {
+				final OPLVCandidate can = this._candidates[curBal.getVote()];
 				can.castVote();
-				this._auditor.auditProcess(String.format("Ballot %d cast a vote for %s in party %s\n", bal.getID(),
+				this._auditor.auditProcess(String.format("Ballot %d cast a vote for %s in party %s\n", curBal.getID(),
 						can.getName(), can.getParty().getName()));
 			}
 			calculatePartySeats();
@@ -148,10 +134,8 @@ public class OPLV extends VotingSystem {
 			assignSeats();
 
 			String res = "Election Winners:\n";
-			for (int i = 0; i < this._numSeats; i++) {
-				final OPLVCandidate curCan = this._seats.get(i);
+			for (final OPLVCandidate curCan : this._seats)
 				res += "\t" + curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
-			}
 			this._auditor.auditResult(res);
 			this._auditor.createAuditFile("auditFile");
 			System.out.print(res);
