@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertFalse;
@@ -50,7 +52,7 @@ public class TestIRVCandidate {
     expectedEliminatedBallot[0] = testBallot;
 
     // check if eliminated Ballot == testBallot
-    assertEquals(expectedEliminatedBallot, eliminatedBallot);
+    assertArrayEquals(expectedEliminatedBallot, eliminatedBallot);
   }
 
   // Testing isEliminated method
