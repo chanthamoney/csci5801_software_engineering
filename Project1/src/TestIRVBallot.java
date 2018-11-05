@@ -16,7 +16,6 @@ public class TestIRVBallot {
     testVotes.add(4);
 
     return new IRVBallot(testVotes, testId);
-
   }
 
   // Testing getNextVote()
@@ -49,6 +48,4 @@ public class TestIRVBallot {
 
     assertEquals(4, testBallot.getID());
   }
-
-
 }
