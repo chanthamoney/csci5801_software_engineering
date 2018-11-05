@@ -45,12 +45,12 @@ public class Driver {
 			final String in_Candidates = fileReader.nextLine();
 
 			final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
-			final ArrayList<String> candidates = new ArrayList<String>();
-			final ArrayList<String> parties = new ArrayList<String>();
+			final String[] candidates = new String[in_NumCandidates];
+			final String[] parties = new String[in_NumCandidates];
 			for (int i = 0; i < in_NumCandidates; i++) {
 				final String[] pair = cpPairs[i].substring(1, cpPairs[i].length() - 1).split(", *");
-				candidates.add(pair[0]);
-				parties.add(pair[1]);
+				candidates[i] = pair[0];
+				parties[i] = pair[1];
 			}
 
 			final int in_NumSeats = Integer.valueOf(fileReader.nextLine());

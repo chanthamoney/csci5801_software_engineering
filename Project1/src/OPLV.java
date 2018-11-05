@@ -9,18 +9,18 @@ public class OPLV extends VotingSystem {
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
 
-	OPLV(int numBallots, int numCandidates, int numSeats, ArrayList<String> candidates, ArrayList<String> parties,
+	OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
 			ArrayList<Integer> ballots) {
 		super(numBallots, numCandidates);
 		this._numSeats = numSeats;
 		this._candidates = new OPLVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
-			Party canParty = findParty(parties.get(i));
+			Party canParty = findParty(parties[i]);
 			if (canParty == null) {
-				canParty = new Party(parties.get(i));
+				canParty = new Party(parties[i]);
 				this._parties.add(canParty);
 			}
-			final OPLVCandidate newCan = new OPLVCandidate(candidates.get(i), canParty);
+			final OPLVCandidate newCan = new OPLVCandidate(candidates[i], canParty);
 			this._candidates[i] = newCan;
 			canParty.addCandidate(newCan);
 		}
