@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Driver {
+	/**
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		final Scanner consoleReader = new Scanner(System.in);
 		System.out.print("Enter Name of Ballot File: ");

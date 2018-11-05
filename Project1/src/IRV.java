@@ -3,10 +3,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class IRV extends VotingSystem {
+	/**
+	 * 
+	 */
 	private final IRVBallot[] _ballots;
+	/**
+	 * 
+	 */
 	private final IRVCandidate[] _candidates;
+	/**
+	 * 
+	 */
 	private IRVBallot[] _voterPool;
 
+	/**
+	 * @param numBallots
+	 * @param numCandidates
+	 * @param candidates
+	 * @param ballots
+	 */
 	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots) {
 		super(numBallots, numCandidates);
 		this._candidates = new IRVCandidate[numCandidates];
@@ -32,6 +47,9 @@ public class IRV extends VotingSystem {
 		this._auditor.auditSetup(setup);
 	}
 
+	/**
+	 * @param numBallots
+	 */
 	private void calculateQuota(int numBallots) {
 		if ((numBallots % 2) == 0)
 			this._quota = (numBallots / 2) + 1;
@@ -39,6 +57,9 @@ public class IRV extends VotingSystem {
 			this._quota = (int) Math.ceil(numBallots * 0.5);
 	}
 
+	/**
+	 * 
+	 */
 	private void eliminateAllNoVoteCandidates() {
 		final ArrayList<String> eliminatedCandidates = new ArrayList<String>();
 		for (final IRVCandidate curCan : this._candidates)
@@ -55,6 +76,9 @@ public class IRV extends VotingSystem {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	private IRVCandidate findMinimumCandidate() {
 		final ArrayList<IRVCandidate> minCandidates = new ArrayList<IRVCandidate>();
 		int minimum = Integer.MAX_VALUE;
@@ -86,10 +110,17 @@ public class IRV extends VotingSystem {
 		}
 	}
 
+	/**
+	 * @param numVotes
+	 * @return
+	 */
 	private boolean isMajority(int numVotes) {
 		return numVotes >= this._quota;
 	}
 
+	/**
+	 * @return
+	 */
 	private String processVoterPool() {
 		String processedBallots = "";
 		for (final IRVBallot bal : this._voterPool) {
@@ -116,6 +147,9 @@ public class IRV extends VotingSystem {
 		return "";
 	}
 
+	/* (non-Javadoc)
+	 * @see VotingSystem#runElection()
+	 */
 	public void runElection() throws IOException {
 		if (!this.wasRun.getAndSet(true)) {
 			final boolean firstRun = true;

@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertFalse;
@@ -43,14 +45,14 @@ public class TestIRVCandidate {
     testCandidate.addBallot(testBallot);
 
     // eliminate candidate and get their ballot
-    ArrayList<IRVBallot> eliminatedBallot = testCandidate.eliminate();
+    IRVBallot[] eliminatedBallot = testCandidate.eliminate();
 
     // expected value an array list of irv ballots
-    ArrayList<IRVBallot> expectedEliminatedBallot = new ArrayList<IRVBallot>();
-    expectedEliminatedBallot.add(testBallot);
+    IRVBallot[] expectedEliminatedBallot = new IRVBallot[1];
+    expectedEliminatedBallot[0] = testBallot;
 
     // check if eliminated Ballot == testBallot
-    assertEquals(expectedEliminatedBallot, eliminatedBallot);
+    assertArrayEquals(expectedEliminatedBallot, eliminatedBallot);
   }
 
   // Testing isEliminated method
@@ -63,7 +65,7 @@ public class TestIRVCandidate {
     testCandidate.addBallot(testBallot);
 
     // eliminate candidate
-    ArrayList<IRVBallot> eliminatedBallot = testCandidate.eliminate();
+    testCandidate.eliminate();
 
     // Check if candidate returns true to isEliminated
     assertTrue(testCandidate.isEliminated());

@@ -3,12 +3,35 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OPLV extends VotingSystem {
+	/**
+	 * 
+	 */
 	public OPLVBallot[] _ballots;
+	/**
+	 * 
+	 */
 	public OPLVCandidate[] _candidates;
+	/**
+	 * 
+	 */
 	private final int _numSeats;
+	/**
+	 * 
+	 */
 	public ArrayList<Party> _parties = new ArrayList<Party>();
+	/**
+	 * 
+	 */
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
 
+	/**
+	 * @param numBallots
+	 * @param numCandidates
+	 * @param numSeats
+	 * @param candidates
+	 * @param parties
+	 * @param ballots
+	 */
 	OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
 			ArrayList<Integer> ballots) {
 		super(numBallots, numCandidates);
@@ -47,11 +70,17 @@ public class OPLV extends VotingSystem {
 		this._auditor.auditSetup(setup);
 	}
 
+	/**
+	 * 
+	 */
 	private void assignSeats() {
 		for (final Party curParty : this._parties)
 			this._seats.addAll(curParty.getWinningCandidates());
 	}
 
+	/**
+	 * 
+	 */
 	private void calculatePartySeats() {
 		String seatAllocations = "\nSeat Allocation Calculation:\n";
 		int seatsLeft = this._numSeats;
@@ -103,10 +132,18 @@ public class OPLV extends VotingSystem {
 		this._auditor.auditProcess(seatAllocations + "\n");
 	}
 
+	/**
+	 * @param numBallots
+	 * @param numSeats
+	 */
 	private void calculateQuota(int numBallots, int numSeats) {
 		this._quota = -Math.floorDiv(-numBallots, numSeats);
 	}
 
+	/**
+	 * @param name
+	 * @return
+	 */
 	private Party findParty(String name) {
 		for (final Party curParty : this._parties)
 			if (curParty.getName().equals(name))
@@ -114,6 +151,9 @@ public class OPLV extends VotingSystem {
 		return null;
 	}
 
+	/**
+	 * 
+	 */
 	private void rankPartyCandidates() {
 		String rankings = "Party Rankings [* - Allocated Party Seat]\n";
 		for (final Party curParty : this._parties)
@@ -121,6 +161,9 @@ public class OPLV extends VotingSystem {
 		this._auditor.auditProcess(rankings);
 	}
 
+	/* (non-Javadoc)
+	 * @see VotingSystem#runElection()
+	 */
 	public void runElection() throws IOException {
 		if (!this.wasRun.getAndSet(true)) {
 			for (final OPLVBallot curBal : this._ballots) {

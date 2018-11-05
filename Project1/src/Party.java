@@ -2,45 +2,87 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Party {
+	/**
+	 * 
+	 */
 	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
+	/**
+	 * 
+	 */
 	private final String _name;
+	/**
+	 * 
+	 */
 	private int _numCandidates = 0;
+	/**
+	 * 
+	 */
 	private int _numSeats = 0;
+	/**
+	 * 
+	 */
 	private int _numVotes = 0;
 
+	/**
+	 * @param name
+	 */
 	Party(String name) {
 		this._name = name;
 	}
 
+	/**
+	 * @param candidate
+	 */
 	public void addCandidate(OPLVCandidate candidate) {
 		this._candidates.add(candidate);
 		this._numCandidates += 1;
 	}
 
+	/**
+	 * 
+	 */
 	public void addVote() {
 		this._numVotes += 1;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<OPLVCandidate> getCandidates() {
 		return this._candidates;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return this._name;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNumCandidates() {
 		return this._numCandidates;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNumSeats() {
 		return this._numSeats;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getNumVotes() {
 		return this._numVotes;
 	}
 
+	/**
+	 * @return
+	 */
 	public ArrayList<OPLVCandidate> getWinningCandidates() {
 		final ArrayList<OPLVCandidate> winners = new ArrayList<OPLVCandidate>();
 		for (int i = 0; (i < this._numSeats) && (i < this._numCandidates); i++)
@@ -48,6 +90,9 @@ public class Party {
 		return winners;
 	}
 
+	/**
+	 * @return
+	 */
 	public String rankCandidates() {
 		String ret = String.format("\tParty %s:\n", this._name);
 
@@ -90,6 +135,9 @@ public class Party {
 		return ret;
 	}
 
+	/**
+	 * @param num
+	 */
 	public void setNumSeats(int num) {
 		this._numSeats = num;
 	}
