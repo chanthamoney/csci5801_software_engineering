@@ -2,15 +2,15 @@ import java.util.ArrayList;
 
 public class IRVBallot extends Ballot {
 	/**
-	 * 
+	 *
 	 */
 	private int _curVoteIndex = 0;
 	/**
-	 * 
+	 *
 	 */
 	private final int _numVotes;
 	/**
-	 * 
+	 *
 	 */
 	private final ArrayList<Integer> _votes;
 

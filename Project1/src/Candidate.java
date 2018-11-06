@@ -1,10 +1,10 @@
 abstract public class Candidate {
 	/**
-	 * 
+	 *
 	 */
 	protected String _name = "";
 	/**
-	 * 
+	 *
 	 */
 	protected int _numVotes = 0;
 

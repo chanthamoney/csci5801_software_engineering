@@ -1,6 +1,6 @@
 abstract public class Ballot {
 	/**
-	 * 
+	 *
 	 */
 	private final int _id;
 

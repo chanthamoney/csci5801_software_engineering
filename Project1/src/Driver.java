@@ -42,7 +42,7 @@ public class Driver {
 					balVotes.add(balVotesOrg[j]);
 				in_Ballots.add(balVotes);
 			}
-			vs = new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots);
+			vs = new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, "auditFile");
 		} else {
 			// Open Party Listing
 			final int in_NumCandidates = Integer.valueOf(fileReader.nextLine());
@@ -69,7 +69,7 @@ public class Driver {
 					}
 
 			}
-			vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+			vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, "auditFile");
 		}
 		vs.runElection();
 		fileReader.close();

@@ -4,23 +4,23 @@ import java.util.Random;
 
 public class OPLV extends VotingSystem {
 	/**
-	 * 
+	 *
 	 */
 	public OPLVBallot[] _ballots;
 	/**
-	 * 
+	 *
 	 */
 	public OPLVCandidate[] _candidates;
 	/**
-	 * 
+	 *
 	 */
 	private final int _numSeats;
 	/**
-	 * 
+	 *
 	 */
 	public ArrayList<Party> _parties = new ArrayList<Party>();
 	/**
-	 * 
+	 *
 	 */
 	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
 
@@ -33,8 +33,8 @@ public class OPLV extends VotingSystem {
 	 * @param ballots
 	 */
 	OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
-			ArrayList<Integer> ballots) {
-		super(numBallots, numCandidates);
+			ArrayList<Integer> ballots, String auditFileName) {
+		super(numBallots, numCandidates, auditFileName);
 		this._numSeats = numSeats;
 		this._candidates = new OPLVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
@@ -71,7 +71,7 @@ public class OPLV extends VotingSystem {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void assignSeats() {
 		for (final Party curParty : this._parties)
@@ -79,7 +79,7 @@ public class OPLV extends VotingSystem {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void calculatePartySeats() {
 		String seatAllocations = "\nSeat Allocation Calculation:\n";
@@ -152,7 +152,7 @@ public class OPLV extends VotingSystem {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void rankPartyCandidates() {
 		String rankings = "Party Rankings [* - Allocated Party Seat]\n";
@@ -161,7 +161,9 @@ public class OPLV extends VotingSystem {
 		this._auditor.auditProcess(rankings);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see VotingSystem#runElection()
 	 */
 	public void runElection() throws IOException {
@@ -180,7 +182,7 @@ public class OPLV extends VotingSystem {
 			for (final OPLVCandidate curCan : this._seats)
 				res += "\t" + curCan.getName() + " (" + curCan.getParty().getName() + ")\n";
 			this._auditor.auditResult(res);
-			this._auditor.createAuditFile("auditFile");
+			this._auditor.createAuditFile();
 			System.out.print(res);
 		} else
 			System.out.print("ERROR: An election can only be run once for a given voting system.\n");

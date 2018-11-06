@@ -1,92 +1,91 @@
-import org.junit.Test;
-
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
+import org.junit.Test;
+
 public class TestIRVCandidate {
-  IRVCandidate testCandidate = new IRVCandidate("Jenny");
-  ArrayList<Integer> testVotes = new ArrayList<Integer>(); // to intitialize the IRVBallot needed for testing
-  int testId = 4;
-  IRVBallot testBallot;
+	IRVBallot testBallot;
+	IRVCandidate testCandidate = new IRVCandidate("Jenny");
+	int testId = 4;
+	ArrayList<Integer> testVotes = new ArrayList<Integer>(); // to intitialize the IRVBallot needed for testing
 
-  private void initializeTestBallot() {
-    // add votes to testVotes
-    testVotes.add(1);
-    testVotes.add(2);
-    testVotes.add(3);
+	private void initializeTestBallot() {
+		// add votes to testVotes
+		this.testVotes.add(1);
+		this.testVotes.add(2);
+		this.testVotes.add(3);
 
-    testBallot = new IRVBallot(testVotes, testId);
-  }
+		this.testBallot = new IRVBallot(this.testVotes, this.testId);
+	}
 
-  // Testing AddBallot
-  @Test
-  public void testAddBallot() {
-    // initializeTestBallot
-    initializeTestBallot();
+	// Testing AddBallot
+	@Test
+	public void testAddBallot() {
+		// initializeTestBallot
+		initializeTestBallot();
 
-    // test AddBallot() with the testBallot
-    testCandidate.addBallot(testBallot);
+		// test AddBallot() with the testBallot
+		this.testCandidate.addBallot(this.testBallot);
 
-    // Check if elim ballots(0)/elim ballots(numBallots-1) == testBallot
-    assertEquals(testBallot, testCandidate._elimBallots.get(1-1));
-  }
+		// Check if elim ballots(0)/elim ballots(numBallots-1) == testBallot
+		assertEquals(this.testBallot, this.testCandidate._elimBallots.get(1 - 1));
+	}
 
-  // Testing eliminate method
-  @Test
-  public void testEliminate() {
-    // initializeTestBallot
-    initializeTestBallot();
+	// Testing eliminate method
+	@Test
+	public void testEliminate() {
+		// initializeTestBallot
+		initializeTestBallot();
 
-    // add ballot to test candidate
-    testCandidate.addBallot(testBallot);
+		// add ballot to test candidate
+		this.testCandidate.addBallot(this.testBallot);
 
-    // eliminate candidate and get their ballot
-    IRVBallot[] eliminatedBallot = testCandidate.eliminate();
+		// eliminate candidate and get their ballot
+		final IRVBallot[] eliminatedBallot = this.testCandidate.eliminate();
 
-    // expected value an array list of irv ballots
-    IRVBallot[] expectedEliminatedBallot = new IRVBallot[1];
-    expectedEliminatedBallot[0] = testBallot;
+		// expected value an array list of irv ballots
+		final IRVBallot[] expectedEliminatedBallot = new IRVBallot[1];
+		expectedEliminatedBallot[0] = this.testBallot;
 
-    // check if eliminated Ballot == testBallot
-    assertArrayEquals(expectedEliminatedBallot, eliminatedBallot);
-  }
+		// check if eliminated Ballot == testBallot
+		assertArrayEquals(expectedEliminatedBallot, eliminatedBallot);
+	}
 
-  // Testing isEliminated method
-  @Test
-  public void testIsEliminated() {
-    // initialize test ballot
-    initializeTestBallot();
+	// Testing getName() method of candidate class that IRVCandidate extends
+	@Test
+	public void testGetName() {
+		assertEquals("Jenny", this.testCandidate.getName());
+	}
 
-    // add test ballots
-    testCandidate.addBallot(testBallot);
+	// Testing getNumVotes() method of candidate class that IRVCandidate extends
+	@Test
+	public void testGetNumVotes() {
+		// initialize testBallot
+		initializeTestBallot();
 
-    // eliminate candidate
-    testCandidate.eliminate();
+		// add ballot to test candidate
+		this.testCandidate.addBallot(this.testBallot);
 
-    // Check if candidate returns true to isEliminated
-    assertTrue(testCandidate.isEliminated());
-  }
+		// check num votes is as expected
+		assertEquals(1, this.testCandidate.getNumVotes());
+	}
 
-  // Testing getName() method of candidate class that IRVCandidate extends
-  @Test
-  public void testGetName() {
-    assertEquals("Jenny", testCandidate.getName());
-  }
+	// Testing isEliminated method
+	@Test
+	public void testIsEliminated() {
+		// initialize test ballot
+		initializeTestBallot();
 
-  // Testing getNumVotes() method of candidate class that IRVCandidate extends
-  @Test
-  public void testGetNumVotes() {
-    // initialize testBallot
-    initializeTestBallot();
+		// add test ballots
+		this.testCandidate.addBallot(this.testBallot);
 
-    // add ballot to test candidate
-    testCandidate.addBallot(testBallot);
+		// eliminate candidate
+		this.testCandidate.eliminate();
 
-    // check num votes is as expected
-    assertEquals(1, testCandidate.getNumVotes());
-  }
+		// Check if candidate returns true to isEliminated
+		assertTrue(this.testCandidate.isEliminated());
+	}
 }

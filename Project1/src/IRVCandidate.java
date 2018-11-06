@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class IRVCandidate extends Candidate {
 	/**
-	 * 
+	 *
 	 */
 	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
 	/**
-	 * 
+	 *
 	 */
 	private boolean _eliminated = false;
 

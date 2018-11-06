@@ -4,15 +4,15 @@ import java.util.Random;
 
 public class IRV extends VotingSystem {
 	/**
-	 * 
+	 *
 	 */
 	private final IRVBallot[] _ballots;
 	/**
-	 * 
+	 *
 	 */
 	private final IRVCandidate[] _candidates;
 	/**
-	 * 
+	 *
 	 */
 	private IRVBallot[] _voterPool;
 
@@ -22,8 +22,9 @@ public class IRV extends VotingSystem {
 	 * @param candidates
 	 * @param ballots
 	 */
-	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots) {
-		super(numBallots, numCandidates);
+	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots,
+			String auditFileName) {
+		super(numBallots, numCandidates, auditFileName);
 		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
 			this._candidates[i] = new IRVCandidate(candidates[i]);
@@ -58,7 +59,7 @@ public class IRV extends VotingSystem {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void eliminateAllNoVoteCandidates() {
 		final ArrayList<String> eliminatedCandidates = new ArrayList<String>();
@@ -104,7 +105,7 @@ public class IRV extends VotingSystem {
 			final Random randomizer = new Random();
 			final IRVCandidate rcan = minCandidates.get(randomizer.nextInt(minCandidates.size()));
 			this._auditor.auditProcess(String.format(
-					"Candidate %s is eliminated with only %d votes.\nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\\n",
+					"Candidate %s is eliminated with only %d votes.\nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\n",
 					rcan.getName(), rcan.getNumVotes()));
 			return rcan;
 		}
@@ -147,7 +148,9 @@ public class IRV extends VotingSystem {
 		return "";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see VotingSystem#runElection()
 	 */
 	public void runElection() throws IOException {
@@ -165,7 +168,7 @@ public class IRV extends VotingSystem {
 					this._auditor.auditProcess(
 							String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n"));
 					this._auditor.auditResult("Election Winner: " + lastCan);
-					this._auditor.createAuditFile("auditFile");
+					this._auditor.createAuditFile();
 					System.out.print("Election Winner: " + lastCan);
 					break;
 				}
@@ -180,7 +183,7 @@ public class IRV extends VotingSystem {
 
 				if (winner != "") {
 					this._auditor.auditResult("Election Winner: " + winner);
-					this._auditor.createAuditFile("auditFile");
+					this._auditor.createAuditFile();
 					System.out.print(winner);
 					break;
 				} else {

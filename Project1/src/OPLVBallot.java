@@ -1,6 +1,6 @@
 public class OPLVBallot extends Ballot {
 	/**
-	 * 
+	 *
 	 */
 	private final int _vote;
 

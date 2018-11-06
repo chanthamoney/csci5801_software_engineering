@@ -4,17 +4,22 @@ import java.io.IOException;
 
 public class Auditor {
 	/**
-	 * 
+	 *
 	 */
 	private String _auditProcess = "";
 	/**
-	 * 
+	 *
 	 */
 	private String _auditResult = "";
 	/**
-	 * 
+	 *
 	 */
 	private String _auditSetup = "";
+	private final String _outputFileName;
+
+	public Auditor(String outputFileName) {
+		this._outputFileName = outputFileName;
+	}
 
 	/**
 	 * @param audit
@@ -41,8 +46,8 @@ public class Auditor {
 	 * @param name
 	 * @throws IOException
 	 */
-	public void createAuditFile(String name) throws IOException {
-		final File file = new File(name);
+	public void createAuditFile() throws IOException {
+		final File file = new File(this._outputFileName);
 		final FileWriter writer = new FileWriter(file);
 		writer.write(this._auditSetup + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditProcess
 				+ "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);

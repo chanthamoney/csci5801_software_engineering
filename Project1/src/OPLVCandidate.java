@@ -1,6 +1,6 @@
 public class OPLVCandidate extends Candidate {
 	/**
-	 * 
+	 *
 	 */
 	private final Party _party;
 
@@ -14,7 +14,7 @@ public class OPLVCandidate extends Candidate {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void castVote() {
 		this._party.addVote();

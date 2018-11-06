@@ -3,23 +3,23 @@ import java.util.Random;
 
 public class Party {
 	/**
-	 * 
+	 *
 	 */
 	public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
 	/**
-	 * 
+	 *
 	 */
 	private final String _name;
 	/**
-	 * 
+	 *
 	 */
 	private int _numCandidates = 0;
 	/**
-	 * 
+	 *
 	 */
 	private int _numSeats = 0;
 	/**
-	 * 
+	 *
 	 */
 	private int _numVotes = 0;
 
@@ -39,7 +39,7 @@ public class Party {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void addVote() {
 		this._numVotes += 1;
