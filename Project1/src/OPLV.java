@@ -36,6 +36,7 @@ public class OPLV extends VotingSystem {
 			ArrayList<Integer> ballots, String auditFileName) {
 		super(numBallots, numCandidates, auditFileName);
 		this._numSeats = numSeats;
+		this._seats.ensureCapacity(numSeats);
 		this._candidates = new OPLVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
 			Party canParty = findParty(parties[i]);
