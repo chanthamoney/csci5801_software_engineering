@@ -127,6 +127,7 @@ public class TestIRV {
 
 		System.out.println(timeAfter - timeBefore); // prints winner from function
 
+		// Must take less than 8 minutes to process a 100,000 vote election.
 		assertTrue((timeAfter - timeBefore) < 480000);
 	}
 }
