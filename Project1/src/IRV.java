@@ -24,7 +24,7 @@ public class IRV extends VotingSystem {
 	 */
 	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots,
 			String auditFileName) {
-		super(numBallots, numCandidates, auditFileName);
+		super(numBallots, numCandidates);
 		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
 			this._candidates[i] = new IRVCandidate(candidates[i]);
@@ -167,7 +167,7 @@ public class IRV extends VotingSystem {
 							String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n"));
 					this._auditor.auditResult("Election Winner: " + lastCan.toString());
 					this._auditor.createAuditFile();
-					System.out.print("Election Winner: " + lastCan.toString());
+					System.out.print("Election Winner: " + lastCan.toString() + "\n");
 					break;
 				}
 
@@ -185,7 +185,7 @@ public class IRV extends VotingSystem {
 				if (winner != "") {
 					this._auditor.auditResult("Election Winner: " + winner);
 					this._auditor.createAuditFile();
-					System.out.print("Election Winner: " + winner);
+					System.out.print("Election Winner: " + winner + "\n");
 					break;
 				} else {
 					final StringBuilder curPartyVotes = new StringBuilder();
