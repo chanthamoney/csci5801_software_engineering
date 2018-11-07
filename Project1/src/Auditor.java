@@ -56,9 +56,18 @@ public class Auditor {
 	public void createAuditFile() throws IOException {
 		final File file = new File(String.format("AUDIT_%d", System.currentTimeMillis()));
 		final FileWriter writer = new FileWriter(file);
-		writer.write(this._auditSetup.toString() + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n"
-				+ this._auditProcess.toString() + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n"
-				+ this._auditResult.toString());
+		StringBuilder fileOutput = new StringBuilder();
+
+		fileOutput.append(this._auditSetup);
+		if (this._auditSetup.length() != 0) {
+			fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+		}
+		fileOutput.append(this._auditProcess);
+		if (this._auditProcess.length() != 0) {
+			fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+		}
+		fileOutput.append(this._auditResult);
+		writer.write(fileOutput.toString());
 		writer.close();
 	}
 }
