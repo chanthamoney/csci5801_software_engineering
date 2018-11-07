@@ -2,34 +2,44 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Represents an Instant Runoff Voting System.
+ */
 public class IRV extends VotingSystem {
+
 	/**
-	 *
+	 * The ballots being cast in the election.
 	 */
 	private final IRVBallot[] _ballots;
+
 	/**
-	 *
+	 * The candidates participating in the election.
 	 */
 	private final IRVCandidate[] _candidates;
+
 	/**
-	 *
+	 * Stores the ballots currently being processed in the initial allocation of
+	 * votes or in a redistribution of votes for a runoff.
 	 */
 	private IRVBallot[] _voterPool;
 
 	/**
-	 * @param numBallots
-	 * @param numCandidates
-	 * @param candidates
-	 * @param ballots
+	 * Instantiates a new instant runoff voting system.
+	 *
+	 * @param numBallots    the number of ballots in the election
+	 * @param numCandidates the number of candidates in the election
+	 * @param candidates    the candidates running in the election
+	 * @param ballots       the ballots being cast in the election
 	 */
-	IRV(int numBallots, int numCandidates, String[] candidates, LinkedList<LinkedList<Integer>> ballots) {
+	IRV(final int numBallots, final int numCandidates, final String[] candidates,
+			final LinkedList<LinkedList<Integer>> ballots) {
 		super(numBallots, numCandidates);
 		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
 			this._candidates[i] = new IRVCandidate(candidates[i]);
 		this._ballots = new IRVBallot[numBallots];
 		int i = 0;
-		for (LinkedList<Integer> bal : ballots) {
+		for (final LinkedList<Integer> bal : ballots) {
 			this._ballots[i] = new IRVBallot(bal, i + 1);
 			i++;
 		}
@@ -46,9 +56,12 @@ public class IRV extends VotingSystem {
 	}
 
 	/**
-	 * @param numBallots
+	 * Determines the quota to be guaranteed a win in the election and stores it in
+	 * a private variable. The quota is a majority > 50%.
+	 *
+	 * @param numBallots the number of ballots cast in the election
 	 */
-	private void calculateQuota(int numBallots) {
+	private void calculateQuota(final int numBallots) {
 		if ((numBallots % 2) == 0)
 			this._quota = (numBallots / 2) + 1;
 		else
@@ -56,7 +69,7 @@ public class IRV extends VotingSystem {
 	}
 
 	/**
-	 *
+	 * Eliminate all candidates who received no votes.
 	 */
 	private void eliminateAllNoVoteCandidates() {
 		final LinkedList<String> eliminatedCandidates = new LinkedList<String>();
@@ -75,7 +88,10 @@ public class IRV extends VotingSystem {
 	}
 
 	/**
-	 * @return
+	 * Find the candidate who received the least amount of votes after the initial
+	 * election process or during a runoff.
+	 *
+	 * @return the IRV candidate
 	 */
 	private IRVCandidate findMinimumCandidate() {
 		final LinkedList<IRVCandidate> minCandidates = new LinkedList<IRVCandidate>();
@@ -109,15 +125,20 @@ public class IRV extends VotingSystem {
 	}
 
 	/**
-	 * @param numVotes
-	 * @return
+	 * Used to check if a candidate has received enough votes for a majority.
+	 *
+	 * @param numVotes the number of votes the candidate has received.
+	 * @return true, if is majority
 	 */
-	private boolean isMajority(int numVotes) {
+	private boolean isMajority(final int numVotes) {
 		return numVotes >= this._quota;
 	}
 
 	/**
-	 * @return
+	 * Processes the current voter pool in the running of an election.
+	 *
+	 * @return the name of the candidate who has received a majority of votes
+	 *         otherwise an empty string if no winner has been tabulated.
 	 */
 	private String processVoterPool() {
 		final StringBuilder processedBallots = new StringBuilder();
