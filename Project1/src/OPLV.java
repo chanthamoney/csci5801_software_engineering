@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class OPLV extends VotingSystem {
@@ -18,11 +18,11 @@ public class OPLV extends VotingSystem {
 	/**
 	 *
 	 */
-	public ArrayList<Party> _parties = new ArrayList<Party>();
+	public LinkedList<Party> _parties = new LinkedList<Party>();
 	/**
 	 *
 	 */
-	public ArrayList<OPLVCandidate> _seats = new ArrayList<OPLVCandidate>();
+	public LinkedList<OPLVCandidate> _seats = new LinkedList<OPLVCandidate>();
 
 	/**
 	 * @param numBallots
@@ -33,10 +33,9 @@ public class OPLV extends VotingSystem {
 	 * @param ballots
 	 */
 	OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
-			ArrayList<Integer> ballots) {
+			LinkedList<Integer> ballots) {
 		super(numBallots, numCandidates);
 		this._numSeats = numSeats;
-		this._seats.ensureCapacity(numSeats);
 		this._candidates = new OPLVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
 			Party canParty = findParty(parties[i]);
@@ -98,7 +97,7 @@ public class OPLV extends VotingSystem {
 		}
 		while (seatsLeft > 0) {
 			seatAllocations.append(String.format("%d Seats Remaining\n", seatsLeft));
-			final ArrayList<Party> rankedRemainders = new ArrayList<Party>();
+			final LinkedList<Party> rankedRemainders = new LinkedList<Party>();
 			// Retrieve Parties that do not have all seats filled
 			for (final Party curParty : this._parties)
 				// If party has not exhausted all candidates in filling seats

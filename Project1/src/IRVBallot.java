@@ -1,41 +1,31 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class IRVBallot extends Ballot {
 	/**
 	 *
 	 */
-	private int _curVoteIndex = 0;
-	/**
-	 *
-	 */
-	private final int _numVotes;
-	/**
-	 *
-	 */
-	private final ArrayList<Integer> _votes;
+	private final LinkedList<Integer> _votes;
 
 	/**
 	 * @param votes
 	 * @param id
 	 */
-	IRVBallot(ArrayList<Integer> votes, int id) {
+	IRVBallot(LinkedList<Integer> votes, int id) {
 		super(id);
 		this._votes = votes;
-		this._numVotes = votes.size();
 	}
 
 	/**
 	 * @return
 	 */
 	public int getNextVote() {
-		this._curVoteIndex += 1;
-		return this._votes.get(this._curVoteIndex - 1);
+		return this._votes.pop();
 	}
 
 	/**
 	 * @return
 	 */
 	public boolean isExhausted() {
-		return this._numVotes <= this._curVoteIndex;
+		return this._votes.isEmpty();
 	}
 }

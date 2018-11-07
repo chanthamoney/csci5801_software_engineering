@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class IRV extends VotingSystem {
@@ -22,16 +22,16 @@ public class IRV extends VotingSystem {
 	 * @param candidates
 	 * @param ballots
 	 */
-	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots) {
+	IRV(int numBallots, int numCandidates, String[] candidates, LinkedList<LinkedList<Integer>> ballots) {
 		super(numBallots, numCandidates);
 		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
 			this._candidates[i] = new IRVCandidate(candidates[i]);
 		this._ballots = new IRVBallot[numBallots];
-		for (int i = 0; i < numBallots; i++) {
-			for (int j = 0; j < ballots.get(i).size(); j++) {
-			}
-			this._ballots[i] = new IRVBallot(ballots.get(i), i + 1);
+		int i = 0;
+		for (LinkedList<Integer> bal : ballots) {
+			this._ballots[i] = new IRVBallot(bal, i + 1);
+			i++;
 		}
 		this._voterPool = this._ballots;
 		calculateQuota(numBallots);
@@ -39,7 +39,7 @@ public class IRV extends VotingSystem {
 		final StringBuilder setup = new StringBuilder(
 				String.format("Voting System:\tInstant Runoff Voting\n\nNumber of Candidates: %s\n\nCandidates:\n",
 						this._numCandidates));
-		for (int i = 0; i < this._numCandidates; i++)
+		for (i = 0; i < this._numCandidates; i++)
 			setup.append(String.format("\t%d - %s\n", i, candidates[i]));
 		setup.append(String.format("\nNumber of Ballots: %s\n\nBallots: %s\n", this._numBallots, ballots));
 		this._auditor.auditSetup(setup.toString());
@@ -59,7 +59,7 @@ public class IRV extends VotingSystem {
 	 *
 	 */
 	private void eliminateAllNoVoteCandidates() {
-		final ArrayList<String> eliminatedCandidates = new ArrayList<String>();
+		final LinkedList<String> eliminatedCandidates = new LinkedList<String>();
 		for (final IRVCandidate curCan : this._candidates)
 			if (curCan.getNumVotes() == 0) {
 				curCan.eliminate();
@@ -78,7 +78,7 @@ public class IRV extends VotingSystem {
 	 * @return
 	 */
 	private IRVCandidate findMinimumCandidate() {
-		final ArrayList<IRVCandidate> minCandidates = new ArrayList<IRVCandidate>();
+		final LinkedList<IRVCandidate> minCandidates = new LinkedList<IRVCandidate>();
 		int minimum = Integer.MAX_VALUE;
 		for (final IRVCandidate curCan : this._candidates)
 			if (!curCan.isEliminated()) {

@@ -1,6 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Driver {
@@ -33,7 +33,7 @@ public class Driver {
 			final String in_Candidates = fileReader.nextLine();
 			final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
 			final int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-			final ArrayList<ArrayList<Integer>> in_Ballots = new ArrayList<ArrayList<Integer>>();
+			final LinkedList<LinkedList<Integer>> in_Ballots = new LinkedList<LinkedList<Integer>>();
 			for (int i = 0; i < in_NumBallots; i++) {
 				final int[] balVotesOrg = new int[in_NumCandidates];
 				final String[] ballotInfo = fileReader.nextLine().split(", *");
@@ -43,7 +43,7 @@ public class Driver {
 						balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
 						numVotes++;
 					}
-				final ArrayList<Integer> balVotes = new ArrayList<Integer>();
+				final LinkedList<Integer> balVotes = new LinkedList<Integer>();
 				for (int j = 0; j < numVotes; j++)
 					balVotes.add(balVotesOrg[j]);
 				in_Ballots.add(balVotes);
@@ -65,7 +65,7 @@ public class Driver {
 
 			final int in_NumSeats = Integer.valueOf(fileReader.nextLine());
 			final int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-			final ArrayList<Integer> in_Ballots = new ArrayList<Integer>();
+			final LinkedList<Integer> in_Ballots = new LinkedList<Integer>();
 			for (int i = 0; i < in_NumBallots; i++) {
 				final String[] ballotInfo = fileReader.nextLine().split(", *");
 				for (int j = 0; j < ballotInfo.length; j++)

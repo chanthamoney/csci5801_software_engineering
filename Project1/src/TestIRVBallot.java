@@ -1,14 +1,14 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.junit.Test;
 
 public class TestIRVBallot {
 	int testId = 4;
-	// initialize an arraylist of votes and an id
-	ArrayList<Integer> testVotes = new ArrayList<Integer>();
+	// initialize a LinkedList of votes and an id
+	LinkedList<Integer> testVotes = new LinkedList<Integer>();
 
 	private IRVBallot testBallotInitialize() {
 		// initialize testVotes

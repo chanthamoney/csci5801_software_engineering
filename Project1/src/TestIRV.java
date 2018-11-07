@@ -3,24 +3,24 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.junit.Test;
 
 public class TestIRV {
 	String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-	ArrayList<ArrayList<Integer>> testBallots = new ArrayList<ArrayList<Integer>>();
+	LinkedList<LinkedList<Integer>> testBallots = new LinkedList<LinkedList<Integer>>();
 
 	private IRV intitializeTestIRV() {
-		final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
-		final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
-		final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
-		final ArrayList<Integer> fourthBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
-		final ArrayList<Integer> fifthBallot = new ArrayList<>(Arrays.asList(2, 1, 0, 3));
-		final ArrayList<Integer> sixthBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
+		final LinkedList<Integer> firstBallot = new LinkedList<>(Arrays.asList(0, 1, 2, 3));
+		final LinkedList<Integer> secondBallot = new LinkedList<>(Arrays.asList(1, 0, 2, 3));
+		final LinkedList<Integer> thirdBallot = new LinkedList<>(Arrays.asList(3, 2, 1, 0));
+		final LinkedList<Integer> fourthBallot = new LinkedList<>(Arrays.asList(1, 0, 2, 3));
+		final LinkedList<Integer> fifthBallot = new LinkedList<>(Arrays.asList(2, 1, 0, 3));
+		final LinkedList<Integer> sixthBallot = new LinkedList<>(Arrays.asList(0, 1, 2, 3));
 
 		this.testBallots.add(firstBallot);
 		this.testBallots.add(secondBallot);
@@ -97,8 +97,8 @@ public class TestIRV {
 				"KD", "KE", "KF", "KG", "KH", "KI", "KJ", "KK", "KL", "KM", "KN" };
 		final Random randomizer = new Random(System.currentTimeMillis());
 		for (int i = 0; i < 100000; i++) {
-			final ArrayList<Integer> newBallot = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-					12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
+			final LinkedList<Integer> newBallot = new LinkedList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+					11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
 			Collections.shuffle(newBallot, randomizer);
 			this.testBallots.add(newBallot);
 		}
@@ -119,6 +119,8 @@ public class TestIRV {
 
 		// Reset the System.out to console
 		System.setOut(oldOut);
+
+		System.out.print(timeAfter - timeBefore);
 
 		// Must take less than 8 minutes to process a 100,000 vote election.
 		assertTrue((timeAfter - timeBefore) < 480000);

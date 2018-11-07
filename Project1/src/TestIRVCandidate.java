@@ -2,7 +2,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ public class TestIRVCandidate {
 	IRVBallot testBallot;
 	IRVCandidate testCandidate = new IRVCandidate("Jenny");
 	int testId = 4;
-	ArrayList<Integer> testVotes = new ArrayList<Integer>(); // to intitialize the IRVBallot needed for testing
+	LinkedList<Integer> testVotes = new LinkedList<Integer>(); // to initialize the IRVBallot needed for testing
 
 	private void initializeTestBallot() {
 		// add votes to testVotes

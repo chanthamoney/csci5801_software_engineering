@@ -3,7 +3,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.junit.Test;
 public class TestOPLV {
 	String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
 	String[] parties = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-	ArrayList<Integer> testBallots = new ArrayList<Integer>();
+	LinkedList<Integer> testBallots = new LinkedList<Integer>();
 
 	@Test
 	public void testRunElection() {
