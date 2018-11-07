@@ -65,7 +65,6 @@ public class TestIRV {
 		// check if winner is as expected
 		assertTrue(output.equals("Election Winner: Sasuke\n") || output.equals("Election Winner: Naruto\n")
 				|| output.equals("Election Winner: Sakura\n"));
-
 	}
 
 	@Test
