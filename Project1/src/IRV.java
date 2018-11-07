@@ -132,6 +132,7 @@ public class IRV extends VotingSystem {
 						processedBallots.append(String.format(
 								"\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n",
 								can.getName(), this._quota));
+						this._auditor.auditProcess(processedBallots.toString());
 						return can.getName();
 					}
 					wasExhausted = false;
