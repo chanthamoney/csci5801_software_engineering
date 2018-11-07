@@ -62,12 +62,9 @@ public class TestIRV {
 		// baos contains winner printed from the runElection function
 		final String output = new String(baos.toByteArray());
 
-		System.out.println(output); // prints winner from function
-
 		// check if winner is as expected
 		assertTrue(output.equals("Election Winner: Sasuke\n") || output.equals("Election Winner: Naruto\n")
 				|| output.equals("Election Winner: Sakura\n"));
-		// assertEquals("Election Winner: Sasuke", output);
 
 	}
 
@@ -124,8 +121,6 @@ public class TestIRV {
 
 		// Reset the System.out to console
 		System.setOut(oldOut);
-
-		System.out.println(timeAfter - timeBefore); // prints winner from function
 
 		// Must take less than 8 minutes to process a 100,000 vote election.
 		assertTrue((timeAfter - timeBefore) < 480000);
