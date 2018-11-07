@@ -33,7 +33,7 @@ public class OPLV extends VotingSystem {
 	 * @param ballots
 	 */
 	OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
-			ArrayList<Integer> ballots, String auditFileName) {
+			ArrayList<Integer> ballots) {
 		super(numBallots, numCandidates);
 		this._numSeats = numSeats;
 		this._seats.ensureCapacity(numSeats);

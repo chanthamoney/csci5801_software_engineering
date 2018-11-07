@@ -4,67 +4,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 import org.junit.Test;
 
-public class TestIRV {
+public class TestOPLV {
 	String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-	ArrayList<ArrayList<Integer>> testBallots = new ArrayList<ArrayList<Integer>>();
-
-	private IRV intitializeTestIRV() {
-		final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
-		final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
-		final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
-		final ArrayList<Integer> fourthBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
-		final ArrayList<Integer> fifthBallot = new ArrayList<>(Arrays.asList(2, 1, 0, 3));
-		final ArrayList<Integer> sixthBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
-
-		this.testBallots.add(firstBallot);
-		this.testBallots.add(secondBallot);
-		this.testBallots.add(thirdBallot);
-		this.testBallots.add(fourthBallot);
-		this.testBallots.add(fifthBallot);
-		this.testBallots.add(sixthBallot);
-
-		return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots);
-	}
-
-	// _QUESTION: Do we test private functions?? - Maybe not bc they are used in the
-	// public methods?
-
-	// Testing runElection() only public method
+	String[] parties = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+	ArrayList<Integer> testBallots = new ArrayList<Integer>();
 
 	@Test
 	public void testRunElection() {
-		// Initialize IRV Election
-		final IRV hokageElection = intitializeTestIRV();
 
-		// Keep current System.out
-		final PrintStream oldOut = System.out;
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		// Change so System.out saved in baos
-		System.setOut(new PrintStream(baos));
-
-		// Run election on irvElection
-		try {
-			hokageElection.runElection();
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-
-		// Reset the System.out to console
-		System.setOut(oldOut);
-
-		// baos contains winner printed from the runElection function
-		final String output = new String(baos.toByteArray());
-
-		// check if winner is as expected
-		assertTrue(output.equals("Election Winner: Sasuke\n") || output.equals("Election Winner: Naruto\n")
-				|| output.equals("Election Winner: Sakura\n"));
 	}
 
 	@Test
@@ -76,7 +27,7 @@ public class TestIRV {
 		// Change so System.out saved in baos
 		System.setOut(new PrintStream(baos));
 
-		// Initialize Large IRV Election
+		// Initialize Large OPLV Election
 		final String[] candidates_300 = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
 				"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH",
 				"AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY",
@@ -95,15 +46,32 @@ public class TestIRV {
 				"IV", "IW", "IX", "IY", "IZ", "JA", "JB", "JC", "JD", "JE", "JF", "JG", "JH", "JI", "JJ", "JK", "JL",
 				"JM", "JN", "JO", "JP", "JQ", "JR", "JS", "JT", "JU", "JV", "JW", "JX", "JY", "JZ", "KA", "KB", "KC",
 				"KD", "KE", "KF", "KG", "KH", "KI", "KJ", "KK", "KL", "KM", "KN" };
+		final String[] parties_100_80_60_40_20 = { "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA", "PA",
+				"PA", "PA", "PA", "PA", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB",
+				"PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB",
+				"PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB",
+				"PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB",
+				"PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PC",
+				"PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC",
+				"PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC",
+				"PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC",
+				"PC", "PC", "PC", "PC", "PC", "PC", "PC", "PC", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD",
+				"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD",
+				"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PE", "PE", "PE",
+				"PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", };
+		System.out.print(parties_100_80_60_40_20);
+		System.out.print(candidates_300);
 		final Random randomizer = new Random(System.currentTimeMillis());
-		for (int i = 0; i < 100000; i++) {
-			final ArrayList<Integer> newBallot = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-					12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
-			Collections.shuffle(newBallot, randomizer);
-			this.testBallots.add(newBallot);
-		}
-		final VotingSystem vs = new IRV(this.testBallots.size(), 300, candidates_300,
-				this.testBallots);
+		for (int i = 0; i < 100000; i++)
+			this.testBallots.add(randomizer.nextInt(300));
+		final int numSeats = randomizer.nextInt(11) + 10;
+		final VotingSystem vs = new OPLV(this.testBallots.size(), 300, numSeats, candidates_300,
+				parties_100_80_60_40_20, this.testBallots);
 
 		// Record current time in milliseconds immediately before election run
 		final long timeBefore = System.currentTimeMillis();

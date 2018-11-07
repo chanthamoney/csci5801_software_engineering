@@ -22,8 +22,7 @@ public class IRV extends VotingSystem {
 	 * @param candidates
 	 * @param ballots
 	 */
-	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots,
-			String auditFileName) {
+	IRV(int numBallots, int numCandidates, String[] candidates, ArrayList<ArrayList<Integer>> ballots) {
 		super(numBallots, numCandidates);
 		this._candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++)
