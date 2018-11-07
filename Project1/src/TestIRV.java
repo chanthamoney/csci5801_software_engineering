@@ -107,7 +107,7 @@ public class TestIRV {
 		// Record current time in milliseconds immediately before election run
 		final long timeBefore = System.currentTimeMillis();
 
-		// Run election on irvElection
+		// Run election on vs
 		try {
 			vs.runElection();
 		} catch (final IOException e) {
