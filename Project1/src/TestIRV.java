@@ -14,7 +14,7 @@ public class TestIRV {
 
 	private IRV intitializeTestIRV() {
 		final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
-		final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 4));
+		final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
 		final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
 		final ArrayList<Integer> fourthBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
 		final ArrayList<Integer> fifthBallot = new ArrayList<>(Arrays.asList(2, 1, 0, 3));
@@ -62,7 +62,7 @@ public class TestIRV {
 		final String output = new String(baos.toByteArray());
 
 		// check if winner is as expected
-		assertEquals("Sasuke", output);
+		assertEquals("Election Winner: Sasuke", output);
 
 		System.out.println(output); // prints winner from function
 	}
