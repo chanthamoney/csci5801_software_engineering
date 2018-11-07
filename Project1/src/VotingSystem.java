@@ -27,10 +27,10 @@ abstract public class VotingSystem {
 	 * @param numBallots
 	 * @param numCandidates
 	 */
-	VotingSystem(int numBallots, int numCandidates, String auditFileName) {
+	VotingSystem(int numBallots, int numCandidates) {
 		this._numBallots = numBallots;
 		this._numCandidates = numCandidates;
-		this._auditor = new Auditor(auditFileName);
+		this._auditor = new Auditor();
 	}
 
 	/**

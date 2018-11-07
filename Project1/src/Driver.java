@@ -9,10 +9,16 @@ public class Driver {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		final Scanner consoleReader = new Scanner(System.in);
-		System.out.print("Enter Name of Ballot File: ");
-		final String in_BallotFile = consoleReader.nextLine();
-		consoleReader.close();
+		final String in_BallotFile;
+
+		if (args.length > 0) {
+			in_BallotFile = args[0].trim();
+		} else {
+			final Scanner consoleReader = new Scanner(System.in);
+			System.out.print("Enter Name of Ballot File: ");
+			in_BallotFile = consoleReader.nextLine().trim();
+			consoleReader.close();
+		}
 		final File file = new File(in_BallotFile);
 		final Scanner fileReader = new Scanner(file);
 
