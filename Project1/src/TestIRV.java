@@ -14,7 +14,7 @@ public class TestIRV {
 	String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
 	LinkedList<LinkedList<Integer>> testBallots = new LinkedList<LinkedList<Integer>>();
 
-	private IRV intitializeTestIRV() {
+	private IRV initializeTestIRV() {
 		final LinkedList<Integer> firstBallot = new LinkedList<>(Arrays.asList(0, 1, 2, 3));
 		final LinkedList<Integer> secondBallot = new LinkedList<>(Arrays.asList(1, 0, 2, 3));
 		final LinkedList<Integer> thirdBallot = new LinkedList<>(Arrays.asList(3, 2, 1, 0));
@@ -40,7 +40,7 @@ public class TestIRV {
 	@Test
 	public void testRunElection() {
 		// Initialize IRV Election
-		final IRV hokageElection = intitializeTestIRV();
+		final IRV hokageElection = initializeTestIRV();
 
 		// Keep current System.out
 		final PrintStream oldOut = System.out;
