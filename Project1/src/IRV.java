@@ -37,9 +37,9 @@ public class IRV extends VotingSystem {
 		this._voterPool = this._ballots;
 		calculateQuota(numBallots);
 
-		final StringBuilder setup = new StringBuilder(String.format(
-				"Voting System:\tInstant Runoff Voting\n\nNumber of Candidates: %s\n\nCandidates:\n",
-				this._numCandidates));
+		final StringBuilder setup = new StringBuilder(
+				String.format("Voting System:\tInstant Runoff Voting\n\nNumber of Candidates: %s\n\nCandidates:\n",
+						this._numCandidates));
 		for (int i = 0; i < this._numCandidates; i++)
 			setup.append(String.format("\t%d - %s\n", i, candidates[i]));
 		setup.append(String.format("\nNumber of Ballots: %s\n\nBallots: %s\n", this._numBallots, ballots));
@@ -67,7 +67,8 @@ public class IRV extends VotingSystem {
 				eliminatedCandidates.add(curCan.getName());
 			}
 		if (eliminatedCandidates.size() > 0) {
-			StringBuilder eliminatedCandidateNames = new StringBuilder("Eliminated the following candidates who received no votes:\n");
+			final StringBuilder eliminatedCandidateNames = new StringBuilder(
+					"Eliminated the following candidates who received no votes:\n");
 			for (final String curCanName : eliminatedCandidates)
 				eliminatedCandidateNames.append(String.format("\t%s\n", curCanName));
 			this._auditor.auditProcess(eliminatedCandidateNames.toString());
@@ -99,7 +100,7 @@ public class IRV extends VotingSystem {
 					mcan.getNumVotes()));
 			return mcan;
 		} else {
-			final Random randomizer = new Random();
+			final Random randomizer = new Random(System.currentTimeMillis());
 			final IRVCandidate rcan = minCandidates.get(randomizer.nextInt(minCandidates.size()));
 			this._auditor.auditProcess(String.format(
 					"Candidate %s is eliminated with only %d votes.\nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\n",
@@ -120,18 +121,19 @@ public class IRV extends VotingSystem {
 	 * @return
 	 */
 	private String processVoterPool() {
-		StringBuilder processedBallots = new StringBuilder();
+		final StringBuilder processedBallots = new StringBuilder();
 		for (final IRVBallot bal : this._voterPool) {
 			boolean wasExhausted = true;
 			while (!bal.isExhausted()) {
 				final IRVCandidate can = this._candidates[bal.getNextVote()];
 				if (!can.isEliminated()) {
 					can.addBallot(bal);
-					processedBallots.append(String.format("Ballot %d cast a vote for %s\n", bal.getID(), can.getName()));
+					processedBallots
+							.append(String.format("Ballot %d cast a vote for %s\n", bal.getID(), can.getName()));
 					if (isMajority(can.getNumVotes())) {
-						processedBallots.append(String.format(
-								"\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n",
-								can.getName(), this._quota));
+						processedBallots.append(
+								String.format("\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n",
+										can.getName(), this._quota));
 						this._auditor.auditProcess(processedBallots.toString());
 						return can.getName();
 					}
@@ -178,7 +180,8 @@ public class IRV extends VotingSystem {
 						ballotsProcessed.append(", ");
 					ballotsProcessed.append(curBallot.getID());
 				}
-				this._auditor.auditProcess("Processing the following ballots:\n\t" + ballotsProcessed.toString() + "\n");
+				this._auditor
+						.auditProcess("Processing the following ballots:\n\t" + ballotsProcessed.toString() + "\n");
 
 				final String winner = processVoterPool();
 

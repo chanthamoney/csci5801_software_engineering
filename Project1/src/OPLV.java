@@ -165,22 +165,24 @@ public class OPLV extends VotingSystem {
 	 */
 	public void runElection() throws IOException {
 		if (!this.wasRun.getAndSet(true)) {
+			final StringBuilder processedBallots = new StringBuilder();
 			for (final OPLVBallot curBal : this._ballots) {
 				final OPLVCandidate can = this._candidates[curBal.getVote()];
 				can.castVote();
-				this._auditor.auditProcess(String.format("Ballot %d cast a vote for %s in party %s\n", curBal.getID(),
+				processedBallots.append(String.format("Ballot %d cast a vote for %s in party %s\n", curBal.getID(),
 						can.getName(), can.getParty().getName()));
 			}
+			this._auditor.auditProcess(processedBallots.toString());
 			calculatePartySeats();
 			rankPartyCandidates();
 			assignSeats();
 
 			final StringBuilder res = new StringBuilder("Election Winners:\n");
 			for (final OPLVCandidate curCan : this._seats)
-				res.append("\t" + curCan.getName() + " (" + curCan.getParty().getName() + ")\n");
+				res.append(String.format("\t%s (%s)\n", curCan.getName(), curCan.getParty().getName()));
 			this._auditor.auditResult(res.toString());
 			this._auditor.createAuditFile();
-			System.out.print(res.toString() + "\n");
+			System.out.print(res.toString());
 		} else
 			System.out.print("ERROR: An election can only be run once for a given voting system.\n");
 	}

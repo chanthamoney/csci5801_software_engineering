@@ -11,9 +11,9 @@ public class Driver {
 	public static void main(String[] args) throws IOException {
 		final String in_BallotFile;
 
-		if (args.length > 0) {
+		if (args.length > 0)
 			in_BallotFile = args[0].trim();
-		} else {
+		else {
 			final Scanner consoleReader = new Scanner(System.in);
 			System.out.print("Enter Name of Ballot File: ");
 			in_BallotFile = consoleReader.nextLine().trim();
