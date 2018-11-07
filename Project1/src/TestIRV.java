@@ -102,8 +102,7 @@ public class TestIRV {
 			Collections.shuffle(newBallot, randomizer);
 			this.testBallots.add(newBallot);
 		}
-		final VotingSystem vs = new IRV(this.testBallots.size(), 300, candidates_300,
-				this.testBallots);
+		final VotingSystem vs = new IRV(this.testBallots.size(), 300, candidates_300, this.testBallots);
 
 		// Record current time in milliseconds immediately before election run
 		final long timeBefore = System.currentTimeMillis();
