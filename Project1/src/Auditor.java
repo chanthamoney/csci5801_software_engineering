@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
 
 public class Auditor {
 	/**
@@ -44,8 +42,7 @@ public class Auditor {
 	 * @throws IOException
 	 */
 	public void createAuditFile() throws IOException {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		final File file = new File("AUDIT_" + timestamp);
+		final File file = new File(String.format("AUDIT_%d", System.currentTimeMillis()));
 		final FileWriter writer = new FileWriter(file);
 		writer.write(this._auditSetup + "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditProcess
 				+ "\n\n- - - - - - - - - - - - - - - - - - - -\n\n" + this._auditResult);
