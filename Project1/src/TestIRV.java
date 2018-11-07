@@ -120,8 +120,6 @@ public class TestIRV {
 		// Reset the System.out to console
 		System.setOut(oldOut);
 
-		System.out.print(timeAfter - timeBefore);
-
 		// Must take less than 8 minutes to process a 100,000 vote election.
 		assertTrue((timeAfter - timeBefore) < 480000);
 	}

@@ -48,8 +48,11 @@ public class OPLV extends VotingSystem {
 			canParty.addCandidate(newCan);
 		}
 		this._ballots = new OPLVBallot[numBallots];
-		for (int i = 0; i < numBallots; i++)
-			this._ballots[i] = new OPLVBallot(ballots.get(i), i + 1);
+		int i = 0;
+		for (Integer bal : ballots) {
+			this._ballots[i] = new OPLVBallot(bal, i + 1);
+			i++;
+		}
 		calculateQuota(numBallots, numSeats);
 
 		final StringBuilder setup = new StringBuilder("Voting System:\tOpen Party List Voting\n\nParties:\n");
@@ -61,7 +64,7 @@ public class OPLV extends VotingSystem {
 		setup.append(String.format(
 				"\nTotal Number of Candidates: %s\n\nNumber of Ballots: %s\n\nBallots: %s\n\nBallot Candidates Key:\n",
 				this._numCandidates, this._numBallots, ballots));
-		for (int i = 0; i < numCandidates; i++)
+		for (i = 0; i < numCandidates; i++)
 			setup.append(String.format("\t%d - %s\n", i, this._candidates[i].getName()));
 		setup.append(String.format("\nNumber of Seats: %s\n", this._numSeats));
 		this._auditor.auditSetup(setup.toString());

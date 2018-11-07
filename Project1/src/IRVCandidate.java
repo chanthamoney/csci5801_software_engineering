@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class IRVCandidate extends Candidate {
 	/**
 	 *
 	 */
-	public ArrayList<IRVBallot> _elimBallots = new ArrayList<IRVBallot>();
+	public LinkedList<IRVBallot> _elimBallots = new LinkedList<IRVBallot>();
 	/**
 	 *
 	 */
