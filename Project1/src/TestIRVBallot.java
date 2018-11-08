@@ -57,7 +57,41 @@ public class TestIRVBallot {
 	assertEquals(this.testVotes.get(0), nextVote, 0.0);
     }
 
-    // Testing getNextVote() with two three
+    // Testing getNextVote() with no votes
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetNextVoteWhenNoVotes() {
+	// initialize test IRVBallot
+	final IRVBallot emptyBallot = new IRVBallot(new ArrayList<Integer>(), 0);
+
+	// test get next vote is as expected
+	try {
+	    emptyBallot.getNextVote();
+	} catch (IndexOutOfBoundsException ioob) {
+	    assertEquals("Index: 0, Size: 0", ioob.getMessage());
+	    throw ioob;
+	}
+	fail("Expected an IndexOutOfBoundsException to be thrown");
+    }
+
+    // Testing getNextVote() five times with only four votes
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetNextVoteFiveTimesWithOnlyFourVotes() {
+	// initialize test IRVBallot
+	final IRVBallot emptyBallot = testBallotInitialize();
+
+	// test get next vote is as expected
+	try {
+	    for (int i = 0; i < 5; i++) {
+		emptyBallot.getNextVote();
+	    }
+	} catch (IndexOutOfBoundsException ioob) {
+	    assertEquals("Index: 4, Size: 4", ioob.getMessage());
+	    throw ioob;
+	}
+	fail("Expected an IndexOutOfBoundsException to be thrown");
+    }
+
+    // Testing getNextVote() with three votes
     @Test
     public void testGetNextVoteThreeVotes() {
 	// initialize test IRVBallot
