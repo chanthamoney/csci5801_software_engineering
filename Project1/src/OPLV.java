@@ -6,11 +6,11 @@ public class OPLV extends VotingSystem {
     /**
      *
      */
-    public OPLVBallot[] _ballots;
+    private OPLVBallot[] _ballots;
     /**
      *
      */
-    public OPLVCandidate[] _candidates;
+    private OPLVCandidate[] _candidates;
     /**
      *
      */
@@ -18,11 +18,13 @@ public class OPLV extends VotingSystem {
     /**
      *
      */
-    public LinkedList<Party> _parties = new LinkedList<Party>();
+    private LinkedList<Party> _parties = new LinkedList<Party>();
     /**
      *
      */
-    public LinkedList<OPLVCandidate> _seats = new LinkedList<OPLVCandidate>();
+    private LinkedList<OPLVCandidate> _seats = new LinkedList<OPLVCandidate>();
+
+    private boolean _wasRandomRanking = false;
 
     /**
      * @param numBallots
@@ -110,8 +112,14 @@ public class OPLV extends VotingSystem {
 	    final Random random = new Random(System.currentTimeMillis());
 	    rankedRemainders.sort(
 		    (o1, o2) -> Integer.compare(o2.getNumVotes() % this._quota, o1.getNumVotes() % this._quota) == 0
-			    ? (random.nextBoolean() ? -1 : 1)
+			    ? getRandomSortValue(random)
 			    : Integer.compare(o2.getNumVotes() % this._quota, o1.getNumVotes() % this._quota));
+
+	    if (this._wasRandomRanking) {
+		seatAllocations.append(
+			"NOTE: There was a tie in remainders which was resolved randomly. This may or may not have caused a consequential tie in seat allocations.\n");
+		this._wasRandomRanking = false;
+	    }
 
 	    seatAllocations.append(String.format("Allocating Additional Seats to Largest Remainders:\n", seatsLeft));
 	    // If there are enough seats for all largest: add all.
@@ -129,6 +137,12 @@ public class OPLV extends VotingSystem {
 	    seatAllocations.append(String.format("\t%s - %d\n", curParty.getName(), curParty.getNumSeats()));
 
 	this._auditor.auditProcess(seatAllocations.toString() + "\n");
+    }
+
+    private int getRandomSortValue(Random random) {
+	this._wasRandomRanking = true;
+	boolean bool = random.nextBoolean();
+	return bool ? -1 : 1;
     }
 
     /**
