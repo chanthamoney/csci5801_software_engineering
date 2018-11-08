@@ -1,4 +1,5 @@
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -30,6 +31,9 @@ public class TestAuditor {
 	}
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
 	aud.createAuditFile(fileName);
 
 	final File file = new File(fileName);
@@ -55,6 +59,9 @@ public class TestAuditor {
 	}
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
 	aud.createAuditFile(fileName);
 
 	final File file = new File(fileName);
@@ -80,6 +87,9 @@ public class TestAuditor {
 	}
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
 	aud.createAuditFile(fileName);
 
 	final File file = new File(fileName);
@@ -104,8 +114,12 @@ public class TestAuditor {
     // Testing createAuditFile()
     @Test
     public void testCreateAuditFile() throws IOException {
+
 	final Auditor aud = initializeTestAuditor();
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
 	aud.createAuditFile(fileName);
 
 	final File file = new File(fileName);
