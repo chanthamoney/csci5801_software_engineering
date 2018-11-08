@@ -208,6 +208,6 @@ public class OPLV extends VotingSystem {
 	    this._auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString());
 	} else
-	    System.out.print("ERROR: An election can only be run once for a given voting system.\n");
+	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
     }
 }

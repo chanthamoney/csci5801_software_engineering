@@ -2,9 +2,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -16,14 +14,8 @@ public class TestOPLV {
     LinkedList<Integer> testBallots = new LinkedList<Integer>();
 
     // Testing IRVOPLV() constructor
-    @Test
-    public void testOPLV() {
-
-    }
-
-    // Testing IRVOPLV() constructor with parameters
     @Test(expected = IllegalArgumentException.class)
-    public void testOPLVWithParams() {
+    public void testOPLV() {
 	try {
 	    new OPLV();
 	} catch (IllegalArgumentException iae) {
@@ -33,20 +25,33 @@ public class TestOPLV {
 	fail("Employee Id Null exception did not throw!");
     }
 
+    // Testing IRVOPLV() constructor with parameters
+    @Test
+    public void testOPLVWithParams() {
+
+    }
+
     @Test
     public void testRunElection() {
 
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testRunElectionTwice() throws IOException {
+	this.testBallots.add(1);
+	final VotingSystem vs = new OPLV(this.testBallots.size(), 4, 1, candidates, parties, this.testBallots);
+	vs.runElection();
+	try {
+	    vs.runElection();
+	} catch (RuntimeException rte) {
+	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
+	    throw rte;
+	}
+	fail("Runtime exception for running election more than once did not throw!");
+    }
+
     @Test
     public void testRunElectionEfficiency() {
-	// Keep current System.out
-	final PrintStream oldOut = System.out;
-	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-	// Change so System.out saved in baos
-	System.setOut(new PrintStream(baos));
-
 	// Initialize Large OPLV Election
 	final String[] candidates_300 = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
 		"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH",
@@ -84,8 +89,6 @@ public class TestOPLV {
 		"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD",
 		"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PE", "PE", "PE",
 		"PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", };
-	System.out.print(parties_100_80_60_40_20);
-	System.out.print(candidates_300);
 	final Random randomizer = new Random(System.currentTimeMillis());
 	for (int i = 0; i < 100000; i++)
 	    this.testBallots.add(randomizer.nextInt(300));
@@ -105,9 +108,6 @@ public class TestOPLV {
 
 	// Record time immediately after election
 	final long timeAfter = System.currentTimeMillis();
-
-	// Reset the System.out to console
-	System.setOut(oldOut);
 
 	// Must take less than 8 minutes to process a 100,000 vote election.
 	assertTrue((timeAfter - timeBefore) < 480000);

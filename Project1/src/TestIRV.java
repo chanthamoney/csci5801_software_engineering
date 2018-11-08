@@ -35,6 +35,19 @@ public class TestIRV {
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testRunElectionTwice() throws IOException {
+	final VotingSystem vs = initializeTestIRV();
+	vs.runElection();
+	try {
+	    vs.runElection();
+	} catch (RuntimeException rte) {
+	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
+	    throw rte;
+	}
+	fail("Runtime exception for running election more than once did not throw!");
+    }
+
     // Testing IRV constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRV() {
