@@ -60,11 +60,11 @@ public class Auditor {
 	StringBuilder fileOutput = new StringBuilder();
 
 	fileOutput.append(this._auditSetup);
-	if (this._auditSetup.length() != 0) {
+	if (this._auditSetup.length() != 0 && this._auditProcess.length() != 0) {
 	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
 	}
 	fileOutput.append(this._auditProcess);
-	if (this._auditProcess.length() != 0) {
+	if (this._auditProcess.length() != 0 && this._auditResult.length() != 0) {
 	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
 	}
 	fileOutput.append(this._auditResult);
