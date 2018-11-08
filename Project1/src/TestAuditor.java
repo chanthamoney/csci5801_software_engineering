@@ -21,6 +21,17 @@ public class TestAuditor {
 	return new Auditor();
     }
 
+    // Testing Auditor() constructor
+    @Test
+    public void testAuditor() {
+
+    }
+
+    // Testing Auditor() constructor with parameters
+    @Test
+    public void testAuditorWithParams() {
+    }
+
     // Testing auditProcess()
     @Test
     public void testAuditProcess() throws IOException {
