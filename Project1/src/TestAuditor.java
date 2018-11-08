@@ -1,49 +1,65 @@
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-import static org.junit.Test;
+import org.junit.Test;
 
 public class TestAuditor {
-	ArrayList<String> testStrings = new ArrayList<String>();
+    ArrayList<String> testStrings = new ArrayList<String>();
 
-	private Auditor initializeTestAuditor() {
-		testStrings.add("Audit line 1\n");
-		testStrings.add("Audit line 2\n");
-		testStrings.add("Audit line 3\n");
-		testStrings.add("Audit line 4\n");
-		testStrings.add("Audit line 5\n");
-	}
-	
-	// Testing auditProcess()
-	@Test
-	public void testAuditProcess() {
-		final Auditor aud = initializeTestAuditor();
+    private Auditor initializeTestAuditor() {
+	testStrings.add("Audit line 1\n");
+	testStrings.add("Audit line 2\n");
+	testStrings.add("Audit line 3\n");
+	testStrings.add("Audit line 4\n");
+	testStrings.add("Audit line 5\n");
+	return new Auditor();
+    }
 
-		for (int i = 0; i < testStrings.size(); i++) {
-			aud.auditProcess(testStrings.get(i));
-		}
+    // Testing auditProcess()
+    @Test
+    public void testAuditProcess() throws IOException {
+	final Auditor aud = initializeTestAuditor();
 
-		assertTrue(aud.getAuditProcess().equals("Audit line 1\nAudit line 2\nAudit line 3\nAudit line 4\nAudit line 5\n"));
+	for (int i = 0; i < testStrings.size(); i++) {
+	    aud.auditProcess(testStrings.get(i));
 	}
 
-	// Testing auditResult()
-	@Test
-	public void testAuditResult() {
-	
-	}
+	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	aud.createAuditFile(fileName);
 
-	// Testing auditSetup()
-	@Test
-	public void testAuditSetup() {
-	
-	}
+	final File file = new File(fileName);
+	final Scanner fileReader = new Scanner(file);
 
-	// Testing createAuditFile()
-	@Test
-	public void testCreateAuditFile() {
-	
-	}
+	final String l1 = fileReader.nextLine();
+	final String l2 = fileReader.nextLine();
+	final String l3 = fileReader.nextLine();
+	final String l4 = fileReader.nextLine();
+	final String l5 = fileReader.nextLine();
+	fileReader.close();
+	assertTrue((l1 + l2 + l3 + l4 + l5).equals("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"));
+    }
+
+    // Testing auditResult()
+    @Test
+    public void testAuditResult() {
+
+    }
+
+    // Testing auditSetup()
+    @Test
+    public void testAuditSetup() {
+
+    }
+
+    // Testing createAuditFile()
+    @Test
+    public void testCreateAuditFile() {
+
+    }
 
 }

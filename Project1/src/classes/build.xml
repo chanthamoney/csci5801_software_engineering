@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build">
+	<path id="build.classpath">
+		<pathelement location="classes"/>
+	</path>
+	<target name="init">
+		<mkdir dir="classes"/>
+	</target>
+	<target name="clean">
+		<delete dir="classes"/>
+	</target>
+	<target depends="init" name="build">
+		<javac srcdir="." destdir="classes" source="1.5" target="1.5" fork="yes">
+			<classpath refid="build.classpath"/>
+			<include name="Party.java"/>
+			<include name="OPLVBallot.java"/>
+			<include name="Ballot.java"/>
+			<include name="IRVBallot.java"/>
+			<include name="IRV.java"/>
+			<include name="IRVCandidate.java"/>
+			<include name="Candidate.java"/>
+			<include name="OPLVCandidate.java"/>
+			<include name="OPLV.java"/>
+			<include name="Driver.java"/>
+			<include name="VotingSystem.java"/>
+			<include name="Auditor.java"/>
+		</javac>
+	</target>
+</project>
