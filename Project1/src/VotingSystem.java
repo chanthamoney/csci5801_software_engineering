@@ -2,39 +2,46 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 abstract public class VotingSystem {
-	/**
-	 *
-	 */
-	protected Auditor _auditor;
-	/**
-	 *
-	 */
-	protected int _numBallots;
-	/**
-	 *
-	 */
-	protected int _numCandidates;
-	/**
-	 *
-	 */
-	protected int _quota;
-	/**
-	 *
-	 */
-	protected AtomicBoolean wasRun = new AtomicBoolean(false);
+    /**
+     *
+     */
+    protected Auditor _auditor;
+    /**
+     *
+     */
+    protected int _numBallots;
+    /**
+     *
+     */
+    protected int _numCandidates;
+    /**
+     *
+     */
+    protected int _quota;
+    /**
+     *
+     */
+    protected AtomicBoolean wasRun = new AtomicBoolean(false);
 
-	/**
-	 * @param numBallots
-	 * @param numCandidates
-	 */
-	VotingSystem(int numBallots, int numCandidates) {
-		this._numBallots = numBallots;
-		this._numCandidates = numCandidates;
-		this._auditor = new Auditor();
-	}
+    /**
+     * Throws an error for default constructor.
+     */
+    VotingSystem() {
+	throw new IllegalArgumentException("Default constructor is not allowed.");
+    }
 
-	/**
-	 * @throws IOException
-	 */
-	abstract protected void runElection() throws IOException;
+    /**
+     * @param numBallots
+     * @param numCandidates
+     */
+    VotingSystem(int numBallots, int numCandidates) {
+	this._numBallots = numBallots;
+	this._numCandidates = numCandidates;
+	this._auditor = new Auditor();
+    }
+
+    /**
+     * @throws IOException
+     */
+    abstract protected void runElection() throws IOException;
 }

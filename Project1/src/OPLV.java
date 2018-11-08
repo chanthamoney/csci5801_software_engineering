@@ -27,6 +27,14 @@ public class OPLV extends VotingSystem {
     private boolean _wasRandomRanking = false;
 
     /**
+     * Throws an error for default constructor.
+     */
+    OPLV() {
+	super();
+	throw new IllegalArgumentException("Default constructor is not allowed.");
+    }
+
+    /**
      * @param numBallots
      * @param numCandidates
      * @param numSeats

@@ -1,39 +1,49 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-/**
- * Represents a ballot in an instant runoff election.
- */
 public class IRVBallot extends Ballot {
+    /**
+     *
+     */
+    private int _curVoteIndex = 0;
+    /**
+     *
+     */
+    private final int _numVotes;
+    /**
+     *
+     */
+    private final ArrayList<Integer> _votes;
 
-	/** The votes. */
-	private final LinkedList<Integer> _votes;
+    /**
+     * Throws an error for default constructor.
+     */
+    IRVBallot() {
+	super();
+	throw new IllegalArgumentException("Default constructor is not allowed.");
+    }
 
-	/**
-	 * Instantiates a new IRV ballot.
-	 *
-	 * @param votes the votes
-	 * @param id    the id
-	 */
-	IRVBallot(LinkedList<Integer> votes, int id) {
-		super(id);
-		this._votes = votes;
-	}
+    /**
+     * @param votes
+     * @param id
+     */
+    IRVBallot(ArrayList<Integer> votes, int id) {
+	super(id);
+	this._votes = votes;
+	this._numVotes = votes.size();
+    }
 
-	/**
-	 * Gets the next vote.
-	 *
-	 * @return the next vote
-	 */
-	public int getNextVote() {
-		return this._votes.pop();
-	}
+    /**
+     * @return
+     */
+    public int getNextVote() {
+	this._curVoteIndex += 1;
+	return this._votes.get(this._curVoteIndex - 1);
+    }
 
-	/**
-	 * Checks if is exhausted.
-	 *
-	 * @return true, if is exhausted
-	 */
-	public boolean isExhausted() {
-		return this._votes.isEmpty();
-	}
+    /**
+     * @return
+     */
+    public boolean isExhausted() {
+	return this._numVotes <= this._curVoteIndex;
+    }
 }

@@ -1,8 +1,11 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,15 +15,15 @@ import org.junit.Test;
 
 public class TestIRV {
     String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-    LinkedList<LinkedList<Integer>> testBallots = new LinkedList<LinkedList<Integer>>();
+    LinkedList<ArrayList<Integer>> testBallots = new LinkedList<ArrayList<Integer>>();
 
     private IRV initializeTestIRV() {
-	final LinkedList<Integer> firstBallot = new LinkedList<>(Arrays.asList(0, 1, 2, 3));
-	final LinkedList<Integer> secondBallot = new LinkedList<>(Arrays.asList(1, 0, 2, 3));
-	final LinkedList<Integer> thirdBallot = new LinkedList<>(Arrays.asList(3, 2, 1, 0));
-	final LinkedList<Integer> fourthBallot = new LinkedList<>(Arrays.asList(1, 0, 2, 3));
-	final LinkedList<Integer> fifthBallot = new LinkedList<>(Arrays.asList(2, 1, 0, 3));
-	final LinkedList<Integer> sixthBallot = new LinkedList<>(Arrays.asList(0, 1, 2, 3));
+	final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
+	final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
+	final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
+	final ArrayList<Integer> fourthBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
+	final ArrayList<Integer> fifthBallot = new ArrayList<>(Arrays.asList(2, 1, 0, 3));
+	final ArrayList<Integer> sixthBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
 
 	this.testBallots.add(firstBallot);
 	this.testBallots.add(secondBallot);
@@ -33,9 +36,15 @@ public class TestIRV {
     }
 
     // Testing IRV constructor
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testIRV() {
-
+	try {
+	    new IRV();
+	} catch (IllegalArgumentException iae) {
+	    assertEquals("Default constructor is not allowed.", iae.getMessage());
+	    throw iae;
+	}
+	fail("Employee Id Null exception did not throw!");
     }
 
     // Testing IRV constructor with parameters
@@ -109,8 +118,8 @@ public class TestIRV {
 		"KD", "KE", "KF", "KG", "KH", "KI", "KJ", "KK", "KL", "KM", "KN" };
 	final Random randomizer = new Random(System.currentTimeMillis());
 	for (int i = 0; i < 100000; i++) {
-	    final LinkedList<Integer> newBallot = new LinkedList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-		    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
+	    final ArrayList<Integer> newBallot = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+		    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
 	    Collections.shuffle(newBallot, randomizer);
 	    this.testBallots.add(newBallot);
 	}

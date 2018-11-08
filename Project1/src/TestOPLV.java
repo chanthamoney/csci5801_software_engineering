@@ -1,4 +1,6 @@
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,9 +22,15 @@ public class TestOPLV {
     }
 
     // Testing IRVOPLV() constructor with parameters
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testOPLVWithParams() {
-
+	try {
+	    new OPLV();
+	} catch (IllegalArgumentException iae) {
+	    assertEquals("Default constructor is not allowed.", iae.getMessage());
+	    throw iae;
+	}
+	fail("Employee Id Null exception did not throw!");
     }
 
     @Test

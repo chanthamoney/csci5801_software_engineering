@@ -1,8 +1,9 @@
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class TestIRVCandidate {
     IRVBallot testBallot;
     IRVCandidate testCandidate = new IRVCandidate("Jenny");
     int testId = 4;
-    LinkedList<Integer> testVotes = new LinkedList<Integer>(); // to initialize the IRVBallot needed for testing
+    ArrayList<Integer> testVotes = new ArrayList<Integer>(); // to initialize the IRVBallot needed for testing
 
     private void initializeTestBallot() {
 	// add votes to testVotes
@@ -22,9 +23,15 @@ public class TestIRVCandidate {
     }
 
     // Testing IRVCandidate() constructor
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testIRVCandidate() {
-
+	try {
+	    new IRVCandidate();
+	} catch (IllegalArgumentException iae) {
+	    assertEquals("Default constructor is not allowed.", iae.getMessage());
+	    throw iae;
+	}
+	fail("Employee Id Null exception did not throw!");
     }
 
     // Testing IRVCandidate() constructor with parameters

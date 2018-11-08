@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -24,6 +25,14 @@ public class IRV extends VotingSystem {
     private IRVBallot[] _voterPool;
 
     /**
+     * Throws an error for default constructor.
+     */
+    IRV() {
+	super();
+	throw new IllegalArgumentException("Default constructor is not allowed.");
+    }
+
+    /**
      * Instantiates a new instant runoff voting system.
      *
      * @param numBallots    the number of ballots in the election
@@ -32,14 +41,14 @@ public class IRV extends VotingSystem {
      * @param ballots       the ballots being cast in the election
      */
     IRV(final int numBallots, final int numCandidates, final String[] candidates,
-	    final LinkedList<LinkedList<Integer>> ballots) {
+	    final LinkedList<ArrayList<Integer>> ballots) {
 	super(numBallots, numCandidates);
 	this._candidates = new IRVCandidate[numCandidates];
 	for (int i = 0; i < numCandidates; i++)
 	    this._candidates[i] = new IRVCandidate(candidates[i]);
 	this._ballots = new IRVBallot[numBallots];
 	int i = 0;
-	for (final LinkedList<Integer> bal : ballots) {
+	for (final ArrayList<Integer> bal : ballots) {
 	    this._ballots[i] = new IRVBallot(bal, i + 1);
 	    i++;
 	}
