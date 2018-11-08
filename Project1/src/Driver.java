@@ -3,10 +3,17 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * The Driver of main which generates and runs an election.
+ */
 public class Driver {
+
 	/**
-	 * @param args
-	 * @throws IOException
+	 * The main method used to generate an election from a file (passed in as
+	 * command line argument or input upon running) and runs the election.
+	 *
+	 * @param args Optional command line file name argument
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void main(String[] args) throws IOException {
 		final String in_BallotFile;
