@@ -1,5 +1,9 @@
-import org.junit.Test;
+
 import static org.junit.Assert.assertTrue;
+
+import java.util.*;
+
+import static org.junit.Test;
 
 public class TestAuditor {
 	ArrayList<String> testStrings = new ArrayList<String>();

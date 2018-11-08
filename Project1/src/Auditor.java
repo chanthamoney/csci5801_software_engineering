@@ -38,6 +38,21 @@ public class Auditor {
 	}
 
 	/**
+	 * get functions for testing
+	 */
+	public String getAuditProcess() {
+		return this._auditProcess;
+	}
+
+	public String getAuditResult() {
+		return this._auditResult;
+	}
+
+	public String getAuditSetup() {
+		return this._auditSetup;
+	}
+
+	/**
 	 * @param name
 	 * @throws IOException
 	 */
