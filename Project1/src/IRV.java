@@ -66,7 +66,7 @@ public class IRV extends VotingSystem {
 
     /**
      * Determines the quota to be guaranteed a win in the election and stores it in
-     * a private variable. The quota is a majority > 50%.
+     * a private variable. The quota is a majority greater than 50%.
      *
      * @param numBallots the number of ballots cast in the election
      */

@@ -1,6 +1,11 @@
+/**
+ * Represents a ballot in an open party list voting election.
+ */
 public class OPLVBallot extends Ballot {
+
     /**
-     *
+     * The vote (generally as an index of the candidate in an array for efficiency,
+     * or potentially any other unique identifier).
      */
     private final int _vote;
 
@@ -13,8 +18,10 @@ public class OPLVBallot extends Ballot {
     }
 
     /**
-     * @param vote
-     * @param id
+     * Instantiates a new OPLV ballot.
+     *
+     * @param vote the vote
+     * @param id   the id
      */
     OPLVBallot(int vote, int id) {
 	super(id);
@@ -22,7 +29,9 @@ public class OPLVBallot extends Ballot {
     }
 
     /**
-     * @return
+     * Gets the vote.
+     *
+     * @return the vote
      */
     public int getVote() {
 	return this._vote;

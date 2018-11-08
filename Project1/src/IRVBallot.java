@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 
+/**
+ * Represents a ballot in an instant runoff election.
+ */
 public class IRVBallot extends Ballot {
-    /**
-     *
-     */
+
+    /** Maintains the index on the ballot array to retrieve the next vote. */
     private int _curVoteIndex = 0;
+
     /**
-     *
-     */
-    private final int _numVotes;
-    /**
-     *
+     * Keeps the list of votes (generally the index of candidates in the candidate
+     * array for efficiency, or potentially any other unique identifier) on the
+     * ballot.
      */
     private final ArrayList<Integer> _votes;
 
@@ -23,17 +24,20 @@ public class IRVBallot extends Ballot {
     }
 
     /**
-     * @param votes
-     * @param id
+     * Instantiates a new instant runoff ballot.
+     *
+     * @param votes the votes
+     * @param id    the id
      */
     IRVBallot(ArrayList<Integer> votes, int id) {
 	super(id);
 	this._votes = votes;
-	this._numVotes = votes.size();
     }
 
     /**
-     * @return
+     * Gets the next vote.
+     *
+     * @return the next vote
      */
     public int getNextVote() {
 	this._curVoteIndex += 1;
@@ -41,9 +45,11 @@ public class IRVBallot extends Ballot {
     }
 
     /**
-     * @return
+     * Checks if the ballot has exhausted all of its votes.
+     *
+     * @return true, if the ballot has exhausted all of its votes
      */
     public boolean isExhausted() {
-	return this._numVotes <= this._curVoteIndex;
+	return this._votes.size() <= this._curVoteIndex;
     }
 }

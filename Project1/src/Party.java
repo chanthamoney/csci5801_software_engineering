@@ -1,25 +1,27 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represents a party in an open party list voting.
+ */
 public class Party {
+
     /**
-     *
+     * The candidates belonging to the party.
      */
     public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
+
     /**
-     *
+     * The name of the party.
      */
     private final String _name;
+
     /**
-     *
-     */
-    private int _numCandidates = 0;
-    /**
-     *
+     * The number of seats allocated to the party for candidates.
      */
     private int _numSeats = 0;
     /**
-     *
+     * The total number of votes cast to the party.
      */
     private int _numVotes = 0;
 
@@ -31,74 +33,91 @@ public class Party {
     }
 
     /**
-     * @param name
+     * Instantiates a new party.
+     *
+     * @param name the name of the party
      */
     Party(String name) {
 	this._name = name;
     }
 
     /**
-     * @param candidate
+     * Adds the candidate to the party.
+     *
+     * @param candidate the candidate
      */
     public void addCandidate(OPLVCandidate candidate) {
 	this._candidates.add(candidate);
-	this._numCandidates += 1;
     }
 
     /**
-     *
+     * Records a cast vote to the party.
      */
     public void addVote() {
 	this._numVotes += 1;
     }
 
     /**
-     * @return
+     * Gets the candidates in the party.
+     *
+     * @return the candidates in the party
      */
     public ArrayList<OPLVCandidate> getCandidates() {
 	return this._candidates;
     }
 
     /**
-     * @return
+     * Gets the name of the party.
+     *
+     * @return the name
      */
     public String getName() {
 	return this._name;
     }
 
     /**
-     * @return
+     * Gets the number of candidates in the party.
+     *
+     * @return the number of candidates
      */
     public int getNumCandidates() {
-	return this._numCandidates;
+	return this._candidates.size();
     }
 
     /**
-     * @return
+     * Gets the number of allocated seats.
+     *
+     * @return the number of seats
      */
     public int getNumSeats() {
 	return this._numSeats;
     }
 
     /**
-     * @return
+     * Gets the number of votes cast to the party.
+     *
+     * @return the number of votes
      */
     public int getNumVotes() {
 	return this._numVotes;
     }
 
     /**
-     * @return
+     * Gets the winning candidates of seats in the party.
+     *
+     * @return the winning candidates
      */
     public ArrayList<OPLVCandidate> getWinningCandidates() {
 	final ArrayList<OPLVCandidate> winners = new ArrayList<OPLVCandidate>();
-	for (int i = 0; (i < this._numSeats) && (i < this._numCandidates); i++)
+	for (int i = 0; (i < this._numSeats) && (i < this._candidates.size()); i++)
 	    winners.add(this._candidates.get(i));
 	return winners;
     }
 
     /**
-     * @return
+     * Rank the candidates according to their total number of votes.
+     *
+     * @return a string of an audit for the ranking of candidates
      */
     public String rankCandidates() {
 	String ret = String.format("\tParty %s:\n", this._name);
@@ -110,12 +129,12 @@ public class Party {
 			: Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 
 	int minVotes;
-	if ((this._numSeats <= this._numCandidates) && (this._numSeats > 0))
+	if ((this._numSeats <= this._candidates.size()) && (this._numSeats > 0))
 	    minVotes = this._candidates.get(this._numSeats - 1).getNumVotes();
 	else
 	    minVotes = Integer.MAX_VALUE;
 	int firstIndx = -1, lastIndx = -1;
-	for (int i = 0; i < this._numCandidates; i++) {
+	for (int i = 0; i < this._candidates.size(); i++) {
 	    final OPLVCandidate can = this._candidates.get(i);
 	    if (i < this._numSeats)
 		ret += "\t\t* ";
@@ -143,7 +162,9 @@ public class Party {
     }
 
     /**
-     * @param num
+     * Sets the number of seats allocated to the party.
+     *
+     * @param num the new number of seats to be allocated
      */
     public void setNumSeats(int num) {
 	this._numSeats = num;

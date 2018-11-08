@@ -2,28 +2,40 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Represents an open party list voting system.
+ */
 public class OPLV extends VotingSystem {
+
     /**
-     *
+     * The ballots in the election.
      */
     private OPLVBallot[] _ballots;
+
     /**
-     *
+     * The candidates running in the election for the given parties.
      */
     private OPLVCandidate[] _candidates;
+
     /**
-     *
+     * The number of seats available in the election.
      */
     private final int _numSeats;
+
     /**
-     *
+     * The parties participating in the election.
      */
     private LinkedList<Party> _parties = new LinkedList<Party>();
+
     /**
-     *
+     * Maintains a list of candidates who have been awarded seats in the election.
      */
     private LinkedList<OPLVCandidate> _seats = new LinkedList<OPLVCandidate>();
 
+    /**
+     * Maintains whether a specific ranking of parties required a random toss
+     * decision for a tie.
+     */
     private boolean _wasRandomRanking = false;
 
     /**
@@ -35,12 +47,14 @@ public class OPLV extends VotingSystem {
     }
 
     /**
-     * @param numBallots
-     * @param numCandidates
-     * @param numSeats
-     * @param candidates
-     * @param parties
-     * @param ballots
+     * Instantiates a new open party list voting system.
+     *
+     * @param numBallots    the number of ballots cast
+     * @param numCandidates the number of candidates participating
+     * @param numSeats      the number of seats available
+     * @param candidates    the candidates participating in the election
+     * @param parties       the parties participating in the election
+     * @param ballots       the ballots cast in the election
      */
     OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
 	    LinkedList<Integer> ballots) {
@@ -81,7 +95,8 @@ public class OPLV extends VotingSystem {
     }
 
     /**
-     *
+     * Sources all of the candidates from every party who was awarded a seat in the
+     * election.
      */
     private void assignSeats() {
 	for (final Party curParty : this._parties)
@@ -89,7 +104,7 @@ public class OPLV extends VotingSystem {
     }
 
     /**
-     *
+     * Calculate the number of seats each party will be awarded.
      */
     private void calculatePartySeats() {
 	int seatsLeft = this._numSeats;
@@ -147,6 +162,13 @@ public class OPLV extends VotingSystem {
 	this._auditor.auditProcess(seatAllocations.toString() + "\n");
     }
 
+    /**
+     * Generates a random value negative or positive for ranking to dispute ties and
+     * documents this random toss.
+     *
+     * @param random the random generator
+     * @return the random negative or positive comparison value
+     */
     private int getRandomSortValue(Random random) {
 	this._wasRandomRanking = true;
 	boolean bool = random.nextBoolean();
@@ -154,16 +176,21 @@ public class OPLV extends VotingSystem {
     }
 
     /**
-     * @param numBallots
-     * @param numSeats
+     * Calculate the quota necessary to be guaranteed a seat in the election. The
+     * ceiling of the number of ballots divided by the number of seats.
+     *
+     * @param numBallots the number of ballots cast
+     * @param numSeats   the number of seats available
      */
     private void calculateQuota(int numBallots, int numSeats) {
 	this._quota = -Math.floorDiv(-numBallots, numSeats);
     }
 
     /**
-     * @param name
-     * @return
+     * Finds a party given the name of the party.
+     *
+     * @param name the name of the party
+     * @return the party
      */
     private Party findParty(String name) {
 	for (final Party curParty : this._parties)
@@ -173,7 +200,7 @@ public class OPLV extends VotingSystem {
     }
 
     /**
-     *
+     * Ranks the candidates in each party participating in the election.
      */
     private void rankPartyCandidates() {
 	final StringBuilder rankings = new StringBuilder("Party Rankings [* - Allocated Party Seat]\n");

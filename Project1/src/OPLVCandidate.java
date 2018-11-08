@@ -1,7 +1,9 @@
+/**
+ * Represents a candidate in an open party list voting election.
+ */
 public class OPLVCandidate extends Candidate {
-    /**
-     *
-     */
+
+    /** The party a candidate belongs to. */
     private final Party _party;
 
     /**
@@ -13,8 +15,10 @@ public class OPLVCandidate extends Candidate {
     }
 
     /**
-     * @param name
-     * @param party
+     * Instantiates a new OPLV candidate.
+     *
+     * @param name  the name of the candidate
+     * @param party the party the candidate belongs to
      */
     OPLVCandidate(final String name, final Party party) {
 	super(name);
@@ -22,7 +26,7 @@ public class OPLVCandidate extends Candidate {
     }
 
     /**
-     *
+     * Records a cast vote to the candidate.
      */
     public void castVote() {
 	this._party.addVote();
@@ -30,7 +34,9 @@ public class OPLVCandidate extends Candidate {
     }
 
     /**
-     * @return
+     * Gets the party the candidate belongs to.
+     *
+     * @return the party
      */
     public Party getParty() {
 	return this._party;

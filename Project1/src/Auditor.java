@@ -11,10 +11,12 @@ public class Auditor {
      * Maintains the audit information for the main processing of information.
      */
     private StringBuilder _auditProcess = new StringBuilder();
+
     /**
      * Maintains the audit information for results of a process.
      */
     private StringBuilder _auditResult = new StringBuilder();
+
     /**
      * Maintains the audit information for setup of a process.
      */
