@@ -18,7 +18,7 @@ import java.util.Random;
 public class Party {
 
     /** The candidates belonging to the party. */
-    private ArrayList<OPLVCandidate> candidates = new ArrayList<OPLVCandidate>();
+    private ArrayList<OPLVCandidate> candidates = new ArrayList<>();
 
     /** The name of the party. */
     private final String name;
@@ -110,9 +110,10 @@ public class Party {
      * @return the winning candidates
      */
     public ArrayList<OPLVCandidate> getWinningCandidates() {
-	final ArrayList<OPLVCandidate> winners = new ArrayList<OPLVCandidate>();
-	for (int i = 0; (i < this.numSeats) && (i < this.candidates.size()); i++)
+	final ArrayList<OPLVCandidate> winners = new ArrayList<>();
+	for (int i = 0; (i < this.numSeats) && (i < this.candidates.size()); i++) {
 	    winners.add(this.candidates.get(i));
+	}
 	return winners;
     }
 
@@ -122,7 +123,7 @@ public class Party {
      * @return a string of an audit for the ranking of candidates
      */
     public String rankCandidates() {
-	String ret = String.format("\tParty %s:\n", this.name);
+	String ret = String.format("\tParty %s:%n", this.name);
 
 	// Randomly decide between ties by using random.
 	final Random random = new Random(System.currentTimeMillis());
@@ -131,35 +132,42 @@ public class Party {
 			: Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 
 	int minVotes;
-	if ((this.numSeats <= this.candidates.size()) && (this.numSeats > 0))
+	if ((this.numSeats <= this.candidates.size()) && (this.numSeats > 0)) {
 	    minVotes = this.candidates.get(this.numSeats - 1).getNumVotes();
-	else
+	} else {
 	    minVotes = Integer.MAX_VALUE;
-	int firstIndx = -1, lastIndx = -1;
+	}
+	int firstIndx = -1;
+	int lastIndx = -1;
 	for (int i = 0; i < this.candidates.size(); i++) {
 	    final OPLVCandidate can = this.candidates.get(i);
-	    if (i < this.numSeats)
+	    if (i < this.numSeats) {
 		ret += "\t\t* ";
-	    else
+	    } else {
 		ret += "\t\t- ";
+	    }
 	    final OPLVCandidate curCan = this.candidates.get(i);
 	    ret += String.format("%s [%d vote", curCan.getName(), curCan.getNumVotes());
-	    if (curCan.getNumVotes() == 1)
+	    if (curCan.getNumVotes() == 1) {
 		ret += "]\n";
-	    else
+	    } else {
 		ret += "s]\n";
+	    }
 	    final int numVotes = can.getNumVotes();
-	    if ((firstIndx == -1) && (numVotes == minVotes))
+	    if ((firstIndx == -1) && (numVotes == minVotes)) {
 		firstIndx = i;
-	    if (numVotes == minVotes)
+	    }
+	    if (numVotes == minVotes) {
 		lastIndx = i;
+	    }
 	}
 
 	// If more than one minimum relay that there was a shuffle decision.
-	if ((firstIndx != lastIndx) && (lastIndx >= this.numSeats))
+	if ((firstIndx != lastIndx) && (lastIndx >= this.numSeats)) {
 	    ret += String.format(
-		    "\t\tNOTE: Randomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.\n",
+		    "\t\tNOTE: Randomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.%n",
 		    firstIndx + 1, lastIndx + 1);
+	}
 	return ret;
     }
 

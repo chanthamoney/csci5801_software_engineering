@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class TestIRV {
     String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-    LinkedList<ArrayList<Integer>> testBallots = new LinkedList<ArrayList<Integer>>();
+    LinkedList<ArrayList<Integer>> testBallots = new LinkedList<>();
 
     private IRV initializeTestIRV() {
 	final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
@@ -108,8 +108,8 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue(output.equals("Election Winner: Sasuke\n") || output.equals("Election Winner: Naruto\n")
-		|| output.equals("Election Winner: Sakura\n"));
+	assertTrue("Election Winner: Sasuke\n".equals(output) || "Election Winner: Naruto\n".equals(output)
+		|| "Election Winner: Sakura\n".equals(output));
     }
 
     @Test
@@ -142,8 +142,8 @@ public class TestIRV {
 		"KD", "KE", "KF", "KG", "KH", "KI", "KJ", "KK", "KL", "KM", "KN" };
 	final Random randomizer = new Random(System.currentTimeMillis());
 	for (int i = 0; i < 100000; i++) {
-	    final ArrayList<Integer> newBallot = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-		    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
+	    final ArrayList<Integer> newBallot = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+		    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30));
 	    Collections.shuffle(newBallot, randomizer);
 	    this.testBallots.add(newBallot);
 	}

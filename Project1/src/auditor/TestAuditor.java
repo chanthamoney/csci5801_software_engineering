@@ -20,7 +20,7 @@ import java.util.Scanner;
 import org.junit.Test;
 
 public class TestAuditor {
-    ArrayList<String> testStrings = new ArrayList<String>();
+    ArrayList<String> testStrings = new ArrayList<>();
 
     private Auditor initializeTestAuditor() {
 	testStrings.add("Audit line 1\n");
@@ -47,9 +47,7 @@ public class TestAuditor {
     public void testAuditProcess() throws IOException {
 	final Auditor aud = initializeTestAuditor();
 
-	for (int i = 0; i < testStrings.size(); i++) {
-	    aud.auditProcess(testStrings.get(i));
-	}
+	testStrings.forEach(aud::auditProcess);
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -67,7 +65,7 @@ public class TestAuditor {
 	final String l5 = fileReader.nextLine();
 	fileReader.close();
 	file.delete();
-	assertTrue((l1 + l2 + l3 + l4 + l5).equals("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"));
+	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     // Testing auditResult()
@@ -75,9 +73,7 @@ public class TestAuditor {
     public void testAuditResult() throws IOException {
 	final Auditor aud = initializeTestAuditor();
 
-	for (int i = 0; i < testStrings.size(); i++) {
-	    aud.auditResult(testStrings.get(i));
-	}
+	testStrings.forEach(aud::auditResult);
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -95,7 +91,7 @@ public class TestAuditor {
 	final String l5 = fileReader.nextLine();
 	fileReader.close();
 	file.delete();
-	assertTrue((l1 + l2 + l3 + l4 + l5).equals("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"));
+	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     // Testing auditSetup()
@@ -103,9 +99,7 @@ public class TestAuditor {
     public void testAuditSetup() throws IOException {
 	final Auditor aud = initializeTestAuditor();
 
-	for (int i = 0; i < testStrings.size(); i++) {
-	    aud.auditSetup(testStrings.get(i));
-	}
+	testStrings.forEach(aud::auditSetup);
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -123,7 +117,7 @@ public class TestAuditor {
 	final String l5 = fileReader.nextLine();
 	fileReader.close();
 	file.delete();
-	assertTrue((l1 + l2 + l3 + l4 + l5).equals("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"));
+	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     // Testing audit file output structure

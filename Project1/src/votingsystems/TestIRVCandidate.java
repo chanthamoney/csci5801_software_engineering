@@ -22,7 +22,7 @@ public class TestIRVCandidate {
     IRVBallot testBallot;
     IRVCandidate testCandidate = new IRVCandidate("Jenny");
     int testId = 4;
-    ArrayList<Integer> testVotes = new ArrayList<Integer>(); // to initialize the IRVBallot needed for testing
+    ArrayList<Integer> testVotes = new ArrayList<>(); // to initialize the IRVBallot needed for testing
 
     private void initializeTestBallot() {
 	// add votes to testVotes

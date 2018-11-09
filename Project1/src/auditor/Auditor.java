@@ -1,4 +1,3 @@
-
 // File:         Auditor.java
 // Created:      2018/11/08
 // Last Changed: $Date: 2018/11/08 11:37:56 $
@@ -19,59 +18,59 @@ import java.io.IOException;
  */
 public class Auditor {
     /** Maintains the audit information for the main processing of information. */
-    private StringBuilder auditProcess = new StringBuilder();
+    private final StringBuilder auditProcess = new StringBuilder();
 
     /** Maintains the audit information for results of a process. */
-    private StringBuilder auditResult = new StringBuilder();
+    private final StringBuilder auditResult = new StringBuilder();
 
     /** Maintains the audit information for setup of a process. */
-    private StringBuilder auditSetup = new StringBuilder();
+    private final StringBuilder auditSetup = new StringBuilder();
 
     /**
      * Stores audit information in audit's process.
-     * 
+     *
      * @param audit the information to be stored
      */
-    public void auditProcess(String audit) {
+    public void auditProcess(final String audit) {
 	this.auditProcess.append(audit);
     }
 
     /**
      * Stores audit information in the audit's results.
-     * 
+     *
      * @param audit the information to be stored
      */
-    public void auditResult(String audit) {
+    public void auditResult(final String audit) {
 	this.auditResult.append(audit);
     }
 
     /**
      * Stores audit information in the audit's setup.
-     * 
+     *
      * @param audit the information to be stored
      */
-    public void auditSetup(String audit) {
+    public void auditSetup(final String audit) {
 	this.auditSetup.append(audit);
     }
 
     /**
      * Generates an audit file in the src directory named as "AUDIT_Timestamp". This
      * file contains separated audit setup, process and result information.
-     * 
+     *
      * @param name the name of the output file
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public void createAuditFile(String name) throws IOException {
+    public void createAuditFile(final String name) throws IOException {
 	final File file = new File(name);
 	final FileWriter writer = new FileWriter(file);
-	StringBuilder fileOutput = new StringBuilder();
+	final StringBuilder fileOutput = new StringBuilder();
 
 	fileOutput.append(this.auditSetup);
-	if (this.auditSetup.length() != 0 && this.auditProcess.length() != 0) {
+	if ((this.auditSetup.length() != 0) && (this.auditProcess.length() != 0)) {
 	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
 	}
 	fileOutput.append(this.auditProcess);
-	if (this.auditProcess.length() != 0 && this.auditResult.length() != 0) {
+	if ((this.auditProcess.length() != 0) && (this.auditResult.length() != 0)) {
 	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
 	}
 	fileOutput.append(this.auditResult);

@@ -31,12 +31,6 @@ public class IRV extends VotingSystem {
      */
     private IRVBallot[] voterPool;
 
-    /** Throws an error for default constructor. */
-    IRV() {
-	super();
-	throw new IllegalArgumentException("Default constructor is not allowed.");
-    }
-
     /**
      * Instantiates a new instant runoff voting system.
      *
@@ -49,8 +43,9 @@ public class IRV extends VotingSystem {
 	    final LinkedList<ArrayList<Integer>> ballots) {
 	super(numBallots, numCandidates);
 	this.candidates = new IRVCandidate[numCandidates];
-	for (int i = 0; i < numCandidates; i++)
+	for (int i = 0; i < numCandidates; i++) {
 	    this.candidates[i] = new IRVCandidate(candidates[i]);
+	}
 	this.ballots = new IRVBallot[numBallots];
 	int i = 0;
 	for (final ArrayList<Integer> bal : ballots) {
@@ -61,12 +56,19 @@ public class IRV extends VotingSystem {
 	calculateQuota(numBallots);
 
 	final StringBuilder setup = new StringBuilder(
-		String.format("Voting System:\tInstant Runoff Voting\n\nNumber of Candidates: %s\n\nCandidates:\n",
+		String.format("Voting System:\tInstant Runoff Voting%n%nNumber of Candidates: %s%n%nCandidates:%n",
 			this.numCandidates));
-	for (i = 0; i < this.numCandidates; i++)
-	    setup.append(String.format("\t%d - %s\n", i, candidates[i]));
-	setup.append(String.format("\nNumber of Ballots: %s\n\nBallots: %s\n", this.numBallots, ballots));
+	for (i = 0; i < this.numCandidates; i++) {
+	    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
+	}
+	setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numBallots, ballots));
 	this.auditor.auditSetup(setup.toString());
+    }
+
+    /** Throws an error for default constructor. */
+    IRV() {
+	super();
+	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
 
     /**
@@ -76,27 +78,29 @@ public class IRV extends VotingSystem {
      * @param numBallots the number of ballots cast in the election
      */
     private void calculateQuota(final int numBallots) {
-	if ((numBallots % 2) == 0)
+	if ((numBallots % 2) == 0) {
 	    this.quota = (numBallots / 2) + 1;
-	else
+	} else {
 	    this.quota = (int) Math.ceil(numBallots * 0.5);
+	}
     }
 
     /**
      * Eliminate all candidates who received no votes.
      */
     private void eliminateAllNoVoteCandidates() {
-	final LinkedList<String> eliminatedCandidates = new LinkedList<String>();
-	for (final IRVCandidate curCan : this.candidates)
+	final LinkedList<String> eliminatedCandidates = new LinkedList<>();
+	for (final IRVCandidate curCan : this.candidates) {
 	    if (curCan.getNumVotes() == 0) {
 		curCan.eliminate();
 		eliminatedCandidates.add(curCan.getName());
 	    }
+	}
 	if (eliminatedCandidates.size() > 0) {
 	    final StringBuilder eliminatedCandidateNames = new StringBuilder(
 		    "Eliminated the following candidates who received no votes:\n");
-	    for (final String curCanName : eliminatedCandidates)
-		eliminatedCandidateNames.append(String.format("\t%s\n", curCanName));
+	    eliminatedCandidates
+		    .forEach(curCanName -> eliminatedCandidateNames.append(String.format("\t%s%n", curCanName)));
 	    this.auditor.auditProcess(eliminatedCandidateNames.toString());
 	}
     }
@@ -108,31 +112,32 @@ public class IRV extends VotingSystem {
      * @return the IRV candidate
      */
     private IRVCandidate findMinimumCandidate() {
-	final LinkedList<IRVCandidate> minCandidates = new LinkedList<IRVCandidate>();
+	final LinkedList<IRVCandidate> minCandidates = new LinkedList<>();
 	int minimum = Integer.MAX_VALUE;
-	for (final IRVCandidate curCan : this.candidates)
+	for (final IRVCandidate curCan : this.candidates) {
 	    if (!curCan.isEliminated()) {
 		final int numVotes = curCan.getNumVotes();
-		if (curCan.getNumVotes() == minimum)
+		if (curCan.getNumVotes() == minimum) {
 		    minCandidates.add(curCan);
-		else if (numVotes < minimum) {
+		} else if (numVotes < minimum) {
 		    minCandidates.clear();
 		    minCandidates.add(curCan);
 		    minimum = numVotes;
 		}
 	    }
+	}
 
 	// Determines if random decision is needed.
 	if (minCandidates.size() == 1) {
 	    final IRVCandidate mcan = minCandidates.get(0);
-	    this.auditor.auditProcess(String.format("\nCandidate %s is eliminated with only %d votes.\n",
+	    this.auditor.auditProcess(String.format("%nCandidate %s is eliminated with only %d votes.%n",
 		    mcan.getName(), mcan.getNumVotes()));
 	    return mcan;
 	} else {
 	    final Random randomizer = new Random(System.currentTimeMillis());
 	    final IRVCandidate rcan = minCandidates.get(randomizer.nextInt(minCandidates.size()));
 	    this.auditor.auditProcess(String.format(
-		    "Candidate %s is eliminated with only %d votes.\nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.\n",
+		    "Candidate %s is eliminated with only %d votes.%nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.%n",
 		    rcan.getName(), rcan.getNumVotes()));
 	    return rcan;
 	}
@@ -163,10 +168,10 @@ public class IRV extends VotingSystem {
 		if (!can.isEliminated()) {
 		    can.addBallot(bal);
 		    processedBallots
-			    .append(String.format("Ballot %d cast a vote for %s\n", bal.getID(), can.getName()));
+			    .append(String.format("Ballot %d cast a vote for %s%n", bal.getID(), can.getName()));
 		    if (isMajority(can.getNumVotes())) {
 			processedBallots.append(
-				String.format("\nProcessing Complete!\nCandidate %s has a majority of votes (>= %d).\n",
+				String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
 					can.getName(), this.quota));
 			this.auditor.auditProcess(processedBallots.toString());
 			return can.getName();
@@ -175,8 +180,9 @@ public class IRV extends VotingSystem {
 		    break;
 		}
 	    }
-	    if (wasExhausted)
-		processedBallots.append(String.format("Ballot %d has exhausted all of its votes.\n", bal.getID()));
+	    if (wasExhausted) {
+		processedBallots.append(String.format("Ballot %d has exhausted all of its votes.%n", bal.getID()));
+	    }
 	}
 	this.auditor.auditProcess(processedBallots.toString());
 	return "";
@@ -187,20 +193,22 @@ public class IRV extends VotingSystem {
      *
      * @see VotingSystem#runElection()
      */
+    @Override
     public void runElection() throws IOException {
 	if (!this.wasRun.getAndSet(true)) {
 	    final boolean firstRun = true;
 	    while (true) {
 		int numCandidatesRemaining = 0;
 		final StringBuilder lastCan = new StringBuilder();
-		for (final IRVCandidate curCan : this.candidates)
+		for (final IRVCandidate curCan : this.candidates) {
 		    if (!curCan.isEliminated()) {
 			numCandidatesRemaining++;
 			lastCan.append(curCan.getName());
 		    }
+		}
 		if (numCandidatesRemaining < 2) {
 		    this.auditor.auditProcess(
-			    String.format("\nProcessing Complete!\nOnly one candidate has not been eliminated.\n"));
+			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
 		    this.auditor.auditResult("Election Winner: " + lastCan.toString());
 		    this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan.toString() + "\n");
@@ -210,32 +218,37 @@ public class IRV extends VotingSystem {
 		final StringBuilder ballotsProcessed = new StringBuilder();
 
 		for (final IRVBallot curBallot : this.voterPool) {
-		    if (ballotsProcessed.length() != 0)
+		    if (ballotsProcessed.length() != 0) {
 			ballotsProcessed.append(", ");
+		    }
 		    ballotsProcessed.append(curBallot.getID());
 		}
 		this.auditor.auditProcess("Processing the following ballots:\n\t" + ballotsProcessed.toString() + "\n");
 
 		final String winner = processVoterPool();
 
-		if (winner != "") {
+		if (!"".equals(winner)) {
 		    this.auditor.auditResult("Election Winner: " + winner);
 		    this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
 		    break;
 		} else {
 		    final StringBuilder curPartyVotes = new StringBuilder();
-		    for (final IRVCandidate curCan : this.candidates)
-			if (!curCan.isEliminated())
-			    curPartyVotes.append(String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes()));
+		    for (final IRVCandidate curCan : this.candidates) {
+			if (!curCan.isEliminated()) {
+			    curPartyVotes.append(String.format("\t%s - %d%n", curCan.getName(), curCan.getNumVotes()));
+			}
+		    }
 		    this.auditor.auditProcess("\nRemaining Candidate - Votes:\n" + curPartyVotes.toString());
-		    if (firstRun)
+		    if (firstRun) {
 			eliminateAllNoVoteCandidates();
+		    }
 		    final IRVCandidate can = findMinimumCandidate();
 		    this.voterPool = can.eliminate();
 		}
 	    }
-	} else
+	} else {
 	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
+	}
     }
 }

@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class IRVCandidate extends Candidate {
 
     /** The ballots cast for the candidate. */
-    private LinkedList<IRVBallot> ballots = new LinkedList<IRVBallot>();
+    private LinkedList<IRVBallot> ballots = new LinkedList<>();
 
     /** Maintains whether the candidate has been eliminated. */
     private boolean eliminated = false;

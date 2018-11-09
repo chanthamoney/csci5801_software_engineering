@@ -21,7 +21,7 @@ import org.junit.Test;
 public class TestIRVBallot {
     int testId = 4;
     // initialize a LinkedList of votes and an id
-    ArrayList<Integer> testVotes = new ArrayList<Integer>();
+    ArrayList<Integer> testVotes = new ArrayList<>();
 
     private IRVBallot testBallotInitialize() {
 	// initialize testVotes

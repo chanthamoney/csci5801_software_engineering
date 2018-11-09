@@ -22,7 +22,7 @@ import org.junit.Test;
 public class TestOPLV {
     String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
     String[] parties = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
-    LinkedList<Integer> testBallots = new LinkedList<Integer>();
+    LinkedList<Integer> testBallots = new LinkedList<>();
 
     // Testing IRVOPLV() constructor
     @Test(expected = IllegalArgumentException.class)
@@ -101,8 +101,9 @@ public class TestOPLV {
 		"PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PD", "PE", "PE", "PE",
 		"PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", "PE", };
 	final Random randomizer = new Random(System.currentTimeMillis());
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 100000; i++) {
 	    this.testBallots.add(randomizer.nextInt(300));
+	}
 	final int numSeats = randomizer.nextInt(11) + 10;
 	final VotingSystem vs = new OPLV(this.testBallots.size(), 300, numSeats, candidates_300,
 		parties_100_80_60_40_20, this.testBallots);

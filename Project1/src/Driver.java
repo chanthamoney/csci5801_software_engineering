@@ -20,7 +20,7 @@ import votingsystems.VotingSystem;
 
 /**
  * The Driver of main which generates and runs an election.
- * 
+ *
  * @author <A HREF="mailto:nippe014@umn.edu">Team14 [Cassandra Chanthamontry
  *         (chant077), Jake Nippert (nippe014), Meghann Silagan (silag001),
  *         Christine Tsai (tsaix223)]</A>
@@ -39,7 +39,7 @@ public class Driver {
 
 	final String in_VotingSystem = scanner.nextLine();
 
-	if (in_VotingSystem.equals("IR")) {
+	if ("IR".equals(in_VotingSystem)) {
 	    // Instant Run-off Voting
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
 	    final String in_Candidates = scanner.nextLine();
@@ -87,7 +87,7 @@ public class Driver {
 
     /**
      * Retrieves the instant runoff ballots from a file.
-     * 
+     *
      * @param numBallots    the number of ballots cast in the election
      * @param numCandidates the number of candidates participating in the election
      * @param scanner       the scanner reading the specified file
@@ -95,19 +95,21 @@ public class Driver {
      */
     private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
 	    Scanner scanner) {
-	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<ArrayList<Integer>>();
+	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<>();
 	for (int i = 0; i < numBallots; i++) {
 	    final int[] balVotesOrg = new int[numCandidates];
 	    final String[] ballotInfo = scanner.nextLine().split(", *");
 	    int numVotes = 0;
-	    for (int j = 0; j < ballotInfo.length; j++)
-		if (!ballotInfo[j].equals("")) {
+	    for (int j = 0; j < ballotInfo.length; j++) {
+		if (!"".equals(ballotInfo[j])) {
 		    balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
 		    numVotes++;
 		}
-	    final ArrayList<Integer> balVotes = new ArrayList<Integer>();
-	    for (int j = 0; j < numVotes; j++)
+	    }
+	    final ArrayList<Integer> balVotes = new ArrayList<>();
+	    for (int j = 0; j < numVotes; j++) {
 		balVotes.add(balVotesOrg[j]);
+	    }
 	    in_Ballots.add(balVotes);
 	}
 	return in_Ballots;
@@ -115,20 +117,21 @@ public class Driver {
 
     /**
      * Retrieves the open party list voting ballots from a file.
-     * 
+     *
      * @param numBallots the number of ballots cast in the election
      * @param scanner    the scanner reading the specified file
      * @return the list of ballots
      */
     private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner) {
-	LinkedList<Integer> in_Ballots = new LinkedList<Integer>();
+	LinkedList<Integer> in_Ballots = new LinkedList<>();
 	for (int i = 0; i < numBallots; i++) {
 	    final String[] ballotInfo = scanner.nextLine().split(", *");
-	    for (int j = 0; j < ballotInfo.length; j++)
-		if (!ballotInfo[j].equals("")) {
+	    for (int j = 0; j < ballotInfo.length; j++) {
+		if (!"".equals(ballotInfo[j])) {
 		    in_Ballots.add(j);
 		    break;
 		}
+	    }
 	}
 	return in_Ballots;
     }
@@ -144,8 +147,9 @@ public class Driver {
 	File file = null;
 	VotingSystem vs;
 
-	if (args.length > 0)
+	if (args.length > 0) {
 	    file = new File(args[0].trim());
+	}
 
 	final Scanner consoleReader = new Scanner(System.in);
 	boolean first = true;
