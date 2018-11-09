@@ -1,29 +1,132 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="build">
-	<path id="build.classpath">
-		<pathelement location="classes"/>
-	</path>
-	<target name="init">
-		<mkdir dir="classes"/>
-	</target>
-	<target name="clean">
-		<delete dir="classes"/>
-	</target>
-	<target depends="init" name="build">
-		<javac srcdir="." destdir="classes" source="1.5" target="1.5" fork="yes">
-			<classpath refid="build.classpath"/>
-			<include name="Party.java"/>
-			<include name="OPLVBallot.java"/>
-			<include name="Ballot.java"/>
-			<include name="IRVBallot.java"/>
-			<include name="IRV.java"/>
-			<include name="IRVCandidate.java"/>
-			<include name="Candidate.java"/>
-			<include name="OPLVCandidate.java"/>
-			<include name="OPLV.java"/>
-			<include name="Driver.java"/>
-			<include name="VotingSystem.java"/>
-			<include name="Auditor.java"/>
-		</javac>
-	</target>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="src">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../../Applications/Eclipse.app/Contents/Eclipse/"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="JUnit 5.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.api_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.params_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.commons_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.engine_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.launcher_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.runner_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.suite.api_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.vintage.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.opentest4j_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.apiguardian_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
+    <path id="src.classpath">
+        <pathelement location="classes"/>
+        <path refid="JUnit 5.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="classes"/>
+        <copy includeemptydirs="false" todir="classes">
+            <fileset dir=".">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="."/>
+            <classpath refid="src.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="Driver (1)">
+        <java classname="Driver" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
+    </target>
+    <target name="TestOPLV (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestOPLV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestAuditor (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestAuditor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestRunner (1)">
+        <java classname="TestRunner" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
+    </target>
+    <target name="TestIRV (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestIRV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestIRVBallot (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestIRVBallot" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestIRVCandidate (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestIRVCandidate" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
 </project>
