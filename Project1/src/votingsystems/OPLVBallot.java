@@ -21,7 +21,7 @@ public class OPLVBallot extends Ballot {
     private final int vote;
 
     /** Throws an error for default constructor. */
-    public OPLVBallot() {
+    OPLVBallot() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
@@ -32,7 +32,7 @@ public class OPLVBallot extends Ballot {
      * @param vote the vote
      * @param id   the id
      */
-    public OPLVBallot(int vote, int id) {
+    OPLVBallot(int vote, int id) {
 	super(id);
 	this.vote = vote;
     }

@@ -27,7 +27,7 @@ public class IRVBallot extends Ballot {
     private final ArrayList<Integer> votes;
 
     /** Throws an error for default constructor. */
-    public IRVBallot() {
+    IRVBallot() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
@@ -38,7 +38,7 @@ public class IRVBallot extends Ballot {
      * @param votes the votes
      * @param id    the id
      */
-    public IRVBallot(ArrayList<Integer> votes, int id) {
+    IRVBallot(ArrayList<Integer> votes, int id) {
 	super(id);
 	this.votes = votes;
     }

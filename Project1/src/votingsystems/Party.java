@@ -30,7 +30,7 @@ public class Party {
     private int numVotes = 0;
 
     /** Throws an error for default constructor. */
-    public Party() {
+    Party() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
 
@@ -39,7 +39,7 @@ public class Party {
      *
      * @param name the name of the party
      */
-    public Party(String name) {
+    Party(String name) {
 	this.name = name;
     }
 

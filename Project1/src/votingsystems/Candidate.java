@@ -21,7 +21,7 @@ abstract public class Candidate {
     protected int numVotes = 0;
 
     /** Throws an error for default constructor. */
-    public Candidate() {
+    Candidate() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
 
@@ -30,7 +30,7 @@ abstract public class Candidate {
      *
      * @param name the name of the candidate
      */
-    public Candidate(String name) {
+    Candidate(String name) {
 	this.name = name;
     }
 

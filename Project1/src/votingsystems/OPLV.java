@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
-import mariahgui.MariahElectionResults;
-
 /**
  * Represents an open party list voting system.
  */
@@ -92,7 +90,7 @@ public class OPLV extends VotingSystem {
     }
 
     /** Throws an error for default constructor. */
-    public OPLV() {
+    OPLV() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
@@ -233,10 +231,8 @@ public class OPLV extends VotingSystem {
 	    this.seats.forEach(
 		    curCan -> res.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	    this.auditor.auditResult(res.toString());
-	    String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+	    this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString());
-	    MariahElectionResults frame = new MariahElectionResults(auditFile, res.toString());
-	    frame.setVisible(true);
 	} else {
 	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
 	}
