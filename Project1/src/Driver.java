@@ -1,9 +1,29 @@
+
+// File:         Driver.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
+/**
+ * The Driver of main which generates and runs an election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import votingsystems.IRV;
+import votingsystems.OPLV;
+import votingsystems.VotingSystem;
 
 /**
  * The Driver of main which generates and runs an election.

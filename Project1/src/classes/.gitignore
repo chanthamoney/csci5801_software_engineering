@@ -2,3 +2,7 @@
 AUDIT*
 TEST_AUDIT*
 /doc/
+/votingsystems/
+/auditor/
+/main/
+/test/

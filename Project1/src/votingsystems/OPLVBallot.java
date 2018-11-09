@@ -1,3 +1,14 @@
+
+// File:         OPLVBallot.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
+package votingsystems;
+
 /**
  * Represents a ballot in an open party list voting election.
  * 

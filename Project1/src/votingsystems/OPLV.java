@@ -1,3 +1,14 @@
+
+// File:         OPLV.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
+package votingsystems;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
@@ -49,7 +60,7 @@ public class OPLV extends VotingSystem {
      * @param parties       the parties participating in the election
      * @param ballots       the ballots cast in the election
      */
-    OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
+    public OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
 	    LinkedList<Integer> ballots) {
 	super(numBallots, numCandidates);
 	this._numSeats = numSeats;

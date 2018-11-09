@@ -1,5 +1,18 @@
+
+// File:         VotingSystem.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
+package votingsystems;
+
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import auditor.Auditor;
 
 /**
  * Represents an abstract voting system.
@@ -46,5 +59,5 @@ abstract public class VotingSystem {
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    abstract protected void runElection() throws IOException;
+    public abstract void runElection() throws IOException;
 }

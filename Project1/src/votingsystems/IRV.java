@@ -1,3 +1,14 @@
+
+// File:         IRV.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
+package votingsystems;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,7 +48,7 @@ public class IRV extends VotingSystem {
      * @param candidates    the candidates running in the election
      * @param ballots       the ballots being cast in the election
      */
-    IRV(final int numBallots, final int numCandidates, final String[] candidates,
+    public IRV(final int numBallots, final int numCandidates, final String[] candidates,
 	    final LinkedList<ArrayList<Integer>> ballots) {
 	super(numBallots, numCandidates);
 	this._candidates = new IRVCandidate[numCandidates];
