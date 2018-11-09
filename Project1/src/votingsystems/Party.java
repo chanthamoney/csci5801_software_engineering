@@ -14,23 +14,20 @@ import java.util.Random;
 
 /**
  * Represents a party in an open party list voting.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class Party {
 
     /** The candidates belonging to the party. */
-    public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
+    private ArrayList<OPLVCandidate> candidates = new ArrayList<OPLVCandidate>();
 
     /** The name of the party. */
-    private final String _name;
+    private final String name;
 
     /** The number of seats allocated to the party for candidates. */
-    private int _numSeats = 0;
+    private int numSeats = 0;
 
     /** The total number of votes cast to the party. */
-    private int _numVotes = 0;
+    private int numVotes = 0;
 
     /** Throws an error for default constructor. */
     Party() {
@@ -43,7 +40,7 @@ public class Party {
      * @param name the name of the party
      */
     Party(String name) {
-	this._name = name;
+	this.name = name;
     }
 
     /**
@@ -52,14 +49,14 @@ public class Party {
      * @param candidate the candidate
      */
     public void addCandidate(OPLVCandidate candidate) {
-	this._candidates.add(candidate);
+	this.candidates.add(candidate);
     }
 
     /**
      * Records a cast vote to the party.
      */
     public void addVote() {
-	this._numVotes += 1;
+	this.numVotes += 1;
     }
 
     /**
@@ -68,7 +65,7 @@ public class Party {
      * @return the candidates in the party
      */
     public ArrayList<OPLVCandidate> getCandidates() {
-	return this._candidates;
+	return this.candidates;
     }
 
     /**
@@ -77,7 +74,7 @@ public class Party {
      * @return the name
      */
     public String getName() {
-	return this._name;
+	return this.name;
     }
 
     /**
@@ -86,7 +83,7 @@ public class Party {
      * @return the number of candidates
      */
     public int getNumCandidates() {
-	return this._candidates.size();
+	return this.candidates.size();
     }
 
     /**
@@ -95,7 +92,7 @@ public class Party {
      * @return the number of seats
      */
     public int getNumSeats() {
-	return this._numSeats;
+	return this.numSeats;
     }
 
     /**
@@ -104,7 +101,7 @@ public class Party {
      * @return the number of votes
      */
     public int getNumVotes() {
-	return this._numVotes;
+	return this.numVotes;
     }
 
     /**
@@ -114,8 +111,8 @@ public class Party {
      */
     public ArrayList<OPLVCandidate> getWinningCandidates() {
 	final ArrayList<OPLVCandidate> winners = new ArrayList<OPLVCandidate>();
-	for (int i = 0; (i < this._numSeats) && (i < this._candidates.size()); i++)
-	    winners.add(this._candidates.get(i));
+	for (int i = 0; (i < this.numSeats) && (i < this.candidates.size()); i++)
+	    winners.add(this.candidates.get(i));
 	return winners;
     }
 
@@ -125,27 +122,27 @@ public class Party {
      * @return a string of an audit for the ranking of candidates
      */
     public String rankCandidates() {
-	String ret = String.format("\tParty %s:\n", this._name);
+	String ret = String.format("\tParty %s:\n", this.name);
 
 	// Randomly decide between ties by using random.
 	final Random random = new Random(System.currentTimeMillis());
-	this._candidates.sort(
+	this.candidates.sort(
 		(o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()) == 0 ? (random.nextBoolean() ? -1 : 1)
 			: Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 
 	int minVotes;
-	if ((this._numSeats <= this._candidates.size()) && (this._numSeats > 0))
-	    minVotes = this._candidates.get(this._numSeats - 1).getNumVotes();
+	if ((this.numSeats <= this.candidates.size()) && (this.numSeats > 0))
+	    minVotes = this.candidates.get(this.numSeats - 1).getNumVotes();
 	else
 	    minVotes = Integer.MAX_VALUE;
 	int firstIndx = -1, lastIndx = -1;
-	for (int i = 0; i < this._candidates.size(); i++) {
-	    final OPLVCandidate can = this._candidates.get(i);
-	    if (i < this._numSeats)
+	for (int i = 0; i < this.candidates.size(); i++) {
+	    final OPLVCandidate can = this.candidates.get(i);
+	    if (i < this.numSeats)
 		ret += "\t\t* ";
 	    else
 		ret += "\t\t- ";
-	    final OPLVCandidate curCan = this._candidates.get(i);
+	    final OPLVCandidate curCan = this.candidates.get(i);
 	    ret += String.format("%s [%d vote", curCan.getName(), curCan.getNumVotes());
 	    if (curCan.getNumVotes() == 1)
 		ret += "]\n";
@@ -159,7 +156,7 @@ public class Party {
 	}
 
 	// If more than one minimum relay that there was a shuffle decision.
-	if ((firstIndx != lastIndx) && (lastIndx >= this._numSeats))
+	if ((firstIndx != lastIndx) && (lastIndx >= this.numSeats))
 	    ret += String.format(
 		    "\t\tNOTE: Randomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.\n",
 		    firstIndx + 1, lastIndx + 1);
@@ -172,6 +169,6 @@ public class Party {
      * @param num the new number of seats to be allocated
      */
     public void setNumSeats(int num) {
-	this._numSeats = num;
+	this.numSeats = num;
     }
 }

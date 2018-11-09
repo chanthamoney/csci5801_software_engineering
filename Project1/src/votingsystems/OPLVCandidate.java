@@ -11,14 +11,11 @@ package votingsystems;
 
 /**
  * Represents a candidate in an open party list voting election.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class OPLVCandidate extends Candidate {
 
     /** The party a candidate belongs to. */
-    private final Party _party;
+    private final Party party;
 
     /** Throws an error for default constructor. */
     OPLVCandidate() {
@@ -34,15 +31,15 @@ public class OPLVCandidate extends Candidate {
      */
     OPLVCandidate(final String name, final Party party) {
 	super(name);
-	this._party = party;
+	this.party = party;
     }
 
     /**
      * Records a cast vote to the candidate.
      */
     public void castVote() {
-	this._party.addVote();
-	this._numVotes += 1;
+	this.party.addVote();
+	this.numVotes += 1;
     }
 
     /**
@@ -51,6 +48,6 @@ public class OPLVCandidate extends Candidate {
      * @return the party
      */
     public Party getParty() {
-	return this._party;
+	return this.party;
     }
 }

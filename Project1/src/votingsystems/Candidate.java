@@ -11,17 +11,14 @@ package votingsystems;
 
 /**
  * Represents an abstract candidate in an election.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 abstract public class Candidate {
 
     /** The name of the candidate. */
-    protected String _name = "";
+    protected String name = "";
 
     /** The number of votes currently tabulated for the candidate. */
-    protected int _numVotes = 0;
+    protected int numVotes = 0;
 
     /** Throws an error for default constructor. */
     Candidate() {
@@ -34,7 +31,7 @@ abstract public class Candidate {
      * @param name the name of the candidate
      */
     Candidate(String name) {
-	this._name = name;
+	this.name = name;
     }
 
     /**
@@ -43,7 +40,7 @@ abstract public class Candidate {
      * @return the name of the candidate
      */
     public String getName() {
-	return this._name;
+	return this.name;
     }
 
     /**
@@ -52,6 +49,6 @@ abstract public class Candidate {
      * @return the number of votes
      */
     public int getNumVotes() {
-	return this._numVotes;
+	return this.numVotes;
     }
 }

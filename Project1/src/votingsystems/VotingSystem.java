@@ -16,23 +16,20 @@ import auditor.Auditor;
 
 /**
  * Represents an abstract voting system.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 abstract public class VotingSystem {
 
     /** The auditor which maintains information about the election processing. */
-    protected Auditor _auditor;
+    protected Auditor auditor;
 
     /** The number of ballots cast in the election. */
-    protected int _numBallots;
+    protected int numBallots;
 
     /** The number of candidates participating in the election. */
-    protected int _numCandidates;
+    protected int numCandidates;
 
     /** The quota of votes necessary to be guaranteed a win in the election. */
-    protected int _quota;
+    protected int quota;
 
     /** Maintains whether the election has been run before. */
     protected AtomicBoolean wasRun = new AtomicBoolean(false);
@@ -49,9 +46,9 @@ abstract public class VotingSystem {
      * @param numCandidates the number of candidates
      */
     VotingSystem(int numBallots, int numCandidates) {
-	this._numBallots = numBallots;
-	this._numCandidates = numCandidates;
-	this._auditor = new Auditor();
+	this.numBallots = numBallots;
+	this.numCandidates = numCandidates;
+	this.auditor = new Auditor();
     }
 
     /**

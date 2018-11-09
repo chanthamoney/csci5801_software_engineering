@@ -60,8 +60,12 @@ public class TestIRVCandidate {
 	// test AddBallot() with the testBallot
 	this.testCandidate.addBallot(this.testBallot);
 
+	// Check if number of votes is one
+	assertEquals(this.testCandidate.getNumVotes(), 1);
+
 	// Check if elim ballots(0)/elim ballots(numBallots-1) == testBallot
-	assertEquals(this.testBallot, this.testCandidate._ballots.get(1 - 1));
+	IRVBallot[] ballots = testCandidate.eliminate();
+	assertEquals(this.testBallot, ballots[0]);
     }
 
     // Testing eliminate method

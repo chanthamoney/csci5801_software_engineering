@@ -13,17 +13,14 @@ import java.util.LinkedList;
 
 /**
  * Represents a candidate in an instant runoff election.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class IRVCandidate extends Candidate {
 
     /** The ballots cast for the candidate. */
-    public LinkedList<IRVBallot> _ballots = new LinkedList<IRVBallot>();
+    private LinkedList<IRVBallot> ballots = new LinkedList<IRVBallot>();
 
     /** Maintains whether the candidate has been eliminated. */
-    private boolean _eliminated = false;
+    private boolean eliminated = false;
 
     /** Throws an error for default constructor. */
     IRVCandidate() {
@@ -47,8 +44,8 @@ public class IRVCandidate extends Candidate {
      * @param ballot the ballot
      */
     public void addBallot(IRVBallot ballot) {
-	this._ballots.add(ballot);
-	this._numVotes += 1;
+	this.ballots.add(ballot);
+	this.numVotes += 1;
     }
 
     /**
@@ -58,9 +55,9 @@ public class IRVCandidate extends Candidate {
      * @return the IRV list of ballots cast for the candidate
      */
     public IRVBallot[] eliminate() {
-	this._eliminated = true;
-	final IRVBallot[] elimBallots = new IRVBallot[this._ballots.size()];
-	return this._ballots.toArray(elimBallots);
+	this.eliminated = true;
+	final IRVBallot[] elimBallots = new IRVBallot[this.ballots.size()];
+	return this.ballots.toArray(elimBallots);
     }
 
     /**
@@ -69,6 +66,6 @@ public class IRVCandidate extends Candidate {
      * @return true, if the candidate has been eliminated
      */
     public boolean isEliminated() {
-	return this._eliminated;
+	return this.eliminated;
     }
 }

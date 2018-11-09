@@ -11,14 +11,11 @@ package votingsystems;
 
 /**
  * Represents an abstract ballot.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 abstract public class Ballot {
 
     /** The unique identifier of a ballot. */
-    private final int _id;
+    private final int id;
 
     /** Throws an error for default constructor. */
     Ballot() {
@@ -31,7 +28,7 @@ abstract public class Ballot {
      * @param id the unique identifier for the ballot.
      */
     Ballot(int id) {
-	this._id = id;
+	this.id = id;
     }
 
     /**
@@ -40,6 +37,6 @@ abstract public class Ballot {
      * @return the id
      */
     public int getID() {
-	return this._id;
+	return this.id;
     }
 }

@@ -7,13 +7,6 @@
 // This code is copyright (c) 2018 University of Minnesota - Twin Cities
 //
 
-/**
- * The Driver of main which generates and runs an election.
- * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
- */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,8 +21,9 @@ import votingsystems.VotingSystem;
 /**
  * The Driver of main which generates and runs an election.
  * 
- * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
- *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
+ * @author <A HREF="mailto:nippe014@umn.edu">Team14 [Cassandra Chanthamontry
+ *         (chant077), Jake Nippert (nippe014), Meghann Silagan (silag001),
+ *         Christine Tsai (tsaix223)]</A>
  */
 public class Driver {
 
