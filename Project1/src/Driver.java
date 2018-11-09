@@ -141,18 +141,27 @@ public class Driver {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static void main(String[] args) throws IOException {
-	final String in_BallotFile;
+	File file = null;
+	VotingSystem vs;
 
 	if (args.length > 0)
-	    in_BallotFile = args[0].trim();
-	else {
-	    final Scanner consoleReader = new Scanner(System.in);
-	    System.out.print("Enter Name of Ballot File: ");
-	    in_BallotFile = consoleReader.nextLine().trim();
-	    consoleReader.close();
+	    file = new File(args[0].trim());
+
+	final Scanner consoleReader = new Scanner(System.in);
+	boolean first = true;
+	while (file == null || !file.isFile()) {
+	    if (!first) {
+		System.out.print("Invalid file name. Please enter the name of the ballot file: ");
+	    } else {
+		System.out.print("Enter Name of Ballot File: ");
+		first = false;
+	    }
+	    final String in_BallotFile = consoleReader.nextLine().trim();
+	    file = new File(in_BallotFile);
 	}
-	final File file = new File(in_BallotFile);
-	VotingSystem vs = votingSystemFromFile(file);
+	consoleReader.close();
+
+	vs = votingSystemFromFile(file);
 
 	vs.runElection();
     }
