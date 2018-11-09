@@ -110,7 +110,7 @@ public class OPLV extends VotingSystem {
 	int seatsLeft = this._numSeats;
 
 	final StringBuilder seatAllocations = new StringBuilder(String.format(
-		"\nSeat Allocation Calculation:\n%d Seats Remaining\nAllocating Initial Seats [Floor(Number of Votes / Quota {%d}) with Max as Number of Candidates]:\n",
+		"\nSeat Allocation Calculation:\n\n- %d Seats Remaining\nAllocating Initial Seats [Floor(Number of Votes / Quota {%d}) with Max as Number of Candidates]:\n",
 		seatsLeft, this._quota));
 
 	for (final Party curParty : this._parties) {
@@ -124,7 +124,7 @@ public class OPLV extends VotingSystem {
 		    curParty.getNumVotes() % this._quota));
 	}
 	while (seatsLeft > 0) {
-	    seatAllocations.append(String.format("%d Seats Remaining\n", seatsLeft));
+	    seatAllocations.append(String.format("\n- %d Seats Remaining\n", seatsLeft));
 	    final LinkedList<Party> rankedRemainders = new LinkedList<Party>();
 	    // Retrieve Parties that do not have all seats filled
 	    for (final Party curParty : this._parties)
@@ -138,20 +138,23 @@ public class OPLV extends VotingSystem {
 			    ? getRandomSortValue(random)
 			    : Integer.compare(o2.getNumVotes() % this._quota, o1.getNumVotes() % this._quota));
 
-	    if (this._wasRandomRanking) {
-		seatAllocations.append(
-			"NOTE: There was a tie in remainders which was resolved randomly. This may or may not have caused a consequential tie in seat allocations.\n");
-		this._wasRandomRanking = false;
-	    }
-
 	    seatAllocations.append(String.format("Allocating Additional Seats to Largest Remainders:\n", seatsLeft));
-	    // If there are enough seats for all largest: add all.
-	    int newSeats;
-	    for (newSeats = 0; (newSeats < rankedRemainders.size()) && (newSeats < seatsLeft); newSeats++) {
-		final Party curParty = rankedRemainders.get(newSeats);
+	    // Add as many remaining seats as possible
+	    int newSeats = Math.min(rankedRemainders.size(), seatsLeft);
+	    for (int i = 0; i < newSeats; i++) {
+		final Party curParty = rankedRemainders.get(i);
 		curParty.setNumSeats(curParty.getNumSeats() + 1);
 		seatAllocations.append(String.format("\tAllocating Additional Seat to %s [%d Seats]\n",
 			curParty.getName(), curParty.getNumSeats()));
+	    }
+	    // If there were any random rankings, determine if consequential and audit this
+	    // finding
+	    if (this._wasRandomRanking && (seatsLeft < rankedRemainders.size())
+		    && (rankedRemainders.get(newSeats - 1).getNumVotes()
+			    % this._quota == rankedRemainders.get(newSeats).getNumVotes() % this._quota)) {
+		seatAllocations
+			.append("NOTE: There was a consequential tie in remainders which was resolved randomly.\n");
+		this._wasRandomRanking = false;
 	    }
 	    seatsLeft -= newSeats;
 	}

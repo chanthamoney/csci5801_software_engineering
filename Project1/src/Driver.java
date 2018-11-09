@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -8,6 +9,78 @@ import java.util.Scanner;
  * The Driver of main which generates and runs an election.
  */
 public class Driver {
+    private static VotingSystem votingSystemFromFile(File file) throws FileNotFoundException {
+	final Scanner scanner = new Scanner(file);
+
+	final String in_VotingSystem = scanner.nextLine();
+
+	if (in_VotingSystem.equals("IR")) {
+	    // Instant Run-off Voting
+	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    final String in_Candidates = scanner.nextLine();
+	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates,
+		    scanner);
+	    scanner.close();
+	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots);
+	} else {
+	    // Open Party Listing
+	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    final String in_Candidates = scanner.nextLine();
+	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+	    final String[] candidates = new String[in_NumCandidates];
+	    final String[] parties = partiesFromFile(in_NumCandidates, cpPairs, candidates);
+	    final int in_NumSeats = Integer.valueOf(scanner.nextLine());
+	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
+	    scanner.close();
+	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+	}
+    }
+
+    private static String[] partiesFromFile(int numCandidates, String[] cpPairs, String[] candidates) {
+	String[] parties = new String[numCandidates];
+	for (int i = 0; i < numCandidates; i++) {
+	    final String[] pair = cpPairs[i].substring(1, cpPairs[i].length() - 1).split(", *");
+	    candidates[i] = pair[0];
+	    parties[i] = pair[1];
+	}
+	return parties;
+    }
+
+    private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
+	    Scanner scanner) {
+	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<ArrayList<Integer>>();
+	for (int i = 0; i < numBallots; i++) {
+	    final int[] balVotesOrg = new int[numCandidates];
+	    final String[] ballotInfo = scanner.nextLine().split(", *");
+	    int numVotes = 0;
+	    for (int j = 0; j < ballotInfo.length; j++)
+		if (!ballotInfo[j].equals("")) {
+		    balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
+		    numVotes++;
+		}
+	    final ArrayList<Integer> balVotes = new ArrayList<Integer>();
+	    for (int j = 0; j < numVotes; j++)
+		balVotes.add(balVotesOrg[j]);
+	    in_Ballots.add(balVotes);
+	}
+	return in_Ballots;
+    }
+
+    private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner) {
+	LinkedList<Integer> in_Ballots = new LinkedList<Integer>();
+	for (int i = 0; i < numBallots; i++) {
+	    final String[] ballotInfo = scanner.nextLine().split(", *");
+	    for (int j = 0; j < ballotInfo.length; j++)
+		if (!ballotInfo[j].equals("")) {
+		    in_Ballots.add(j);
+		    break;
+		}
+	}
+	return in_Ballots;
+    }
 
     /**
      * The main method used to generate an election from a file (passed in as
@@ -28,64 +101,8 @@ public class Driver {
 	    consoleReader.close();
 	}
 	final File file = new File(in_BallotFile);
-	final Scanner fileReader = new Scanner(file);
+	VotingSystem vs = votingSystemFromFile(file);
 
-	final String in_VotingSystem = fileReader.nextLine();
-
-	VotingSystem vs = null;
-
-	if (in_VotingSystem.equals("IR")) {
-	    // Instant Run-off Voting
-	    final int in_NumCandidates = Integer.valueOf(fileReader.nextLine());
-
-	    final String in_Candidates = fileReader.nextLine();
-	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
-	    final int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-	    final LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<ArrayList<Integer>>();
-	    for (int i = 0; i < in_NumBallots; i++) {
-		final int[] balVotesOrg = new int[in_NumCandidates];
-		final String[] ballotInfo = fileReader.nextLine().split(", *");
-		int numVotes = 0;
-		for (int j = 0; j < ballotInfo.length; j++)
-		    if (!ballotInfo[j].equals("")) {
-			balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
-			numVotes++;
-		    }
-		final ArrayList<Integer> balVotes = new ArrayList<Integer>();
-		for (int j = 0; j < numVotes; j++)
-		    balVotes.add(balVotesOrg[j]);
-		in_Ballots.add(balVotes);
-	    }
-	    vs = new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots);
-	} else {
-	    // Open Party Listing
-	    final int in_NumCandidates = Integer.valueOf(fileReader.nextLine());
-	    final String in_Candidates = fileReader.nextLine();
-
-	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
-	    final String[] candidates = new String[in_NumCandidates];
-	    final String[] parties = new String[in_NumCandidates];
-	    for (int i = 0; i < in_NumCandidates; i++) {
-		final String[] pair = cpPairs[i].substring(1, cpPairs[i].length() - 1).split(", *");
-		candidates[i] = pair[0];
-		parties[i] = pair[1];
-	    }
-
-	    final int in_NumSeats = Integer.valueOf(fileReader.nextLine());
-	    final int in_NumBallots = Integer.valueOf(fileReader.nextLine());
-	    final LinkedList<Integer> in_Ballots = new LinkedList<Integer>();
-	    for (int i = 0; i < in_NumBallots; i++) {
-		final String[] ballotInfo = fileReader.nextLine().split(", *");
-		for (int j = 0; j < ballotInfo.length; j++)
-		    if (!ballotInfo[j].equals("")) {
-			in_Ballots.add(j);
-			break;
-		    }
-
-	    }
-	    vs = new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
-	}
 	vs.runElection();
-	fileReader.close();
     }
 }

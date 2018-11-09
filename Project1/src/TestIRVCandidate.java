@@ -50,7 +50,7 @@ public class TestIRVCandidate {
 	this.testCandidate.addBallot(this.testBallot);
 
 	// Check if elim ballots(0)/elim ballots(numBallots-1) == testBallot
-	assertEquals(this.testBallot, this.testCandidate._elimBallots.get(1 - 1));
+	assertEquals(this.testBallot, this.testCandidate._ballots.get(1 - 1));
     }
 
     // Testing eliminate method

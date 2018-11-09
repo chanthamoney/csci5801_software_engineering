@@ -120,8 +120,8 @@ public class IRV extends VotingSystem {
 	// Determines if random decision is needed.
 	if (minCandidates.size() == 1) {
 	    final IRVCandidate mcan = minCandidates.get(0);
-	    this._auditor.auditProcess(String.format("Candidate %s is eliminated with only %d votes.\n", mcan.getName(),
-		    mcan.getNumVotes()));
+	    this._auditor.auditProcess(String.format("\nCandidate %s is eliminated with only %d votes.\n",
+		    mcan.getName(), mcan.getNumVotes()));
 	    return mcan;
 	} else {
 	    final Random randomizer = new Random(System.currentTimeMillis());
@@ -224,7 +224,7 @@ public class IRV extends VotingSystem {
 		    for (final IRVCandidate curCan : this._candidates)
 			if (!curCan.isEliminated())
 			    curPartyVotes.append(String.format("\t%s - %d\n", curCan.getName(), curCan.getNumVotes()));
-		    this._auditor.auditProcess("Remaining Candidate - Votes:\n" + curPartyVotes.toString());
+		    this._auditor.auditProcess("\nRemaining Candidate - Votes:\n" + curPartyVotes.toString());
 		    if (firstRun)
 			eliminateAllNoVoteCandidates();
 		    final IRVCandidate can = findMinimumCandidate();
