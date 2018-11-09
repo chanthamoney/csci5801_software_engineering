@@ -1,3 +1,12 @@
+
+// File:         TestIRV.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
 package votingsystems;
 
 import static org.junit.Assert.assertEquals;

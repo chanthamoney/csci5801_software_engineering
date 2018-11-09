@@ -1,3 +1,12 @@
+
+// File:         TestAuditor.java
+// Created:      2018/11/08
+// Last Changed: $Date: 2018/11/08 11:37:56 $
+// Author:       <A HREF="mailto:"></A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
 package auditor;
 
 import static org.junit.Assert.assertFalse;
