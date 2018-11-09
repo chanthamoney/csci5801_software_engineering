@@ -121,6 +121,24 @@
             <classpath refid="src.classpath"/>
         </junit>
     </target>
+    <target name="TestIRV (2)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="votingsystems.TestIRV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestIRVCandidate (2)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="votingsystems.TestIRVCandidate" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
             <fileset dir="${junit.output.dir}">
