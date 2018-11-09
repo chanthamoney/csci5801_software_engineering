@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 /**
  * Represents a ballot in an instant runoff election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class IRVBallot extends Ballot {
 
@@ -15,9 +18,7 @@ public class IRVBallot extends Ballot {
      */
     private final ArrayList<Integer> _votes;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     IRVBallot() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

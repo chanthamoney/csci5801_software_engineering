@@ -5,17 +5,16 @@ import java.util.Random;
 
 /**
  * Represents an Instant Runoff Voting System.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class IRV extends VotingSystem {
 
-    /**
-     * The ballots being cast in the election.
-     */
+    /** The ballots being cast in the election. */
     private final IRVBallot[] _ballots;
 
-    /**
-     * The candidates participating in the election.
-     */
+    /** The candidates participating in the election. */
     private final IRVCandidate[] _candidates;
 
     /**
@@ -24,9 +23,7 @@ public class IRV extends VotingSystem {
      */
     private IRVBallot[] _voterPool;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     IRV() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

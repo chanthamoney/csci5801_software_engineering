@@ -1,5 +1,8 @@
 /**
  * Represents a ballot in an open party list voting election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class OPLVBallot extends Ballot {
 
@@ -9,9 +12,7 @@ public class OPLVBallot extends Ballot {
      */
     private final int _vote;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     OPLVBallot() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

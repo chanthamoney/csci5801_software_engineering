@@ -1,21 +1,18 @@
 /**
  * Represents an abstract candidate in an election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 abstract public class Candidate {
 
-    /**
-     * The name of the candidate.
-     */
+    /** The name of the candidate. */
     protected String _name = "";
 
-    /**
-     * The number of votes currently tabulated for the candidate.
-     */
+    /** The number of votes currently tabulated for the candidate. */
     protected int _numVotes = 0;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     Candidate() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }

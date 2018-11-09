@@ -1,14 +1,15 @@
 /**
  * Represents a candidate in an open party list voting election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class OPLVCandidate extends Candidate {
 
     /** The party a candidate belongs to. */
     private final Party _party;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     OPLVCandidate() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

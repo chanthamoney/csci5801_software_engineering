@@ -5,21 +5,18 @@ import java.io.IOException;
 /**
  * Represents an auditor for a process. Can store information regarding the
  * setup, processing and results of a process and generate a file when complete.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class Auditor {
-    /**
-     * Maintains the audit information for the main processing of information.
-     */
+    /** Maintains the audit information for the main processing of information. */
     private StringBuilder _auditProcess = new StringBuilder();
 
-    /**
-     * Maintains the audit information for results of a process.
-     */
+    /** Maintains the audit information for results of a process. */
     private StringBuilder _auditResult = new StringBuilder();
 
-    /**
-     * Maintains the audit information for setup of a process.
-     */
+    /** Maintains the audit information for setup of a process. */
     private StringBuilder _auditSetup = new StringBuilder();
 
     /**

@@ -3,31 +3,25 @@ import java.util.Random;
 
 /**
  * Represents a party in an open party list voting.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class Party {
 
-    /**
-     * The candidates belonging to the party.
-     */
+    /** The candidates belonging to the party. */
     public ArrayList<OPLVCandidate> _candidates = new ArrayList<OPLVCandidate>();
 
-    /**
-     * The name of the party.
-     */
+    /** The name of the party. */
     private final String _name;
 
-    /**
-     * The number of seats allocated to the party for candidates.
-     */
+    /** The number of seats allocated to the party for candidates. */
     private int _numSeats = 0;
-    /**
-     * The total number of votes cast to the party.
-     */
+
+    /** The total number of votes cast to the party. */
     private int _numVotes = 0;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     Party() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }

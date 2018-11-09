@@ -2,22 +2,19 @@ import java.util.LinkedList;
 
 /**
  * Represents a candidate in an instant runoff election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class IRVCandidate extends Candidate {
 
-    /**
-     * The ballots cast for the candidate.
-     */
+    /** The ballots cast for the candidate. */
     public LinkedList<IRVBallot> _ballots = new LinkedList<IRVBallot>();
 
-    /**
-     * Maintains whether the candidate has been eliminated.
-     */
+    /** Maintains whether the candidate has been eliminated. */
     private boolean _eliminated = false;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     IRVCandidate() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

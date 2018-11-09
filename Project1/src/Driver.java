@@ -7,8 +7,19 @@ import java.util.Scanner;
 
 /**
  * The Driver of main which generates and runs an election.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class Driver {
+
+    /**
+     * Generates a voting system from a standardized voting system file.
+     *
+     * @param file the file
+     * @return the voting system
+     * @throws FileNotFoundException the file not found exception
+     */
     private static VotingSystem votingSystemFromFile(File file) throws FileNotFoundException {
 	final Scanner scanner = new Scanner(file);
 
@@ -29,8 +40,11 @@ public class Driver {
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
 	    final String in_Candidates = scanner.nextLine();
 	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+
 	    final String[] candidates = new String[in_NumCandidates];
-	    final String[] parties = partiesFromFile(in_NumCandidates, cpPairs, candidates);
+	    final String[] parties = new String[in_NumCandidates];
+	    CandidateParyPairsSeparator(in_NumCandidates, cpPairs, candidates, parties);
+
 	    final int in_NumSeats = Integer.valueOf(scanner.nextLine());
 	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
@@ -39,16 +53,32 @@ public class Driver {
 	}
     }
 
-    private static String[] partiesFromFile(int numCandidates, String[] cpPairs, String[] candidates) {
-	String[] parties = new String[numCandidates];
-	for (int i = 0; i < numCandidates; i++) {
+    /**
+     * Stores the separated strings of candidate party pairs into the designated
+     * lists.
+     *
+     * @param numPairs   the number of pairs to separate
+     * @param cpPairs    the candidate party pairs
+     * @param candidates the list in which to store candidate names
+     * @param parties    the list in which to store party names
+     */
+    private static void CandidateParyPairsSeparator(int numPairs, String[] cpPairs, String[] candidates,
+	    String[] parties) {
+	for (int i = 0; i < numPairs; i++) {
 	    final String[] pair = cpPairs[i].substring(1, cpPairs[i].length() - 1).split(", *");
 	    candidates[i] = pair[0];
 	    parties[i] = pair[1];
 	}
-	return parties;
     }
 
+    /**
+     * Retrieves the instant runoff ballots from a file.
+     * 
+     * @param numBallots    the number of ballots cast in the election
+     * @param numCandidates the number of candidates participating in the election
+     * @param scanner       the scanner reading the specified file
+     * @return the list of ballots as a list of votes
+     */
     private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
 	    Scanner scanner) {
 	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<ArrayList<Integer>>();
@@ -69,6 +99,13 @@ public class Driver {
 	return in_Ballots;
     }
 
+    /**
+     * Retrieves the open party list voting ballots from a file.
+     * 
+     * @param numBallots the number of ballots cast in the election
+     * @param scanner    the scanner reading the specified file
+     * @return the list of ballots
+     */
     private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner) {
 	LinkedList<Integer> in_Ballots = new LinkedList<Integer>();
 	for (int i = 0; i < numBallots; i++) {

@@ -3,38 +3,28 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Represents an abstract voting system.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 abstract public class VotingSystem {
 
-    /**
-     * The auditor for the voting system to maintain information about the election
-     * processing.
-     */
+    /** The auditor which maintains information about the election processing. */
     protected Auditor _auditor;
 
-    /**
-     * The number of ballots cast in the election.
-     */
+    /** The number of ballots cast in the election. */
     protected int _numBallots;
 
-    /**
-     * The number of candidates participating in the election.
-     */
+    /** The number of candidates participating in the election. */
     protected int _numCandidates;
 
-    /**
-     * The quota for votes associated with being guaranteed a win in the election.
-     */
+    /** The quota of votes necessary to be guaranteed a win in the election. */
     protected int _quota;
 
-    /**
-     * Maintains whether the election has been run before.
-     */
+    /** Maintains whether the election has been run before. */
     protected AtomicBoolean wasRun = new AtomicBoolean(false);
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     VotingSystem() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }

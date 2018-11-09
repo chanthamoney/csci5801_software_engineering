@@ -4,27 +4,22 @@ import java.util.Random;
 
 /**
  * Represents an open party list voting system.
+ * 
+ * @author Team14 [Cassandra Chanthamontry (chant077), Jake Nippert (nippe014),
+ *         Meghann Silagan (silag001), Christine Tsai (tsaix223)]
  */
 public class OPLV extends VotingSystem {
 
-    /**
-     * The ballots in the election.
-     */
+    /** The ballots in the election. */
     private OPLVBallot[] _ballots;
 
-    /**
-     * The candidates running in the election for the given parties.
-     */
+    /** The candidates running in the election for the given parties. */
     private OPLVCandidate[] _candidates;
 
-    /**
-     * The number of seats available in the election.
-     */
+    /** The number of seats available in the election. */
     private final int _numSeats;
 
-    /**
-     * The parties participating in the election.
-     */
+    /** The parties participating in the election. */
     private LinkedList<Party> _parties = new LinkedList<Party>();
 
     /**
@@ -38,9 +33,7 @@ public class OPLV extends VotingSystem {
      */
     private boolean _wasRandomRanking = false;
 
-    /**
-     * Throws an error for default constructor.
-     */
+    /** Throws an error for default constructor. */
     OPLV() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
