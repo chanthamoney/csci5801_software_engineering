@@ -23,7 +23,7 @@ public class IRVCandidate extends Candidate {
     private boolean eliminated = false;
 
     /** Throws an error for default constructor. */
-    IRVCandidate() {
+    public IRVCandidate() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
@@ -33,7 +33,7 @@ public class IRVCandidate extends Candidate {
      *
      * @param name the name of the candidate
      */
-    IRVCandidate(String name) {
+    public IRVCandidate(String name) {
 	super(name);
     }
 

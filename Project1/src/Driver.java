@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import mariahgui.MariahFileChooser;
 import votingsystems.IRV;
 import votingsystems.OPLV;
 import votingsystems.VotingSystem;
@@ -34,7 +35,8 @@ public class Driver {
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      */
-    private static VotingSystem votingSystemFromFile(File file) throws FileNotFoundException {
+    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException {
+	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
@@ -141,23 +143,26 @@ public class Driver {
      * command line argument or input upon running) and runs the election.
      *
      * @param args Optional command line file name argument
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
      */
-    public static void main(String[] args) throws IOException {        
-	File file;
+    public static void main(String[] args) throws IOException, InterruptedException {
+	String fileName = null;
 
 	if (args.length > 0) {
-	    file = new File(args[0].trim());
+	    fileName = args[0].trim();
 	} else {
-            MariahGUIFileChooser frame = new MariahGUIFileChooser();
-            frame.setVisible(true);
-            file = new File(frame.getFileName());
-            frame.setVisible(false);
-            frame.dispose();
-        }
-        
-	VotingSystem vs = votingSystemFromFile(file);
+	    MariahFileChooser frame = new MariahFileChooser();
+	    frame.setVisible(true);
+	    while (frame.getFileName() == null) {
+		Thread.sleep(1000);
+	    }
+	    frame.setVisible(false);
+	    fileName = frame.getFileName();
+	    frame.dispose();
+	}
 
+	VotingSystem vs = votingSystemFromFile(fileName);
 	vs.runElection();
     }
 }
