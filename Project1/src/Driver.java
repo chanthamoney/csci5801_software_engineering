@@ -143,29 +143,20 @@ public class Driver {
      * @param args Optional command line file name argument
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static void main(String[] args) throws IOException {
-	File file = null;
-	VotingSystem vs;
+    public static void main(String[] args) throws IOException {        
+	File file;
 
 	if (args.length > 0) {
 	    file = new File(args[0].trim());
-	}
-
-	final Scanner consoleReader = new Scanner(System.in);
-	boolean first = true;
-	while (file == null || !file.isFile()) {
-	    if (!first) {
-		System.out.print("Invalid file name. Please enter the name of the ballot file: ");
-	    } else {
-		System.out.print("Enter Name of Ballot File: ");
-		first = false;
-	    }
-	    final String in_BallotFile = consoleReader.nextLine().trim();
-	    file = new File(in_BallotFile);
-	}
-	consoleReader.close();
-
-	vs = votingSystemFromFile(file);
+	} else {
+            MariahGUIFileChooser frame = new MariahGUIFileChooser();
+            frame.setVisible(true);
+            file = new File(frame.getFileName());
+            frame.setVisible(false);
+            frame.dispose();
+        }
+        
+	VotingSystem vs = votingSystemFromFile(file);
 
 	vs.runElection();
     }
