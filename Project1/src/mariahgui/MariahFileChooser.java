@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// File:         MariahFileChooser.java
+// Created:      2018/11/09
+// Last Changed: $Date: 2018/11/09 8:20:09 $
+// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+//
+// This code is copyright (c) 2018 University of Minnesota - Twin Cities
+//
+
 package mariahgui;
 
 import java.awt.Dimension;

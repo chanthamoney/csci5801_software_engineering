@@ -31,7 +31,7 @@ public class Driver {
     /**
      * Generates a voting system from a standardized voting system file.
      *
-     * @param file the file
+     * @param fileName the file name
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      */
@@ -144,7 +144,7 @@ public class Driver {
      *
      * @param args Optional command line file name argument
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     public static void main(String[] args) throws IOException, InterruptedException {
 	String fileName = null;
