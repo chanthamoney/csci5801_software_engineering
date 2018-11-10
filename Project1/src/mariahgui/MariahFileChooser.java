@@ -5,6 +5,8 @@
  */
 package mariahgui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -17,23 +19,36 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MariahFileChooser extends javax.swing.JFrame {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -1703036202595575064L;
     private String filePath = null;
-
-    public String getFileName() {
-	return filePath;
-    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.TextField fileName;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton manualOpen;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form MariahGUI
      */
     public MariahFileChooser() {
 	initComponents();
+
 	jFileChooser1.setAcceptAllFileFilterUsed(false);
 	FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file", "txt");
 	jFileChooser1.addChoosableFileFilter(filter);
+    }
+
+    public String getFileName() {
+	return filePath;
     }
 
     /**
@@ -45,6 +60,13 @@ public class MariahFileChooser extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     @SuppressWarnings("deprecation")
     private void initComponents() {
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int height = (int) (screenSize.height * 0.667);
+	int width = (int) (screenSize.width * 0.667);
+	setSize(new Dimension(width, height));
+	setPreferredSize(new Dimension(width, height));
+	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+		screenSize.height / 2 - this.getSize().height / 2);
 
 	jPanel3 = new javax.swing.JPanel();
 	jPanel4 = new javax.swing.JPanel();
@@ -79,28 +101,16 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jLabel1.setText("Please select an election file from your file system or input the file name below.");
 
 	jFileChooser1.setCurrentDirectory(null);
-	jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		jFileChooser1ActionPerformed(evt);
-	    }
-	});
+	jFileChooser1.addActionListener(this::jFileChooser1ActionPerformed);
 
 	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
 
 	manualOpen.setActionCommand("Open");
 	manualOpen.setLabel("Open");
-	manualOpen.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		manualOpenActionPerformed(evt);
-	    }
-	});
+	manualOpen.addActionListener(this::manualOpenActionPerformed);
 
 	fileName.setForeground(new java.awt.Color(153, 153, 153));
-	fileName.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		fileNameActionPerformed(evt);
-	    }
-	});
+	fileName.addActionListener(this::fileNameActionPerformed);
 
 	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 	jPanel1.setLayout(jPanel1Layout);
@@ -214,39 +224,14 @@ public class MariahFileChooser extends javax.swing.JFrame {
 		    break;
 		}
 	    }
-	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+		| ClassNotFoundException ex) {
 	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
 		    null, ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MariahFileChooser().setVisible(true);
-	    }
-	});
+	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser().setVisible(true));
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.TextField fileName;
-    private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JButton manualOpen;
-    // End of variables declaration//GEN-END:variables
 }

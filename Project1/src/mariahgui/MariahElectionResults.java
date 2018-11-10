@@ -1,6 +1,8 @@
 package mariahgui;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,14 +18,20 @@ import java.io.IOException;
  */
 public class MariahElectionResults extends javax.swing.JFrame {
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -7573327634981945907L;
     private String auditFile = null;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form MariahElectionResults
-     * 
+     *
      * @param auditFile       the name of the audit file produced
      * @param electionResults the results of the election
      */
@@ -47,6 +55,15 @@ public class MariahElectionResults extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+	this.setLocationRelativeTo(null);
+
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int height = (int) (screenSize.height * 0.333);
+	int width = (int) (screenSize.width * 0.333);
+	setSize(new Dimension(width, height));
+	setPreferredSize(new Dimension(width, height));
+	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+		screenSize.height / 2 - this.getSize().height / 2);
 
 	jPanel1 = new javax.swing.JPanel();
 	jScrollPane2 = new javax.swing.JScrollPane();
@@ -71,14 +88,12 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	jTextArea1.getAccessibleContext().setAccessibleDescription("");
 
 	jButton1.setText("Open Audit File");
-	jButton1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jButton1ActionPerformed(evt);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+	jButton1.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jButton1ActionPerformed(evt);
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	    }
 	});
 
@@ -127,33 +142,14 @@ public class MariahElectionResults extends javax.swing.JFrame {
 		    break;
 		}
 	    }
-	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+		| ClassNotFoundException ex) {
 	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
 		    .log(java.util.logging.Level.SEVERE, null, ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MariahElectionResults().setVisible(true);
-	    }
-	});
+	java.awt.EventQueue.invokeLater(() -> new MariahElectionResults().setVisible(true));
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    // End of variables declaration//GEN-END:variables
 }
