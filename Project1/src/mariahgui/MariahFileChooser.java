@@ -283,9 +283,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 	jPanel3.snow();
 	jButton1.setVisible(false);
-	jPanel2.setMaximumSize(new java.awt.Dimension(60, 20));
-	jPanel2.setPreferredSize(new java.awt.Dimension(60, 20));
-	jPanel2.setSize((new java.awt.Dimension(60, 20)));
+	jPanel2.setVisible(false);
     }
 
     /**
