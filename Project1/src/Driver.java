@@ -156,23 +156,28 @@ public class Driver {
 
 	if (args.length > 0) {
 	    fileName = args[0].trim();
-	} else {
-	    MariahFileChooser frame = new MariahFileChooser();
-	    frame.setVisible(true);
-	    while (frame.getFileName() == null) {
-		Thread.sleep(500);
+	}
+	while (true) {
+	    if (fileName == null) {
+		MariahFileChooser frame = new MariahFileChooser();
+		frame.setVisible(true);
+		while (frame.getFileName() == null) {
+		    Thread.sleep(500);
+		}
+		frame.setVisible(false);
+		fileName = frame.getFileName();
+		frame.dispose();
 	    }
-	    frame.setVisible(false);
-	    fileName = frame.getFileName();
-	    frame.dispose();
-	}
 
-	VotingSystem vs = null;
-	try {
-	    vs = votingSystemFromFile(fileName);
-	} catch (ParseException e) {
-	    e.printStackTrace();
+	    VotingSystem vs = null;
+	    try {
+		vs = votingSystemFromFile(fileName);
+	    } catch (ParseException e) {
+		e.printStackTrace();
+	    }
+
+	    vs.runElection();
+	    fileName = null;
 	}
-	vs.runElection();
     }
 }

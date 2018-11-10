@@ -14,13 +14,15 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JDialog;
+
 /**
  * The GUI component for showing election results. Shows the output results of
  * an election as well as a button to open the output audit file.
  *
  * @author janippert
  */
-public class MariahElectionResults extends javax.swing.JFrame {
+public class MariahElectionResults extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7573327634981945907L;
@@ -49,6 +51,8 @@ public class MariahElectionResults extends javax.swing.JFrame {
      * @param electionResults the results of the election
      */
     public MariahElectionResults(String auditFile, String electionResults) {
+	super();
+	setModal(true);
 	initComponents();
 	this.auditFile = auditFile;
 	jTextArea1.setText(electionResults);
@@ -81,7 +85,7 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	jTextArea1 = new javax.swing.JTextArea();
 	jButton1 = new javax.swing.JButton();
 
-	setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 	setTitle("Election Results");
 
 	jPanel1.setBackground(new java.awt.Color(0, 51, 102));
