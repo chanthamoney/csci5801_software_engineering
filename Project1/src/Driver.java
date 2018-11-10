@@ -10,6 +10,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -34,14 +35,15 @@ public class Driver {
      * @param fileName the file name
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
+     * @throws ParseException        the parse exception
      */
-    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException {
+    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException, ParseException {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
 
-	if ("IR".equals(in_VotingSystem)) {
+	if ("IR".equals(in_VotingSystem.toUpperCase())) {
 	    // Instant Run-off Voting
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
 	    final String in_Candidates = scanner.nextLine();
@@ -51,7 +53,7 @@ public class Driver {
 		    scanner);
 	    scanner.close();
 	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots);
-	} else {
+	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Open Party Listing
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
 	    final String in_Candidates = scanner.nextLine();
@@ -66,6 +68,9 @@ public class Driver {
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	    scanner.close();
 	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+	} else {
+	    scanner.close();
+	    throw new ParseException("Invalid Election Type", 0);
 	}
     }
 
@@ -155,14 +160,19 @@ public class Driver {
 	    MariahFileChooser frame = new MariahFileChooser();
 	    frame.setVisible(true);
 	    while (frame.getFileName() == null) {
-		Thread.sleep(1000);
+		Thread.sleep(500);
 	    }
 	    frame.setVisible(false);
 	    fileName = frame.getFileName();
 	    frame.dispose();
 	}
 
-	VotingSystem vs = votingSystemFromFile(fileName);
+	VotingSystem vs = null;
+	try {
+	    vs = votingSystemFromFile(fileName);
+	} catch (ParseException e) {
+	    e.printStackTrace();
+	}
 	vs.runElection();
     }
 }

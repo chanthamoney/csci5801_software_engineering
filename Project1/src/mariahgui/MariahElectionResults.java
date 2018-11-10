@@ -28,6 +28,20 @@ public class MariahElectionResults extends javax.swing.JFrame {
     /** The audit file. */
     private String auditFile = null;
 
+    /** The j button 1. */
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+
+    /** The j panel 1. */
+    private javax.swing.JPanel jPanel1;
+
+    /** The j scroll pane 2. */
+    private javax.swing.JScrollPane jScrollPane2;
+
+    /** The j text area 1. */
+    private javax.swing.JTextArea jTextArea1;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form MariahElectionResults.
      *
@@ -85,14 +99,12 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	jTextArea1.getAccessibleContext().setAccessibleDescription("");
 
 	jButton1.setText("Open Audit File");
-	jButton1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jButton1ActionPerformed(evt);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+	jButton1.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jButton1ActionPerformed(evt);
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	    }
 	});
 
@@ -149,40 +161,14 @@ public class MariahElectionResults extends javax.swing.JFrame {
 		    break;
 		}
 	    }
-	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
-	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+		| ClassNotFoundException ex) {
 	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
 		    .log(java.util.logging.Level.SEVERE, null, ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MariahElectionResults().setVisible(true);
-	    }
-	});
+	java.awt.EventQueue.invokeLater(() -> new MariahElectionResults().setVisible(true));
     }
-
-    /** The j button 1. */
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-
-    /** The j panel 1. */
-    private javax.swing.JPanel jPanel1;
-
-    /** The j scroll pane 2. */
-    private javax.swing.JScrollPane jScrollPane2;
-
-    /** The j text area 1. */
-    private javax.swing.JTextArea jTextArea1;
-    // End of variables declaration//GEN-END:variables
 }

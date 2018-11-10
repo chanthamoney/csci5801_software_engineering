@@ -29,14 +29,40 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /** The file path. */
     private String filePath = null;
 
-    /**
-     * Gets the file name.
-     *
-     * @return the file name
-     */
-    public String getFileName() {
-	return filePath;
-    }
+    /** The file name. */
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.TextField fileName;
+
+    /** The j file chooser 1. */
+    private javax.swing.JFileChooser jFileChooser1;
+
+    /** The j label 1. */
+    private javax.swing.JLabel jLabel1;
+
+    /** The j label 3. */
+    private javax.swing.JLabel jLabel3;
+
+    /** The j panel 1. */
+    private javax.swing.JPanel jPanel1;
+
+    /** The j panel 2. */
+    private javax.swing.JPanel jPanel2;
+
+    /** The j panel 3. */
+    private MariahSnowFall jPanel3;
+
+    /** The j panel 4. */
+    private javax.swing.JPanel jPanel4;
+
+    /** The j separator 1. */
+    private javax.swing.JSeparator jSeparator1;
+
+    /** The j separator 2. */
+    private javax.swing.JSeparator jSeparator2;
+
+    /** The manual open. */
+    private javax.swing.JButton manualOpen;
+    // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form MariahGUI.
@@ -48,6 +74,18 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jFileChooser1.addChoosableFileFilter(filter);
     }
 
+    /**
+     * Gets the file name.
+     *
+     * @return the file name
+     */
+    public String getFileName() {
+	return filePath;
+    }
+
+    /**
+     * Netbeans generated and adapted Swing Jframe initialization.
+     */
     @SuppressWarnings("deprecation")
     private void initComponents() {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -90,21 +128,13 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			59, Short.MAX_VALUE));
 
 	jFileChooser1.setCurrentDirectory(null);
-	jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		jFileChooser1ActionPerformed(evt);
-	    }
-	});
+	jFileChooser1.addActionListener(this::jFileChooser1ActionPerformed);
 
 	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
 
 	manualOpen.setActionCommand("Open");
 	manualOpen.setLabel("Open");
-	manualOpen.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		manualOpenActionPerformed(evt);
-	    }
-	});
+	manualOpen.addActionListener(this::manualOpenActionPerformed);
 
 	fileName.setForeground(new java.awt.Color(153, 153, 153));
 
@@ -237,61 +267,14 @@ public class MariahFileChooser extends javax.swing.JFrame {
 		    break;
 		}
 	    }
-	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
-		    null, ex);
-	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+		| ClassNotFoundException ex) {
 	    java.util.logging.Logger.getLogger(MariahFileChooser.class.getName()).log(java.util.logging.Level.SEVERE,
 		    null, ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MariahFileChooser().setVisible(true);
-	    }
-	});
+	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser().setVisible(true));
     }
-
-    /** The file name. */
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.TextField fileName;
-
-    /** The j file chooser 1. */
-    private javax.swing.JFileChooser jFileChooser1;
-
-    /** The j label 1. */
-    private javax.swing.JLabel jLabel1;
-
-    /** The j label 3. */
-    private javax.swing.JLabel jLabel3;
-
-    /** The j panel 1. */
-    private javax.swing.JPanel jPanel1;
-
-    /** The j panel 2. */
-    private javax.swing.JPanel jPanel2;
-
-    /** The j panel 3. */
-    private MariahSnowFall jPanel3;
-
-    /** The j panel 4. */
-    private javax.swing.JPanel jPanel4;
-
-    /** The j separator 1. */
-    private javax.swing.JSeparator jSeparator1;
-
-    /** The j separator 2. */
-    private javax.swing.JSeparator jSeparator2;
-
-    /** The manual open. */
-    private javax.swing.JButton manualOpen;
-    // End of variables declaration//GEN-END:variables
 }
