@@ -1,6 +1,8 @@
 package mariahgui;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -47,6 +49,13 @@ public class MariahElectionResults extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int height = (int) (screenSize.height * 0.333);
+	int width = (int) (screenSize.width * 0.333);
+	setSize(new Dimension(width, height));
+	setPreferredSize(new Dimension(width, height));
+	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+		screenSize.height / 2 - this.getSize().height / 2);
 
 	jPanel1 = new javax.swing.JPanel();
 	jScrollPane2 = new javax.swing.JScrollPane();
