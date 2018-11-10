@@ -50,7 +50,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
 
     /** The j panel 3. */
-    private MariahSnowFall jPanel3;
+    private MariahSnowFallPanel jPanel3;
 
     /** The j panel 4. */
     private javax.swing.JPanel jPanel4;
@@ -100,7 +100,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
 		screenSize.height / 2 - this.getSize().height / 2);
 
-	jPanel3 = new MariahSnowFall();
+	jPanel3 = new MariahSnowFallPanel();
 	jPanel4 = new javax.swing.JPanel();
 	jLabel3 = new javax.swing.JLabel();
 	jButton1 = new javax.swing.JButton();

@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 /**
  * Extends the GUI JPanel to have a snow theme background.
  */
-class MariahSnowFall extends JPanel {
+class MariahSnowFallPanel extends JPanel {
     private Integer[] randomOpacities = new Integer[1000];
     private int curOpacity = 0;
     private Integer[] randomXPos = new Integer[10000];
@@ -40,7 +40,7 @@ class MariahSnowFall extends JPanel {
     /**
      * Instantiates a new Mariah snow fall gui panel.
      */
-    public MariahSnowFall() {
+    public MariahSnowFallPanel() {
 	java.util.SplittableRandom random = new java.util.SplittableRandom();
 	randomOpacities = Stream.generate(() -> random.nextInt(255)).limit(1000).toArray(Integer[]::new);
 	randomXPos = Stream.generate(() -> random.nextInt(3000)).limit(10000).toArray(Integer[]::new);
@@ -66,13 +66,6 @@ class MariahSnowFall extends JPanel {
 	};
 	// Refresh often to prevent sporadic behavior at 60fps
 	new javax.swing.Timer(16, al).start();
-    }
-
-    /**
-     * Makes it snow in the background.
-     */
-    public void stopSnow() {
-
     }
 
     /*

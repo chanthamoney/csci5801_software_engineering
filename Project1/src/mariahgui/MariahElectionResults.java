@@ -84,7 +84,7 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 	setTitle("Election Results");
 
-	jPanel1.setBackground(new java.awt.Color(0, 102, 51));
+	jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Election Results",
 		javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
 		new java.awt.Font("Helvetica", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
