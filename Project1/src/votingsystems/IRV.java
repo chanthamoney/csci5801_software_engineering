@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-import mariahgui.MariahElectionResults;
-
 /**
  * Represents an Instant Runoff Voting System.
  */
@@ -68,7 +66,7 @@ public class IRV extends VotingSystem {
     }
 
     /** Throws an error for default constructor. */
-    public IRV() {
+    IRV() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
@@ -212,13 +210,8 @@ public class IRV extends VotingSystem {
 		    this.auditor.auditProcess(
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
 		    this.auditor.auditResult("Election Winner: " + lastCan.toString());
-		    String auditFile = this.auditor
-			    .createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+		    this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan.toString() + "\n");
-		    new MariahElectionResults(auditFile, "Election Winner: " + lastCan.toString() + "\n");
-		    MariahElectionResults frame = new MariahElectionResults(auditFile,
-			    "Election Winner: " + lastCan.toString() + "\n");
-		    frame.setVisible(true);
 		    break;
 		}
 
@@ -236,12 +229,8 @@ public class IRV extends VotingSystem {
 
 		if (!"".equals(winner)) {
 		    this.auditor.auditResult("Election Winner: " + winner);
-		    String auditFile = this.auditor
-			    .createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+		    this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
-		    MariahElectionResults frame = new MariahElectionResults(auditFile,
-			    "Election Winner: " + winner + "\n");
-		    frame.setVisible(true);
 		    break;
 		} else {
 		    final StringBuilder curPartyVotes = new StringBuilder();

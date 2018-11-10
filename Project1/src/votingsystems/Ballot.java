@@ -18,7 +18,7 @@ abstract public class Ballot {
     private final int id;
 
     /** Throws an error for default constructor. */
-    public Ballot() {
+    Ballot() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
 
@@ -27,7 +27,7 @@ abstract public class Ballot {
      *
      * @param id the unique identifier for the ballot.
      */
-    public Ballot(int id) {
+    Ballot(int id) {
 	this.id = id;
     }
 

@@ -18,7 +18,7 @@ public class OPLVCandidate extends Candidate {
     private final Party party;
 
     /** Throws an error for default constructor. */
-    public OPLVCandidate() {
+    OPLVCandidate() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
