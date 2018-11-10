@@ -49,7 +49,6 @@ class MariahSnowFall extends JPanel {
 	randomLayerNum = Stream.generate(() -> random.nextInt(1)).limit(100).toArray(Integer[]::new);
 
 	setOpaque(false);
-	snow();
     }
 
     /**
@@ -67,6 +66,13 @@ class MariahSnowFall extends JPanel {
 	};
 	// Refresh often to prevent sporadic behavior at 60fps
 	new javax.swing.Timer(16, al).start();
+    }
+
+    /**
+     * Makes it snow in the background.
+     */
+    public void stopSnow() {
+
     }
 
     /*
@@ -126,7 +132,7 @@ class MariahSnowFall extends JPanel {
 	public SnowFlake() {
 	    opacity = randomOpacities[curOpacity++ % 1000];
 	    xPos = randomXPos[curXPos++ % 10000];
-	    yPos = 0;
+	    yPos = 50;
 	}
     }
 }
