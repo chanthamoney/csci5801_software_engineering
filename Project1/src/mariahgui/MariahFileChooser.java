@@ -8,6 +8,8 @@
 
 package mariahgui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -48,6 +50,13 @@ public class MariahFileChooser extends javax.swing.JFrame {
 
     @SuppressWarnings("deprecation")
     private void initComponents() {
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int height = (int) (screenSize.height * 0.667);
+	int width = (int) (screenSize.width * 0.667);
+	setSize(new Dimension(width, height));
+	setPreferredSize(new Dimension(width, height));
+	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+		screenSize.height / 2 - this.getSize().height / 2);
 
 	jPanel3 = new MariahSnowFall();
 	jPanel4 = new javax.swing.JPanel();
