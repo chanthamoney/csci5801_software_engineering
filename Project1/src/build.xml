@@ -146,11 +146,29 @@
             <classpath refid="src.classpath"/>
         </junit>
     </target>
+    <target name="TestAuditor (2)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="auditor.TestAuditor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
     <target name="TestAuditor (1)">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="TestAuditor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="JunitTestSuite">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="JunitTestSuite" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
             <classpath refid="src.classpath"/>
         </junit>
@@ -168,15 +186,6 @@
         <java classname="src.Driver" failonerror="true" fork="yes">
             <classpath refid="src.classpath"/>
         </java>
-    </target>
-    <target name="TestAuditor (2)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="auditor.TestAuditor" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
