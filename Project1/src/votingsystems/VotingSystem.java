@@ -35,7 +35,7 @@ abstract public class VotingSystem {
     protected AtomicBoolean wasRun = new AtomicBoolean(false);
 
     /** Throws an error for default constructor. */
-    VotingSystem() {
+    public VotingSystem() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
     }
 
@@ -45,7 +45,7 @@ abstract public class VotingSystem {
      * @param numBallots    the number of ballots
      * @param numCandidates the number of candidates
      */
-    VotingSystem(int numBallots, int numCandidates) {
+    public VotingSystem(int numBallots, int numCandidates) {
 	this.numBallots = numBallots;
 	this.numCandidates = numCandidates;
 	this.auditor = new Auditor();

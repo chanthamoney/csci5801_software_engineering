@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import mariahgui.MariahFileChooser;
 import votingsystems.IRV;
 import votingsystems.OPLV;
 import votingsystems.VotingSystem;
@@ -34,7 +35,8 @@ public class Driver {
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      */
-    private static VotingSystem votingSystemFromFile(File file) throws FileNotFoundException {
+    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException {
+	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
@@ -141,32 +143,26 @@ public class Driver {
      * command line argument or input upon running) and runs the election.
      *
      * @param args Optional command line file name argument
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
      */
-    public static void main(String[] args) throws IOException {
-	File file = null;
-	VotingSystem vs;
+    public static void main(String[] args) throws IOException, InterruptedException {
+	String fileName = null;
 
 	if (args.length > 0) {
-	    file = new File(args[0].trim());
-	}
-
-	final Scanner consoleReader = new Scanner(System.in);
-	boolean first = true;
-	while (file == null || !file.isFile()) {
-	    if (!first) {
-		System.out.print("Invalid file name. Please enter the name of the ballot file: ");
-	    } else {
-		System.out.print("Enter Name of Ballot File: ");
-		first = false;
+	    fileName = args[0].trim();
+	} else {
+	    MariahFileChooser frame = new MariahFileChooser();
+	    frame.setVisible(true);
+	    while (frame.getFileName() == null) {
+		Thread.sleep(1000);
 	    }
-	    final String in_BallotFile = consoleReader.nextLine().trim();
-	    file = new File(in_BallotFile);
+	    frame.setVisible(false);
+	    fileName = frame.getFileName();
+	    frame.dispose();
 	}
-	consoleReader.close();
 
-	vs = votingSystemFromFile(file);
-
+	VotingSystem vs = votingSystemFromFile(fileName);
 	vs.runElection();
     }
 }
