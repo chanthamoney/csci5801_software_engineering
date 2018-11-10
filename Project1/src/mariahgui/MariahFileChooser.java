@@ -46,6 +46,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jFileChooser1.addChoosableFileFilter(filter);
     }
 
+    @SuppressWarnings("deprecation")
     private void initComponents() {
 
 	jPanel3 = new MariahSnowFall();
