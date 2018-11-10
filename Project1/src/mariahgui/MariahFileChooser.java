@@ -118,10 +118,10 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jPanel4.setBackground(new java.awt.Color(153, 0, 0));
 	jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-	jLabel3.setFont(new java.awt.Font("Helvetica", 1, 36)); // NOI18N
+	jLabel3.setFont(new java.awt.Font("Helvetica", 1, 32)); // NOI18N
 	jLabel3.setForeground(new java.awt.Color(255, 255, 255));
 	jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-	jLabel3.setText("MARIAH VOTING SYSTEMS");
+	jLabel3.setText("MARIAH ELECTION PROCESSOR");
 
 	jPanel2.setBackground(new java.awt.Color(153, 0, 0));
 	jPanel2.setMaximumSize(new java.awt.Dimension(80, 20));
