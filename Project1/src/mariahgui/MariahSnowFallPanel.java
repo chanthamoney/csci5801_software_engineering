@@ -24,10 +24,10 @@ class MariahSnowFallPanel extends JPanel {
     private int curOpacity = 0;
     private Integer[] randomXPos = new Integer[10000];
     private int curXPos = 0;
-    private Double[] randomXIncrement = new Double[100];
-    private int curXIncrement = 0;
-    private Double[] randomYIncrement = new Double[1000];
-    private int curYIncrement = 0;
+    private Double[] randomXVel = new Double[1000];
+    private int curXVel = 0;
+    private Double[] randomYVel = new Double[1000];
+    private int curYVel = 0;
     private Integer[] randomLayerNum = new Integer[100];
     private int curLayerNum = 0;
 
@@ -43,9 +43,9 @@ class MariahSnowFallPanel extends JPanel {
     public MariahSnowFallPanel() {
 	java.util.SplittableRandom random = new java.util.SplittableRandom();
 	randomOpacities = Stream.generate(() -> random.nextInt(255)).limit(1000).toArray(Integer[]::new);
-	randomXPos = Stream.generate(() -> random.nextInt(3000)).limit(10000).toArray(Integer[]::new);
-	randomXIncrement = Stream.generate(() -> random.nextDouble(0.333)).limit(100).toArray(Double[]::new);
-	randomYIncrement = Stream.generate(() -> random.nextDouble(2)).limit(1000).toArray(Double[]::new);
+	randomXPos = Stream.generate(() -> random.nextInt(-100, 3000)).limit(10000).toArray(Integer[]::new);
+	randomXVel = Stream.generate(() -> random.nextDouble(2)).limit(1000).toArray(Double[]::new);
+	randomYVel = Stream.generate(() -> random.nextDouble(1.5) + 0.5).limit(1000).toArray(Double[]::new);
 	randomLayerNum = Stream.generate(() -> random.nextInt(1)).limit(100).toArray(Integer[]::new);
 
 	setOpaque(false);
@@ -58,7 +58,7 @@ class MariahSnowFallPanel extends JPanel {
 	ActionListener al = (ActionEvent ae) -> {
 	    layers.add(new Layer());
 	    repaint();
-	    if (layers.size() > 9) {
+	    if (layers.size() > 50) {
 		// Remove pointer to old layer for garbage collection
 		layers.remove(0);
 		layers.add(new Layer());
@@ -82,8 +82,8 @@ class MariahSnowFallPanel extends JPanel {
 		SnowFlake snowFlake = layer.snowFlakes[z];
 		g.setColor(new Color(255, 255, 255, snowFlake.opacity));
 		g.fillOval(snowFlake.xPos, snowFlake.yPos, 8, 8);
-		snowFlake.yPos += randomYIncrement[curYIncrement++ % 1000];
-		snowFlake.xPos += randomXIncrement[curXIncrement++ % 100];
+		snowFlake.yPos = (int) ((double) snowFlake.yPos + snowFlake.yVel);
+		snowFlake.xPos = (int) ((double) snowFlake.xPos + snowFlake.xVel);
 	    }
 	}
     }
@@ -110,14 +110,17 @@ class MariahSnowFallPanel extends JPanel {
     private class SnowFlake {
 	int opacity;
 
-	/**
-	 * The position of the snow flake as x-y coordinates. Initially start at the top
-	 * of the screen.
-	 */
+	/** The x coordinate of the snow flake on the panel. */
 	int xPos;
 
-	/** The y. */
+	/** The y coordinate of the snow flake on the panel. */
 	int yPos;
+
+	/** The x coordinate of the snow flake on the panel. */
+	double xVel;
+
+	/** The y coordinate of the snow flake on the panel. */
+	double yVel;
 
 	/**
 	 * Instantiates a new snow flake.
@@ -125,7 +128,9 @@ class MariahSnowFallPanel extends JPanel {
 	public SnowFlake() {
 	    opacity = randomOpacities[curOpacity++ % 1000];
 	    xPos = randomXPos[curXPos++ % 10000];
-	    yPos = 50;
+	    yPos = 40;
+	    xVel = randomXVel[curXVel++ % 1000];
+	    yVel = randomYVel[curYVel++ % 1000];
 	}
     }
 }

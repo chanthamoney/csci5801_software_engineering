@@ -166,6 +166,8 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			.addGap(0, 0, 0)));
 
 	jLabel1.setText("Please select an election file from your file system or input the file name below.");
+	jLabel1.setOpaque(true);
+	jLabel1.setBackground(getBackground());
 
 	jFileChooser1.setCurrentDirectory(null);
 	jFileChooser1.addActionListener(new java.awt.event.ActionListener() {

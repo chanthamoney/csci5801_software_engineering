@@ -21,7 +21,7 @@ import votingsystems.OPLV;
 import votingsystems.VotingSystem;
 
 /**
- * The Driver of main which generates and runs an election.
+ * The Main Class which generates and runs an election utilizing Mariah GUI.
  *
  * @author <A HREF="mailto:nippe014@umn.edu">Team14 [Cassandra Chanthamontry
  *         (chant077), Jake Nippert (nippe014), Meghann Silagan (silag001),
