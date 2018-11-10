@@ -37,26 +37,26 @@ public class MariahFileChooser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextField fileName;
 
-    /** The j file chooser 1. */
+    /** The main file chooser 1. */
     private javax.swing.JFileChooser jFileChooser1;
 
-    /** The j label 1. */
-    private javax.swing.JLabel jLabel1;
+    /** The label to select a file. */
+    private javax.swing.JLabel fcLabel;
 
-    /** The j label 3. */
-    private javax.swing.JLabel jLabel3;
+    /** The title / header of the frame. */
+    private javax.swing.JLabel headerLabel;
 
-    /** The j panel 1. */
-    private javax.swing.JPanel jPanel1;
+    /** The panel for manual file entry. */
+    private javax.swing.JPanel manualFileEntryPanel;
 
-    /** The j panel 2. */
-    private javax.swing.JPanel jPanel2;
+    /** The panel used to keep space balanced in header. */
+    private javax.swing.JPanel headerSpacePanel;
 
-    /** The j panel 3. */
-    private MariahSnowFallPanel jPanel3;
+    /** The main panel of the frame. */
+    private MariahSnowFallPanel mainPanel;
 
-    /** The j panel 4. */
-    private javax.swing.JPanel jPanel4;
+    /** The panel for the title / header. */
+    private javax.swing.JPanel headerPanel;
 
     /** The j separator 1. */
     private javax.swing.JSeparator jSeparator1;
@@ -64,15 +64,17 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /** The j separator 2. */
     private javax.swing.JSeparator jSeparator2;
 
-    /** The j button 1. */
-    private JButton jButton1;
+    /** A button which makes it snow on the panel. */
+    private JButton snowButton;
 
-    /** The manual open. */
-    private javax.swing.JButton manualOpen;
+    /** The manual open button. */
+    private javax.swing.JButton manualOpenButton;
     // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form MariahGUI.
+     *
+     * @param title the title to place in the header
      */
     public MariahFileChooser(String title) {
 	this.title = title;
@@ -104,70 +106,71 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
 		screenSize.height / 2 - this.getSize().height / 2);
 
-	jPanel3 = new MariahSnowFallPanel();
-	jPanel4 = new javax.swing.JPanel();
-	jLabel3 = new javax.swing.JLabel();
-	jButton1 = new javax.swing.JButton();
-	jPanel2 = new javax.swing.JPanel();
+	mainPanel = new MariahSnowFallPanel();
+	headerPanel = new javax.swing.JPanel();
+	headerLabel = new javax.swing.JLabel();
+	snowButton = new javax.swing.JButton();
+	headerSpacePanel = new javax.swing.JPanel();
 	jSeparator1 = new javax.swing.JSeparator();
-	jLabel1 = new javax.swing.JLabel();
+	fcLabel = new javax.swing.JLabel();
 	jFileChooser1 = new javax.swing.JFileChooser();
 	jSeparator2 = new javax.swing.JSeparator();
-	jPanel1 = new javax.swing.JPanel();
-	manualOpen = new javax.swing.JButton();
+	manualFileEntryPanel = new javax.swing.JPanel();
+	manualOpenButton = new javax.swing.JButton();
 	fileName = new java.awt.TextField();
 
 	setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-	jPanel4.setBackground(new java.awt.Color(153, 0, 0));
-	jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+	headerPanel.setBackground(new java.awt.Color(153, 0, 0));
+	headerPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-	jLabel3.setFont(new java.awt.Font("Helvetica", 1, 32)); // NOI18N
-	jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-	jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-	jLabel3.setText(this.title);
+	headerLabel.setFont(new java.awt.Font("Helvetica", 1, 32)); // NOI18N
+	headerLabel.setForeground(new java.awt.Color(255, 255, 255));
+	headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+	headerLabel.setText(this.title);
 
-	jPanel2.setBackground(new java.awt.Color(153, 0, 0));
-	jPanel2.setMaximumSize(new java.awt.Dimension(80, 20));
-	jPanel2.setMinimumSize(new java.awt.Dimension(0, 0));
+	headerSpacePanel.setBackground(new java.awt.Color(153, 0, 0));
+	headerSpacePanel.setMaximumSize(new java.awt.Dimension(80, 20));
+	headerSpacePanel.setMinimumSize(new java.awt.Dimension(0, 0));
 
-	javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-	jPanel2.setLayout(jPanel2Layout);
-	jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGap(0, 62, Short.MAX_VALUE));
-	jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGap(0, 30, Short.MAX_VALUE));
+	javax.swing.GroupLayout headerSpacePanelLayout = new javax.swing.GroupLayout(headerSpacePanel);
+	headerSpacePanel.setLayout(headerSpacePanelLayout);
+	headerSpacePanelLayout.setHorizontalGroup(headerSpacePanelLayout
+		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 62, Short.MAX_VALUE));
+	headerSpacePanelLayout.setVerticalGroup(headerSpacePanelLayout
+		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 30, Short.MAX_VALUE));
 
-	jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-	jButton1.setIcon(new javax.swing.ImageIcon("mariahgui/img/snowflake_icon.png")); // NOI18N
-	jButton1.addActionListener(new java.awt.event.ActionListener() {
+	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+	snowButton.setIcon(new javax.swing.ImageIcon("mariahgui/img/snowflake_icon.png")); // NOI18N
+	snowButton.addActionListener(new java.awt.event.ActionListener() {
 	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		jButton1ActionPerformed(evt);
+		snowButtonActionPerformed(evt);
 	    }
 	});
 
-	javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-	jPanel4.setLayout(jPanel4Layout);
-	jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel4Layout.createSequentialGroup()
-			.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
-				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-			.addGap(0, 0, 0)
-			.addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
-			.addGap(18, 18, 18).addComponent(jButton1).addGap(22, 22, 22)));
-	jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel4Layout.createSequentialGroup()
-			.addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-				.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+	javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+	headerPanel.setLayout(headerPanelLayout);
+	headerPanelLayout
+		.setHorizontalGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			.addGroup(headerPanelLayout.createSequentialGroup()
+				.addComponent(headerSpacePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 					javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-				.addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51,
-					javax.swing.GroupLayout.PREFERRED_SIZE)
-				.addComponent(jButton1))
-			.addGap(0, 0, 0)));
+				.addGap(0, 0, 0)
+				.addComponent(headerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+				.addGap(20, 20, 20).addComponent(snowButton).addGap(22, 22, 22)));
+	headerPanelLayout
+		.setVerticalGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			.addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+				.addComponent(headerSpacePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+					javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addComponent(headerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51,
+					javax.swing.GroupLayout.PREFERRED_SIZE))
+			.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+				.addContainerGap().addComponent(snowButton).addContainerGap()));
 
-	jLabel1.setText("Please select an election file from your file system or input the file name below.");
-	jLabel1.setOpaque(true);
-	jLabel1.setBackground(getBackground());
+	fcLabel.setText("Please select an election file from your file system or input the file name below.");
+	fcLabel.setOpaque(true);
+	fcLabel.setBackground(getBackground());
 
 	jFileChooser1.setCurrentDirectory(null);
 	jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
@@ -176,57 +179,62 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	    }
 	});
 
-	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
+	manualFileEntryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
 
-	manualOpen.setActionCommand("Open");
-	manualOpen.setLabel("Open");
-	manualOpen.addActionListener(new java.awt.event.ActionListener() {
+	manualOpenButton.setActionCommand("Open");
+	manualOpenButton.setLabel("Open");
+	manualOpenButton.addActionListener(new java.awt.event.ActionListener() {
 	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		manualOpenActionPerformed(evt);
+		manualOpenButtonActionPerformed(evt);
 	    }
 	});
 
 	fileName.setForeground(new java.awt.Color(153, 153, 153));
 
-	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-	jPanel1.setLayout(jPanel1Layout);
-	jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-			jPanel1Layout.createSequentialGroup().addContainerGap()
+	javax.swing.GroupLayout manualFileEntryPanelLayout = new javax.swing.GroupLayout(manualFileEntryPanel);
+	manualFileEntryPanel.setLayout(manualFileEntryPanelLayout);
+	manualFileEntryPanelLayout.setHorizontalGroup(
+		manualFileEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+			javax.swing.GroupLayout.Alignment.TRAILING,
+			manualFileEntryPanelLayout.createSequentialGroup().addContainerGap()
 				.addComponent(fileName, javax.swing.GroupLayout.DEFAULT_SIZE,
 					javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-				.addComponent(manualOpen)));
-	jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+				.addComponent(manualOpenButton)));
+	manualFileEntryPanelLayout.setVerticalGroup(manualFileEntryPanelLayout
+		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manualFileEntryPanelLayout.createSequentialGroup()
 			.addGap(0, 9, Short.MAX_VALUE)
-			.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(manualOpen).addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE,
-					javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+			.addGroup(manualFileEntryPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(manualOpenButton).addComponent(fileName,
+					javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+					javax.swing.GroupLayout.PREFERRED_SIZE))
 			.addContainerGap()));
 
-	javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-	jPanel3.setLayout(jPanel3Layout);
-	jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+	javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+	mainPanel.setLayout(mainPanelLayout);
+	mainPanelLayout.setHorizontalGroup(mainPanelLayout
+		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		.addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 			Short.MAX_VALUE)
-		.addGroup(jPanel3Layout.createSequentialGroup().addContainerGap().addGroup(jPanel3Layout
+		.addGroup(mainPanelLayout.createSequentialGroup().addContainerGap().addGroup(mainPanelLayout
 			.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-			.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jLabel1).addGap(0, 0,
+			.addGroup(mainPanelLayout.createSequentialGroup().addComponent(fcLabel).addGap(0, 0,
 				Short.MAX_VALUE))
-			.addGroup(jPanel3Layout.createSequentialGroup().addGroup(jPanel3Layout
+			.addGroup(mainPanelLayout.createSequentialGroup().addGroup(mainPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
 				.addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-				.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+				.addComponent(manualFileEntryPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 					javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
 				.addContainerGap()))));
-	jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel3Layout.createSequentialGroup()
-			.addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE,
+	mainPanelLayout.setVerticalGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		.addGroup(mainPanelLayout.createSequentialGroup()
+			.addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-			.addGap(0, 0, 0).addComponent(jLabel1).addGap(0, 0, 0)
+			.addGap(0, 0, 0).addComponent(fcLabel).addGap(0, 0, 0)
 			.addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10,
 				javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addGap(0, 0, 0)
@@ -235,24 +243,28 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			.addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10,
 				javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-			.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+			.addComponent(manualFileEntryPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 			.addGap(0, 0, 0)));
 
 	javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 	getContentPane().setLayout(layout);
-	layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-		jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-	layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-		jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+	layout.setHorizontalGroup(
+		layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(mainPanel,
+			javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+	layout.setVerticalGroup(
+		layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(mainPanel,
+			javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
 	pack();
     }// </editor-fold>
 
     /**
-     * J file chooser 1 action performed.
+     * Determines if user selected to cancel or open file. Replaces internal file
+     * path with file if opened. Sends them to current directly when user presses
+     * cancel.
      *
-     * @param evt the evt
+     * @param evt action performed on file chooser
      */
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jFileChooser1ActionPerformed
 	JFileChooser theFileChooser = (JFileChooser) evt.getSource();
@@ -268,11 +280,13 @@ public class MariahFileChooser extends javax.swing.JFrame {
     }// GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
-     * Manual open action performed.
+     * Determines if manually entered file has text and is a file. If the file
+     * exists, replaces internal file path with value, otherwise shows a dialog
+     * error message.
      *
-     * @param evt the evt
+     * @param evt open button selected for manual file entry
      */
-    private void manualOpenActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_manualOpenActionPerformed
+    private void manualOpenButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_manualOpenButtonActionPerformed
 	if (fileName.getText().isEmpty()) {
 	    JOptionPane.showMessageDialog(null, "Please manually enter the file name.");
 	    return;
@@ -284,16 +298,21 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	    this.filePath = fileName.getText().trim();
 	    ;
 	}
-    }// GEN-LAST:event_manualOpenActionPerformed
+    }// GEN-LAST:event_manualOpenButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-	jPanel3.snow();
-	jButton1.setVisible(false);
-	jPanel2.setVisible(false);
+    /**
+     * Generates snow after the snow button is clicked.
+     *
+     * @param evt click on the snow button
+     */
+    private void snowButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	mainPanel.snow();
+	snowButton.setVisible(false);
+	headerSpacePanel.setVisible(false);
     }
 
     /**
-     * The main method.
+     * An example of the file chooser.
      *
      * @param args the command line arguments
      */
