@@ -1,4 +1,4 @@
-// File:         MariahSnowFall.java
+// File:         MariahSnowFallPanel.java
 // Created:      2018/11/09
 // Last Changed: $Date: 2018/11/09 8:20:09 $
 // Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>

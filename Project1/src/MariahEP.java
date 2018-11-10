@@ -1,5 +1,5 @@
 
-// File:         Driver.java
+// File:         MariahEP.java
 // Created:      2018/11/08
 // Last Changed: $Date: 2018/11/08 11:37:56 $
 // Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
@@ -27,7 +27,7 @@ import votingsystems.VotingSystem;
  *         (chant077), Jake Nippert (nippe014), Meghann Silagan (silag001),
  *         Christine Tsai (tsaix223)]</A>
  */
-public class Driver {
+public class MariahEP {
 
     /**
      * Generates a voting system from a standardized voting system file.
@@ -159,7 +159,7 @@ public class Driver {
 	}
 	while (true) {
 	    if (fileName == null) {
-		MariahFileChooser frame = new MariahFileChooser();
+		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
 		while (frame.getFileName() == null) {
 		    Thread.sleep(500);

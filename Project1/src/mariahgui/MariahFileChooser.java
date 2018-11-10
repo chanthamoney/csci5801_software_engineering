@@ -30,6 +30,9 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /** The file path. */
     private String filePath = null;
 
+    /** The file path. */
+    private String title = null;
+
     /** The file name. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.TextField fileName;
@@ -71,7 +74,8 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /**
      * Creates new form MariahGUI.
      */
-    public MariahFileChooser() {
+    public MariahFileChooser(String title) {
+	this.title = title;
 	initComponents();
 	jFileChooser1.setAcceptAllFileFilterUsed(false);
 	FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file", "txt");
@@ -121,7 +125,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jLabel3.setFont(new java.awt.Font("Helvetica", 1, 32)); // NOI18N
 	jLabel3.setForeground(new java.awt.Color(255, 255, 255));
 	jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-	jLabel3.setText("MARIAH ELECTION PROCESSOR");
+	jLabel3.setText(this.title);
 
 	jPanel2.setBackground(new java.awt.Color(153, 0, 0));
 	jPanel2.setMaximumSize(new java.awt.Dimension(80, 20));
@@ -315,6 +319,6 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser().setVisible(true));
+	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser("Title Here").setVisible(true));
     }
 }
