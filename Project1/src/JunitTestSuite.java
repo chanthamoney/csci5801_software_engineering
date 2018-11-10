@@ -1,5 +1,5 @@
 
-// File:         TestIRV.java
+// File:         JunitTestSuite.java
 // Created:      2018/11/08
 // Last Changed: $Date: 2018/11/08 11:37:56 $
 // Author:       <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
@@ -15,9 +15,10 @@ import votingsystems.TestIRVBallot;
 import votingsystems.TestIRVCandidate;
 import votingsystems.TestOPLV;
 
+/**
+ * The Class JunitTestSuite.
+ */
 @RunWith(Suite.class)
-
 @Suite.SuiteClasses({ TestIRVBallot.class, TestIRVCandidate.class, TestIRV.class, TestOPLV.class })
-
 public class JunitTestSuite {
 }

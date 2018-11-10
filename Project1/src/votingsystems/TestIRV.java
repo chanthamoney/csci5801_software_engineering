@@ -24,10 +24,22 @@ import java.util.Random;
 
 import org.junit.Test;
 
+/**
+ * The Class TestIRV.
+ */
 public class TestIRV {
+
+    /** The candidates. */
     String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+
+    /** The test ballots. */
     LinkedList<ArrayList<Integer>> testBallots = new LinkedList<>();
 
+    /**
+     * Initialize test IRV.
+     *
+     * @return the irv
+     */
     private IRV initializeTestIRV() {
 	final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
 	final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
@@ -46,6 +58,11 @@ public class TestIRV {
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots);
     }
 
+    /**
+     * Test run election twice.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @Test(expected = RuntimeException.class)
     public void testRunElectionTwice() throws IOException {
 	final VotingSystem vs = initializeTestIRV();
@@ -59,6 +76,9 @@ public class TestIRV {
 	fail("Runtime exception for running election more than once did not throw!");
     }
 
+    /**
+     * Test IRV.
+     */
     // Testing IRV constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRV() {
@@ -71,6 +91,9 @@ public class TestIRV {
 	fail("Employee Id Null exception did not throw!");
     }
 
+    /**
+     * Test IRV with params.
+     */
     // Testing IRV constructor with parameters
     @Test
     public void testIRVWithParams() {
@@ -82,6 +105,9 @@ public class TestIRV {
 
     // Testing runElection() only public method
 
+    /**
+     * Test run election.
+     */
     @Test
     public void testRunElection() {
 	// Initialize IRV Election
@@ -112,6 +138,9 @@ public class TestIRV {
 		|| "Election Winner: Sakura\n".equals(output));
     }
 
+    /**
+     * Test run election efficiency.
+     */
     @Test
     public void testRunElectionEfficiency() {
 	// Keep current System.out

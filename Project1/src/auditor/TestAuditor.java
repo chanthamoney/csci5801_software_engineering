@@ -19,9 +19,19 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+/**
+ * The Class TestAuditor.
+ */
 public class TestAuditor {
+
+    /** The test strings. */
     ArrayList<String> testStrings = new ArrayList<>();
 
+    /**
+     * Initialize test auditor.
+     *
+     * @return the auditor
+     */
     private Auditor initializeTestAuditor() {
 	testStrings.add("Audit line 1\n");
 	testStrings.add("Audit line 2\n");
@@ -31,17 +41,28 @@ public class TestAuditor {
 	return new Auditor();
     }
 
+    /**
+     * Test auditor.
+     */
     // Testing Auditor() constructor
     @Test
     public void testAuditor() {
 
     }
 
+    /**
+     * Test auditor with params.
+     */
     // Testing Auditor() constructor with parameters
     @Test
     public void testAuditorWithParams() {
     }
 
+    /**
+     * Test audit process.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     // Testing auditProcess()
     @Test
     public void testAuditProcess() throws IOException {
@@ -68,6 +89,11 @@ public class TestAuditor {
 	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
+    /**
+     * Test audit result.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     // Testing auditResult()
     @Test
     public void testAuditResult() throws IOException {
@@ -94,6 +120,11 @@ public class TestAuditor {
 	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
+    /**
+     * Test audit setup.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     // Testing auditSetup()
     @Test
     public void testAuditSetup() throws IOException {
@@ -120,12 +151,22 @@ public class TestAuditor {
 	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
+    /**
+     * Test audit structure.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     // Testing audit file output structure
     @Test
     public void testAuditStructure() throws IOException {
 
     }
 
+    /**
+     * Test create audit file.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     // Testing createAuditFile()
     @Test
     public void testCreateAuditFile() throws IOException {

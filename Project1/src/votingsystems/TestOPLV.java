@@ -19,11 +19,23 @@ import java.util.Random;
 
 import org.junit.Test;
 
+/**
+ * The Class TestOPLV.
+ */
 public class TestOPLV {
+
+    /** The candidates. */
     String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+
+    /** The parties. */
     String[] parties = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+
+    /** The test ballots. */
     LinkedList<Integer> testBallots = new LinkedList<>();
 
+    /**
+     * Test OPLV.
+     */
     // Testing IRVOPLV() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLV() {
@@ -36,17 +48,28 @@ public class TestOPLV {
 	fail("Employee Id Null exception did not throw!");
     }
 
+    /**
+     * Test OPLV with params.
+     */
     // Testing IRVOPLV() constructor with parameters
     @Test
     public void testOPLVWithParams() {
 
     }
 
+    /**
+     * Test run election.
+     */
     @Test
     public void testRunElection() {
 
     }
 
+    /**
+     * Test run election twice.
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     @Test(expected = RuntimeException.class)
     public void testRunElectionTwice() throws IOException {
 	this.testBallots.add(1);
@@ -61,6 +84,9 @@ public class TestOPLV {
 	fail("Runtime exception for running election more than once did not throw!");
     }
 
+    /**
+     * Test run election efficiency.
+     */
     @Test
     public void testRunElectionEfficiency() {
 	// Initialize Large OPLV Election

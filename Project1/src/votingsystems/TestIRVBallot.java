@@ -18,11 +18,23 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+/**
+ * The Class TestIRVBallot.
+ */
 public class TestIRVBallot {
+
+    /** The test id. */
     int testId = 4;
+
+    /** The test votes. */
     // initialize a LinkedList of votes and an id
     ArrayList<Integer> testVotes = new ArrayList<>();
 
+    /**
+     * Test ballot initialize.
+     *
+     * @return the IRV ballot
+     */
     private IRVBallot testBallotInitialize() {
 	// initialize testVotes
 	this.testVotes.addAll(Arrays.asList(1, 2, 3, 4));
@@ -30,6 +42,9 @@ public class TestIRVBallot {
 	return new IRVBallot(this.testVotes, this.testId);
     }
 
+    /**
+     * Test IRV ballot.
+     */
     // Testing IRVBallot() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRVBallot() {
@@ -42,12 +57,18 @@ public class TestIRVBallot {
 	fail("Employee Id Null exception did not throw!");
     }
 
+    /**
+     * Test IRV ballot with params.
+     */
     // Testing IRVBallot() constructor with parameters
     @Test
     public void testIRVBallotWithParams() {
 
     }
 
+    /**
+     * Test get ID.
+     */
     // Testing getID() method of ballot class that irv ballot extends
     @Test
     public void testGetID() {
@@ -57,6 +78,9 @@ public class TestIRVBallot {
 	assertEquals(4, testBallot.getID());
     }
 
+    /**
+     * Test get next vote one vote.
+     */
     // Testing getNextVote() with one vote
     @Test
     public void testGetNextVoteOneVote() {
@@ -68,6 +92,9 @@ public class TestIRVBallot {
 	assertEquals(this.testVotes.get(0), nextVote, 0.0);
     }
 
+    /**
+     * Test get next vote when no votes.
+     */
     // Testing getNextVote() with no votes
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetNextVoteWhenNoVotes() {
@@ -84,6 +111,9 @@ public class TestIRVBallot {
 	fail("Expected an IndexOutOfBoundsException to be thrown");
     }
 
+    /**
+     * Test get next vote five times with only four votes.
+     */
     // Testing getNextVote() five times with only four votes
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetNextVoteFiveTimesWithOnlyFourVotes() {
@@ -102,6 +132,9 @@ public class TestIRVBallot {
 	fail("Expected an IndexOutOfBoundsException to be thrown");
     }
 
+    /**
+     * Test get next vote three votes.
+     */
     // Testing getNextVote() with three votes
     @Test
     public void testGetNextVoteThreeVotes() {
@@ -117,6 +150,9 @@ public class TestIRVBallot {
 	assertEquals(this.testVotes.get(2), nextVote, 0.0);
     }
 
+    /**
+     * Test is exhausted.
+     */
     // Testing is exhausted method
     @Test
     public void testIsExhausted() {

@@ -14,26 +14,23 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
+ * The GUI component for showing election results. Shows the output results of
+ * an election as well as a button to open the output audit file.
  *
  * @author janippert
  */
 public class MariahElectionResults extends javax.swing.JFrame {
-    /**
-     * 
-     */
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7573327634981945907L;
+
+    /** The audit file. */
     private String auditFile = null;
 
     /**
-     * Creates new form MariahElectionResults
-     * 
+     * Creates new form MariahElectionResults.
+     *
      * @param auditFile       the name of the audit file produced
      * @param electionResults the results of the election
      */
@@ -44,7 +41,7 @@ public class MariahElectionResults extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form MariahElectionResults
+     * Creates new form MariahElectionResults.
      */
     public MariahElectionResults() {
 	initComponents();
@@ -121,11 +118,19 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	pack();
     }// </editor-fold>
 
+    /**
+     * J button 1 action performed.
+     *
+     * @param evt the evt
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
 	Desktop.getDesktop().open(new File(auditFile));
     }// GEN-LAST:event_jButton1ActionPerformed
 
     /**
+     * The main method.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -167,10 +172,17 @@ public class MariahElectionResults extends javax.swing.JFrame {
 	});
     }
 
+    /** The j button 1. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+
+    /** The j panel 1. */
     private javax.swing.JPanel jPanel1;
+
+    /** The j scroll pane 2. */
     private javax.swing.JScrollPane jScrollPane2;
+
+    /** The j text area 1. */
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

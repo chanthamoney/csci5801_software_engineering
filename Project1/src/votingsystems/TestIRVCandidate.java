@@ -18,12 +18,26 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+/**
+ * The Class TestIRVCandidate.
+ */
 public class TestIRVCandidate {
+
+    /** The test ballot. */
     IRVBallot testBallot;
+
+    /** The test candidate. */
     IRVCandidate testCandidate = new IRVCandidate("Jenny");
+
+    /** The test id. */
     int testId = 4;
+
+    /** The test votes. */
     ArrayList<Integer> testVotes = new ArrayList<>(); // to initialize the IRVBallot needed for testing
 
+    /**
+     * Initialize test ballot.
+     */
     private void initializeTestBallot() {
 	// add votes to testVotes
 	this.testVotes.add(1);
@@ -33,6 +47,9 @@ public class TestIRVCandidate {
 	this.testBallot = new IRVBallot(this.testVotes, this.testId);
     }
 
+    /**
+     * Test IRV candidate.
+     */
     // Testing IRVCandidate() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRVCandidate() {
@@ -45,12 +62,18 @@ public class TestIRVCandidate {
 	fail("Employee Id Null exception did not throw!");
     }
 
+    /**
+     * Test IRV candidate with params.
+     */
     // Testing IRVCandidate() constructor with parameters
     @Test
     public void testIRVCandidateWithParams() {
 
     }
 
+    /**
+     * Test add ballot.
+     */
     // Testing AddBallot
     @Test
     public void testAddBallot() {
@@ -68,6 +91,9 @@ public class TestIRVCandidate {
 	assertEquals(this.testBallot, ballots[0]);
     }
 
+    /**
+     * Test eliminate.
+     */
     // Testing eliminate method
     @Test
     public void testEliminate() {
@@ -88,12 +114,18 @@ public class TestIRVCandidate {
 	assertArrayEquals(expectedEliminatedBallot, eliminatedBallot);
     }
 
+    /**
+     * Test get name.
+     */
     // Testing getName() method of candidate class that IRVCandidate extends
     @Test
     public void testGetName() {
 	assertEquals("Jenny", this.testCandidate.getName());
     }
 
+    /**
+     * Test get num votes.
+     */
     // Testing getNumVotes() method of candidate class that IRVCandidate extends
     @Test
     public void testGetNumVotes() {
@@ -107,6 +139,9 @@ public class TestIRVCandidate {
 	assertEquals(1, this.testCandidate.getNumVotes());
     }
 
+    /**
+     * Test is eliminated.
+     */
     // Testing isEliminated method
     @Test
     public void testIsEliminated() {

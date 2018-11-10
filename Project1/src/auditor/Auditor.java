@@ -58,6 +58,7 @@ public class Auditor {
      * file contains separated audit setup, process and result information.
      *
      * @param name the name of the output file
+     * @return the name of the file that was created
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public String createAuditFile(final String name) throws IOException {
