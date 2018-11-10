@@ -60,7 +60,7 @@ public class Auditor {
      * @param name the name of the output file
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public void createAuditFile(final String name) throws IOException {
+    public String createAuditFile(final String name) throws IOException {
 	final File file = new File(name);
 	final FileWriter writer = new FileWriter(file);
 	final StringBuilder fileOutput = new StringBuilder();
@@ -76,5 +76,6 @@ public class Auditor {
 	fileOutput.append(this.auditResult);
 	writer.write(fileOutput.toString());
 	writer.close();
+	return name;
     }
 }
