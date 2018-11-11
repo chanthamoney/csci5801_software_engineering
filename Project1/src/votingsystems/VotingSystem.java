@@ -53,9 +53,8 @@ abstract public class VotingSystem {
 
     /**
      * Run election.
-     * 
-     * @return
      *
+     * @return the name of the Audit file produced
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public abstract String runElection() throws IOException;

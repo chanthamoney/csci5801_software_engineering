@@ -142,11 +142,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 
 	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
 	snowButton.setIcon(new javax.swing.ImageIcon("mariahgui/img/snowflake_icon.png")); // NOI18N
-	snowButton.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		snowButtonActionPerformed(evt);
-	    }
-	});
+	snowButton.addActionListener(this::snowButtonActionPerformed);
 
 	javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
 	headerPanel.setLayout(headerPanelLayout);
@@ -173,21 +169,13 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	fcLabel.setBackground(getBackground());
 
 	jFileChooser1.setCurrentDirectory(null);
-	jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		jFileChooser1ActionPerformed(evt);
-	    }
-	});
+	jFileChooser1.addActionListener(this::jFileChooser1ActionPerformed);
 
 	manualFileEntryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
 
 	manualOpenButton.setActionCommand("Open");
 	manualOpenButton.setLabel("Open");
-	manualOpenButton.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		manualOpenButtonActionPerformed(evt);
-	    }
-	});
+	manualOpenButton.addActionListener(this::manualOpenButtonActionPerformed);
 
 	fileName.setForeground(new java.awt.Color(153, 153, 153));
 

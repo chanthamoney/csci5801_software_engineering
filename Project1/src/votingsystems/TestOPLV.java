@@ -33,6 +33,15 @@ import org.junit.Test;
  */
 public class TestOPLV {
 
+    /** The candidates. */
+    String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi", "Sai", "Tsunade", "Itachi" };
+
+    /** The parties. */
+    String[] parties = { "Senju", "Senju", "Akatsuki", "Akatsuki", "Anbu", "Anbu", "Uchiha" };
+
+    /** The test ballots. */
+    LinkedList<Integer> testBallots = new LinkedList<>();
+
     /**
      * Generates a voting system from a standardized voting system file.
      *
@@ -102,15 +111,6 @@ public class TestOPLV {
 	    parties[i] = pair[1];
 	}
     }
-
-    /** The candidates. */
-    String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi", "Sai", "Tsunade", "Itachi" };
-
-    /** The parties. */
-    String[] parties = { "Senju", "Senju", "Akatsuki", "Akatsuki", "Anbu", "Anbu", "Uchiha" };
-
-    /** The test ballots. */
-    LinkedList<Integer> testBallots = new LinkedList<>();
 
     /**
      * Test OPLV.

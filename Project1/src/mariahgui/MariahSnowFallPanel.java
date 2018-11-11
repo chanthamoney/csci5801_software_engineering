@@ -20,25 +20,44 @@ import javax.swing.JPanel;
  * Extends the GUI JPanel to have a snow theme background.
  */
 class MariahSnowFallPanel extends JPanel {
-    private Integer[] randomOpacities = new Integer[1024];
-    private int curOpacity = 0;
-    private Integer[] randomXPos = new Integer[8192];
-    private int curXPos = 0;
-    private Double[] randomXVel = new Double[1024];
-    private int curXVel = 0;
-    private Double[] randomYVel = new Double[1024];
-    private int curYVel = 0;
-    private Integer[] randomLayerNum = new Integer[128];
-    private int curLayerNum = 0;
-
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2478139986153881780L;
 
-    /** The layers. */
-    java.util.List<Layer> layers = new java.util.ArrayList<>();
+    /** Randomly generates opacities for snowflakes. */
+    private Integer[] randomOpacities = new Integer[1024];
+
+    /** The current index to grab from the random opacities. */
+    private int curOpacity = 0;
+
+    /** Randomly generates x positions for snowflakes. */
+    private Integer[] randomXPos = new Integer[8192];
+
+    /** The current index to grab from the random x positions. */
+    private int curXPos = 0;
+
+    /** Randomly generates x velocities for snowflakes. */
+    private Double[] randomXVel = new Double[1024];
+
+    /** The current index to grab from the random x velocities. */
+    private int curXVel = 0;
+
+    /** Randomly generates y velocities for snowflakes. */
+    private Double[] randomYVel = new Double[1024];
+
+    /** The current index to grab from the random y velocities. */
+    private int curYVel = 0;
+
+    /** Randomly generates maximum number of snow layers. */
+    private Integer[] randomLayerNum = new Integer[128];
+
+    /** The current index to grab from the random layer numbers. */
+    private int curLayerNum = 0;
+
+    /** The layers of snow on the panel. */
+    private java.util.List<Layer> layers = new java.util.ArrayList<>();
 
     /**
-     * Instantiates a new Mariah snow fall gui panel.
+     * Instantiates a new Mariah snow fall GUI panel.
      */
     public MariahSnowFallPanel() {
 	java.util.SplittableRandom random = new java.util.SplittableRandom();
@@ -99,7 +118,7 @@ class MariahSnowFallPanel extends JPanel {
 	 * Instantiates a new layer of snow flakes.
 	 */
 	public Layer() {
-	    snowFlakes = Stream.generate(() -> new SnowFlake()).limit(randomLayerNum[curLayerNum++ & 127] + 1)
+	    snowFlakes = Stream.generate(SnowFlake::new).limit(randomLayerNum[curLayerNum++ & 127] + 1)
 		    .toArray(SnowFlake[]::new);
 	}
     }
@@ -108,6 +127,8 @@ class MariahSnowFallPanel extends JPanel {
      * Represents a single snow flake in the background.
      */
     private class SnowFlake {
+
+	/** The opacity. */
 	int opacity;
 
 	/** The x coordinate of the snow flake on the panel. */
