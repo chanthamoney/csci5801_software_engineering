@@ -1,5 +1,5 @@
 
-// File:         TestIRV.java
+// File:         TestOPLV.java
 // Created:      2018/11/08
 // Last Changed: $Date: 2018/11/08 11:37:56 $
 // Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
@@ -36,7 +36,7 @@ public class TestOPLV {
     /**
      * Test OPLV.
      */
-    // Testing IRVOPLV() constructor
+    // Testing OPLV() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLV() {
 	try {
@@ -45,13 +45,13 @@ public class TestOPLV {
 	    assertEquals("Default constructor is not allowed.", iae.getMessage());
 	    throw iae;
 	}
-	fail("Employee Id Null exception did not throw!");
+	fail("Default constructor did not throw exception as expected.");
     }
 
     /**
      * Test OPLV with params.
      */
-    // Testing IRVOPLV() constructor with parameters
+    // Testing OPLV() constructor with parameters
     @Test
     public void testOPLVWithParams() {
 
