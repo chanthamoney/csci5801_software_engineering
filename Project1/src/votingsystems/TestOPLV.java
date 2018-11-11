@@ -1,11 +1,11 @@
 
-// File:         TestOPLV.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestOPLV.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:40:05 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -28,6 +28,7 @@ import java.util.Scanner;
 //import junitx.framework.FileAssert
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */
@@ -42,6 +43,13 @@ public class TestOPLV {
     /** The test ballots. */
     LinkedList<Integer> testBallots = new LinkedList<>();
 
+    /**
+     * Test file audit pair.
+     *
+     * @param electionFile the election file
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
     private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
 	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
@@ -52,6 +60,14 @@ public class TestOPLV {
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
+    /**
+     * Test file audit pair random msg.
+     *
+     * @param electionFile the election file
+     * @param randomMsg    the random msg
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
 	    throws ParseException, IOException {
 	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
@@ -236,9 +252,9 @@ public class TestOPLV {
 
     /**
      * Test an election where there is one seat and one winner with six candidates.
-     * 
-     * @throws ParseException
-     * @throws IOException
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
      */
     @Test
     public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
@@ -248,9 +264,9 @@ public class TestOPLV {
     /**
      * Test an election where there is one seat and one winner with six candidates
      * with only a single vote cast.
-     * 
-     * @throws ParseException
-     * @throws IOException
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
      */
     @Test
     public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
@@ -258,10 +274,11 @@ public class TestOPLV {
     }
 
     /**
-     * Test an election where there is six seats and all candidates receive one vote
-     * 
-     * @throws ParseException
-     * @throws IOException
+     * Test an election where there is six seats and all candidates receive one
+     * vote.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
      */
     @Test
     public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
@@ -270,11 +287,11 @@ public class TestOPLV {
 
     /**
      * Test an election where there is a consequential tie between candidates on the
-     * same party
-     * 
-     * @throws ParseException
-     * @throws IOException
-     * @throws InterruptedException
+     * same party.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testOPLVConsequentialPartyTieTwoCandidates() throws ParseException, IOException, InterruptedException {
@@ -284,11 +301,11 @@ public class TestOPLV {
 
     /**
      * Test an election where there is a consequential tie between candidates on the
-     * same party
-     * 
-     * @throws ParseException
-     * @throws IOException
-     * @throws InterruptedException
+     * same party.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testOPLVConsequentialPartyTieThreeCandidates()

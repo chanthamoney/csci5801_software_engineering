@@ -1,16 +1,17 @@
 
-// File:         IRVBallot.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: IRVBallot.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:38:27 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents a ballot in an instant runoff election.
  */

@@ -1,10 +1,10 @@
-// File:         MariahElectionResults.java
-// Created:      2018/11/09
-// Last Changed: $Date: 2018/11/09 8:20:09 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: MariahElectionResults.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:37:41 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package mariahgui;
 
@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import javax.swing.JDialog;
 
+// TODO: Auto-generated Javadoc
 /**
  * The GUI component for showing election results. Shows the output results of
  * an election as well as a button to open the output audit file.

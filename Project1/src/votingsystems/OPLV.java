@@ -1,11 +1,11 @@
 
-// File:         OPLV.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: OPLV.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:38:36 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -15,6 +15,7 @@ import java.util.Random;
 
 import mariahgui.MariahElectionResults;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents an open party list voting system.
  */

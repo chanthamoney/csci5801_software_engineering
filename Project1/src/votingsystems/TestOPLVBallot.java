@@ -1,11 +1,11 @@
 
-// File:         TestOPLVBallot.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestOPLVBallot.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:40:11 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -14,10 +14,15 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */
 public class TestOPLVBallot {
+
+    /**
+     * Test OPLV ballot.
+     */
     // Testing OPLVBallot() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLVBallot() {
@@ -30,6 +35,9 @@ public class TestOPLVBallot {
 	fail("Default constructor did not throw exception as expected.");
     }
 
+    /**
+     * Test OPLV test votes.
+     */
     // Testing OPLVBallot() constructor with vote zero
     @Test
     public void testOPLVTestVotes() {
@@ -40,6 +48,9 @@ public class TestOPLVBallot {
 	}
     }
 
+    /**
+     * Test OPLV test I ds.
+     */
     // Testing OPLVBallot() constructor with vote zero
     @Test
     public void testOPLVTestIDs() {

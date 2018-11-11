@@ -1,10 +1,10 @@
-// File:         Auditor.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: Auditor.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:37:33 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package auditor;
 
@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents an auditor for a process. Can store information regarding the
  * setup, processing and results of a process and generate a file when complete.

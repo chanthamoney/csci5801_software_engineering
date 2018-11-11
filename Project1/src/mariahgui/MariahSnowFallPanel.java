@@ -1,10 +1,10 @@
-// File:         MariahSnowFallPanel.java
-// Created:      2018/11/09
-// Last Changed: $Date: 2018/11/09 8:20:09 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: MariahSnowFallPanel.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:38:02 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package mariahgui;
 
@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Extends the GUI JPanel to have a snow theme background.
  */

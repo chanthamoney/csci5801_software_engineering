@@ -1,11 +1,11 @@
 
-// File:         TestAuditor.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestAuditor.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:36:23 PM
+ * Author: <A HREF="mailto:tsaix223@umn.edu">Christine Tsai</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package auditor;
 
@@ -19,6 +19,7 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestAuditor.
  */

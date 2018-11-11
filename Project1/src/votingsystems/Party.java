@@ -1,17 +1,18 @@
 
-// File:         Party.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: Party.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:38:55 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents a party in an open party list voting.
  */
@@ -125,18 +126,25 @@ public class Party {
     public String rankCandidates() {
 	String ret = String.format("\tParty %s:%n", this.name);
 
-	// Randomly decide between ties by using random.
+	// Randomly decide between ties by using random and sorting the candidates
 	final Random random = new Random(System.currentTimeMillis());
 	this.candidates.sort(
 		(o1, o2) -> Integer.compare(o2.getNumVotes(), o1.getNumVotes()) == 0 ? (random.nextBoolean() ? -1 : 1)
 			: Integer.compare(o2.getNumVotes(), o1.getNumVotes()));
 
+	/**
+	 * Determine if the ranking caused a consequential difference in who is elected
+	 * for auditing
+	 */
 	int minVotes;
 	if ((this.numSeats <= this.candidates.size()) && (this.numSeats > 0)) {
 	    minVotes = this.candidates.get(this.numSeats - 1).getNumVotes();
 	} else {
 	    minVotes = Integer.MAX_VALUE;
 	}
+	// Find the index of the first and last candidates who received the minimum
+	// number of votes. Meanwhile, print to the audit file a list of all the ranked
+	// candidates, indicating which ones will be elected!
 	int firstIndx = -1;
 	int lastIndx = -1;
 	for (int i = 0; i < this.candidates.size(); i++) {
@@ -162,7 +170,9 @@ public class Party {
 	    }
 	}
 
-	// If more than one minimum relay that there was a shuffle decision.
+	// If more than one minimum candidate and the index of the last candidate is
+	// further than the index of the last candidate who received a seat relay that
+	// there was a consequential random decision.
 	if ((firstIndx != lastIndx) && (lastIndx >= this.numSeats)) {
 	    ret += String.format(
 		    "\t\tNOTE: Randomly ranked candidates %d to %d due to a consequential tie in Party seat allocations.%n",

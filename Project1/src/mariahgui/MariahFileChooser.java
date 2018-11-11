@@ -1,10 +1,10 @@
-// File:         MariahFileChooser.java
-// Created:      2018/11/09
-// Last Changed: $Date: 2018/11/09 8:20:09 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: MariahFileChooser.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:37:57 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package mariahgui;
 
@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+// TODO: Auto-generated Javadoc
 /**
  * The GUI component which prompts the user to select an election file.
  *

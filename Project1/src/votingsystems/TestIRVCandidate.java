@@ -1,11 +1,11 @@
 
-// File:         TestIRV.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestIRVCandidate.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:39:21 PM
+ * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestIRVCandidate.
  */

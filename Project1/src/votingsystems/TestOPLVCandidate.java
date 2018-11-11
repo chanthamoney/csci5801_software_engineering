@@ -1,11 +1,11 @@
 
-// File:         TestOPLVCandidate.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestOPLVCandidate.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:40:19 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -14,15 +14,17 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */
 public class TestOPLVCandidate {
 
+    /** The party. */
     private Party party = new Party("TestParty");
 
     /**
-     * Initialize test Candidate
+     * Initialize test Candidate.
      *
      * @return the candidate
      */
@@ -30,6 +32,9 @@ public class TestOPLVCandidate {
 	return new OPLVCandidate("TestCandidate", party);
     }
 
+    /**
+     * Test OPLV candidate.
+     */
     // Testing OPLVCandidate() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLVCandidate() {
@@ -42,6 +47,9 @@ public class TestOPLVCandidate {
 	fail("Default constructor did not throw exception as expected.");
     }
 
+    /**
+     * Test OPLV candidate name.
+     */
     // Testing if candidate name is correct
     @Test
     public void testOPLVCandidateName() {
@@ -49,6 +57,9 @@ public class TestOPLVCandidate {
 	assertEquals("TestCandidate", candidate.getName());
     }
 
+    /**
+     * Test OPLV candidate party.
+     */
     // Testing if candidate party is correct
     @Test
     public void testOPLVCandidateParty() {
@@ -56,6 +67,9 @@ public class TestOPLVCandidate {
 	assertEquals(party, candidate.getParty());
     }
 
+    /**
+     * Test OPLV candidate cast zero vote.
+     */
     // Testing casting zero vote
     @Test
     public void testOPLVCandidateCastZeroVote() {
@@ -64,6 +78,9 @@ public class TestOPLVCandidate {
 	assertEquals(0, candidate.getParty().getNumVotes());
     }
 
+    /**
+     * Test OPLV candidate cast one vote.
+     */
     // Testing casting one vote
     @Test
     public void testOPLVCandidateCastOneVote() {
@@ -73,6 +90,9 @@ public class TestOPLVCandidate {
 	assertEquals(1, candidate.getParty().getNumVotes());
     }
 
+    /**
+     * Test OPLV candidate cast five votes.
+     */
     // Testing casting five votes
     @Test
     public void testOPLVCandidateCastFiveVotes() {

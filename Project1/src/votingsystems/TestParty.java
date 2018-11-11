@@ -1,11 +1,11 @@
 
-// File:         TestParty.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: TestParty.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:40:37 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -17,14 +17,17 @@ import java.util.Collections;
 
 import org.junit.Test;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */
 public class TestParty {
+
+    /** The candidates. */
     private ArrayList<OPLVCandidate> candidates = new ArrayList<>();
 
     /**
-     * Initialize test Candidate
+     * Initialize test Candidate.
      *
      * @return the candidate
      */
@@ -37,6 +40,9 @@ public class TestParty {
 	return party;
     }
 
+    /**
+     * Test party.
+     */
     // Testing Party() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testParty() {
@@ -49,6 +55,9 @@ public class TestParty {
 	fail("Default constructor did not throw exception as expected.");
     }
 
+    /**
+     * Test party name.
+     */
     // Testing if party name is correct
     @Test
     public void testPartyName() {
@@ -56,6 +65,9 @@ public class TestParty {
 	assertEquals("TestParty", party.getName());
     }
 
+    /**
+     * Test party cast zero vote.
+     */
     // Testing casting zero vote
     @Test
     public void testPartyCastZeroVote() {
@@ -63,6 +75,9 @@ public class TestParty {
 	assertEquals(0, party.getNumVotes());
     }
 
+    /**
+     * Test party cast one vote.
+     */
     // Testing party one vote
     @Test
     public void testPartyCastOneVote() {
@@ -71,6 +86,9 @@ public class TestParty {
 	assertEquals(1, party.getNumVotes());
     }
 
+    /**
+     * Test party cast five votes.
+     */
     // Testing casting five votes
     @Test
     public void testPartyCastFiveVotes() {
@@ -81,6 +99,9 @@ public class TestParty {
 	assertEquals(5, party.getNumVotes());
     }
 
+    /**
+     * Test party zero seats.
+     */
     // Testing default zero seats
     @Test
     public void testPartyZeroSeats() {
@@ -88,6 +109,9 @@ public class TestParty {
 	assertEquals(0, party.getNumSeats());
     }
 
+    /**
+     * Test party one seat.
+     */
     // Testing party seats are correct
     @Test
     public void testPartyOneSeat() {
@@ -99,6 +123,9 @@ public class TestParty {
     }
 
     // Testing if number of seats is equal to number of candidates, all candidates
+    /**
+     * Test get winning candidates num seats equals num candidates.
+     */
     // are returned
     @Test
     public void testGetWinningCandidatesNumSeatsEqualsNumCandidates() {
@@ -108,6 +135,9 @@ public class TestParty {
     }
 
     // Testing if number of seats is smaller than the number of candidates, only
+    /**
+     * Test get winning candidates less num seats than num candidates.
+     */
     // winning candidates are returned
     @Test
     public void testGetWinningCandidatesLessNumSeatsThanNumCandidates() {
@@ -126,6 +156,9 @@ public class TestParty {
 	}
     }
 
+    /**
+     * Test rank candidates zero candidate.
+     */
     // Testing ranking zero candidates gives back zero candidates
     @Test
     public void testRankCandidatesZeroCandidate() {
@@ -135,6 +168,9 @@ public class TestParty {
 	assertEquals(zeroCandidates, party.getCandidates());
     }
 
+    /**
+     * Test rank candidates one candidate.
+     */
     // Testing ranking one candidate only gives back ranked candidate and has 1 vote
     @Test
     public void testRankCandidatesOneCandidate() {
@@ -147,6 +183,9 @@ public class TestParty {
 	assertEquals(oneCandidates, party.getCandidates());
     }
 
+    /**
+     * Test rank candidates two candidates.
+     */
     // Testing ranking two candidate only gives back two ranked candidates
     @Test
     public void testRankCandidatesTwoCandidates() {
@@ -169,6 +208,9 @@ public class TestParty {
 	assertEquals(twoCandidates, party.getCandidates());
     }
 
+    /**
+     * Test rank candidates five candidates.
+     */
     // Testing ranking five candidate only gives back five ranked candidates
     @Test
     public void testRankCandidatesFiveCandidates() {

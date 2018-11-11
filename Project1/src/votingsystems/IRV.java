@@ -1,11 +1,10 @@
-
-// File:         IRV.java
-// Created:      2018/11/08
-// Last Changed: $Date: 2018/11/08 11:37:56 $
-// Author:       <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
-//
-// This code is copyright (c) 2018 University of Minnesota - Twin Cities
-//
+/**
+ * File: IRV.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:38:22 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package votingsystems;
 
@@ -16,6 +15,7 @@ import java.util.Random;
 
 import mariahgui.MariahElectionResults;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents an Instant Runoff Voting System.
  */
@@ -43,6 +43,8 @@ public class IRV extends VotingSystem {
      * @param numCandidates the number of candidates in the election
      * @param candidates    the candidates running in the election
      * @param ballots       the ballots being cast in the election
+     * @param resultsGUI    indicator for whether the results should be displaying
+     *                      using the gui
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
 	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) {
