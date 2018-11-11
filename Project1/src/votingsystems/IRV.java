@@ -196,7 +196,8 @@ public class IRV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public void runElection() throws IOException {
+    public String runElection() throws IOException {
+	String auditFile;
 	if (!this.wasRun.getAndSet(true)) {
 	    final boolean firstRun = true;
 	    while (true) {
@@ -212,8 +213,7 @@ public class IRV extends VotingSystem {
 		    this.auditor.auditProcess(
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
 		    this.auditor.auditResult("Election Winner: " + lastCan.toString());
-		    String auditFile = this.auditor
-			    .createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan.toString() + "\n");
 		    new MariahElectionResults(auditFile, "Election Winner: " + lastCan.toString() + "\n");
 		    MariahElectionResults frame = new MariahElectionResults(auditFile,
@@ -236,8 +236,7 @@ public class IRV extends VotingSystem {
 
 		if (!"".equals(winner)) {
 		    this.auditor.auditResult("Election Winner: " + winner);
-		    String auditFile = this.auditor
-			    .createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
 		    MariahElectionResults frame = new MariahElectionResults(auditFile,
 			    "Election Winner: " + winner + "\n");
@@ -261,5 +260,6 @@ public class IRV extends VotingSystem {
 	} else {
 	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
 	}
+	return auditFile;
     }
 }

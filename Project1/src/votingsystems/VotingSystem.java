@@ -53,8 +53,10 @@ abstract public class VotingSystem {
 
     /**
      * Run election.
+     * 
+     * @return
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public abstract void runElection() throws IOException;
+    public abstract String runElection() throws IOException;
 }

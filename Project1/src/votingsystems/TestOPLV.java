@@ -13,10 +13,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
+//import junitx.framework.FileAssert
 import org.junit.Test;
 
 /**
@@ -24,11 +29,80 @@ import org.junit.Test;
  */
 public class TestOPLV {
 
+    /**
+     * Generates a voting system from a standardized voting system file.
+     *
+     * @param fileName the file name
+     * @return the voting system
+     * @throws FileNotFoundException the file not found exception
+     * @throws ParseException        the parse exception
+     */
+    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException, ParseException {
+	File file = new File(fileName);
+	final Scanner scanner = new Scanner(file);
+
+	final String in_VotingSystem = scanner.nextLine();
+
+	// Open Party Listing
+	final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	final String in_Candidates = scanner.nextLine();
+	final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+
+	final String[] candidates = new String[in_NumCandidates];
+	final String[] parties = new String[in_NumCandidates];
+	CandidateParyPairsSeparator(in_NumCandidates, cpPairs, candidates, parties);
+
+	final int in_NumSeats = Integer.valueOf(scanner.nextLine());
+	final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
+	scanner.close();
+	return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+    }
+
+    /**
+     * Retrieves the open party list voting ballots from a file.
+     *
+     * @param numBallots the number of ballots cast in the election
+     * @param scanner    the scanner reading the specified file
+     * @return the list of ballots
+     */
+    private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner) {
+	LinkedList<Integer> in_Ballots = new LinkedList<>();
+	for (int i = 0; i < numBallots; i++) {
+	    final String[] ballotInfo = scanner.nextLine().split(", *");
+	    for (int j = 0; j < ballotInfo.length; j++) {
+		if (!"".equals(ballotInfo[j])) {
+		    in_Ballots.add(j);
+		    break;
+		}
+	    }
+	}
+	return in_Ballots;
+    }
+
+    /**
+     * Stores the separated strings of candidate party pairs into the designated
+     * lists.
+     *
+     * @param numPairs   the number of pairs to separate
+     * @param cpPairs    the candidate party pairs
+     * @param candidates the list in which to store candidate names
+     * @param parties    the list in which to store party names
+     */
+    private static void CandidateParyPairsSeparator(int numPairs, String[] cpPairs, String[] candidates,
+	    String[] parties) {
+	for (int i = 0; i < numPairs; i++) {
+	    final String[] pair = cpPairs[i].substring(1, cpPairs[i].length() - 1).split(", *");
+	    candidates[i] = pair[0];
+	    parties[i] = pair[1];
+	}
+    }
+
     /** The candidates. */
-    String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+    String[] candidates = { "Naruto", "Sasuke", "Sakura", "Kakashi", "Sai", "Tsunade", "Itachi" };
 
     /** The parties. */
-    String[] parties = { "Naruto", "Sasuke", "Sakura", "Kakashi" };
+    String[] parties = { "Senju", "Senju", "Akatsuki", "Akatsuki", "Anbu", "Anbu", "Uchiha" };
 
     /** The test ballots. */
     LinkedList<Integer> testBallots = new LinkedList<>();
@@ -46,23 +120,6 @@ public class TestOPLV {
 	    throw iae;
 	}
 	fail("Default constructor did not throw exception as expected.");
-    }
-
-    /**
-     * Test OPLV with params.
-     */
-    // Testing OPLV() constructor with parameters
-    @Test
-    public void testOPLVWithParams() {
-
-    }
-
-    /**
-     * Test run election.
-     */
-    @Test
-    public void testRunElection() {
-
     }
 
     /**
@@ -149,5 +206,19 @@ public class TestOPLV {
 
 	// Must take less than 8 minutes to process a 100,000 vote election.
 	assertTrue((timeAfter - timeBefore) < 480000);
+    }
+
+    /**
+     * Test run election.
+     * 
+     * @throws ParseException
+     * @throws IOException
+     */
+    @Test
+    public void testRunElection() throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../../testing/oneSeatOneWinner.txt");
+	String auditFile = vs.runElection();
+	// Compare her output to what we expect
+
     }
 }

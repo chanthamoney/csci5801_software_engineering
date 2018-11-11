@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -114,7 +115,7 @@ public class TestParty {
 	// Initialize candidates to have sequential ranked number of votes
 	for (int i = 0; i < 5; i++) {
 	    OPLVCandidate candidate = party.getCandidates().get(i);
-	    for (int j = 5; j > 0; j--) {
+	    for (int j = 5; j > i; j--) {
 		candidate.castVote();
 	    }
 	}
@@ -125,7 +126,16 @@ public class TestParty {
 	}
     }
 
-    // Testing ranking 1 candidate only gives back ranked candidate and has 1 vote
+    // Testing ranking zero candidates gives back zero candidates
+    @Test
+    public void testRankCandidatesZeroCandidate() {
+	Party party = new Party("ZeroCandidateParty");
+	ArrayList<OPLVCandidate> zeroCandidates = new ArrayList<>();
+	party.rankCandidates();
+	assertEquals(zeroCandidates, party.getCandidates());
+    }
+
+    // Testing ranking one candidate only gives back ranked candidate and has 1 vote
     @Test
     public void testRankCandidatesOneCandidate() {
 	Party party = new Party("OneCandidateParty");
@@ -137,7 +147,7 @@ public class TestParty {
 	assertEquals(oneCandidates, party.getCandidates());
     }
 
-    // Testing ranking 2 candidate only gives back two ranked candidates
+    // Testing ranking two candidate only gives back two ranked candidates
     @Test
     public void testRankCandidatesTwoCandidates() {
 	Party party = new Party("TwoCandidateParty");
@@ -157,5 +167,25 @@ public class TestParty {
 	twoCandidates.add(candidate1);
 	party.rankCandidates();
 	assertEquals(twoCandidates, party.getCandidates());
+    }
+
+    // Testing ranking five candidate only gives back five ranked candidates
+    @Test
+    public void testRankCandidatesFiveCandidates() {
+	Party party = initializeTestParty();
+
+	// Initialize candidates to have sequential ranked number of votes
+	for (int i = 0; i < 5; i++) {
+	    OPLVCandidate candidate = party.getCandidates().get(i);
+	    for (int j = 5; j > i; j--) {
+		candidate.castVote();
+	    }
+	}
+
+	for (int i = 0; i < 1; i++) {
+	    Collections.shuffle(party.getCandidates());
+	    party.rankCandidates();
+	    assertEquals(candidates, party.getCandidates());
+	}
     }
 }
