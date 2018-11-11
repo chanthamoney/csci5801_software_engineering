@@ -10,84 +10,28 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <path id="JUnit 5.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.api_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.params_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.commons_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.engine_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.launcher_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.runner_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.suite.api_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.vintage.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.opentest4j_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.apiguardian_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
     <path id="src.classpath">
-        <pathelement location="bin"/>
+        <pathelement location="."/>
+        <path refid="JUnit 5.libraryclasspath"/>
     </path>
-    <path id="run.Driver (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.Driver (1).bootclasspath"/>
-    <path id="run.TestOPLV (2).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestOPLV (2).bootclasspath"/>
-    <path id="run.MariahElectionProcessor.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.MariahElectionProcessor.bootclasspath"/>
-    <path id="run.TestIRV (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestIRV (1).bootclasspath"/>
-    <path id="run.MariahElectionResults.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.MariahElectionResults.bootclasspath"/>
-    <path id="run.TestIRVCandidate (2).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestIRVCandidate (2).bootclasspath"/>
-    <path id="run.MariahFileChooser.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.MariahFileChooser.bootclasspath"/>
-    <path id="run.Driver (2).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.Driver (2).bootclasspath"/>
-    <path id="run.TestOPLV (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestOPLV (1).bootclasspath"/>
-    <path id="run.TestIRVCandidate (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestIRVCandidate (1).bootclasspath"/>
-    <path id="run.TestRunner (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestRunner (1).bootclasspath"/>
-    <path id="run.TestIRV (2).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestIRV (2).bootclasspath"/>
-    <path id="run.TestAuditor (2).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestAuditor (2).bootclasspath"/>
-    <path id="run.MariahEP.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.MariahEP.bootclasspath"/>
-    <path id="run.TestAuditor (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestAuditor (1).bootclasspath"/>
-    <path id="run.JunitTestSuite.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.JunitTestSuite.bootclasspath"/>
-    <path id="run.TestIRVBallot (1).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestIRVBallot (1).bootclasspath"/>
-    <path id="run.Driver (4).classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.Driver (4).bootclasspath"/>
     <target name="init">
-        <mkdir dir="bin"/>
-        <copy includeemptydirs="false" todir="bin">
+        <copy includeemptydirs="false" todir=".">
             <fileset dir=".">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
@@ -95,14 +39,16 @@
         </copy>
     </target>
     <target name="clean">
-        <delete dir="bin"/>
+        <delete>
+            <fileset dir="." includes="**/*.class"/>
+        </delete>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="." includeantruntime="false" source="${source}" target="${target}">
             <src path="."/>
             <classpath refid="src.classpath"/>
         </javac>
@@ -123,10 +69,7 @@
     </target>
     <target name="Driver (1)">
         <java classname="Driver" failonerror="true" fork="yes">
-            <classpath refid="run.Driver (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.Driver (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestOPLV (2)">
@@ -135,18 +78,12 @@
             <formatter type="xml"/>
             <test name="votingsystems.TestOPLV" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestOPLV (2).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestOPLV (2).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="MariahElectionProcessor">
         <java classname="MariahElectionProcessor" failonerror="true" fork="yes">
-            <classpath refid="run.MariahElectionProcessor.classpath"/>
-            <bootclasspath>
-                <path refid="run.MariahElectionProcessor.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestIRV (1)">
@@ -155,18 +92,12 @@
             <formatter type="xml"/>
             <test name="TestIRV" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestIRV (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestIRV (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="MariahElectionResults">
         <java classname="mariahgui.MariahElectionResults" failonerror="true" fork="yes">
-            <classpath refid="run.MariahElectionResults.classpath"/>
-            <bootclasspath>
-                <path refid="run.MariahElectionResults.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestIRVCandidate (2)">
@@ -175,26 +106,17 @@
             <formatter type="xml"/>
             <test name="votingsystems.TestIRVCandidate" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestIRVCandidate (2).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestIRVCandidate (2).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="MariahFileChooser">
         <java classname="mariahgui.MariahFileChooser" failonerror="true" fork="yes">
-            <classpath refid="run.MariahFileChooser.classpath"/>
-            <bootclasspath>
-                <path refid="run.MariahFileChooser.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="Driver (2)">
         <java classname="main.Driver" failonerror="true" fork="yes">
-            <classpath refid="run.Driver (2).classpath"/>
-            <bootclasspath>
-                <path refid="run.Driver (2).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestOPLV (1)">
@@ -203,10 +125,7 @@
             <formatter type="xml"/>
             <test name="TestOPLV" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestOPLV (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestOPLV (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="TestIRVCandidate (1)">
@@ -215,18 +134,12 @@
             <formatter type="xml"/>
             <test name="TestIRVCandidate" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestIRVCandidate (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestIRVCandidate (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="TestRunner (1)">
         <java classname="TestRunner" failonerror="true" fork="yes">
-            <classpath refid="run.TestRunner (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestRunner (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestIRV (2)">
@@ -235,10 +148,7 @@
             <formatter type="xml"/>
             <test name="votingsystems.TestIRV" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestIRV (2).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestIRV (2).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="TestAuditor (2)">
@@ -247,18 +157,12 @@
             <formatter type="xml"/>
             <test name="auditor.TestAuditor" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestAuditor (2).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestAuditor (2).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="MariahEP">
         <java classname="MariahEP" failonerror="true" fork="yes">
-            <classpath refid="run.MariahEP.classpath"/>
-            <bootclasspath>
-                <path refid="run.MariahEP.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="TestAuditor (1)">
@@ -267,10 +171,7 @@
             <formatter type="xml"/>
             <test name="TestAuditor" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestAuditor (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestAuditor (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="JunitTestSuite">
@@ -279,10 +180,7 @@
             <formatter type="xml"/>
             <test name="JunitTestSuite" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.JunitTestSuite.classpath"/>
-            <bootclasspath>
-                <path refid="run.JunitTestSuite.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="TestIRVBallot (1)">
@@ -291,18 +189,12 @@
             <formatter type="xml"/>
             <test name="TestIRVBallot" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.TestIRVBallot (1).classpath"/>
-            <bootclasspath>
-                <path refid="run.TestIRVBallot (1).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="Driver (4)">
         <java classname="src.Driver" failonerror="true" fork="yes">
-            <classpath refid="run.Driver (4).classpath"/>
-            <bootclasspath>
-                <path refid="run.Driver (4).bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="junitreport">
