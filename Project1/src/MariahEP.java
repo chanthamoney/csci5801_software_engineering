@@ -7,8 +7,6 @@
 // This code is copyright (c) 2018 University of Minnesota - Twin Cities
 //
 
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,11 +33,13 @@ public class MariahEP {
      * Generates a voting system from a standardized voting system file.
      *
      * @param fileName the file name
+     * @param noGUI    maintains if no GUI component should be utilized
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      * @throws ParseException        the parse exception
      */
-    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException, ParseException {
+    private static VotingSystem votingSystemFromFile(String fileName, boolean noGUI)
+	    throws FileNotFoundException, ParseException {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
@@ -54,7 +54,7 @@ public class MariahEP {
 	    final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates,
 		    scanner);
 	    scanner.close();
-	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, true);
+	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, !noGUI);
 	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Open Party Listing
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
@@ -69,7 +69,7 @@ public class MariahEP {
 	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	    scanner.close();
-	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, true);
+	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, !noGUI);
 	} else {
 	    scanner.close();
 	    throw new ParseException("Invalid Election Type", 0);
@@ -155,12 +155,16 @@ public class MariahEP {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
 	String fileName = null;
+	boolean noGUI = false;
 
 	if (args.length > 0) {
 	    fileName = args[0].trim();
+	    if (args.length == 2 && "NoGUI".equals(args[1])) {
+		noGUI = true;
+	    }
 	}
 	while (true) {
-	    if (fileName == null) {
+	    if (!noGUI && fileName == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
 		while (frame.getFileName() == null) {
@@ -173,12 +177,18 @@ public class MariahEP {
 
 	    VotingSystem vs = null;
 	    try {
-		vs = votingSystemFromFile(fileName);
+		vs = votingSystemFromFile(fileName, noGUI);
 	    } catch (ParseException e) {
 		e.printStackTrace();
 	    }
 
-	    vs.runElection();
+	    String auditFile = vs.runElection();
+	    System.out.print(String.format("Audit File: %s", auditFile));
+
+	    if (noGUI) {
+		return;
+	    }
+
 	    fileName = null;
 	}
     }

@@ -42,6 +42,16 @@ public class TestOPLV {
     /** The test ballots. */
     LinkedList<Integer> testBallots = new LinkedList<>();
 
+    private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> testOutput = Files.readAllLines(auditFile);
+	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing", electionFile + "Audit.txt"));
+	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+    }
+
     /**
      * Generates a voting system from a standardized voting system file.
      *
@@ -221,13 +231,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../testing/oneSeatOneWinner.txt");
-	Path auditFile = Paths.get(".", vs.runElection());
 
-	// Retrieve audit output and expected output.
-	List<String> expectedOutput = Files.readAllLines(auditFile);
-	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "oneSeatOneWinnerAudit.txt"));
-	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
     /**
@@ -239,13 +243,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../testing/oneSeatOneWinnerOneVote.txt");
-	Path auditFile = Paths.get(".", vs.runElection());
-
-	// Retrieve audit output and expected output.
-	List<String> expectedOutput = Files.readAllLines(auditFile);
-	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "oneSeatOneWinnerOneVoteAudit.txt"));
-	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+	testFileAuditPair("oneSeatOneWinnerOneVote");
     }
 
     /**
@@ -256,12 +254,6 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../testing/sixSeatsSixCandidatesEqual.txt");
-	Path auditFile = Paths.get(".", vs.runElection());
-
-	// Retrieve audit output and expected output.
-	List<String> expectedOutput = Files.readAllLines(auditFile);
-	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "sixSeatsSixCandidatesEqualAudit.txt"));
-	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+	testFileAuditPair("sixSeatsSixCandidatesEqual");
     }
 }
