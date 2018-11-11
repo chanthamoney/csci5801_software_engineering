@@ -49,6 +49,30 @@ public class TestMariahEP {
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
+    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
+	    throws ParseException, IOException, InterruptedException {
+	// Keep current System.out
+	final PrintStream oldOut = System.out;
+	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+	// Change so System.out saved in baos
+	System.setOut(new PrintStream(baos));
+
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "NoGUI" });
+
+	// Reset the System.out to console
+	System.setOut(oldOut);
+
+	// baos contains winner printed from the runElection function
+	final String output = new String(baos.toByteArray());
+	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1));
+
+	// Retrieve audit output and expected output.
+	List<String> testOutput = Files.readAllLines(auditFile);
+	testOutput.replaceAll(String::trim);
+	assertTrue(testOutput.contains(randomMsg));
+    }
+
     /**
      * Test an election where there is one seat and one winner with six candidates.
      * 
@@ -57,8 +81,8 @@ public class TestMariahEP {
      * @throws InterruptedException
      */
     @Test
-    public void testOPLVOneSeatOneWinner() throws ParseException, IOException, InterruptedException {
-	testFileAuditPair("oneSeatOneWinner");
+    public void testMainOPLVOneSeatOneWinner() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/oneSeatOneWinner");
     }
 
     /**
@@ -70,8 +94,8 @@ public class TestMariahEP {
      * @throws InterruptedException
      */
     @Test
-    public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException, InterruptedException {
-	testFileAuditPair("oneSeatOneWinnerOneVote");
+    public void testMainOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/oneSeatOneWinnerOneVote");
     }
 
     /**
@@ -82,7 +106,37 @@ public class TestMariahEP {
      * @throws InterruptedException
      */
     @Test
-    public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException, InterruptedException {
-	testFileAuditPair("sixSeatsSixCandidatesEqual");
+    public void testMainOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/sixSeatsSixCandidatesEqual");
+    }
+
+    /**
+     * Test an election where there is a consequential tie between candidates on the
+     * same party
+     * 
+     * @throws ParseException
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainOPLVConsequentialPartyTieTwoCandidates()
+	    throws ParseException, IOException, InterruptedException {
+	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieTwoCandidates",
+		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+    }
+
+    /**
+     * Test an election where there is a consequential tie between candidates on the
+     * same party
+     * 
+     * @throws ParseException
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainOPLVConsequentialPartyTieThreeCandidates()
+	    throws ParseException, IOException, InterruptedException {
+	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
+		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
     }
 }

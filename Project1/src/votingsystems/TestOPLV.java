@@ -52,6 +52,17 @@ public class TestOPLV {
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
+    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
+	    throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> testOutput = Files.readAllLines(auditFile);
+	testOutput.replaceAll(String::trim);
+	assertTrue(testOutput.contains(randomMsg));
+    }
+
     /**
      * Generates a voting system from a standardized voting system file.
      *
@@ -231,7 +242,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
-
+	testFileAuditPair("OPLV/oneSeatOneWinner");
     }
 
     /**
@@ -243,7 +254,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
-	testFileAuditPair("oneSeatOneWinnerOneVote");
+	testFileAuditPair("OPLV/oneSeatOneWinnerOneVote");
     }
 
     /**
@@ -254,6 +265,35 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
-	testFileAuditPair("sixSeatsSixCandidatesEqual");
+	testFileAuditPair("OPLV/sixSeatsSixCandidatesEqual");
+    }
+
+    /**
+     * Test an election where there is a consequential tie between candidates on the
+     * same party
+     * 
+     * @throws ParseException
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testOPLVConsequentialPartyTieTwoCandidates() throws ParseException, IOException, InterruptedException {
+	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieTwoCandidates",
+		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+    }
+
+    /**
+     * Test an election where there is a consequential tie between candidates on the
+     * same party
+     * 
+     * @throws ParseException
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testOPLVConsequentialPartyTieThreeCandidates()
+	    throws ParseException, IOException, InterruptedException {
+	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
+		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
     }
 }
