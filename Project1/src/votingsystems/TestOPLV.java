@@ -16,8 +16,12 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -41,7 +45,8 @@ public class TestOPLV {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
-	final String in_VotingSystem = scanner.nextLine();
+	// Reads in first line which is oplv voting system
+	scanner.nextLine();
 
 	// Open Party Listing
 	final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
@@ -56,7 +61,7 @@ public class TestOPLV {
 	final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	scanner.close();
-	return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+	return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, false);
     }
 
     /**
@@ -130,7 +135,7 @@ public class TestOPLV {
     @Test(expected = RuntimeException.class)
     public void testRunElectionTwice() throws IOException {
 	this.testBallots.add(1);
-	final VotingSystem vs = new OPLV(this.testBallots.size(), 4, 1, candidates, parties, this.testBallots);
+	final VotingSystem vs = new OPLV(this.testBallots.size(), 4, 1, candidates, parties, this.testBallots, false);
 	vs.runElection();
 	try {
 	    vs.runElection();
@@ -189,7 +194,7 @@ public class TestOPLV {
 	}
 	final int numSeats = randomizer.nextInt(11) + 10;
 	final VotingSystem vs = new OPLV(this.testBallots.size(), 300, numSeats, candidates_300,
-		parties_100_80_60_40_20, this.testBallots);
+		parties_100_80_60_40_20, this.testBallots, false);
 
 	// Record current time in milliseconds immediately before election run
 	final long timeBefore = System.currentTimeMillis();
@@ -209,16 +214,54 @@ public class TestOPLV {
     }
 
     /**
-     * Test run election.
+     * Test an election where there is one seat and one winner with six candidates.
      * 
      * @throws ParseException
      * @throws IOException
      */
     @Test
-    public void testRunElection() throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../../testing/oneSeatOneWinner.txt");
-	String auditFile = vs.runElection();
-	// Compare her output to what we expect
+    public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/oneSeatOneWinner.txt");
+	Path auditFile = Paths.get(".", vs.runElection());
 
+	// Retrieve audit output and expected output.
+	List<String> expectedOutput = Files.readAllLines(auditFile);
+	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "oneSeatOneWinnerAudit.txt"));
+	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+    }
+
+    /**
+     * Test an election where there is one seat and one winner with six candidates
+     * with only a single vote cast.
+     * 
+     * @throws ParseException
+     * @throws IOException
+     */
+    @Test
+    public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/oneSeatOneWinnerOneVote.txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> expectedOutput = Files.readAllLines(auditFile);
+	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "oneSeatOneWinnerOneVoteAudit.txt"));
+	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+    }
+
+    /**
+     * Test an election where there is six seats and all candidates receive one vote
+     * 
+     * @throws ParseException
+     * @throws IOException
+     */
+    @Test
+    public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/sixSeatsSixCandidatesEqual.txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> expectedOutput = Files.readAllLines(auditFile);
+	List<String> testOutput = Files.readAllLines(Paths.get("../testing", "sixSeatsSixCandidatesEqualAudit.txt"));
+	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 }

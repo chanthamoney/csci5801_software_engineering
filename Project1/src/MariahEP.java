@@ -67,7 +67,7 @@ public class MariahEP {
 	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	    scanner.close();
-	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots);
+	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, true);
 	} else {
 	    scanner.close();
 	    throw new ParseException("Invalid Election Type", 0);
