@@ -7,8 +7,6 @@
 // This code is copyright (c) 2018 University of Minnesota - Twin Cities
 //
 
-
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -21,6 +19,6 @@ import votingsystems.TestOPLV;
  * The Class JunitTestSuite.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ TestIRVBallot.class, TestIRVCandidate.class, TestIRV.class, TestOPLV.class })
+@Suite.SuiteClasses({ TestMariahEP.class, TestIRVBallot.class, TestIRVCandidate.class, TestIRV.class, TestOPLV.class })
 public class JunitTestSuite {
 }
