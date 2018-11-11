@@ -44,7 +44,7 @@ public class OPLV extends VotingSystem {
     private boolean wasRandomRanking = false;
 
     /** Indicates if the results should be output to the GUI. */
-    private boolean resultsGui;
+    private boolean resultsGUI;
 
     /**
      * Instantiates a new open party list voting system.
@@ -55,12 +55,12 @@ public class OPLV extends VotingSystem {
      * @param candidates    the candidates participating in the election
      * @param parties       the parties participating in the election
      * @param ballots       the ballots cast in the election
-     * @param resultsGui    indicates if the results should be output to the GUI
+     * @param resultsGUI    indicates if the results should be output to the GUI
      */
     public OPLV(int numBallots, int numCandidates, int numSeats, String[] candidates, String[] parties,
-	    LinkedList<Integer> ballots, boolean resultsGui) {
+	    LinkedList<Integer> ballots, boolean resultsGUI) {
 	super(numBallots, numCandidates);
-	this.resultsGui = resultsGui;
+	this.resultsGUI = resultsGUI;
 	this.numSeats = numSeats;
 	this.candidates = new OPLVCandidate[numCandidates];
 	for (int i = 0; i < numCandidates; i++) {
@@ -241,7 +241,7 @@ public class OPLV extends VotingSystem {
 	    this.auditor.auditResult(res.toString());
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString());
-	    if (this.resultsGui) {
+	    if (this.resultsGUI) {
 		MariahElectionResults frame = new MariahElectionResults(auditFile, res.toString());
 		frame.setVisible(true);
 	    }

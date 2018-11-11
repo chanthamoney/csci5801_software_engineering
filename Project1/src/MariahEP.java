@@ -52,7 +52,7 @@ public class MariahEP {
 	    final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates,
 		    scanner);
 	    scanner.close();
-	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots);
+	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, true);
 	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Open Party Listing
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());

@@ -33,6 +33,9 @@ public class IRV extends VotingSystem {
      */
     private IRVBallot[] voterPool;
 
+    /** Indicates if the results should be output to the GUI. */
+    private boolean resultsGUI;
+
     /**
      * Instantiates a new instant runoff voting system.
      *
@@ -42,8 +45,9 @@ public class IRV extends VotingSystem {
      * @param ballots       the ballots being cast in the election
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
-	    final LinkedList<ArrayList<Integer>> ballots) {
+	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) {
 	super(numBallots, numCandidates);
+	this.resultsGUI = resultsGUI;
 	this.candidates = new IRVCandidate[numCandidates];
 	for (int i = 0; i < numCandidates; i++) {
 	    this.candidates[i] = new IRVCandidate(candidates[i]);
@@ -215,10 +219,11 @@ public class IRV extends VotingSystem {
 		    this.auditor.auditResult("Election Winner: " + lastCan.toString());
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan.toString() + "\n");
-		    new MariahElectionResults(auditFile, "Election Winner: " + lastCan.toString() + "\n");
-		    MariahElectionResults frame = new MariahElectionResults(auditFile,
-			    "Election Winner: " + lastCan.toString() + "\n");
-		    frame.setVisible(true);
+		    if (resultsGUI) {
+			MariahElectionResults frame = new MariahElectionResults(auditFile,
+				"Election Winner: " + lastCan.toString() + "\n");
+			frame.setVisible(true);
+		    }
 		    break;
 		}
 
@@ -238,9 +243,11 @@ public class IRV extends VotingSystem {
 		    this.auditor.auditResult("Election Winner: " + winner);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
-		    MariahElectionResults frame = new MariahElectionResults(auditFile,
-			    "Election Winner: " + winner + "\n");
-		    frame.setVisible(true);
+		    if (resultsGUI) {
+			MariahElectionResults frame = new MariahElectionResults(auditFile,
+				"Election Winner: " + winner + "\n");
+			frame.setVisible(true);
+		    }
 		    break;
 		} else {
 		    final StringBuilder curPartyVotes = new StringBuilder();
