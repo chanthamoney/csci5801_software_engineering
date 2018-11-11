@@ -81,6 +81,11 @@
             <classpath refid="src.classpath"/>
         </junit>
     </target>
+    <target name="MariahElectionProcessor">
+        <java classname="MariahElectionProcessor" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
+    </target>
     <target name="TestIRV (1)">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -154,6 +159,11 @@
             <jvmarg line="-ea"/>
             <classpath refid="src.classpath"/>
         </junit>
+    </target>
+    <target name="MariahEP">
+        <java classname="MariahEP" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
     </target>
     <target name="TestAuditor (1)">
         <mkdir dir="${junit.output.dir}"/>

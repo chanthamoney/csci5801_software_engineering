@@ -20,15 +20,15 @@ import javax.swing.JPanel;
  * Extends the GUI JPanel to have a snow theme background.
  */
 class MariahSnowFallPanel extends JPanel {
-    private Integer[] randomOpacities = new Integer[1000];
+    private Integer[] randomOpacities = new Integer[1024];
     private int curOpacity = 0;
-    private Integer[] randomXPos = new Integer[10000];
+    private Integer[] randomXPos = new Integer[8192];
     private int curXPos = 0;
-    private Double[] randomXVel = new Double[1000];
+    private Double[] randomXVel = new Double[1024];
     private int curXVel = 0;
-    private Double[] randomYVel = new Double[1000];
+    private Double[] randomYVel = new Double[1024];
     private int curYVel = 0;
-    private Integer[] randomLayerNum = new Integer[100];
+    private Integer[] randomLayerNum = new Integer[128];
     private int curLayerNum = 0;
 
     /** The Constant serialVersionUID. */
@@ -42,11 +42,11 @@ class MariahSnowFallPanel extends JPanel {
      */
     public MariahSnowFallPanel() {
 	java.util.SplittableRandom random = new java.util.SplittableRandom();
-	randomOpacities = Stream.generate(() -> random.nextInt(255)).limit(1000).toArray(Integer[]::new);
-	randomXPos = Stream.generate(() -> random.nextInt(-100, 3000)).limit(10000).toArray(Integer[]::new);
-	randomXVel = Stream.generate(() -> random.nextDouble(2)).limit(1000).toArray(Double[]::new);
-	randomYVel = Stream.generate(() -> random.nextDouble(1.5) + 0.5).limit(1000).toArray(Double[]::new);
-	randomLayerNum = Stream.generate(() -> random.nextInt(1)).limit(100).toArray(Integer[]::new);
+	randomOpacities = Stream.generate(() -> random.nextInt(255)).limit(1024).toArray(Integer[]::new);
+	randomXPos = Stream.generate(() -> random.nextInt(-100, 3000)).limit(8192).toArray(Integer[]::new);
+	randomXVel = Stream.generate(() -> random.nextDouble(2)).limit(1024).toArray(Double[]::new);
+	randomYVel = Stream.generate(() -> random.nextDouble(1.5) + 0.5).limit(1024).toArray(Double[]::new);
+	randomLayerNum = Stream.generate(() -> random.nextInt(1)).limit(128).toArray(Integer[]::new);
 
 	setOpaque(false);
     }
@@ -99,7 +99,7 @@ class MariahSnowFallPanel extends JPanel {
 	 * Instantiates a new layer of snow flakes.
 	 */
 	public Layer() {
-	    snowFlakes = Stream.generate(() -> new SnowFlake()).limit(randomLayerNum[curLayerNum++ % 100] + 1)
+	    snowFlakes = Stream.generate(() -> new SnowFlake()).limit(randomLayerNum[curLayerNum++ & 127] + 1)
 		    .toArray(SnowFlake[]::new);
 	}
     }
@@ -126,11 +126,11 @@ class MariahSnowFallPanel extends JPanel {
 	 * Instantiates a new snow flake.
 	 */
 	public SnowFlake() {
-	    opacity = randomOpacities[curOpacity++ % 1000];
-	    xPos = randomXPos[curXPos++ % 10000];
+	    opacity = randomOpacities[curOpacity++ & 1023];
+	    xPos = randomXPos[curXPos++ % 8191];
 	    yPos = 40;
-	    xVel = randomXVel[curXVel++ % 1000];
-	    yVel = randomYVel[curYVel++ % 1000];
+	    xVel = randomXVel[curXVel++ & 1023];
+	    yVel = randomYVel[curYVel++ & 1023];
 	}
     }
 }
