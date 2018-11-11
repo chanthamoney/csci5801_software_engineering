@@ -5,7 +5,7 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="src">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../../../../../Applications/Eclipse.app/Contents/Eclipse/"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../Applications/Eclipse.app/Contents/Eclipse/"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
@@ -27,11 +27,12 @@
         <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
     </path>
     <path id="src.classpath">
-        <pathelement location="."/>
+        <pathelement location="bin"/>
         <path refid="JUnit 5.libraryclasspath"/>
     </path>
     <target name="init">
-        <copy includeemptydirs="false" todir=".">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
             <fileset dir=".">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
@@ -39,16 +40,14 @@
         </copy>
     </target>
     <target name="clean">
-        <delete>
-            <fileset dir="." includes="**/*.class"/>
-        </delete>
+        <delete dir="bin"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="." includeantruntime="false" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="."/>
             <classpath refid="src.classpath"/>
         </javac>
@@ -67,112 +66,15 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="Driver (1)">
-        <java classname="Driver" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestOPLV (2)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="votingsystems.TestOPLV" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="MariahElectionProcessor">
-        <java classname="MariahElectionProcessor" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestIRV (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="TestIRV" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="MariahElectionResults">
-        <java classname="mariahgui.MariahElectionResults" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestIRVCandidate (2)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="votingsystems.TestIRVCandidate" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="MariahFileChooser">
-        <java classname="mariahgui.MariahFileChooser" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="Driver (2)">
-        <java classname="main.Driver" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestOPLV (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="TestOPLV" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="TestIRVCandidate (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="TestIRVCandidate" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="TestRunner (1)">
-        <java classname="TestRunner" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestIRV (2)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="votingsystems.TestIRV" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="TestAuditor (2)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="auditor.TestAuditor" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
     <target name="MariahEP">
         <java classname="MariahEP" failonerror="true" fork="yes">
             <classpath refid="src.classpath"/>
         </java>
     </target>
-    <target name="TestAuditor (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="TestAuditor" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
+    <target name="TestRunner">
+        <java classname="TestRunner" failonerror="true" fork="yes">
             <classpath refid="src.classpath"/>
-        </junit>
+        </java>
     </target>
     <target name="JunitTestSuite">
         <mkdir dir="${junit.output.dir}"/>
@@ -182,20 +84,6 @@
             <jvmarg line="-ea"/>
             <classpath refid="src.classpath"/>
         </junit>
-    </target>
-    <target name="TestIRVBallot (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="TestIRVBallot" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="Driver (4)">
-        <java classname="src.Driver" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
