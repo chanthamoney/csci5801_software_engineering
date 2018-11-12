@@ -11,6 +11,7 @@ package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -153,14 +154,29 @@ public class TestIRVBallot {
     }
 
     /**
-     * Test is exhausted.
+     * Test is exhausted when not exhausted.
      */
     // Testing is exhausted method
     @Test
-    public void testIsExhausted() {
+    public void testIsExhaustedWhenNotExhausted() {
 	// initalize testBallot
 	final IRVBallot testBallot = testBallotInitialize();
 
 	assertFalse(testBallot.isExhausted());
+    }
+
+    /**
+     * Test is exhausted when exhausted.
+     */
+    // Testing is exhausted method
+    @Test
+    public void testIsExhaustedWhenExhausted() {
+	// initalize testBallot
+	final IRVBallot testBallot = testBallotInitialize();
+	for (int i = 0; i < 4; i++) {
+	    testBallot.getNextVote();
+	}
+
+	assertTrue(testBallot.isExhausted());
     }
 }
