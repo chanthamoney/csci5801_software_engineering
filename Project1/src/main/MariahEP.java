@@ -170,9 +170,14 @@ public class MariahEP {
 	// Determine if optional command line arguments of file name and indicator for
 	// no gui were provided
 	if (args.length > 0) {
-	    fileName = args[0].trim();
-	    if (args.length == 2 && "NoGUI".equals(args[1])) {
+	    if (args.length == 2 && "NOGUI".equals(args[0].toUpperCase())) {
 		noGUI = true;
+		fileName = args[1].trim();
+	    } else if (args.length == 2 && "NOGUI".equals(args[1].toUpperCase())) {
+		noGUI = true;
+		fileName = args[0].trim();
+	    } else {
+		fileName = args[0].trim();
 	    }
 	}
 	while (true) {
@@ -181,7 +186,6 @@ public class MariahEP {
 	    if (!noGUI && fileName == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
-		Thread.sleep(5000);
 		while (frame.getFileName() == null) {
 		    Thread.sleep(1000);
 		}
