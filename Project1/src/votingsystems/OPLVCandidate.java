@@ -2,7 +2,7 @@
 /**
  * File: OPLVCandidate.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:38:49 PM
+ * Last Update: Nov 12, 2018 12:24:11 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -29,7 +29,7 @@ public class OPLVCandidate extends Candidate {
      * @param name  the name of the candidate
      * @param party the party the candidate belongs to
      */
-    OPLVCandidate(final String name, final Party party) {
+    public OPLVCandidate(final String name, final Party party) {
 	super(name);
 	this.party = party;
     }

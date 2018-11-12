@@ -2,17 +2,20 @@
 /**
  * File: TestOPLVCandidate.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:40:19 PM
+ * Last Update: Nov 12, 2018 12:28:37 AM
  * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import votingsystems.OPLVCandidate;
+import votingsystems.Party;
 
 /**
  * The Class TestOPLV.

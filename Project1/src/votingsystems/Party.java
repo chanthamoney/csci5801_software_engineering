@@ -2,8 +2,8 @@
 /**
  * File: Party.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:38:55 PM
- * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * Last Update: Nov 12, 2018 12:23:54 AM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 

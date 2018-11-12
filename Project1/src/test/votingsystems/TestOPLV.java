@@ -2,12 +2,12 @@
 /**
  * File: TestOPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:40:05 PM
+ * Last Update: Nov 12, 2018 12:30:43 AM
  * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,8 +25,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-//import junitx.framework.FileAssert
 import org.junit.Test;
+
+import votingsystems.OPLV;
+import votingsystems.VotingSystem;
 
 /**
  * The Class TestOPLV.

@@ -1,11 +1,11 @@
-
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:41:18 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * Last Update: Nov 12, 2018 12:27:22 AM
+ * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
+package test.main;
 
 import static org.junit.Assert.assertTrue;
 
@@ -18,8 +18,17 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
 
-//import junitx.framework.FileAssert
 import org.junit.Test;
+
+/**
+ * File: TestMariahEP.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 11, 2018 2:41:18 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
+
+import main.MariahEP;
 
 /**
  * The Class TestOPLV.

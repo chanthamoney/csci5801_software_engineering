@@ -2,7 +2,7 @@
 /**
  * File: IRVCandidate.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:38:32 PM
+ * Last Update: Nov 12, 2018 12:24:49 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */

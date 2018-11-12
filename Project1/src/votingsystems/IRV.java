@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 5:44:19 PM
+ * Last Update: Nov 12, 2018 12:25:20 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -35,7 +35,7 @@ public class IRV extends VotingSystem {
     /** Indicates if the results should be output to the GUI. */
     private boolean resultsGUI;
 
-    /** Maintains the number of candidates who have not been eliminated */
+    /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
     /**

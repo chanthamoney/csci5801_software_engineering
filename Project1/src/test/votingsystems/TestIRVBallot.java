@@ -2,12 +2,12 @@
 /**
  * File: TestIRVBallot.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:39:13 PM
+ * Last Update: Nov 12, 2018 12:31:43 AM
  * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import votingsystems.IRVBallot;
 
 /**
  * The Class TestIRVBallot.
