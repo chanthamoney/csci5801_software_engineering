@@ -168,8 +168,7 @@ public class TestMariahEP {
      * @throws InterruptedException the interrupted exception
      */
     @Test
-    public void testMainOPLVTwoSeatsFiveCandidatesUnequal()
-        throws ParseException, IOException, InterruptedException {
-    testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
+    public void testMainOPLVTwoSeatsFiveCandidatesUnequal() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
     }
 }

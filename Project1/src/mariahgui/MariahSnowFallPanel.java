@@ -96,13 +96,13 @@ class MariahSnowFallPanel extends JPanel {
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	for (int x = 0, y = layers.size(); x < y; x++) {
-	    Layer layer = (Layer) layers.get(x);
+	    Layer layer = layers.get(x);
 	    for (int z = 0, zz = layer.snowFlakes.length; z < zz; z++) {
 		SnowFlake snowFlake = layer.snowFlakes[z];
 		g.setColor(new Color(255, 255, 255, snowFlake.opacity));
 		g.fillOval(snowFlake.xPos, snowFlake.yPos, 8, 8);
-		snowFlake.yPos = (int) ((double) snowFlake.yPos + snowFlake.yVel);
-		snowFlake.xPos = (int) ((double) snowFlake.xPos + snowFlake.xVel);
+		snowFlake.yPos = (int) (snowFlake.yPos + snowFlake.yVel);
+		snowFlake.xPos = (int) (snowFlake.xPos + snowFlake.xVel);
 	    }
 	}
     }

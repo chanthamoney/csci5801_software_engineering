@@ -1,7 +1,7 @@
 /**
  * File: MariahFileChooser.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:37:57 PM
+ * Last Update: Nov 11, 2018 11:01:23 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -16,8 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import sun.tools.jar.Main;
 
 /**
  * The GUI component which prompts the user to select an election file.
@@ -71,8 +69,6 @@ public class MariahFileChooser extends javax.swing.JFrame {
 
     /** The manual open button. */
     private javax.swing.JButton manualOpenButton;
-
-    javax.swing.GroupLayout headerPanelLayout;
 
     // End of variables declaration//GEN-END:variables
 
@@ -129,7 +125,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	headerPanel.setBackground(new java.awt.Color(153, 0, 0));
 	headerPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-	headerLabel.setFont(new java.awt.Font("Helvetica", 1, 32)); // NOI18N
+	headerLabel.setFont(new java.awt.Font("Helvetica", 1, 32));
 	headerLabel.setForeground(new java.awt.Color(255, 255, 255));
 	headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 	headerLabel.setText(this.title);
@@ -145,11 +141,11 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	headerSpacePanelLayout.setVerticalGroup(headerSpacePanelLayout
 		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 30, Short.MAX_VALUE));
 
-	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-	snowButton.setIcon(new javax.swing.ImageIcon(Main.class.getResource("/snowflake_icon.png"))); // NOI18N
+	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24));
+	snowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snowflake_icon.png")));
 	snowButton.addActionListener(this::snowButtonActionPerformed);
 
-	headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+	javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
 	headerPanel.setLayout(headerPanelLayout);
 	headerPanelLayout
 		.setHorizontalGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
