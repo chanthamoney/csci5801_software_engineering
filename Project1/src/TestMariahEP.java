@@ -158,4 +158,18 @@ public class TestMariahEP {
 	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
 		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
     }
+
+    /**
+     * Test an election where there are two seats, the sole candidate from one party
+     * receives 5 votes and another candidate from another party receives 1 vote.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
+     */
+    @Test
+    public void testMainOPLVTwoSeatsFiveCandidatesUnequal()
+        throws ParseException, IOException, InterruptedException {
+    testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
+    }
 }
