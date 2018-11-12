@@ -33,12 +33,12 @@ public class TestAuditor {
      * @return the auditor
      */
     private Auditor initializeTestAuditor() {
-	testStrings.add("Audit line 1\n");
-	testStrings.add("Audit line 2\n");
-	testStrings.add("Audit line 3\n");
-	testStrings.add("Audit line 4\n");
-	testStrings.add("Audit line 5\n");
-	return new Auditor();
+    	testStrings.add("Audit line 1\n");
+    	testStrings.add("Audit line 2\n");
+    	testStrings.add("Audit line 3\n");
+    	testStrings.add("Audit line 4\n");
+    	testStrings.add("Audit line 5\n");
+    	return new Auditor();
     }
 
     /**
@@ -66,27 +66,27 @@ public class TestAuditor {
     // Testing auditProcess()
     @Test
     public void testAuditProcess() throws IOException {
-	final Auditor aud = initializeTestAuditor();
+    	final Auditor aud = initializeTestAuditor();
 
-	testStrings.forEach(aud::auditProcess);
+    	testStrings.forEach(aud::auditProcess);
 
-	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
-	final File fileDNE = new File(fileName);
-	assertFalse(fileDNE.isFile());
+    	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+    	final File fileDNE = new File(fileName);
+    	assertFalse(fileDNE.isFile());
 
-	aud.createAuditFile(fileName);
+    	aud.createAuditFile(fileName);
 
-	final File file = new File(fileName);
-	final Scanner fileReader = new Scanner(file);
+    	final File file = new File(fileName);
+    	final Scanner fileReader = new Scanner(file);
 
-	final String l1 = fileReader.nextLine();
-	final String l2 = fileReader.nextLine();
-	final String l3 = fileReader.nextLine();
-	final String l4 = fileReader.nextLine();
-	final String l5 = fileReader.nextLine();
-	fileReader.close();
-	file.delete();
-	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
+    	final String l1 = fileReader.nextLine();
+    	final String l2 = fileReader.nextLine();
+    	final String l3 = fileReader.nextLine();
+    	final String l4 = fileReader.nextLine();
+    	final String l5 = fileReader.nextLine();
+    	fileReader.close();
+    	file.delete();
+    	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     /**
@@ -97,27 +97,27 @@ public class TestAuditor {
     // Testing auditResult()
     @Test
     public void testAuditResult() throws IOException {
-	final Auditor aud = initializeTestAuditor();
+    	final Auditor aud = initializeTestAuditor();
 
-	testStrings.forEach(aud::auditResult);
+    	testStrings.forEach(aud::auditResult);
 
-	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
-	final File fileDNE = new File(fileName);
-	assertFalse(fileDNE.isFile());
+    	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+    	final File fileDNE = new File(fileName);
+    	assertFalse(fileDNE.isFile());
 
-	aud.createAuditFile(fileName);
+    	aud.createAuditFile(fileName);
 
-	final File file = new File(fileName);
-	final Scanner fileReader = new Scanner(file);
+    	final File file = new File(fileName);
+    	final Scanner fileReader = new Scanner(file);
 
-	final String l1 = fileReader.nextLine();
-	final String l2 = fileReader.nextLine();
-	final String l3 = fileReader.nextLine();
-	final String l4 = fileReader.nextLine();
-	final String l5 = fileReader.nextLine();
-	fileReader.close();
-	file.delete();
-	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
+    	final String l1 = fileReader.nextLine();
+    	final String l2 = fileReader.nextLine();
+    	final String l3 = fileReader.nextLine();
+    	final String l4 = fileReader.nextLine();
+    	final String l5 = fileReader.nextLine();
+    	fileReader.close();
+    	file.delete();
+    	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     /**
@@ -128,27 +128,27 @@ public class TestAuditor {
     // Testing auditSetup()
     @Test
     public void testAuditSetup() throws IOException {
-	final Auditor aud = initializeTestAuditor();
+    	final Auditor aud = initializeTestAuditor();
 
-	testStrings.forEach(aud::auditSetup);
+    	testStrings.forEach(aud::auditSetup);
 
-	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
-	final File fileDNE = new File(fileName);
-	assertFalse(fileDNE.isFile());
+    	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+    	final File fileDNE = new File(fileName);
+    	assertFalse(fileDNE.isFile());
 
-	aud.createAuditFile(fileName);
+    	aud.createAuditFile(fileName);
 
-	final File file = new File(fileName);
-	final Scanner fileReader = new Scanner(file);
+    	final File file = new File(fileName);
+    	final Scanner fileReader = new Scanner(file);
 
-	final String l1 = fileReader.nextLine();
-	final String l2 = fileReader.nextLine();
-	final String l3 = fileReader.nextLine();
-	final String l4 = fileReader.nextLine();
-	final String l5 = fileReader.nextLine();
-	fileReader.close();
-	file.delete();
-	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
+    	final String l1 = fileReader.nextLine();
+    	final String l2 = fileReader.nextLine();
+    	final String l3 = fileReader.nextLine();
+    	final String l4 = fileReader.nextLine();
+    	final String l5 = fileReader.nextLine();
+    	fileReader.close();
+    	file.delete();
+    	assertTrue("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5".equals((l1 + l2 + l3 + l4 + l5)));
     }
 
     /**
@@ -170,17 +170,16 @@ public class TestAuditor {
     // Testing createAuditFile()
     @Test
     public void testCreateAuditFile() throws IOException {
+    	final Auditor aud = initializeTestAuditor();
+    	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+    	final File fileDNE = new File(fileName);
+    	assertFalse(fileDNE.isFile());
 
-	final Auditor aud = initializeTestAuditor();
-	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
-	final File fileDNE = new File(fileName);
-	assertFalse(fileDNE.isFile());
+    	aud.createAuditFile(fileName);
 
-	aud.createAuditFile(fileName);
-
-	final File file = new File(fileName);
-	assertTrue(file.isFile());
-	file.delete();
+    	final File file = new File(fileName);
+    	assertTrue(file.isFile());
+    	file.delete();
     }
 
 }

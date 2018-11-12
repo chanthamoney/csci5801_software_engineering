@@ -32,7 +32,7 @@ public class Auditor {
      * @param audit the information to be stored
      */
     public void auditProcess(final String audit) {
-	this.auditProcess.append(audit);
+	   this.auditProcess.append(audit);
     }
 
     /**
@@ -41,7 +41,7 @@ public class Auditor {
      * @param audit the information to be stored
      */
     public void auditResult(final String audit) {
-	this.auditResult.append(audit);
+	   this.auditResult.append(audit);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Auditor {
      * @param audit the information to be stored
      */
     public void auditSetup(final String audit) {
-	this.auditSetup.append(audit);
+	   this.auditSetup.append(audit);
     }
 
     /**
@@ -62,21 +62,21 @@ public class Auditor {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public String createAuditFile(final String name) throws IOException {
-	final File file = new File(name);
-	final FileWriter writer = new FileWriter(file);
-	final StringBuilder fileOutput = new StringBuilder();
+    	final File file = new File(name);
+    	final FileWriter writer = new FileWriter(file);
+    	final StringBuilder fileOutput = new StringBuilder();
 
-	fileOutput.append(this.auditSetup);
-	if ((this.auditSetup.length() != 0) && (this.auditProcess.length() != 0)) {
-	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
-	}
-	fileOutput.append(this.auditProcess);
-	if ((this.auditProcess.length() != 0) && (this.auditResult.length() != 0)) {
-	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
-	}
-	fileOutput.append(this.auditResult);
-	writer.write(fileOutput.toString());
-	writer.close();
-	return name;
+    	fileOutput.append(this.auditSetup);
+    	if ((this.auditSetup.length() != 0) && (this.auditProcess.length() != 0)) {
+    	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+    	}
+    	fileOutput.append(this.auditProcess);
+    	if ((this.auditProcess.length() != 0) && (this.auditResult.length() != 0)) {
+    	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+    	}
+    	fileOutput.append(this.auditResult);
+    	writer.write(fileOutput.toString());
+    	writer.close();
+    	return name;
     }
 }
