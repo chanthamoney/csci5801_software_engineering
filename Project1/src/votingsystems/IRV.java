@@ -236,7 +236,7 @@ public class IRV extends VotingSystem {
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
 	if (!this.wasRun.getAndSet(true)) {
-	    final boolean firstRun = true;
+	    boolean firstRun = true;
 	    while (true) {
 		// If there is only one candidate remaining return and audit winner
 		if (remainingCandidates < 2) {
@@ -301,6 +301,7 @@ public class IRV extends VotingSystem {
 		    if (firstRun) {
 			int numElim = eliminateAllNoVoteCandidates();
 			remainingCandidates -= numElim;
+			firstRun = false;
 		    }
 
 		    // Eliminate the candidate with the least number of votes and update voter pool

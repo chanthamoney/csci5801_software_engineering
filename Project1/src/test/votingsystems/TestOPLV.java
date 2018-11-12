@@ -52,12 +52,12 @@ public class TestOPLV {
      * @throws IOException    Signals that an I/O exception has occurred.
      */
     private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
+	VotingSystem vs = votingSystemFromFile("../testing/OPLV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
-	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing", electionFile + "Audit.txt"));
+	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/OPLV", electionFile + "Audit.txt"));
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -71,7 +71,7 @@ public class TestOPLV {
      */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
 	    throws ParseException, IOException {
-	VotingSystem vs = votingSystemFromFile("../testing/" + electionFile + ".txt");
+	VotingSystem vs = votingSystemFromFile("../testing/OPLV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
 	// Retrieve audit output and expected output.
@@ -259,7 +259,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
-	testFileAuditPair("OPLV/oneSeatOneWinner");
+	testFileAuditPair("oneSeatOneWinner");
     }
 
     /**
@@ -271,7 +271,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
-	testFileAuditPair("OPLV/oneSeatOneWinnerOneVote");
+	testFileAuditPair("oneSeatOneWinnerOneVote");
     }
 
     /**
@@ -283,7 +283,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
-	testFileAuditPair("OPLV/sixSeatsSixCandidatesEqual");
+	testFileAuditPair("sixSeatsSixCandidatesEqual");
     }
 
     /**
@@ -296,7 +296,7 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVConsequentialPartyTieTwoCandidates() throws ParseException, IOException, InterruptedException {
-	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieTwoCandidates",
+	testFileAuditPairRandomMsg("consequentialPartyTieTwoCandidates",
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
     }
 
@@ -311,7 +311,7 @@ public class TestOPLV {
     @Test
     public void testOPLVConsequentialPartyTieThreeCandidates()
 	    throws ParseException, IOException, InterruptedException {
-	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
+	testFileAuditPairRandomMsg("consequentialPartyTieThreeCandidates",
 		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
     }
 }

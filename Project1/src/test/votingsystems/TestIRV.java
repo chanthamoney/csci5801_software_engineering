@@ -14,13 +14,21 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.junit.Test;
 
@@ -59,6 +67,101 @@ public class TestIRV {
 	this.testBallots.add(sixthBallot);
 
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false);
+    }
+
+    /**
+     * Test file audit pair.
+     *
+     * @param electionFile the election file
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> testOutput = Files.readAllLines(auditFile);
+	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/IRV/", electionFile + "Audit.txt"));
+	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
+    }
+
+    /**
+     * Test file audit pair random msg.
+     *
+     * @param electionFile the election file
+     * @param randomMsg    the random msg
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
+	    throws ParseException, IOException {
+	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	// Retrieve audit output and expected output.
+	List<String> testOutput = Files.readAllLines(auditFile);
+	testOutput.replaceAll(String::trim);
+	assertTrue(testOutput.contains(randomMsg));
+    }
+
+    /**
+     * Generates a voting system from a standardized voting system file.
+     *
+     * @param fileName the file name
+     * @return the voting system
+     * @throws FileNotFoundException the file not found exception
+     * @throws ParseException        the parse exception
+     */
+    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException, ParseException {
+	File file = new File(fileName);
+	final Scanner scanner = new Scanner(file);
+
+	// Reads in first line which is oplv voting system
+	scanner.nextLine();
+
+	// Open Party Listing
+	final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	final String in_Candidates = scanner.nextLine();
+	final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+	final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates, scanner);
+	scanner.close();
+	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false);
+    }
+
+    private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
+	    Scanner scanner) {
+	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<>();
+
+	// For each ballot perform the following set of operations:
+	// 1) Create an organization array in length of the number of ballots
+	// 2) Split votes by commas and any amount of white space
+	// 3) For each split value, if it is not empty (meaning the candidates
+	// associated with the current index has been ranked), store the candidate's
+	// index (the current index) in the index corresponding to the rank in the
+	// organizational array
+	// 4) Create an array to store the processed ballots
+	// 5) Store the subset of the organizational array up to the number of votes
+	// cast as the votes for that ballot
+	for (int i = 0; i < numBallots; i++) {
+	    final int[] balVotesOrg = new int[numCandidates];
+	    final String[] ballotInfo = scanner.nextLine().split(", *");
+	    int numVotes = 0;
+	    for (int j = 0; j < ballotInfo.length; j++) {
+		if (!"".equals(ballotInfo[j])) {
+		    balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
+		    numVotes++;
+		}
+	    }
+	    final ArrayList<Integer> balVotes = new ArrayList<>();
+	    for (int j = 0; j < numVotes; j++) {
+		balVotes.add(balVotesOrg[j]);
+	    }
+	    in_Ballots.add(balVotes);
+	}
+
+	return in_Ballots;
     }
 
     /**
@@ -199,5 +302,47 @@ public class TestIRV {
 
 	// Must take less than 8 minutes to process a 100,000 vote election.
 	assertTrue((timeAfter - timeBefore) < 480000);
+    }
+
+    /**
+     * Test an election where no majority is ever reached in the instant runoffs and
+     * the winner is decided by popular vote
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVNoMajorityPopularVote() throws ParseException, IOException {
+	testFileAuditPair("noMajorityPopularVote");
+    }
+
+    /**
+     * Test an election where no majority is ever reached in the instant runoffs and
+     * the winner is decided by popular vote
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVConsequentialTieTwoCandidates() throws ParseException, IOException {
+	// Keep current System.out
+	final PrintStream oldOut = System.out;
+	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+	// Change so System.out saved in baos
+	System.setOut(new PrintStream(baos));
+
+	testFileAuditPairRandomMsg("consequentialTieTwoCandidates",
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
+
+	// Reset the System.out to console
+	System.setOut(oldOut);
+
+	// baos contains winner printed from the runElection function
+	final String output = new String(baos.toByteArray());
+
+	// check if winner is as expected
+	assertTrue("Election Winner: Naruto (Senju)\n".equals(output)
+		|| "Election Winner: Sasuke (Senju)\n".equals(output));
     }
 }
