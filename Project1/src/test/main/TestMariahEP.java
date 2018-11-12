@@ -59,7 +59,7 @@ public class TestMariahEP {
 
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
-	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1));
+	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1).trim());
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
@@ -92,7 +92,7 @@ public class TestMariahEP {
 
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
-	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1));
+	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1).trim());
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
