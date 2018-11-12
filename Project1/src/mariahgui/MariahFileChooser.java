@@ -142,7 +142,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 30, Short.MAX_VALUE));
 
 	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24));
-	snowButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/snowflake_icon.png")));
+	snowButton.setIcon(new javax.swing.ImageIcon("../misc/snowflake_icon.png", "snow flake"));
 	snowButton.addActionListener(this::snowButtonActionPerformed);
 
 	javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
