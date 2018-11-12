@@ -29,15 +29,15 @@ public class MariahEP {
     /**
      * Generates a voting system from a standardized voting system file.
      *
-     * @param fileName the file name
+     * @param filePath the file name
      * @param noGUI    maintains if no GUI component should be utilized
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      * @throws ParseException        the parse exception
      */
-    private static VotingSystem votingSystemFromFile(String fileName, boolean noGUI)
+    private static VotingSystem votingSystemFromFile(String filePath, boolean noGUI)
 	    throws FileNotFoundException, ParseException {
-	File file = new File(fileName);
+	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
@@ -165,38 +165,38 @@ public class MariahEP {
      * @throws InterruptedException the interrupted exception
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-	String fileName = null;
+	String filePath = null;
 	boolean noGUI = false;
 	// Determine if optional command line arguments of file name and indicator for
 	// no gui were provided
 	if (args.length > 0) {
 	    if (args.length == 2 && "NOGUI".equals(args[0].toUpperCase())) {
 		noGUI = true;
-		fileName = args[1].trim();
+		filePath = args[1].trim();
 	    } else if (args.length == 2 && "NOGUI".equals(args[1].toUpperCase())) {
 		noGUI = true;
-		fileName = args[0].trim();
+		filePath = args[0].trim();
 	    } else {
-		fileName = args[0].trim();
+		filePath = args[0].trim();
 	    }
 	}
 	while (true) {
-	    // If user did not restrict GUI and filename was not provided generate file
+	    // If user did not restrict GUI and filePath was not provided generate file
 	    // chooser gui
-	    if (!noGUI && fileName == null) {
+	    if (!noGUI && filePath == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
-		while (frame.getFileName() == null) {
+		while (frame.getFilePath() == null) {
 		    Thread.sleep(1000);
 		}
 		frame.setVisible(false);
-		fileName = frame.getFileName();
+		filePath = frame.getFilePath();
 		frame.dispose();
 	    }
 
 	    VotingSystem vs = null;
 	    try {
-		vs = votingSystemFromFile(fileName, noGUI);
+		vs = votingSystemFromFile(filePath, noGUI);
 	    } catch (ParseException e) {
 		e.printStackTrace();
 	    }
@@ -208,7 +208,7 @@ public class MariahEP {
 	    if (noGUI) {
 		return;
 	    }
-	    fileName = null;
+	    filePath = null;
 	}
     }
 }

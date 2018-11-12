@@ -33,9 +33,9 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /** The file path. */
     private String title = null;
 
-    /** The file name. */
+    /** The file path. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.TextField fileName;
+    private java.awt.TextField filePathInput;
 
     /** The main file chooser 1. */
     private javax.swing.JFileChooser jFileChooser1;
@@ -86,11 +86,11 @@ public class MariahFileChooser extends javax.swing.JFrame {
     }
 
     /**
-     * Gets the file name.
+     * Gets the file path.
      *
-     * @return the file name
+     * @return the file path
      */
-    public String getFileName() {
+    public String getFilePath() {
 	return filePath;
     }
 
@@ -118,7 +118,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jSeparator2 = new javax.swing.JSeparator();
 	manualFileEntryPanel = new javax.swing.JPanel();
 	manualOpenButton = new javax.swing.JButton();
-	fileName = new java.awt.TextField();
+	filePathInput = new java.awt.TextField();
 
 	setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -165,20 +165,20 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
 				.addContainerGap().addComponent(snowButton).addContainerGap()));
 
-	fcLabel.setText("Please select an election file from your file system or input the file name below.");
+	fcLabel.setText("Please select an election file from your file system or input the file path below.");
 	fcLabel.setOpaque(true);
 	fcLabel.setBackground(getBackground());
 
 	jFileChooser1.setCurrentDirectory(new File(System.getProperty("user.dir")));
 	jFileChooser1.addActionListener(this::jFileChooser1ActionPerformed);
 
-	manualFileEntryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
+	manualFileEntryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Path Entry  "));
 
 	manualOpenButton.setActionCommand("Open");
 	manualOpenButton.setLabel("Open");
 	manualOpenButton.addActionListener(this::manualOpenButtonActionPerformed);
 
-	fileName.setForeground(new java.awt.Color(153, 153, 153));
+	filePathInput.setForeground(new java.awt.Color(153, 153, 153));
 
 	javax.swing.GroupLayout manualFileEntryPanelLayout = new javax.swing.GroupLayout(manualFileEntryPanel);
 	manualFileEntryPanel.setLayout(manualFileEntryPanelLayout);
@@ -186,7 +186,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 		manualFileEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 			javax.swing.GroupLayout.Alignment.TRAILING,
 			manualFileEntryPanelLayout.createSequentialGroup().addContainerGap()
-				.addComponent(fileName, javax.swing.GroupLayout.DEFAULT_SIZE,
+				.addComponent(filePathInput, javax.swing.GroupLayout.DEFAULT_SIZE,
 					javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 				.addComponent(manualOpenButton)));
@@ -196,7 +196,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			.addGap(0, 9, Short.MAX_VALUE)
 			.addGroup(manualFileEntryPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(manualOpenButton).addComponent(fileName,
+				.addComponent(manualOpenButton).addComponent(filePathInput,
 					javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 					javax.swing.GroupLayout.PREFERRED_SIZE))
 			.addContainerGap()));
@@ -276,15 +276,15 @@ public class MariahFileChooser extends javax.swing.JFrame {
      * @param evt open button selected for manual file entry
      */
     private void manualOpenButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_manualOpenButtonActionPerformed
-	if (fileName.getText().isEmpty()) {
-	    JOptionPane.showMessageDialog(null, "Please manually enter the file name.");
+	if (filePathInput.getText().isEmpty()) {
+	    JOptionPane.showMessageDialog(null, "Please manually enter the file path.");
 	    return;
 	}
-	File myfile = new File(fileName.getText().trim());
+	File myfile = new File(filePathInput.getText().trim());
 	if (!myfile.isFile()) {
-	    JOptionPane.showMessageDialog(null, "Please enter a valid file name.");
+	    JOptionPane.showMessageDialog(null, "Please enter a valid file path.");
 	} else {
-	    this.filePath = fileName.getText().trim();
+	    this.filePath = filePathInput.getText().trim();
 	}
     }// GEN-LAST:event_manualOpenButtonActionPerformed
 
