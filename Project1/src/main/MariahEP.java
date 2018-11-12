@@ -1,3 +1,4 @@
+package main;
 
 /**
  * File: MariahEP.java

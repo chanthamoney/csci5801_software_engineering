@@ -1,3 +1,4 @@
+package test.main;
 
 /**
  * File: JunitTestSuite.java
@@ -10,10 +11,10 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import votingsystems.TestIRV;
-import votingsystems.TestIRVBallot;
-import votingsystems.TestIRVCandidate;
-import votingsystems.TestOPLV;
+import test.votingsystems.TestIRV;
+import test.votingsystems.TestIRVBallot;
+import test.votingsystems.TestIRVCandidate;
+import test.votingsystems.TestOPLV;
 
 /**
  * The Class JunitTestSuite.

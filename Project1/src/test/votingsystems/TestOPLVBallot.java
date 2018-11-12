@@ -7,12 +7,14 @@
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
+
+import votingsystems.OPLVBallot;
 
 /**
  * The Class TestOPLV.

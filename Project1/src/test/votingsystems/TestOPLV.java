@@ -7,7 +7,7 @@
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,6 +27,9 @@ import java.util.Scanner;
 
 //import junitx.framework.FileAssert
 import org.junit.Test;
+
+import votingsystems.OPLV;
+import votingsystems.VotingSystem;
 
 /**
  * The Class TestOPLV.

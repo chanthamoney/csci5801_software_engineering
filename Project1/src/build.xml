@@ -10,27 +10,37 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
+    <path id="JUnit 5.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.api_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.jupiter.params_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.commons_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.engine_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.launcher_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.runner_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.platform.suite.api_1.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit.vintage.engine_5.1.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.opentest4j_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.apiguardian_1.0.0.v20180327-1502.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+    </path>
     <path id="src.classpath">
         <pathelement location="bin"/>
-        <pathelement location="hamcrest-core-1.3.jar"/>
-        <pathelement location="junit-4.12.jar"/>
+        <path refid="JUnit 5.libraryclasspath"/>
     </path>
-    <path id="run.MariahEP.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.MariahEP.bootclasspath"/>
-    <path id="run.JunitTestSuite.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.JunitTestSuite.bootclasspath"/>
-    <path id="run.TestRunner.classpath">
-        <path refid="src.classpath"/>
-    </path>
-    <path id="run.TestRunner.bootclasspath"/>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir=".">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+                <exclude name="mariahgui/img/"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="mariahgui/img">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
@@ -46,6 +56,8 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="."/>
+            <src path="mariahgui/img"/>
+            <exclude name="mariahgui/img/"/>
             <classpath refid="src.classpath"/>
         </javac>
     </target>
@@ -63,12 +75,32 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="TestAuditor">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="auditor.TestAuditor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="MariahFileChooser">
+        <java classname="mariahgui.MariahFileChooser" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
+    </target>
+    <target name="TestOPLV">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="votingsystems.TestOPLV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
     <target name="MariahEP">
         <java classname="MariahEP" failonerror="true" fork="yes">
-            <classpath refid="run.MariahEP.classpath"/>
-            <bootclasspath>
-                <path refid="run.MariahEP.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="JunitTestSuite">
@@ -77,18 +109,35 @@
             <formatter type="xml"/>
             <test name="JunitTestSuite" todir="${junit.output.dir}"/>
             <jvmarg line="-ea"/>
-            <classpath refid="run.JunitTestSuite.classpath"/>
-            <bootclasspath>
-                <path refid="run.JunitTestSuite.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestMariahEP">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="TestMariahEP" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
         </junit>
     </target>
     <target name="TestRunner">
         <java classname="TestRunner" failonerror="true" fork="yes">
-            <classpath refid="run.TestRunner.classpath"/>
-            <bootclasspath>
-                <path refid="run.TestRunner.bootclasspath"/>
-            </bootclasspath>
+            <classpath refid="src.classpath"/>
+        </java>
+    </target>
+    <target name="TestParty">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="votingsystems.TestParty" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="MariahEP (1)">
+        <java classname="main.MariahEP" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
         </java>
     </target>
     <target name="junitreport">

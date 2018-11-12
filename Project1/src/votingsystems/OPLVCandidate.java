@@ -29,7 +29,7 @@ public class OPLVCandidate extends Candidate {
      * @param name  the name of the candidate
      * @param party the party the candidate belongs to
      */
-    OPLVCandidate(final String name, final Party party) {
+    public OPLVCandidate(final String name, final Party party) {
 	super(name);
 	this.party = party;
     }

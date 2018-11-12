@@ -1,3 +1,4 @@
+package test.main;
 
 /**
  * File: TestMariahEP.java
@@ -20,6 +21,8 @@ import java.util.List;
 
 //import junitx.framework.FileAssert
 import org.junit.Test;
+
+import main.MariahEP;
 
 /**
  * The Class TestOPLV.

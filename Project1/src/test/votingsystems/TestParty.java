@@ -7,7 +7,7 @@
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
-package votingsystems;
+package test.votingsystems;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.Test;
+
+import votingsystems.OPLVCandidate;
+import votingsystems.Party;
 
 /**
  * The Class TestOPLV.
