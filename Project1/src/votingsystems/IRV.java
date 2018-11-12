@@ -256,7 +256,7 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan + "\n");
 		    if (resultsGUI) {
-			MariahElectionResults frame = new MariahElectionResults(auditFile,
+			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + lastCan + "\n");
 			frame.setVisible(true);
 		    }
@@ -282,7 +282,7 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
 		    if (resultsGUI) {
-			MariahElectionResults frame = new MariahElectionResults(auditFile,
+			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + winner + "\n");
 			frame.setVisible(true);
 		    }

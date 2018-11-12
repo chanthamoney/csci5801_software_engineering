@@ -242,7 +242,7 @@ public class OPLV extends VotingSystem {
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString());
 	    if (this.resultsGUI) {
-		MariahElectionResults frame = new MariahElectionResults(auditFile, res.toString());
+		MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile, res.toString());
 		frame.setVisible(true);
 	    }
 	} else {

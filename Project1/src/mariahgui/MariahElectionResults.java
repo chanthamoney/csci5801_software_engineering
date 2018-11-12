@@ -1,7 +1,7 @@
 /**
  * File: MariahElectionResults.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:37:41 PM
+ * Last Update: Nov 11, 2018 7:47:45 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -31,7 +31,6 @@ public class MariahElectionResults extends JDialog {
     private String auditFile = null;
 
     /** The j button 1. */
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
 
     /** The j panel 1. */
@@ -42,16 +41,20 @@ public class MariahElectionResults extends JDialog {
 
     /** The j text area 1. */
     private javax.swing.JTextArea jTextArea1;
-    // End of variables declaration//GEN-END:variables
+
+    /** The header name. */
+    private String headerName;
 
     /**
      * Creates new form MariahElectionResults.
      *
+     * @param headerName      the header name
      * @param auditFile       the name of the audit file produced
      * @param electionResults the results of the election
      */
-    public MariahElectionResults(String auditFile, String electionResults) {
+    public MariahElectionResults(String headerName, String auditFile, String electionResults) {
 	super();
+	this.headerName = headerName;
 	setModal(true);
 	initComponents();
 	this.auditFile = auditFile;
@@ -86,7 +89,7 @@ public class MariahElectionResults extends JDialog {
 	jButton1 = new javax.swing.JButton();
 
 	setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-	setTitle("Election Results");
+	setTitle(headerName);
 
 	jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Election Results",
