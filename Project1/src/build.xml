@@ -36,13 +36,6 @@
             <fileset dir=".">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
-                <exclude name="mariahgui/img/"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="mariahgui/img">
-                <exclude name="**/*.launch"/>
-                <exclude name="**/*.java"/>
             </fileset>
         </copy>
     </target>
@@ -56,8 +49,6 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="."/>
-            <src path="mariahgui/img"/>
-            <exclude name="mariahgui/img/"/>
             <classpath refid="src.classpath"/>
         </javac>
     </target>
@@ -74,6 +65,29 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
+    </target>
+    <target name="TestMariahEP.testMainOPLVConsequentialPartyTieThreeCandidates">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.main.TestMariahEP" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestParty">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="votingsystems.TestParty" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="MariahEP (1)">
+        <java classname="main.MariahEP" failonerror="true" fork="yes">
+            <classpath refid="src.classpath"/>
+        </java>
     </target>
     <target name="TestAuditor">
         <mkdir dir="${junit.output.dir}"/>
@@ -98,10 +112,70 @@
             <classpath refid="src.classpath"/>
         </junit>
     </target>
+    <target name="TestOPLV (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.votingsystems.TestOPLV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="test.votingsystems">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.votingsystems.TestIRV" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestIRVBallot" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestIRVCandidate" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestOPLV" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestOPLVBallot" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestOPLVCandidate" todir="${junit.output.dir}"/>
+            <test name="test.votingsystems.TestParty" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="test.auditor">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.auditor.TestAuditor" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestOPLV.testRunElectionEfficiency">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.votingsystems.TestOPLV" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
+    <target name="TestMariahEP (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.main.TestMariahEP" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
+    </target>
     <target name="MariahEP">
         <java classname="MariahEP" failonerror="true" fork="yes">
             <classpath refid="src.classpath"/>
         </java>
+    </target>
+    <target name="TestParty (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.votingsystems.TestParty" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="src.classpath"/>
+        </junit>
     </target>
     <target name="JunitTestSuite">
         <mkdir dir="${junit.output.dir}"/>
@@ -125,29 +199,6 @@
         <java classname="TestRunner" failonerror="true" fork="yes">
             <classpath refid="src.classpath"/>
         </java>
-    </target>
-    <target name="TestParty">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="votingsystems.TestParty" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
-    </target>
-    <target name="MariahEP (1)">
-        <java classname="main.MariahEP" failonerror="true" fork="yes">
-            <classpath refid="src.classpath"/>
-        </java>
-    </target>
-    <target name="TestParty (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="test.votingsystems.TestParty" todir="${junit.output.dir}"/>
-            <jvmarg line="-ea"/>
-            <classpath refid="src.classpath"/>
-        </junit>
     </target>
     <target name="junitreport">
         <junitreport todir="${junit.output.dir}">
