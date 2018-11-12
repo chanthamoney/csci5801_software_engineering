@@ -3,19 +3,6 @@
 	<classpathentry excluding="mariahgui/img/" kind="src" path=""/>
 	<classpathentry kind="src" path="mariahgui/img"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="lib" path="lib/org.apiguardian_1.0.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.jupiter.api_5.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.jupiter.engine_5.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.jupiter.migrationsupport_5.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.jupiter.params_5.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.platform.commons_1.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.platform.engine_1.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.platform.launcher_1.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.platform.runner_1.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.platform.suite.api_1.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.junit.vintage.engine_5.1.0.v20180327-1502.jar"/>
-	<classpathentry kind="lib" path="lib/org.opentest4j_1.0.0.v20180327-1502.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
