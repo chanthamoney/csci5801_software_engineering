@@ -1,12 +1,11 @@
-package test.main;
-
 /**
  * File: JunitTestSuite.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:41:26 PM
+ * Last Update: Nov 12, 2018 12:27:15 AM
  * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
+package test.main;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
