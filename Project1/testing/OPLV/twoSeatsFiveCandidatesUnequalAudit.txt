@@ -44,10 +44,14 @@ Ballot 6 cast a vote for Naruto in party Senju
 Seat Allocation Calculation:
 
 - 2 Seats Remaining
-Allocating Initial Seats [Floor(Number of Votes / Quota {1}) with Max as Number of Candidates]:
+Allocating Initial Seats [Floor(Number of Votes / Quota {3}) with Max as Number of Candidates]:
 	[Party: Senju, Votes: 1, Number of Candidates: 2, Initial Seats: 0, Remainder: 1]
 	[Party: Akatsuki, Votes: 0, Number of Candidates: 2, Initial Seats: 0, Remainder: 0]
 	[Party: Anbu, Votes: 5, Number of Candidates: 1, Initial Seats: 1, Remainder: 2]
+
+- 1 Seats Remaining
+Allocating Additional Seats to Largest Remainders:
+	Allocating Additional Seat to Senju [1 Seats]
 
 Final Seat Allocations:
 	Senju - 1
@@ -62,11 +66,11 @@ Party Rankings [* - Allocated Party Seat]
 		- Sakura [0 votes]
 		- Kakashi [0 votes]
 	Party Anbu:
-		- Sai [5 votes]
+		* Sai [5 votes]
 
 
 - - - - - - - - - - - - - - - - - - - -
 
 Election Winners:
-	Sai (Anbu)
 	Naruto (Senju)
+	Sai (Anbu)
