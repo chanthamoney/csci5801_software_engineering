@@ -1,0 +1,100 @@
+Voting System:	Instant Runoff Voting
+
+Number of Candidates: 6
+
+Candidates:
+	0 - Naruto (Senju)
+	1 - Sasuke (Senju)
+	2 - Jake (Senju)
+	3 - Kakashi (Akatsuki)
+	4 - Sai (Anbu)
+	5 - Tsunade (Anbu)
+
+Number of Ballots: 22
+
+Ballots: [[0, 1, 2, 3, 4, 5], [0, 5, 4, 3, 2, 1], [1, 4, 2], [1, 5, 3], [2, 3, 4, 0, 5], [3, 2, 0], [4, 1], [0], [0], [0], [0], [0], [1], [1], [1], [1], [2], [2], [2], [3], [3], [4]]
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Processing the following ballots:
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+Ballot 1 cast a vote for Naruto (Senju)
+Ballot 2 cast a vote for Naruto (Senju)
+Ballot 3 cast a vote for Sasuke (Senju)
+Ballot 4 cast a vote for Sasuke (Senju)
+Ballot 5 cast a vote for Jake (Senju)
+Ballot 6 cast a vote for Kakashi (Akatsuki)
+Ballot 7 cast a vote for Sai (Anbu)
+Ballot 8 cast a vote for Naruto (Senju)
+Ballot 9 cast a vote for Naruto (Senju)
+Ballot 10 cast a vote for Naruto (Senju)
+Ballot 11 cast a vote for Naruto (Senju)
+Ballot 12 cast a vote for Naruto (Senju)
+Ballot 13 cast a vote for Sasuke (Senju)
+Ballot 14 cast a vote for Sasuke (Senju)
+Ballot 15 cast a vote for Sasuke (Senju)
+Ballot 16 cast a vote for Sasuke (Senju)
+Ballot 17 cast a vote for Jake (Senju)
+Ballot 18 cast a vote for Jake (Senju)
+Ballot 19 cast a vote for Jake (Senju)
+Ballot 20 cast a vote for Kakashi (Akatsuki)
+Ballot 21 cast a vote for Kakashi (Akatsuki)
+Ballot 22 cast a vote for Sai (Anbu)
+
+Remaining Candidate - Votes:
+	Naruto (Senju) - 7
+	Sasuke (Senju) - 6
+	Jake (Senju) - 4
+	Kakashi (Akatsuki) - 3
+	Sai (Anbu) - 2
+	Tsunade (Anbu) - 0
+Eliminated the following candidates who received no votes:
+	Tsunade (Anbu)
+
+Candidate Sai (Anbu) is eliminated with only 2 votes.
+Processing the following ballots:
+	7, 22
+Ballot 7 cast a vote for Sasuke (Senju)
+Ballot 22 has exhausted all of its votes.
+
+Remaining Candidate - Votes:
+	Naruto (Senju) - 7
+	Sasuke (Senju) - 7
+	Jake (Senju) - 4
+	Kakashi (Akatsuki) - 3
+
+Candidate Kakashi (Akatsuki) is eliminated with only 3 votes.
+Processing the following ballots:
+	6, 20, 21
+Ballot 6 cast a vote for Jake (Senju)
+Ballot 20 has exhausted all of its votes.
+Ballot 21 has exhausted all of its votes.
+
+Remaining Candidate - Votes:
+	Naruto (Senju) - 7
+	Sasuke (Senju) - 7
+	Jake (Senju) - 5
+
+Candidate Jake (Senju) is eliminated with only 5 votes.
+Processing the following ballots:
+	5, 17, 18, 19, 6
+Ballot 5 cast a vote for Naruto (Senju)
+Ballot 17 has exhausted all of its votes.
+Ballot 18 has exhausted all of its votes.
+Ballot 19 has exhausted all of its votes.
+Ballot 6 cast a vote for Naruto (Senju)
+
+Remaining Candidate - Votes:
+	Naruto (Senju) - 9
+	Sasuke (Senju) - 7
+
+Candidate Sasuke (Senju) is eliminated with only 7 votes.
+
+Processing Complete!
+Only one candidate has not been eliminated.
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Election Winner: Naruto (Senju)
