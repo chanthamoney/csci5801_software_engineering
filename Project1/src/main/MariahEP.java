@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:41:23 PM
+ * Last Update: Nov 12, 2018 10:42:50 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -30,12 +30,12 @@ public class MariahEP {
      * Generates a voting system from a standardized voting system file.
      *
      * @param filePath the file name
-     * @param noGUI    maintains if no GUI component should be utilized
+     * @param gui      maintains if the GUI should be utilized
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
      * @throws ParseException        the parse exception
      */
-    private static VotingSystem votingSystemFromFile(String filePath, boolean noGUI)
+    private static VotingSystem votingSystemFromFile(String filePath, boolean gui)
 	    throws FileNotFoundException, ParseException {
 	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
@@ -51,7 +51,7 @@ public class MariahEP {
 	    final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates,
 		    scanner);
 	    scanner.close();
-	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, !noGUI);
+	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, gui);
 	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve Open Party List Voting from file
 	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
@@ -66,7 +66,7 @@ public class MariahEP {
 	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	    scanner.close();
-	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, !noGUI);
+	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, gui);
 	} else {
 	    scanner.close();
 	    throw new ParseException("Invalid Election Type", 0);
@@ -92,7 +92,9 @@ public class MariahEP {
     }
 
     /**
-     * Retrieves the instant runoff ballots from a file.
+     * Retrieves the instant runoff ballots from a file. Ballots are represented as
+     * a list of ordered preferences for candidates identified by their unique
+     * index.
      *
      * @param numBallots    the number of ballots cast in the election
      * @param numCandidates the number of candidates participating in the election
@@ -134,7 +136,8 @@ public class MariahEP {
     }
 
     /**
-     * Retrieves the open party list voting ballots from a file.
+     * Retrieves the open party list voting ballots from a file. Ballots are
+     * represented as the index of the candidate.
      *
      * @param numBallots the number of ballots cast in the election
      * @param scanner    the scanner reading the specified file
@@ -160,21 +163,21 @@ public class MariahEP {
      * The main method used to generate an election from a file (passed in as
      * command line argument or input upon running) and runs the election.
      *
-     * @param args Optional command line file name argument
+     * @param args Optional command line file name argument and flag for no gui
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
      */
     public static void main(String[] args) throws IOException, InterruptedException {
 	String filePath = null;
-	boolean noGUI = false;
+	boolean gui = true;
 	// Determine if optional command line arguments of file name and indicator for
 	// no gui were provided
 	if (args.length > 0) {
-	    if (args.length == 2 && "NOGUI".equals(args[0].toUpperCase())) {
-		noGUI = true;
+	    if (args.length == 2 && "--no-gui".equals(args[0].toLowerCase())) {
+		gui = false;
 		filePath = args[1].trim();
-	    } else if (args.length == 2 && "NOGUI".equals(args[1].toUpperCase())) {
-		noGUI = true;
+	    } else if (args.length == 2 && "--no-gui".equals(args[1].toLowerCase())) {
+		gui = false;
 		filePath = args[0].trim();
 	    } else {
 		filePath = args[0].trim();
@@ -183,7 +186,7 @@ public class MariahEP {
 	while (true) {
 	    // If user did not restrict GUI and filePath was not provided generate file
 	    // chooser gui
-	    if (!noGUI && filePath == null) {
+	    if (gui && filePath == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
 		while (frame.getFilePath() == null) {
@@ -196,16 +199,17 @@ public class MariahEP {
 
 	    VotingSystem vs = null;
 	    try {
-		vs = votingSystemFromFile(filePath, noGUI);
+		vs = votingSystemFromFile(filePath, gui);
 	    } catch (ParseException e) {
 		e.printStackTrace();
 	    }
 
 	    String auditFile = vs.runElection();
-	    System.out.print(String.format("Audit File: %s\n", auditFile));
+	    System.out.print(String.format("Audit File: %s%n", auditFile));
 
 	    // If there is a GUI we set the file name to null and open file chooser
-	    if (noGUI) {
+	    // otherwise we return
+	    if (!gui) {
 		return;
 	    }
 	    filePath = null;

@@ -306,7 +306,7 @@ public class TestIRV {
 
     /**
      * Test an election where no majority is ever reached in the instant runoffs and
-     * the winner is decided by popular vote
+     * the winner is decided by popular vote.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -318,7 +318,7 @@ public class TestIRV {
 
     /**
      * Test an election where no majority is ever reached in the instant runoffs and
-     * the winner is decided by popular vote
+     * the winner is decided by popular vote.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.

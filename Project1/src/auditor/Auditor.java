@@ -1,7 +1,7 @@
 /**
  * File: Auditor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:37:33 PM
+ * Last Update: Nov 12, 2018 10:31:58 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -54,7 +54,7 @@ public class Auditor {
     }
 
     /**
-     * Generates an audit file in the src directory named as "AUDIT_Timestamp". This
+     * Generates an audit file in the current directory under a specified name. This
      * file contains separated audit setup, process and result information.
      *
      * @param name the name of the output file
