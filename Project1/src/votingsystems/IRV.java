@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:38:22 PM
+ * Last Update: Nov 11, 2018 5:44:19 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -15,7 +15,6 @@ import java.util.Random;
 
 import mariahgui.MariahElectionResults;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents an Instant Runoff Voting System.
  */
@@ -36,6 +35,9 @@ public class IRV extends VotingSystem {
     /** Indicates if the results should be output to the GUI. */
     private boolean resultsGUI;
 
+    /** Maintains the number of candidates who have not been eliminated */
+    private int remainingCandidates;
+
     /**
      * Instantiates a new instant runoff voting system.
      *
@@ -50,19 +52,29 @@ public class IRV extends VotingSystem {
 	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) {
 	super(numBallots, numCandidates);
 	this.resultsGUI = resultsGUI;
+
+	// Initialize candidates
 	this.candidates = new IRVCandidate[numCandidates];
 	for (int i = 0; i < numCandidates; i++) {
 	    this.candidates[i] = new IRVCandidate(candidates[i]);
 	}
+	remainingCandidates = numCandidates;
+
+	// Initialize ballots
 	this.ballots = new IRVBallot[numBallots];
 	int i = 0;
 	for (final ArrayList<Integer> bal : ballots) {
 	    this.ballots[i] = new IRVBallot(bal, i + 1);
 	    i++;
 	}
-	this.voterPool = this.ballots;
-	calculateQuota(numBallots);
 
+	// Initialize voter pool to all ballots
+	this.voterPool = this.ballots;
+
+	// Initialize quota
+	initializeQuota(numBallots);
+
+	// Produce audit file information
 	final StringBuilder setup = new StringBuilder(
 		String.format("Voting System:\tInstant Runoff Voting%n%nNumber of Candidates: %s%n%nCandidates:%n",
 			this.numCandidates));
@@ -85,7 +97,7 @@ public class IRV extends VotingSystem {
      *
      * @param numBallots the number of ballots cast in the election
      */
-    private void calculateQuota(final int numBallots) {
+    private void initializeQuota(final int numBallots) {
 	if ((numBallots % 2) == 0) {
 	    this.quota = (numBallots / 2) + 1;
 	} else {
@@ -95,22 +107,30 @@ public class IRV extends VotingSystem {
 
     /**
      * Eliminate all candidates who received no votes.
+     *
+     * @return the number of candidates with no votes eliminated
      */
-    private void eliminateAllNoVoteCandidates() {
+    private int eliminateAllNoVoteCandidates() {
 	final LinkedList<String> eliminatedCandidates = new LinkedList<>();
+	int numElim = 0;
 	for (final IRVCandidate curCan : this.candidates) {
 	    if (curCan.getNumVotes() == 0) {
 		curCan.eliminate();
+		numElim++;
 		eliminatedCandidates.add(curCan.getName());
 	    }
 	}
-	if (eliminatedCandidates.size() > 0) {
+
+	// Audit elimination of candidates with no votes
+	if (numElim > 0) {
 	    final StringBuilder eliminatedCandidateNames = new StringBuilder(
 		    "Eliminated the following candidates who received no votes:\n");
 	    eliminatedCandidates
 		    .forEach(curCanName -> eliminatedCandidateNames.append(String.format("\t%s%n", curCanName)));
 	    this.auditor.auditProcess(eliminatedCandidateNames.toString());
 	}
+
+	return numElim;
     }
 
     /**
@@ -137,11 +157,13 @@ public class IRV extends VotingSystem {
 
 	// Determines if random decision is needed.
 	if (minCandidates.size() == 1) {
+	    // Return and audit winner
 	    final IRVCandidate mcan = minCandidates.get(0);
 	    this.auditor.auditProcess(String.format("%nCandidate %s is eliminated with only %d votes.%n",
 		    mcan.getName(), mcan.getNumVotes()));
 	    return mcan;
 	} else {
+	    // Return and audit randomly selected winner
 	    final Random randomizer = new Random(System.currentTimeMillis());
 	    final IRVCandidate rcan = minCandidates.get(randomizer.nextInt(minCandidates.size()));
 	    this.auditor.auditProcess(String.format(
@@ -168,6 +190,13 @@ public class IRV extends VotingSystem {
      *         otherwise an empty string if no winner has been tabulated.
      */
     private String processVoterPool() {
+	// Iterate through the voter pool and perform the following actions:
+	// 1) Find the next vote on the ballot
+	// 2) If ballot becomes exhausted or was exhausted before a vote is found then
+	// audit this information and move to the next ballot
+	// 3) Else if a vote is found find the candidate the vote corresponds to and add
+	// the ballot and check if the candidate now has a majority
+	// 3a) If there is a majority, return the winner with an audit
 	final StringBuilder processedBallots = new StringBuilder();
 	for (final IRVBallot bal : this.voterPool) {
 	    boolean wasExhausted = true;
@@ -204,33 +233,39 @@ public class IRV extends VotingSystem {
     @Override
     public String runElection() throws IOException {
 	String auditFile;
+	// Atomically determine if election was run before. Throw error if run before as
+	// an election can only be run once!
 	if (!this.wasRun.getAndSet(true)) {
 	    final boolean firstRun = true;
 	    while (true) {
-		int numCandidatesRemaining = 0;
-		final StringBuilder lastCan = new StringBuilder();
-		for (final IRVCandidate curCan : this.candidates) {
-		    if (!curCan.isEliminated()) {
-			numCandidatesRemaining++;
-			lastCan.append(curCan.getName());
+		// If there is only one candidate remaining return and audit winner
+		if (remainingCandidates < 2) {
+		    String lastCan = "";
+		    // Collect candidate who has not been eliminated
+		    for (final IRVCandidate curCan : this.candidates) {
+			if (!curCan.isEliminated()) {
+			    lastCan = curCan.getName();
+			    break;
+			}
 		    }
-		}
-		if (numCandidatesRemaining < 2) {
+
+		    // Audit winner found and break;
 		    this.auditor.auditProcess(
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
-		    this.auditor.auditResult("Election Winner: " + lastCan.toString());
+		    this.auditor.auditResult("Election Winner: " + lastCan);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + lastCan.toString() + "\n");
+		    System.out.print("Election Winner: " + lastCan + "\n");
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults(auditFile,
-				"Election Winner: " + lastCan.toString() + "\n");
+				"Election Winner: " + lastCan + "\n");
 			frame.setVisible(true);
 		    }
 		    break;
 		}
 
+		// Audit the processing of voter pool (NOTE: Not all ballots may actually
+		// process if majority is found early!)
 		final StringBuilder ballotsProcessed = new StringBuilder();
-
 		for (final IRVBallot curBallot : this.voterPool) {
 		    if (ballotsProcessed.length() != 0) {
 			ballotsProcessed.append(", ");
@@ -242,6 +277,7 @@ public class IRV extends VotingSystem {
 		final String winner = processVoterPool();
 
 		if (!"".equals(winner)) {
+		    // Audit winner found and break;
 		    this.auditor.auditResult("Election Winner: " + winner);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n");
@@ -252,6 +288,7 @@ public class IRV extends VotingSystem {
 		    }
 		    break;
 		} else {
+		    // Audit the current party votes
 		    final StringBuilder curPartyVotes = new StringBuilder();
 		    for (final IRVCandidate curCan : this.candidates) {
 			if (!curCan.isEliminated()) {
@@ -259,11 +296,17 @@ public class IRV extends VotingSystem {
 			}
 		    }
 		    this.auditor.auditProcess("\nRemaining Candidate - Votes:\n" + curPartyVotes.toString());
+
+		    // On the first run only eliminate all candidates who did not receive votes
 		    if (firstRun) {
-			eliminateAllNoVoteCandidates();
+			int numElim = eliminateAllNoVoteCandidates();
+			remainingCandidates -= numElim;
 		    }
+
+		    // Eliminate the candidate with the least number of votes and update voter pool
 		    final IRVCandidate can = findMinimumCandidate();
 		    this.voterPool = can.eliminate();
+		    remainingCandidates--;
 		}
 	    }
 	} else {

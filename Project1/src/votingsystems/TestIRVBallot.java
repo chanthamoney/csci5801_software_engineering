@@ -18,7 +18,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestIRVBallot.
  */

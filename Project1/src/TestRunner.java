@@ -10,7 +10,6 @@
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestRunner.
  */

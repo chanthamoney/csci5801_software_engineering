@@ -14,7 +14,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import auditor.Auditor;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents an abstract voting system.
  */

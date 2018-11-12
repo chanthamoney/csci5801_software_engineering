@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import javax.swing.JDialog;
 
-// TODO: Auto-generated Javadoc
 /**
  * The GUI component for showing election results. Shows the output results of
  * an election as well as a button to open the output audit file.
@@ -108,7 +107,6 @@ public class MariahElectionResults extends JDialog {
 	    try {
 		jButton1ActionPerformed(evt);
 	    } catch (IOException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
 	});

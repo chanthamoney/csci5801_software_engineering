@@ -9,7 +9,6 @@
 
 package votingsystems;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents an abstract candidate in an election.
  */

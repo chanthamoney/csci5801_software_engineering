@@ -20,7 +20,6 @@ import votingsystems.IRV;
 import votingsystems.OPLV;
 import votingsystems.VotingSystem;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Main Class which generates and runs an election utilizing Mariah GUI.
  */
@@ -181,8 +180,9 @@ public class MariahEP {
 	    if (!noGUI && fileName == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
 		frame.setVisible(true);
+		Thread.sleep(5000);
 		while (frame.getFileName() == null) {
-		    Thread.sleep(500);
+		    Thread.sleep(1000);
 		}
 		frame.setVisible(false);
 		fileName = frame.getFileName();

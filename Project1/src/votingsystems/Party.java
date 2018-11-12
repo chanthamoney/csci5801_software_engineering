@@ -12,7 +12,6 @@ package votingsystems;
 import java.util.ArrayList;
 import java.util.Random;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents a party in an open party list voting.
  */

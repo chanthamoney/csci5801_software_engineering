@@ -11,7 +11,6 @@ package votingsystems;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents a ballot in an instant runoff election.
  */

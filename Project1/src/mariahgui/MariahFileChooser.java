@@ -17,7 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-// TODO: Auto-generated Javadoc
+import sun.tools.jar.Main;
+
 /**
  * The GUI component which prompts the user to select an election file.
  *
@@ -70,6 +71,9 @@ public class MariahFileChooser extends javax.swing.JFrame {
 
     /** The manual open button. */
     private javax.swing.JButton manualOpenButton;
+
+    javax.swing.GroupLayout headerPanelLayout;
+
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -142,10 +146,10 @@ public class MariahFileChooser extends javax.swing.JFrame {
 		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 30, Short.MAX_VALUE));
 
 	snowButton.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-	snowButton.setIcon(new javax.swing.ImageIcon("mariahgui/img/snowflake_icon.png")); // NOI18N
+	snowButton.setIcon(new javax.swing.ImageIcon(Main.class.getResource("/snowflake_icon.png"))); // NOI18N
 	snowButton.addActionListener(this::snowButtonActionPerformed);
 
-	javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+	headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
 	headerPanel.setLayout(headerPanelLayout);
 	headerPanelLayout
 		.setHorizontalGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +173,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	fcLabel.setOpaque(true);
 	fcLabel.setBackground(getBackground());
 
-	jFileChooser1.setCurrentDirectory(null);
+	jFileChooser1.setCurrentDirectory(new File(System.getProperty("user.dir")));
 	jFileChooser1.addActionListener(this::jFileChooser1ActionPerformed);
 
 	manualFileEntryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Manual File Name Entry  "));
@@ -285,7 +289,6 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	    JOptionPane.showMessageDialog(null, "Please enter a valid file name.");
 	} else {
 	    this.filePath = fileName.getText().trim();
-	    ;
 	}
     }// GEN-LAST:event_manualOpenButtonActionPerformed
 
@@ -297,7 +300,6 @@ public class MariahFileChooser extends javax.swing.JFrame {
     private void snowButtonActionPerformed(java.awt.event.ActionEvent evt) {
 	mainPanel.snow();
 	snowButton.setVisible(false);
-	headerSpacePanel.setVisible(false);
     }
 
     /**

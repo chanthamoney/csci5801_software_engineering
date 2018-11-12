@@ -9,7 +9,6 @@
 
 package votingsystems;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents a candidate in an open party list voting election.
  */

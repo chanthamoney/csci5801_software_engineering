@@ -28,7 +28,6 @@ import java.util.Scanner;
 //import junitx.framework.FileAssert
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */

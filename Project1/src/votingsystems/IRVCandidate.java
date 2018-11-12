@@ -11,7 +11,6 @@ package votingsystems;
 
 import java.util.LinkedList;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents a candidate in an instant runoff election.
  */

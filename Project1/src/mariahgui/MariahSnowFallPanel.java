@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 
-// TODO: Auto-generated Javadoc
 /**
  * Extends the GUI JPanel to have a snow theme background.
  */

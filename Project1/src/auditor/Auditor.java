@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents an auditor for a process. Can store information regarding the
  * setup, processing and results of a process and generate a file when complete.

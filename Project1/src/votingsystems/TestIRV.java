@@ -24,7 +24,6 @@ import java.util.Random;
 
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestIRV.
  */

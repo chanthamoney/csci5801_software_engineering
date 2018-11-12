@@ -19,7 +19,6 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestAuditor.
  */

@@ -15,7 +15,6 @@ import java.util.Random;
 
 import mariahgui.MariahElectionResults;
 
-// TODO: Auto-generated Javadoc
 /**
  * Represents an open party list voting system.
  */
