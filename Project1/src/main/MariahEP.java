@@ -205,7 +205,7 @@ public class MariahEP {
 	    }
 
 	    String auditFile = vs.runElection();
-	    System.out.print(String.format("Audit File: %s%n", auditFile));
+	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
 
 	    // If there is a GUI we set the file name to null and open file chooser
 	    // otherwise we return

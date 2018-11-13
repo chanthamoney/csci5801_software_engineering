@@ -240,7 +240,7 @@ public class OPLV extends VotingSystem {
 		    curCan -> res.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	    this.auditor.auditResult(res.toString());
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-	    System.out.print(res.toString());
+	    System.out.print(res.toString() + "\n\n");
 	    if (this.resultsGUI) {
 		MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile, res.toString());
 		frame.setVisible(true);

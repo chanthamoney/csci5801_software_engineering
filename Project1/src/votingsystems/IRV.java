@@ -254,7 +254,7 @@ public class IRV extends VotingSystem {
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
 		    this.auditor.auditResult("Election Winner: " + lastCan);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + lastCan + "\n");
+		    System.out.print("Election Winner: " + lastCan + "\n\n");
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + lastCan + "\n");
@@ -280,7 +280,7 @@ public class IRV extends VotingSystem {
 		    // Audit winner found and break;
 		    this.auditor.auditResult("Election Winner: " + winner);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + winner + "\n");
+		    System.out.print("Election Winner: " + winner + "\n\n");
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + winner + "\n");
