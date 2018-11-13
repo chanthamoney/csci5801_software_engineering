@@ -198,15 +198,6 @@ public class TestIRV {
     }
 
     /**
-     * Test IRV with params.
-     */
-    // Testing IRV constructor with parameters
-    @Test
-    public void testIRVWithParams() {
-
-    }
-
-    /**
      * Test election where winner is random
      * 
      * @throws IOException
