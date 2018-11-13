@@ -2,8 +2,8 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 11:03:42 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * Last Update: Nov 13, 2018 12:41:20 AM
+ * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -130,6 +130,14 @@ public class TestIRV {
 	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false);
     }
 
+    /**
+     * IRV ballots from file.
+     *
+     * @param numBallots    the num ballots
+     * @param numCandidates the num candidates
+     * @param scanner       the scanner
+     * @return the linked list
+     */
     private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
 	    Scanner scanner) {
 	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<>();
@@ -198,26 +206,10 @@ public class TestIRV {
     }
 
     /**
-<<<<<<< HEAD
-     * Test election where winner is random
-     * 
-     * @throws IOException
-     * @throws ParseException
-=======
-     * Test IRV with params.
-     */
-    // Testing IRV constructor with parameters
-    @Test
-    public void testIRVWithParams() {
-
-    }
-
-    /**
      * Test election where winner is random.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
->>>>>>> 4aae3311886ef7cbc3b06f03c930ed9ca1e8c3c7
      */
     @Test
     public void testIRVRandomWinner() throws ParseException, IOException {
