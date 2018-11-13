@@ -1,0 +1,39 @@
+Voting System:  Instant Runoff Voting
+Number of Candidates: 4
+Candidates:
+    0 - Naruto
+    1 - Sasuke
+    2 - Sakura
+    3 - Kakashi
+Number of Ballots: 5
+Ballots: [[0, 1, 2, 3], [1, 0, 2, 3], [3, 2, 1, 0], [2, 1, 0, 3], [0, 1, 2, 3]]
+- - - - - - - - - - - - - - - - - - - -
+Processing the following ballots:
+    1, 2, 3, 4, 5
+Ballot 1 cast a vote for Naruto
+Ballot 2 cast a vote for Sasuke
+Ballot 3 cast a vote for Kakashi
+Ballot 4 cast a vote for Sakura
+Ballot 5 cast a vote for Naruto
+Remaining Candidate - Votes:
+    Naruto - 2
+    Sasuke - 1
+    Sakura - 1
+    Kakashi - 1
+Candidate Kakashi is eliminated with only 1 votes.
+NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.
+Processing the following ballots:
+    3
+Ballot 3 cast a vote for Sakura
+Remaining Candidate - Votes:
+    Naruto - 2
+    Sasuke - 1
+    Sakura - 2
+Candidate Sasuke is eliminated with only 1 votes.
+Processing the following ballots:
+    2
+Ballot 2 cast a vote for Naruto
+Processing Complete!
+Candidate Naruto has a majority of votes (>= 3).
+- - - - - - - - - - - - - - - - - - - -
+Election Winner: Naruto
