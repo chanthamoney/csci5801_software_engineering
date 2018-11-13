@@ -1,0 +1,94 @@
+Voting System:	Open Party List Voting
+
+Parties:
+
+All Might
+	Candidates:
+		- Katsuki
+		- Deku
+
+Endeavor
+	Candidates:
+		- Todoroki
+		- Dabi
+
+EraserHead
+	Candidates:
+		- Momo
+		- Froppy
+
+Total Number of Candidates: 6
+
+Number of Ballots: 16
+
+Ballots: [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5]
+
+Ballot Candidates Key:
+	0 - Katsuki
+	1 - Deku
+	2 - Todoroki
+	3 - Dabi
+	4 - Momo
+	5 - Froppy
+
+Number of Seats: 5
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Ballot 1 cast a vote for Katsuki in party All Might
+Ballot 2 cast a vote for Katsuki in party All Might
+Ballot 3 cast a vote for Katsuki in party All Might
+Ballot 4 cast a vote for Deku in party All Might
+Ballot 5 cast a vote for Deku in party All Might
+Ballot 6 cast a vote for Deku in party All Might
+Ballot 7 cast a vote for Todoroki in party Endeavor
+Ballot 8 cast a vote for Todoroki in party Endeavor
+Ballot 9 cast a vote for Todoroki in party Endeavor
+Ballot 10 cast a vote for Dabi in party Endeavor
+Ballot 11 cast a vote for Dabi in party Endeavor
+Ballot 12 cast a vote for Dabi in party Endeavor
+Ballot 13 cast a vote for Momo in party EraserHead
+Ballot 14 cast a vote for Momo in party EraserHead
+Ballot 15 cast a vote for Froppy in party EraserHead
+Ballot 16 cast a vote for Froppy in party EraserHead
+
+Seat Allocation Calculation:
+
+- 5 Seats Remaining
+Allocating Initial Seats [Floor(Number of Votes / Quota {4}) with Max as Number of Candidates]:
+	[Party: All Might, Votes: 6, Number of Candidates: 2, Initial Seats: 1, Remainder: 2]
+	[Party: Endeavor, Votes: 6, Number of Candidates: 2, Initial Seats: 1, Remainder: 2]
+	[Party: EraserHead, Votes: 4, Number of Candidates: 2, Initial Seats: 1, Remainder: 0]
+
+- 2 Seats Remaining
+Allocating Additional Seats to Largest Remainders:
+	Allocating Additional Seat to All Might [2 Seats]
+	Allocating Additional Seat to Endeavor [2 Seats]
+
+Final Seat Allocations:
+	All Might - 2
+	Endeavor - 2
+	EraserHead - 1
+
+Party Rankings [* - Allocated Party Seat]
+	Party All Might:
+		* Katsuki [3 votes]
+		* Deku [3 votes]
+	Party Endeavor:
+		* Todoroki [3 votes]
+		* Dabi [3 votes]
+	Party EraserHead:
+		* Momo [2 votes]
+		- Froppy [2 votes]
+		NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Election Winners:
+	Katsuki (All Might)
+	Deku (All Might)
+	Todoroki (Endeavor)
+	Dabi (Endeavor)
+	Momo (EraserHead)

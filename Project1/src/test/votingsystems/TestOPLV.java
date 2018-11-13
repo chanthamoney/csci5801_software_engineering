@@ -13,9 +13,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -296,8 +298,26 @@ public class TestOPLV {
      */
     @Test
     public void testOPLVConsequentialPartyTieTwoCandidates() throws ParseException, IOException, InterruptedException {
+	// Keep current System.out
+	final PrintStream oldOut = System.out;
+	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+	// Change so System.out saved in baos
+	System.setOut(new PrintStream(baos));
+
+	// check if it was a tie happen
 	testFileAuditPairRandomMsg("consequentialPartyTieTwoCandidates",
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+
+	// Reset the System.out to console
+	System.setOut(oldOut);
+	// baos contains winner printed from the runElection function
+	final String output = new String(baos.toByteArray());
+
+	// check if winner is as expected
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output));
+
     }
 
     /**
@@ -311,7 +331,59 @@ public class TestOPLV {
     @Test
     public void testOPLVConsequentialPartyTieThreeCandidates()
 	    throws ParseException, IOException, InterruptedException {
+
+	// Keep current System.out
+	final PrintStream oldOut = System.out;
+	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+	// Change so System.out saved in baos
+	System.setOut(new PrintStream(baos));
+
 	testFileAuditPairRandomMsg("consequentialPartyTieThreeCandidates",
 		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
+
+	// Reset the System.out to console
+	System.setOut(oldOut);
+
+	// baos contains winner printed from the runElection function
+	final String output = new String(baos.toByteArray());
+	// check if winner is as expected
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output)
+		|| "Election Winners:\n\tJake (Senju)\n".equals(output));
+
     }
+
+    /**
+     * Test an election where there is a tie between candidates on the same party.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
+     */
+    @Test
+    public void testOPLVconsequentialTie() throws ParseException, IOException, InterruptedException {
+	// Keep current System.out
+	final PrintStream oldOut = System.out;
+	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+	// Change so System.out saved in baos
+	System.setOut(new PrintStream(baos));
+
+	testFileAuditPairRandomMsg("consequentialCandidateTie",
+		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+
+	// Reset the System.out to console
+	System.setOut(oldOut);
+
+	// baos contains winner printed from the runElection function
+	final String output = new String(baos.toByteArray());
+	// check if winner is as expected
+	assertTrue(
+		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n"
+			.equals(output)
+			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n"
+				.equals(output));
+    }
+
 }
