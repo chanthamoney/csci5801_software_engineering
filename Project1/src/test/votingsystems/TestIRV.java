@@ -206,19 +206,14 @@ public class TestIRV {
 
     }
 
-    // _QUESTION: Do we test private functions?? - Maybe not bc they are used in the
-    // public methods?
-
-    // Testing runElection() only public method
-
     /**
-     * Test run election.
+     * Test election where winner is random
+     * 
+     * @throws IOException
+     * @throws ParseException
      */
     @Test
-    public void testRunElection() {
-	// Initialize IRV Election
-	final IRV hokageElection = initializeTestIRV();
-
+    public void testIRVRandomWinner() throws ParseException, IOException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -226,12 +221,8 @@ public class TestIRV {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	// Run election on irvElection
-	try {
-	    hokageElection.runElection();
-	} catch (final IOException e) {
-	    e.printStackTrace();
-	}
+	testFileAuditPairRandomMsg("randomWinner",
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -304,9 +295,54 @@ public class TestIRV {
 	assertTrue((timeAfter - timeBefore) < 480000);
     }
 
+    // Testing Different Election Cases
+
     /**
-     * Test an election where no majority is ever reached in the instant runoffs and
-     * the winner is decided by popular vote.
+     * Test an election where there is a clear winner by majority
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVMajorityPopularVote() throws ParseException, IOException {
+	testFileAuditPair("majorityPopularVote");
+    }
+
+    /**
+     * Test an election where there are 10,000 ballots
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVTenThousandVotes() throws ParseException, IOException {
+	testFileAuditPair("tenThousandVotes");
+    }
+
+    /**
+     * Test an election where there is only one ballot and multiple candidates
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVOneVote() throws ParseException, IOException {
+	testFileAuditPair("oneVote");
+    }
+
+    /**
+     * Test an election where there is only one candidate
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testIRVOneCandidate() throws ParseException, IOException {
+	testFileAuditPair("OneCandidate");
+    }
+
+    /**
+     * Test an election where there is no candidate that receives majority vote
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.

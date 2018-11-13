@@ -52,7 +52,7 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "NoGUI" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -63,7 +63,7 @@ public class TestMariahEP {
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
-	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing", electionFile + "Audit.txt"));
+	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/", electionFile + "Audit.txt"));
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -76,7 +76,7 @@ public class TestMariahEP {
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
      */
-    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
+    private static String testFileAuditPairRandomMsg(String electionFile, String randomMsg)
 	    throws ParseException, IOException, InterruptedException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
@@ -85,19 +85,25 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "NoGUI" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
 
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
+
+	System.out.print(output);
+
 	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1).trim());
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	testOutput.replaceAll(String::trim);
 	assertTrue(testOutput.contains(randomMsg));
+
+	int auditFileIndex = output.indexOf("Audit File:");
+	return output.substring(0, auditFileIndex);
     }
 
     /**
@@ -179,5 +185,101 @@ public class TestMariahEP {
     @Test
     public void testMainOPLVTwoSeatsFiveCandidatesUnequal() throws ParseException, IOException, InterruptedException {
 	testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
+    }
+
+    /**
+     * Test election where winner is random
+     * 
+     * @throws IOException
+     * @throws ParseException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVRandomWinner() throws ParseException, IOException, InterruptedException {
+	String electionWinner = testFileAuditPairRandomMsg("IRV/randomWinner",
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
+
+	// check if winner is as expected
+	assertTrue(
+		"Election Winner: Sasuke\n".equals(electionWinner) || "Election Winner: Naruto\n".equals(electionWinner)
+			|| "Election Winner: Sakura\n".equals(electionWinner));
+    }
+
+    /**
+     * Test an election where there is a clear winner by majority
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVMajorityPopularVote() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("IRV/majorityPopularVote");
+    }
+
+    /**
+     * Test an election where there are 10,000 ballots
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVTenThousandVotes() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("IRV/tenThousandVotes");
+    }
+
+    /**
+     * Test an election where there is only one ballot and multiple candidates
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVOneVote() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("IRV/oneVote");
+    }
+
+    /**
+     * Test an election where there is only one candidate
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVOneCandidate() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("IRV/OneCandidate");
+    }
+
+    /**
+     * Test an election where there is no candidate that receives majority vote
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVNoMajorityPopularVote() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("IRV/noMajorityPopularVote");
+    }
+
+    /**
+     * Test an election where no majority is ever reached in the instant runoffs and
+     * the winner is decided by popular vote.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMainIRVConsequentialTieTwoCandidates() throws ParseException, IOException, InterruptedException {
+	String electionWinners = testFileAuditPairRandomMsg("IRV/consequentialTieTwoCandidates",
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
+
+	// check if winner is as expected
+	assertTrue("Election Winner: Naruto (Senju)\n".equals(electionWinners)
+		|| "Election Winner: Sasuke (Senju)\n".equals(electionWinners));
     }
 }
