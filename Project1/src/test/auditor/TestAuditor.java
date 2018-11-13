@@ -144,7 +144,37 @@ public class TestAuditor {
     // Testing audit file output structure
     @Test
     public void testAuditStructure() throws IOException {
+	final Auditor aud = initializeTestAuditor();
 
+	// add strings to auditProcess, auditResult, and auditSetup
+	testStrings.forEach(aud::auditProcess);
+
+	testStrings.forEach(aud::auditResult);
+
+	testStrings.forEach(aud::auditSetup);
+
+	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
+	aud.createAuditFile(fileName);
+
+	final File file = new File(fileName);
+	final Scanner fileReader = new Scanner(file);
+
+	StringBuilder sb = new StringBuilder();
+	while (fileReader.hasNextLine()) {
+	    sb.append(fileReader.nextLine());
+	}
+
+	fileReader.close();
+	file.delete();
+
+	assertTrue(("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"
+		+ "- - - - - - - - - - - - - - - - - - - -"
+		+ "Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"
+		+ "- - - - - - - - - - - - - - - - - - - -"
+		+ "Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5").equals((sb.toString())));
     }
 
     /**
