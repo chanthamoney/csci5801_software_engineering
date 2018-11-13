@@ -155,8 +155,13 @@ public class TestMariahEP {
     @Test
     public void testMainOPLVConsequentialPartyTieTwoCandidates()
 	    throws ParseException, IOException, InterruptedException {
-	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieTwoCandidates",
+	String electionWinner = testFileAuditPairRandomMsg("OPLV/consequentialPartyTieTwoCandidates",
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+
+	// check if winner is as expected
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(electionWinner)
+		|| "Election Winners:\n\tSasuke (Senju)\n".equals(electionWinner));
+
     }
 
     /**
@@ -170,8 +175,15 @@ public class TestMariahEP {
     @Test
     public void testMainOPLVConsequentialPartyTieThreeCandidates()
 	    throws ParseException, IOException, InterruptedException {
-	testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
+
+	String electionWinner = testFileAuditPairRandomMsg("OPLV/consequentialPartyTieThreeCandidates",
 		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
+
+	// check if winner is as expected
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(electionWinner)
+		|| "Election Winners:\n\tSasuke (Senju)\n".equals(electionWinner)
+		|| "Election Winners:\n\tJake (Senju)\n".equals(electionWinner));
+
     }
 
     /**
@@ -281,5 +293,27 @@ public class TestMariahEP {
 	// check if winner is as expected
 	assertTrue("Election Winner: Naruto (Senju)\n".equals(electionWinners)
 		|| "Election Winner: Sasuke (Senju)\n".equals(electionWinners));
+    }
+
+    /**
+     * Test an election where there is a tie between candidates on the same party.
+     *
+     * @param electionFile the election file
+     * @param randomMsg    the random msg
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
+     */
+    @Test
+    public void testOPLVconsequentialTie() throws ParseException, IOException, InterruptedException {
+	String electionWinner = testFileAuditPairRandomMsg("OPLV/consequentialCandidateTie",
+		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
+
+	// check if winner is as expected
+	assertTrue(
+		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n"
+			.equals(electionWinner)
+			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n"
+				.equals(electionWinner));
     }
 }
