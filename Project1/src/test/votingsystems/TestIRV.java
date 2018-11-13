@@ -2,8 +2,8 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:31:49 AM
- * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * Last Update: Nov 12, 2018 11:03:42 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -198,6 +198,12 @@ public class TestIRV {
     }
 
     /**
+<<<<<<< HEAD
+     * Test election where winner is random
+     * 
+     * @throws IOException
+     * @throws ParseException
+=======
      * Test IRV with params.
      */
     // Testing IRV constructor with parameters
@@ -207,10 +213,11 @@ public class TestIRV {
     }
 
     /**
-     * Test election where winner is random
-     * 
-     * @throws IOException
-     * @throws ParseException
+     * Test election where winner is random.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+>>>>>>> 4aae3311886ef7cbc3b06f03c930ed9ca1e8c3c7
      */
     @Test
     public void testIRVRandomWinner() throws ParseException, IOException {
@@ -298,7 +305,7 @@ public class TestIRV {
     // Testing Different Election Cases
 
     /**
-     * Test an election where there is a clear winner by majority
+     * Test an election where there is a clear winner by majority.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -309,7 +316,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there are 10,000 ballots
+     * Test an election where there are 10,000 ballots.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -320,7 +327,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is only one ballot and multiple candidates
+     * Test an election where there is only one ballot and multiple candidates.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -331,7 +338,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is only one candidate
+     * Test an election where there is only one candidate.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -342,7 +349,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is no candidate that receives majority vote
+     * Test an election where there is no candidate that receives majority vote.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.

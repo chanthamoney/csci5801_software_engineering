@@ -1,8 +1,8 @@
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:27:22 AM
- * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * Last Update: Nov 12, 2018 11:03:03 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 package test.main;
@@ -200,11 +200,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test election where winner is random
-     * 
-     * @throws IOException
-     * @throws ParseException
-     * @throws InterruptedException
+     * Test election where winner is random.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVRandomWinner() throws ParseException, IOException, InterruptedException {
@@ -218,11 +218,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is a clear winner by majority
+     * Test an election where there is a clear winner by majority.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVMajorityPopularVote() throws ParseException, IOException, InterruptedException {
@@ -230,11 +230,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there are 10,000 ballots
+     * Test an election where there are 10,000 ballots.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVTenThousandVotes() throws ParseException, IOException, InterruptedException {
@@ -242,11 +242,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is only one ballot and multiple candidates
+     * Test an election where there is only one ballot and multiple candidates.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVOneVote() throws ParseException, IOException, InterruptedException {
@@ -254,11 +254,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is only one candidate
+     * Test an election where there is only one candidate.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVOneCandidate() throws ParseException, IOException, InterruptedException {
