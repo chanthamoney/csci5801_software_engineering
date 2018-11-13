@@ -44,23 +44,6 @@ public class TestAuditor {
     }
 
     /**
-     * Test auditor.
-     */
-    // Testing Auditor() constructor
-    @Test
-    public void testAuditor() {
-
-    }
-
-    /**
-     * Test auditor with params.
-     */
-    // Testing Auditor() constructor with parameters
-    @Test
-    public void testAuditorWithParams() {
-    }
-
-    /**
      * Test audit process.
      *
      * @throws IOException Signals that an I/O exception has occurred.
