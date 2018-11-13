@@ -1,8 +1,8 @@
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:27:22 AM
- * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * Last Update: Nov 13, 2018 12:40:27 AM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 package test.main;
@@ -16,17 +16,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
-
-/**
- * File: TestMariahEP.java
- * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:41:18 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
- * This code is copyright (c) 2018 University of Minnesota - Twin Cities
- */
 
 import main.MariahEP;
 
@@ -59,7 +53,13 @@ public class TestMariahEP {
 
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
-	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1).trim());
+	Map<String, String> outputMap = new HashMap<>();
+	String[] splitOutput = output.split("\n\n");
+	for (int i = 0; i < splitOutput.length; i++) {
+	    String[] splitPair = splitOutput[i].split(":");
+	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
+	}
+	Path auditFile = Paths.get(".", outputMap.get("Audit File"));
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
@@ -72,6 +72,7 @@ public class TestMariahEP {
      *
      * @param electionFile the election file
      * @param randomMsg    the random msg
+     * @return the string
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
@@ -92,18 +93,24 @@ public class TestMariahEP {
 
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
-
-	System.out.print(output);
-
-	Path auditFile = Paths.get(".", output.substring(output.lastIndexOf(" ") + 1).trim());
+	Map<String, String> outputMap = new HashMap<>();
+	String[] splitOutput = output.split("\n\n");
+	for (int i = 0; i < splitOutput.length; i++) {
+	    String[] splitPair = splitOutput[i].split(":");
+	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
+	}
+	Path auditFile = Paths.get(".", outputMap.get("Audit File"));
 
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	testOutput.replaceAll(String::trim);
 	assertTrue(testOutput.contains(randomMsg));
 
-	int auditFileIndex = output.indexOf("Audit File:");
-	return output.substring(0, auditFileIndex);
+	if (outputMap.get("Election Winner") != null) {
+	    return outputMap.get("Election Winner");
+	} else {
+	    return outputMap.get("Election Winners");
+	}
     }
 
     /**
@@ -159,8 +166,7 @@ public class TestMariahEP {
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
 
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(electionWinner)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(electionWinner));
+	assertTrue("Naruto (Senju)".equals(electionWinner) || "Sasuke (Senju)".equals(electionWinner));
 
     }
 
@@ -180,9 +186,8 @@ public class TestMariahEP {
 		"NOTE: Randomly ranked candidates 1 to 3 due to a consequential tie in Party seat allocations.");
 
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(electionWinner)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(electionWinner)
-		|| "Election Winners:\n\tJake (Senju)\n".equals(electionWinner));
+	assertTrue("Naruto (Senju)".equals(electionWinner) || "Sasuke (Senju)".equals(electionWinner)
+		|| "Jake (Senju)".equals(electionWinner));
 
     }
 
@@ -200,11 +205,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test election where winner is random
-     * 
-     * @throws IOException
-     * @throws ParseException
-     * @throws InterruptedException
+     * Test election where winner is random.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVRandomWinner() throws ParseException, IOException, InterruptedException {
@@ -213,16 +218,15 @@ public class TestMariahEP {
 
 	// check if winner is as expected
 	assertTrue(
-		"Election Winner: Sasuke\n".equals(electionWinner) || "Election Winner: Naruto\n".equals(electionWinner)
-			|| "Election Winner: Sakura\n".equals(electionWinner));
+		"Sasuke".equals(electionWinner) || "Naruto".equals(electionWinner) || "Sakura".equals(electionWinner));
     }
 
     /**
-     * Test an election where there is a clear winner by majority
+     * Test an election where there is a clear winner by majority.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVMajorityPopularVote() throws ParseException, IOException, InterruptedException {
@@ -230,11 +234,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there are 10,000 ballots
+     * Test an election where there are 10,000 ballots.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVTenThousandVotes() throws ParseException, IOException, InterruptedException {
@@ -242,11 +246,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is only one ballot and multiple candidates
+     * Test an election where there is only one ballot and multiple candidates.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVOneVote() throws ParseException, IOException, InterruptedException {
@@ -254,11 +258,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is only one candidate
+     * Test an election where there is only one candidate.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVOneCandidate() throws ParseException, IOException, InterruptedException {
@@ -266,11 +270,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is no candidate that receives majority vote
+     * Test an election where there is no candidate that receives majority vote.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVNoMajorityPopularVote() throws ParseException, IOException, InterruptedException {
@@ -283,7 +287,7 @@ public class TestMariahEP {
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVConsequentialTieTwoCandidates() throws ParseException, IOException, InterruptedException {
@@ -291,15 +295,12 @@ public class TestMariahEP {
 		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Naruto (Senju)\n".equals(electionWinners)
-		|| "Election Winner: Sasuke (Senju)\n".equals(electionWinners));
+	assertTrue("Naruto (Senju)".equals(electionWinners) || "Sasuke (Senju)".equals(electionWinners));
     }
 
     /**
      * Test an election where there is a tie between candidates on the same party.
      *
-     * @param electionFile the election file
-     * @param randomMsg    the random msg
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
@@ -311,9 +312,9 @@ public class TestMariahEP {
 
 	// check if winner is as expected
 	assertTrue(
-		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n"
+		"Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)"
 			.equals(electionWinner)
-			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n"
+			|| "Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)"
 				.equals(electionWinner));
     }
 }

@@ -315,8 +315,8 @@ public class TestOPLV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output));
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output));
 
     }
 
@@ -348,9 +348,9 @@ public class TestOPLV {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output)
-		|| "Election Winners:\n\tJake (Senju)\n".equals(output));
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tJake (Senju)\n\n".equals(output));
 
     }
 
@@ -380,9 +380,9 @@ public class TestOPLV {
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
 	assertTrue(
-		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n"
+		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n\n"
 			.equals(output)
-			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n"
+			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n\n"
 				.equals(output));
     }
 

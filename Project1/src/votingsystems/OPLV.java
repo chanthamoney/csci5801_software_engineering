@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
+
 import mariahgui.MariahElectionResults;
 
 /**
@@ -240,10 +242,17 @@ public class OPLV extends VotingSystem {
 		    curCan -> res.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	    this.auditor.auditResult(res.toString());
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-	    System.out.print(res.toString());
+	    System.out.print(res.toString() + "\n");
 	    if (this.resultsGUI) {
 		MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile, res.toString());
-		frame.setVisible(true);
+
+		// Ensures thread safety with GUI
+		SwingUtilities.invokeLater(new Runnable() {
+		    @Override
+		    public void run() {
+			frame.setVisible(true);
+		    }
+		});
 	    }
 	} else {
 	    throw new RuntimeException("An election can only be run once for a given voting system.\n");

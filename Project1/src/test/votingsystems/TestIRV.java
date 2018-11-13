@@ -2,7 +2,7 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:31:49 AM
+ * Last Update: Nov 13, 2018 12:41:20 AM
  * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -130,6 +130,14 @@ public class TestIRV {
 	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false);
     }
 
+    /**
+     * IRV ballots from file.
+     *
+     * @param numBallots    the num ballots
+     * @param numCandidates the num candidates
+     * @param scanner       the scanner
+     * @return the linked list
+     */
     private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
 	    Scanner scanner) {
 	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<>();
@@ -198,19 +206,10 @@ public class TestIRV {
     }
 
     /**
-     * Test IRV with params.
-     */
-    // Testing IRV constructor with parameters
-    @Test
-    public void testIRVWithParams() {
-
-    }
-
-    /**
-     * Test election where winner is random
-     * 
-     * @throws IOException
-     * @throws ParseException
+     * Test election where winner is random.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
      */
     @Test
     public void testIRVRandomWinner() throws ParseException, IOException {
@@ -231,8 +230,8 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Sasuke\n".equals(output) || "Election Winner: Naruto\n".equals(output)
-		|| "Election Winner: Sakura\n".equals(output));
+	assertTrue("Election Winner: Sasuke\n\n".equals(output) || "Election Winner: Naruto\n\n".equals(output)
+		|| "Election Winner: Sakura\n\n".equals(output));
     }
 
     /**
@@ -298,7 +297,7 @@ public class TestIRV {
     // Testing Different Election Cases
 
     /**
-     * Test an election where there is a clear winner by majority
+     * Test an election where there is a clear winner by majority.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -309,7 +308,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there are 10,000 ballots
+     * Test an election where there are 10,000 ballots.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -320,7 +319,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is only one ballot and multiple candidates
+     * Test an election where there is only one ballot and multiple candidates.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -331,7 +330,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is only one candidate
+     * Test an election where there is only one candidate.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -342,7 +341,7 @@ public class TestIRV {
     }
 
     /**
-     * Test an election where there is no candidate that receives majority vote
+     * Test an election where there is no candidate that receives majority vote.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -378,7 +377,7 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Naruto (Senju)\n".equals(output)
-		|| "Election Winner: Sasuke (Senju)\n".equals(output));
+	assertTrue("Election Winner: Naruto (Senju)\n\n".equals(output)
+		|| "Election Winner: Sasuke (Senju)\n\n".equals(output));
     }
 }

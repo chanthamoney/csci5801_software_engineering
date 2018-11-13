@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import javax.swing.SwingUtilities;
+
 import mariahgui.MariahFileChooser;
 import votingsystems.IRV;
 import votingsystems.OPLV;
@@ -188,13 +190,25 @@ public class MariahEP {
 	    // chooser gui
 	    if (gui && filePath == null) {
 		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
-		frame.setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
+		    @Override
+		    public void run() {
+			frame.setVisible(true);
+		    }
+		});
 		while (frame.getFilePath() == null) {
 		    Thread.sleep(1000);
 		}
-		frame.setVisible(false);
 		filePath = frame.getFilePath();
-		frame.dispose();
+
+		// Ensures thread safety with GUI
+		SwingUtilities.invokeLater(new Runnable() {
+		    @Override
+		    public void run() {
+			frame.setVisible(false);
+			frame.dispose();
+		    }
+		});
 	    }
 
 	    VotingSystem vs = null;
@@ -205,7 +219,7 @@ public class MariahEP {
 	    }
 
 	    String auditFile = vs.runElection();
-	    System.out.print(String.format("Audit File: %s%n", auditFile));
+	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
 
 	    // If there is a GUI we set the file name to null and open file chooser
 	    // otherwise we return

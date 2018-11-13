@@ -67,7 +67,8 @@ public class Auditor {
 	final StringBuilder fileOutput = new StringBuilder();
 
 	fileOutput.append(this.auditSetup);
-	if ((this.auditSetup.length() != 0) && (this.auditProcess.length() != 0)) {
+	if ((this.auditSetup.length() != 0)
+		&& ((this.auditProcess.length() != 0) || (this.auditResult.length() != 0))) {
 	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
 	}
 	fileOutput.append(this.auditProcess);

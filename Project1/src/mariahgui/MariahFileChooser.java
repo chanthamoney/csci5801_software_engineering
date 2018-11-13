@@ -260,8 +260,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	String command = evt.getActionCommand();
 	if (command.equals(JFileChooser.APPROVE_SELECTION)) {
 	    File selectedFile = theFileChooser.getSelectedFile();
-	    int index = selectedFile.getAbsolutePath().lastIndexOf("\\");
-	    this.filePath = selectedFile.getAbsolutePath().substring(index + 1);
+	    this.filePath = selectedFile.getAbsolutePath();
 	} else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
 	    File workingDirectory = new File(System.getProperty("user.dir"));
 	    jFileChooser1.setCurrentDirectory(workingDirectory);
