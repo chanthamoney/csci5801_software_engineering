@@ -1,7 +1,7 @@
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 11:03:03 PM
+ * Last Update: Nov 13, 2018 12:40:27 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -19,14 +19,6 @@ import java.text.ParseException;
 import java.util.List;
 
 import org.junit.Test;
-
-/**
- * File: TestMariahEP.java
- * Date Created: 11/08/2018
- * Last Update: Nov 11, 2018 2:41:18 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
- * This code is copyright (c) 2018 University of Minnesota - Twin Cities
- */
 
 import main.MariahEP;
 
@@ -72,6 +64,7 @@ public class TestMariahEP {
      *
      * @param electionFile the election file
      * @param randomMsg    the random msg
+     * @return the string
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
@@ -266,11 +259,11 @@ public class TestMariahEP {
     }
 
     /**
-     * Test an election where there is no candidate that receives majority vote
+     * Test an election where there is no candidate that receives majority vote.
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVNoMajorityPopularVote() throws ParseException, IOException, InterruptedException {
@@ -283,7 +276,7 @@ public class TestMariahEP {
      *
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException
+     * @throws InterruptedException the interrupted exception
      */
     @Test
     public void testMainIRVConsequentialTieTwoCandidates() throws ParseException, IOException, InterruptedException {
@@ -298,8 +291,6 @@ public class TestMariahEP {
     /**
      * Test an election where there is a tie between candidates on the same party.
      *
-     * @param electionFile the election file
-     * @param randomMsg    the random msg
      * @throws ParseException       the parse exception
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InterruptedException the interrupted exception
