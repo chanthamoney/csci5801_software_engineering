@@ -230,8 +230,8 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Sasuke\n".equals(output) || "Election Winner: Naruto\n".equals(output)
-		|| "Election Winner: Sakura\n".equals(output));
+	assertTrue("Election Winner: Sasuke\n\n".equals(output) || "Election Winner: Naruto\n\n".equals(output)
+		|| "Election Winner: Sakura\n\n".equals(output));
     }
 
     /**
@@ -377,7 +377,7 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Naruto (Senju)\n".equals(output)
-		|| "Election Winner: Sasuke (Senju)\n".equals(output));
+	assertTrue("Election Winner: Naruto (Senju)\n\n".equals(output)
+		|| "Election Winner: Sasuke (Senju)\n\n".equals(output));
     }
 }

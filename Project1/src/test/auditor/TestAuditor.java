@@ -137,21 +137,21 @@ public class TestAuditor {
     }
 
     /**
-     * Test audit structure.
+     * Test audit structure with setup, process, results
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing audit file output structure
+    // Testing audit file output structure for SPR
     @Test
-    public void testAuditStructure() throws IOException {
+    public void testAuditStructureSPR() throws IOException {
 	final Auditor aud = initializeTestAuditor();
 
 	// add strings to auditProcess, auditResult, and auditSetup
-	testStrings.forEach(aud::auditProcess);
-
-	testStrings.forEach(aud::auditResult);
-
-	testStrings.forEach(aud::auditSetup);
+	for (String el : testStrings) {
+	    aud.auditProcess("p_" + el);
+	    aud.auditResult("r_" + el);
+	    aud.auditSetup("s_" + el);
+	}
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -170,11 +170,125 @@ public class TestAuditor {
 	fileReader.close();
 	file.delete();
 
-	assertTrue(("Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"
+	assertTrue(("s_Audit line 1s_Audit line 2s_Audit line 3s_Audit line 4s_Audit line 5"
 		+ "- - - - - - - - - - - - - - - - - - - -"
-		+ "Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5"
+		+ "p_Audit line 1p_Audit line 2p_Audit line 3p_Audit line 4p_Audit line 5"
 		+ "- - - - - - - - - - - - - - - - - - - -"
-		+ "Audit line 1Audit line 2Audit line 3Audit line 4Audit line 5").equals((sb.toString())));
+		+ "r_Audit line 1r_Audit line 2r_Audit line 3r_Audit line 4r_Audit line 5").equals((sb.toString())));
+    }
+
+    /**
+     * Test audit structure with setup and process
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    // Testing audit file output structure for SP
+    @Test
+    public void testAuditStructureSP() throws IOException {
+	final Auditor aud = initializeTestAuditor();
+
+	// add strings to auditProcess, and auditSetup
+	for (String el : testStrings) {
+	    aud.auditProcess("p_" + el);
+	    aud.auditSetup("s_" + el);
+	}
+
+	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
+	aud.createAuditFile(fileName);
+
+	final File file = new File(fileName);
+	final Scanner fileReader = new Scanner(file);
+
+	StringBuilder sb = new StringBuilder();
+	while (fileReader.hasNextLine()) {
+	    sb.append(fileReader.nextLine());
+	}
+
+	fileReader.close();
+	file.delete();
+
+	assertTrue(("s_Audit line 1s_Audit line 2s_Audit line 3s_Audit line 4s_Audit line 5"
+		+ "- - - - - - - - - - - - - - - - - - - -"
+		+ "p_Audit line 1p_Audit line 2p_Audit line 3p_Audit line 4p_Audit line 5").equals((sb.toString())));
+    }
+
+    /**
+     * Test audit structure with setup and result
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    // Testing audit file output structure for SR
+    @Test
+    public void testAuditStructureSR() throws IOException {
+	final Auditor aud = initializeTestAuditor();
+
+	// add strings to auditSetup auditResult
+	for (String el : testStrings) {
+	    aud.auditResult("r_" + el);
+	    aud.auditSetup("s_" + el);
+	}
+
+	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
+	aud.createAuditFile(fileName);
+
+	final File file = new File(fileName);
+	final Scanner fileReader = new Scanner(file);
+
+	StringBuilder sb = new StringBuilder();
+	while (fileReader.hasNextLine()) {
+	    sb.append(fileReader.nextLine());
+	}
+
+	fileReader.close();
+	file.delete();
+
+	assertTrue(("s_Audit line 1s_Audit line 2s_Audit line 3s_Audit line 4s_Audit line 5"
+		+ "- - - - - - - - - - - - - - - - - - - -"
+		+ "r_Audit line 1r_Audit line 2r_Audit line 3r_Audit line 4r_Audit line 5").equals((sb.toString())));
+    }
+
+    /**
+     * Test audit structure with process and result
+     *
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    // Testing audit file output structure for PR
+    @Test
+    public void testAuditStructurePR() throws IOException {
+	final Auditor aud = initializeTestAuditor();
+
+	// add strings to auditSetup auditResult
+	for (String el : testStrings) {
+	    aud.auditProcess("p_" + el);
+	    aud.auditResult("r_" + el);
+	}
+
+	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
+	final File fileDNE = new File(fileName);
+	assertFalse(fileDNE.isFile());
+
+	aud.createAuditFile(fileName);
+
+	final File file = new File(fileName);
+	final Scanner fileReader = new Scanner(file);
+
+	StringBuilder sb = new StringBuilder();
+	while (fileReader.hasNextLine()) {
+	    sb.append(fileReader.nextLine());
+	}
+
+	fileReader.close();
+	file.delete();
+
+	assertTrue(("p_Audit line 1p_Audit line 2p_Audit line 3p_Audit line 4p_Audit line 5"
+		+ "- - - - - - - - - - - - - - - - - - - -"
+		+ "r_Audit line 1r_Audit line 2r_Audit line 3r_Audit line 4r_Audit line 5").equals((sb.toString())));
     }
 
     /**
@@ -188,7 +302,9 @@ public class TestAuditor {
 	final Auditor aud = initializeTestAuditor();
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
-	assertFalse(fileDNE.isFile());
+	if (fileDNE.isFile()) {
+	    fileDNE.delete();
+	}
 
 	aud.createAuditFile(fileName);
 
