@@ -386,4 +386,26 @@ public class TestOPLV {
 				.equals(output));
     }
 
+    /**
+     * Test an election where there is two seats with five candidates .
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesTenVotes");
+    }
+
+    /**
+     * Test an election where there is one seat and one winner with six candidates.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesUnequal");
+    }
+
 }
