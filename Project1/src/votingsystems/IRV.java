@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
+
 import mariahgui.MariahElectionResults;
 
 /**
@@ -258,7 +260,14 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + lastCan + "\n");
-			frame.setVisible(true);
+
+			// Ensures thread safety with GUI
+			SwingUtilities.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+				frame.setVisible(true);
+			    }
+			});
 		    }
 		    break;
 		}
@@ -284,7 +293,14 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + winner + "\n");
-			frame.setVisible(true);
+
+			// Ensures thread safety with GUI
+			SwingUtilities.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+				frame.setVisible(true);
+			    }
+			});
 		    }
 		    break;
 		} else {
