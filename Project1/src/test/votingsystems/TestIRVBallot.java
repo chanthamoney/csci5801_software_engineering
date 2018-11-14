@@ -29,8 +29,7 @@ public class TestIRVBallot {
     /** The test id. */
     int testId = 4;
 
-    /** The test votes. */
-    // initialize a LinkedList of votes and an id
+    /** The test votes. These must be initialized. */
     ArrayList<Integer> testVotes = new ArrayList<>();
 
     /**
@@ -46,9 +45,8 @@ public class TestIRVBallot {
     }
 
     /**
-     * Test IRV ballot.
+     * Test IRV ballot constructor which must fail.
      */
-    // Testing IRVBallot() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRVBallot() {
 	try {
@@ -61,18 +59,8 @@ public class TestIRVBallot {
     }
 
     /**
-     * Test IRV ballot with params.
+     * Testing getID() method of ballot class that irv ballot extends.
      */
-    // Testing IRVBallot() constructor with parameters
-    @Test
-    public void testIRVBallotWithParams() {
-
-    }
-
-    /**
-     * Test get ID.
-     */
-    // Testing getID() method of ballot class that irv ballot extends
     @Test
     public void testGetID() {
 	// initialize Test Ballot
@@ -84,7 +72,6 @@ public class TestIRVBallot {
     /**
      * Test get next vote one vote.
      */
-    // Testing getNextVote() with one vote
     @Test
     public void testGetNextVoteOneVote() {
 	// initialize test IRVBallot
@@ -98,7 +85,6 @@ public class TestIRVBallot {
     /**
      * Test get next vote when no votes.
      */
-    // Testing getNextVote() with no votes
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetNextVoteWhenNoVotes() {
 	// initialize test IRVBallot
@@ -117,7 +103,6 @@ public class TestIRVBallot {
     /**
      * Test get next vote five times with only four votes.
      */
-    // Testing getNextVote() five times with only four votes
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetNextVoteFiveTimesWithOnlyFourVotes() {
 	// initialize test IRVBallot
@@ -138,7 +123,6 @@ public class TestIRVBallot {
     /**
      * Test get next vote three votes.
      */
-    // Testing getNextVote() with three votes
     @Test
     public void testGetNextVoteThreeVotes() {
 	// initialize test IRVBallot
@@ -156,7 +140,6 @@ public class TestIRVBallot {
     /**
      * Test is exhausted when not exhausted.
      */
-    // Testing is exhausted method
     @Test
     public void testIsExhaustedWhenNotExhausted() {
 	// initalize testBallot
@@ -168,7 +151,6 @@ public class TestIRVBallot {
     /**
      * Test is exhausted when exhausted.
      */
-    // Testing is exhausted method
     @Test
     public void testIsExhaustedWhenExhausted() {
 	// initalize testBallot

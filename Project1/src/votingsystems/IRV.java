@@ -9,6 +9,7 @@
 package votingsystems;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -233,7 +234,7 @@ public class IRV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public String runElection() throws IOException {
+    public String runElection() throws IOException, InterruptedException, InvocationTargetException {
 	String auditFile;
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
@@ -262,7 +263,7 @@ public class IRV extends VotingSystem {
 				"Election Winner: " + lastCan + "\n");
 
 			// Ensures thread safety with GUI
-			SwingUtilities.invokeLater(new Runnable() {
+			SwingUtilities.invokeAndWait(new Runnable() {
 			    @Override
 			    public void run() {
 				frame.setVisible(true);
@@ -295,7 +296,7 @@ public class IRV extends VotingSystem {
 				"Election Winner: " + winner + "\n");
 
 			// Ensures thread safety with GUI
-			SwingUtilities.invokeLater(new Runnable() {
+			SwingUtilities.invokeAndWait(new Runnable() {
 			    @Override
 			    public void run() {
 				frame.setVisible(true);
