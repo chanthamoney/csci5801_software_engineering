@@ -334,7 +334,7 @@ public class TestMariahEP {
      * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVconsequentialTie()
+    public void testMainOPLVconsequentialTie()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	String electionWinner = testFileAuditPairRandomMsg("OPLV/consequentialCandidateTie",
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
@@ -357,7 +357,7 @@ public class TestMariahEP {
      * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVtwoSeatsFiveCandidatesTenVotes()
+    public void testMainOPLVtwoSeatsFiveCandidatesTenVotes()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("OPLV/twoSeatsFiveCandidatesTenVotes");
     }
