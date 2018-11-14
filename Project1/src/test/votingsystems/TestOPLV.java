@@ -410,4 +410,29 @@ public class TestOPLV {
 				.equals(output));
     }
 
+    /**
+     * Test an election where there is two seats with five candidates and the
+     * remaining seat goes to the party with the largest remainder .
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesTenVotes");
+    }
+
+    /**
+     * Test an election where there is two seats with five candidates and the party
+     * with the largest remainder does not have a candidate to fill seat so the seat
+     * is allocated to the next party with the next highest largest remainder.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesUnequal");
+    }
+
 }

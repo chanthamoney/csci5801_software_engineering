@@ -63,8 +63,8 @@ Party Rankings [* - Allocated Party Seat]
 		* Naruto [1 vote]
 		- Sasuke [0 votes]
 	Party Akatsuki:
-		- Sakura [0 votes]
 		- Kakashi [0 votes]
+		- Sakura [0 votes]
 	Party Anbu:
 		* Sai [5 votes]
 
