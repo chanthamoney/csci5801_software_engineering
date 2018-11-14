@@ -19,7 +19,7 @@ You have the option of running the application with a pre-defined file:
 Run without GUI
 You have the option of running the application without the use of the GUI.
 Simply set the --no-gui flag on the command line:
->> java main/MariahEP --no-gui< <election file>
+>> java main/MariahEP --no-gui <election file>
 
 System Testers,
 To compile tests use the following:
