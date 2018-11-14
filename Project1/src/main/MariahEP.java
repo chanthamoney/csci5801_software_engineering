@@ -225,7 +225,7 @@ public class MariahEP {
 	consoleReader.close();
 
 	vs = votingSystemFromFile(filePath, false);
-
+	System.out.print(String.format("Election File: %s%n%n", filePath));
 	String auditFile = vs.runElection();
 	System.out.print(String.format("Audit File: %s%n%n", auditFile));
 
@@ -269,6 +269,7 @@ public class MariahEP {
 	    }
 
 	    if (vs != null) {
+		System.out.print(String.format("Election File: %s%n%n", filePath));
 		String auditFile = vs.runElection();
 		System.out.print(String.format("Audit File: %s%n%n", auditFile));
 	    }
