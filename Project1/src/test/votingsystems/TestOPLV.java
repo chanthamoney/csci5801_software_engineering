@@ -387,7 +387,8 @@ public class TestOPLV {
     }
 
     /**
-     * Test an election where there is two seats with five candidates .
+     * Test an election where there is two seats with five candidates and the
+     * remaining seat goes to the party with the largest remainder .
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
@@ -398,7 +399,9 @@ public class TestOPLV {
     }
 
     /**
-     * Test an election where there is one seat and one winner with six candidates.
+     * Test an election where there is two seats with five candidates and the party
+     * with the largest remainder does not have a candidate to fill seat so the seat
+     * is allocated to the next party with the next highest largest remainder.
      *
      * @throws ParseException the parse exception
      * @throws IOException    Signals that an I/O exception has occurred.
