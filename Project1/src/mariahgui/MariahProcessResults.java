@@ -1,5 +1,5 @@
 /**
- * File: MariahElectionResults.java
+ * File: MariahProcessResults.java
  * Date Created: 11/08/2018
  * Last Update: Nov 13, 2018 6:47:23 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
@@ -17,12 +17,12 @@ import java.io.IOException;
 import javax.swing.JDialog;
 
 /**
- * The GUI component for showing election results. Shows the output results of
- * an election as well as a button to open the output audit file.
+ * The GUI component for showing the results of an audited process. Shows the
+ * output results as well as a button to open the output audit file.
  *
  * @author janippert
  */
-public class MariahElectionResults extends JDialog {
+public class MariahProcessResults extends JDialog {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7573327634981945907L;
@@ -46,25 +46,25 @@ public class MariahElectionResults extends JDialog {
     private String headerName;
 
     /**
-     * Creates new form MariahElectionResults.
+     * Creates new form MariahProcessResults.
      *
-     * @param headerName      the header name
-     * @param auditFile       the name of the audit file produced
-     * @param electionResults the results of the election
+     * @param headerName     the header name
+     * @param auditFile      the name of the audit file produced
+     * @param processResults the results of the process
      */
-    public MariahElectionResults(String headerName, String auditFile, String electionResults) {
+    public MariahProcessResults(String headerName, String auditFile, String processResults) {
 	super();
 	this.headerName = headerName;
 	setModal(true);
 	initComponents();
 	this.auditFile = auditFile;
-	jTextArea1.setText(electionResults);
+	jTextArea1.setText(processResults);
     }
 
     /**
-     * Creates new form MariahElectionResults.
+     * Creates new form MariahProcessResults.
      */
-    public MariahElectionResults() {
+    public MariahProcessResults() {
 	initComponents();
     }
 
@@ -92,7 +92,7 @@ public class MariahElectionResults extends JDialog {
 	setTitle(headerName);
 
 	jPanel1.setBackground(new java.awt.Color(0, 51, 102));
-	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Election Results",
+	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, headerName,
 		javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
 		new java.awt.Font("Helvetica", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
@@ -169,12 +169,12 @@ public class MariahElectionResults extends JDialog {
 	    }
 	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
 		| ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahElectionResults.class.getName())
-		    .log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(MariahProcessResults.class.getName()).log(java.util.logging.Level.SEVERE,
+		    null, ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(() -> new MariahElectionResults().setVisible(true));
+	java.awt.EventQueue.invokeLater(() -> new MariahProcessResults().setVisible(true));
     }
 }
