@@ -16,7 +16,7 @@ import java.util.Random;
 
 import javax.swing.SwingUtilities;
 
-import mariahgui.MariahProcessResults;
+import mariahgui.MariahResults;
 
 /**
  * Represents an open party list voting system.
@@ -245,7 +245,8 @@ public class OPLV extends VotingSystem {
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString() + "\n");
 	    if (this.resultsGUI) {
-		MariahProcessResults frame = new MariahProcessResults("Election Results", auditFile, res.toString());
+		MariahResults frame = new MariahResults("Election Results", auditFile, res.toString(),
+			"Official Mariah Election Processor Report", "Print Report TODO");
 
 		// Ensures thread safety with GUI
 		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
