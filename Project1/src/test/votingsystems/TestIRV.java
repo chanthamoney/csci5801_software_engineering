@@ -2,8 +2,8 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 12:41:20 AM
- * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * Last Update: Nov 13, 2018 5:43:00 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,10 +74,13 @@ public class TestIRV {
      * Test file audit pair.
      *
      * @param electionFile the election file
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
-    private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
+    private static void testFileAuditPair(String electionFile)
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -91,11 +95,13 @@ public class TestIRV {
      *
      * @param electionFile the election file
      * @param randomMsg    the random msg
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
-	    throws ParseException, IOException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -175,10 +181,12 @@ public class TestIRV {
     /**
      * Test run election twice.
      *
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test(expected = RuntimeException.class)
-    public void testRunElectionTwice() throws IOException {
+    public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
 	final VotingSystem vs = initializeTestIRV();
 	vs.runElection();
 	try {
@@ -191,9 +199,8 @@ public class TestIRV {
     }
 
     /**
-     * Test IRV.
+     * Test IRV default constructor which should fail.
      */
-    // Testing IRV constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRV() {
 	try {
@@ -208,11 +215,14 @@ public class TestIRV {
     /**
      * Test election where winner is random.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testIRVRandomWinner() throws ParseException, IOException {
+    public void testIRVRandomWinner()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -236,9 +246,12 @@ public class TestIRV {
 
     /**
      * Test run election efficiency.
+     *
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testRunElectionEfficiency() {
+    public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -299,55 +312,69 @@ public class TestIRV {
     /**
      * Test an election where there is a clear winner by majority.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testIRVMajorityPopularVote() throws ParseException, IOException {
+    public void testIRVMajorityPopularVote()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("majorityPopularVote");
     }
 
     /**
      * Test an election where there are 10,000 ballots.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testIRVTenThousandVotes() throws ParseException, IOException {
+    public void testIRVTenThousandVotes()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("tenThousandVotes");
     }
 
     /**
      * Test an election where there is only one ballot and multiple candidates.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testIRVOneVote() throws ParseException, IOException {
+    public void testIRVOneVote() throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("oneVote");
     }
 
     /**
      * Test an election where there is only one candidate.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testIRVOneCandidate() throws ParseException, IOException {
+    public void testIRVOneCandidate()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("OneCandidate");
     }
 
     /**
      * Test an election where there is no candidate that receives majority vote.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testIRVNoMajorityPopularVote() throws ParseException, IOException {
+    public void testIRVNoMajorityPopularVote()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("noMajorityPopularVote");
     }
 
@@ -355,11 +382,14 @@ public class TestIRV {
      * Test an election where no majority is ever reached in the instant runoffs and
      * the winner is decided by popular vote.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testIRVConsequentialTieTwoCandidates() throws ParseException, IOException {
+    public void testIRVConsequentialTieTwoCandidates()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();

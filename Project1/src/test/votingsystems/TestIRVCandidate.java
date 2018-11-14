@@ -51,9 +51,8 @@ public class TestIRVCandidate {
     }
 
     /**
-     * Test IRV candidate.
+     * Test IRV candidate constructor which must fail.
      */
-    // Testing IRVCandidate() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testIRVCandidate() {
 	try {
@@ -66,18 +65,8 @@ public class TestIRVCandidate {
     }
 
     /**
-     * Test IRV candidate with params.
-     */
-    // Testing IRVCandidate() constructor with parameters
-    @Test
-    public void testIRVCandidateWithParams() {
-
-    }
-
-    /**
      * Test add ballot.
      */
-    // Testing AddBallot
     @Test
     public void testAddBallot() {
 	// initializeTestBallot
@@ -95,9 +84,8 @@ public class TestIRVCandidate {
     }
 
     /**
-     * Test eliminate.
+     * Test eliminate method.
      */
-    // Testing eliminate method
     @Test
     public void testEliminate() {
 	// initializeTestBallot
@@ -118,18 +106,16 @@ public class TestIRVCandidate {
     }
 
     /**
-     * Test get name.
+     * Testing getName() method of candidate class that IRVCandidate extends.
      */
-    // Testing getName() method of candidate class that IRVCandidate extends
     @Test
     public void testGetName() {
 	assertEquals("Jenny", this.testCandidate.getName());
     }
 
     /**
-     * Test get num votes.
+     * Testing getNumVotes() method of candidate class that IRVCandidate extends.
      */
-    // Testing getNumVotes() method of candidate class that IRVCandidate extends
     @Test
     public void testGetNumVotes() {
 	// initialize testBallot
@@ -143,9 +129,8 @@ public class TestIRVCandidate {
     }
 
     /**
-     * Test is eliminated.
+     * Testing isEliminated method.
      */
-    // Testing isEliminated method
     @Test
     public void testIsEliminated() {
 	// initialize test ballot

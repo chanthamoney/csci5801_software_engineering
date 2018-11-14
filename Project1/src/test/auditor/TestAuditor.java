@@ -2,8 +2,8 @@
 /**
  * File: TestAuditor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:26:19 AM
- * Author: <A HREF="mailto:tsaix223@umn.edu">Christine Tsai</A>
+ * Last Update: Nov 13, 2018 1:26:28 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -48,7 +48,6 @@ public class TestAuditor {
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing auditProcess()
     @Test
     public void testAuditProcess() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -79,7 +78,6 @@ public class TestAuditor {
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing auditResult()
     @Test
     public void testAuditResult() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -110,7 +108,6 @@ public class TestAuditor {
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing auditSetup()
     @Test
     public void testAuditSetup() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -137,11 +134,10 @@ public class TestAuditor {
     }
 
     /**
-     * Test audit structure with setup, process, results
+     * Test audit structure with setup, process, results.
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing audit file output structure for SPR
     @Test
     public void testAuditStructureSPR() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -178,11 +174,10 @@ public class TestAuditor {
     }
 
     /**
-     * Test audit structure with setup and process
+     * Test audit structure with setup and process.
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing audit file output structure for SP
     @Test
     public void testAuditStructureSP() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -216,11 +211,10 @@ public class TestAuditor {
     }
 
     /**
-     * Test audit structure with setup and result
+     * Test audit structure with setup and result.
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing audit file output structure for SR
     @Test
     public void testAuditStructureSR() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -254,11 +248,10 @@ public class TestAuditor {
     }
 
     /**
-     * Test audit structure with process and result
+     * Test audit structure with process and result.
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing audit file output structure for PR
     @Test
     public void testAuditStructurePR() throws IOException {
 	final Auditor aud = initializeTestAuditor();
@@ -296,7 +289,6 @@ public class TestAuditor {
      *
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    // Testing createAuditFile()
     @Test
     public void testCreateAuditFile() throws IOException {
 	final Auditor aud = initializeTestAuditor();

@@ -10,6 +10,7 @@
 package votingsystems;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -222,7 +223,7 @@ public class OPLV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public String runElection() throws IOException {
+    public String runElection() throws IOException, InterruptedException, InvocationTargetException {
 	String auditFile = null;
 	if (!this.wasRun.getAndSet(true)) {
 	    final StringBuilder processedBallots = new StringBuilder();
@@ -247,7 +248,7 @@ public class OPLV extends VotingSystem {
 		MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile, res.toString());
 
 		// Ensures thread safety with GUI
-		SwingUtilities.invokeLater(new Runnable() {
+		SwingUtilities.invokeAndWait(new Runnable() {
 		    @Override
 		    public void run() {
 			frame.setVisible(true);
