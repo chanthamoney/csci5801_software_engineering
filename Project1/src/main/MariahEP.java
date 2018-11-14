@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 10:42:50 AM
+ * Last Update: Nov 13, 2018 5:58:33 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -11,10 +11,13 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import javax.swing.SwingUtilities;
 
 import mariahgui.MariahFileChooser;
 import votingsystems.IRV;
@@ -164,10 +167,13 @@ public class MariahEP {
      * command line argument or input upon running) and runs the election.
      *
      * @param args Optional command line file name argument and flag for no gui
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws ParseException            the parse exception
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args)
+	    throws IOException, InterruptedException, InvocationTargetException, ParseException {
 	String filePath = null;
 	boolean gui = true;
 	// Determine if optional command line arguments of file name and indicator for
@@ -183,36 +189,81 @@ public class MariahEP {
 		filePath = args[0].trim();
 	    }
 	}
-	while (true) {
-	    // If user did not restrict GUI and filePath was not provided generate file
-	    // chooser gui
-	    if (gui && filePath == null) {
-		MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
-		frame.setVisible(true);
-		while (frame.getFilePath() == null) {
-		    Thread.sleep(1000);
-		}
-		frame.setVisible(false);
-		filePath = frame.getFilePath();
-		frame.dispose();
-	    }
 
-	    VotingSystem vs = null;
-	    try {
-		vs = votingSystemFromFile(filePath, gui);
-	    } catch (ParseException e) {
-		e.printStackTrace();
+	if (gui) {
+	    MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
+	    SwingUtilities.invokeAndWait(new Runnable() {
+		@Override
+		public void run() {
+		    frame.setVisible(true);
+		}
+	    });
+	    while (true) {
+		// If user did not restrict GUI and filePath was not provided generate file
+		// chooser gui
+		if (filePath == null) {
+		    // Wait for user to input file
+		    while (frame.getFilePath() == null) {
+			Thread.sleep(500);
+		    }
+
+		    filePath = frame.getFilePath();
+		}
+
+		VotingSystem vs = null;
+
+		try {
+		    vs = votingSystemFromFile(filePath, true);
+		} catch (Exception e) {
+		    vs = null;
+
+		    // Thread safe way to open unsafe file dialog
+		    SwingUtilities.invokeAndWait(new Runnable() {
+			@Override
+			public void run() {
+			    frame.invalidFile();
+			}
+		    });
+		}
+
+		if (vs != null) {
+		    String auditFile = vs.runElection();
+		    System.out.print(String.format("Audit File: %s%n%n", auditFile));
+		}
+
+		// If there is a GUI we set the file name to null and open file chooser
+		// otherwise we return
+		filePath = null;
+
+		// Thread safe way to set file path
+		SwingUtilities.invokeAndWait(new Runnable() {
+		    @Override
+		    public void run() {
+			frame.setFilePath(null);
+		    }
+		});
 	    }
+	} else {
+	    File file = new File(filePath.trim());
+	    VotingSystem vs;
+	    final Scanner consoleReader = new Scanner(System.in);
+	    boolean first = true;
+	    while (file == null || !file.isFile()) {
+		if (!first) {
+		    System.out.print("Invalid file name. Please enter the name of the ballot file: ");
+		} else {
+		    System.out.print("Enter Name of Ballot File: ");
+		    first = false;
+		}
+		final String in_BallotFile = consoleReader.nextLine().trim();
+		file = new File(in_BallotFile);
+	    }
+	    consoleReader.close();
+
+	    vs = votingSystemFromFile(filePath, false);
 
 	    String auditFile = vs.runElection();
-	    System.out.print(String.format("Audit File: %s%n", auditFile));
-
-	    // If there is a GUI we set the file name to null and open file chooser
-	    // otherwise we return
-	    if (!gui) {
-		return;
-	    }
-	    filePath = null;
+	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
 	}
     }
 }

@@ -22,9 +22,8 @@ import votingsystems.OPLVBallot;
 public class TestOPLVBallot {
 
     /**
-     * Test OPLV ballot.
+     * Testing OPLVBallot() constructor which must fail.
      */
-    // Testing OPLVBallot() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLVBallot() {
 	try {
@@ -39,7 +38,6 @@ public class TestOPLVBallot {
     /**
      * Test OPLV test votes.
      */
-    // Testing OPLVBallot() constructor with vote zero
     @Test
     public void testOPLVTestVotes() {
 	OPLVBallot[] ballots = new OPLVBallot[5];
@@ -50,9 +48,8 @@ public class TestOPLVBallot {
     }
 
     /**
-     * Test OPLV test I ds.
+     * Test OPLV test IDs.
      */
-    // Testing OPLVBallot() constructor with vote zero
     @Test
     public void testOPLVTestIDs() {
 	OPLVBallot[] ballots = new OPLVBallot[5];

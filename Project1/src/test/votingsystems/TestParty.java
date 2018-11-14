@@ -21,7 +21,7 @@ import votingsystems.OPLVCandidate;
 import votingsystems.Party;
 
 /**
- * The Class TestOPLV.
+ * The JUNIT class TestParty.
  */
 public class TestParty {
 
@@ -43,9 +43,8 @@ public class TestParty {
     }
 
     /**
-     * Test party.
+     * Testing Party() constructor which must fail.
      */
-    // Testing Party() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testParty() {
 	try {
@@ -58,9 +57,8 @@ public class TestParty {
     }
 
     /**
-     * Test party name.
+     * Test party name is correct.
      */
-    // Testing if party name is correct
     @Test
     public void testPartyName() {
 	Party party = initializeTestParty();
@@ -70,7 +68,6 @@ public class TestParty {
     /**
      * Test party cast zero vote.
      */
-    // Testing casting zero vote
     @Test
     public void testPartyCastZeroVote() {
 	Party party = initializeTestParty();
@@ -91,7 +88,6 @@ public class TestParty {
     /**
      * Test party cast five votes.
      */
-    // Testing casting five votes
     @Test
     public void testPartyCastFiveVotes() {
 	Party party = initializeTestParty();
@@ -104,7 +100,6 @@ public class TestParty {
     /**
      * Test party zero seats.
      */
-    // Testing default zero seats
     @Test
     public void testPartyZeroSeats() {
 	Party party = initializeTestParty();
@@ -112,9 +107,8 @@ public class TestParty {
     }
 
     /**
-     * Test party one seat.
+     * Test party one seat is correct.
      */
-    // Testing party seats are correct
     @Test
     public void testPartyOneSeat() {
 	Party party = initializeTestParty();
@@ -124,11 +118,11 @@ public class TestParty {
 	}
     }
 
-    // Testing if number of seats is equal to number of candidates, all candidates
     /**
-     * Test get winning candidates num seats equals num candidates.
+     * Testing if number of seats is equal to number of candidates, all candidates
+     * are returned.
      */
-    // are returned
+    //
     @Test
     public void testGetWinningCandidatesNumSeatsEqualsNumCandidates() {
 	Party party = initializeTestParty();
@@ -136,11 +130,11 @@ public class TestParty {
 	assertEquals(party.getWinningCandidates(), candidates);
     }
 
-    // Testing if number of seats is smaller than the number of candidates, only
     /**
-     * Test get winning candidates less num seats than num candidates.
+     * Testing if number of seats is smaller than the number of candidates, only
+     * winning candidates are returned.
      */
-    // winning candidates are returned
+    //
     @Test
     public void testGetWinningCandidatesLessNumSeatsThanNumCandidates() {
 	Party party = initializeTestParty();
@@ -159,9 +153,8 @@ public class TestParty {
     }
 
     /**
-     * Test rank candidates zero candidate.
+     * Testing ranking zero candidates gives back zero candidates.
      */
-    // Testing ranking zero candidates gives back zero candidates
     @Test
     public void testRankCandidatesZeroCandidate() {
 	Party party = new Party("ZeroCandidateParty");
@@ -171,9 +164,9 @@ public class TestParty {
     }
 
     /**
-     * Test rank candidates one candidate.
+     * Testing ranking one candidate only gives back ranked candidate and has 1
+     * vote.
      */
-    // Testing ranking one candidate only gives back ranked candidate and has 1 vote
     @Test
     public void testRankCandidatesOneCandidate() {
 	Party party = new Party("OneCandidateParty");
@@ -186,9 +179,8 @@ public class TestParty {
     }
 
     /**
-     * Test rank candidates two candidates.
+     * Testing ranking two candidate only gives back two ranked candidates.
      */
-    // Testing ranking two candidate only gives back two ranked candidates
     @Test
     public void testRankCandidatesTwoCandidates() {
 	Party party = new Party("TwoCandidateParty");
@@ -211,9 +203,8 @@ public class TestParty {
     }
 
     /**
-     * Test rank candidates five candidates.
+     * Testing ranking five candidate only gives back five ranked candidates.
      */
-    // Testing ranking five candidate only gives back five ranked candidates
     @Test
     public void testRankCandidatesFiveCandidates() {
 	Party party = initializeTestParty();

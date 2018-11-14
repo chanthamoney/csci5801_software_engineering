@@ -1,7 +1,7 @@
 /**
  * File: MariahFileChooser.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:36:34 AM
+ * Last Update: Nov 13, 2018 2:05:13 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -260,8 +260,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	String command = evt.getActionCommand();
 	if (command.equals(JFileChooser.APPROVE_SELECTION)) {
 	    File selectedFile = theFileChooser.getSelectedFile();
-	    int index = selectedFile.getAbsolutePath().lastIndexOf("\\");
-	    this.filePath = selectedFile.getAbsolutePath().substring(index + 1);
+	    this.filePath = selectedFile.getAbsolutePath();
 	} else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
 	    File workingDirectory = new File(System.getProperty("user.dir"));
 	    jFileChooser1.setCurrentDirectory(workingDirectory);
@@ -328,5 +327,18 @@ public class MariahFileChooser extends javax.swing.JFrame {
 
 	/* Create and display the form */
 	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser("Title Here").setVisible(true));
+    }
+
+    /**
+     * Sets the file path.
+     *
+     * @param path the new file path
+     */
+    public void setFilePath(String path) {
+	this.filePath = path;
+    }
+
+    public void invalidFile() {
+	JOptionPane.showMessageDialog(null, "Selected file is not a standardized IRV or OPLV election file.");
     }
 }

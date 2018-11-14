@@ -9,9 +9,12 @@
 package votingsystems;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+
+import javax.swing.SwingUtilities;
 
 import mariahgui.MariahElectionResults;
 
@@ -231,7 +234,7 @@ public class IRV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public String runElection() throws IOException {
+    public String runElection() throws IOException, InterruptedException, InvocationTargetException {
 	String auditFile;
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
@@ -254,11 +257,18 @@ public class IRV extends VotingSystem {
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
 		    this.auditor.auditResult("Election Winner: " + lastCan);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + lastCan + "\n");
+		    System.out.print("Election Winner: " + lastCan + "\n\n");
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + lastCan + "\n");
-			frame.setVisible(true);
+
+			// Ensures thread safety with GUI
+			SwingUtilities.invokeAndWait(new Runnable() {
+			    @Override
+			    public void run() {
+				frame.setVisible(true);
+			    }
+			});
 		    }
 		    break;
 		}
@@ -280,11 +290,18 @@ public class IRV extends VotingSystem {
 		    // Audit winner found and break;
 		    this.auditor.auditResult("Election Winner: " + winner);
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + winner + "\n");
+		    System.out.print("Election Winner: " + winner + "\n\n");
 		    if (resultsGUI) {
 			MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile,
 				"Election Winner: " + winner + "\n");
-			frame.setVisible(true);
+
+			// Ensures thread safety with GUI
+			SwingUtilities.invokeAndWait(new Runnable() {
+			    @Override
+			    public void run() {
+				frame.setVisible(true);
+			    }
+			});
 		    }
 		    break;
 		} else {

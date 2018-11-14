@@ -2,8 +2,8 @@
 /**
  * File: TestOPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:30:43 AM
- * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
+ * Last Update: Nov 13, 2018 5:45:54 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +34,7 @@ import votingsystems.OPLV;
 import votingsystems.VotingSystem;
 
 /**
- * The Class TestOPLV.
+ * The JUNIT class TestOPLV.
  */
 public class TestOPLV {
 
@@ -50,10 +51,13 @@ public class TestOPLV {
      * Test file audit pair.
      *
      * @param electionFile the election file
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
-    private static void testFileAuditPair(String electionFile) throws ParseException, IOException {
+    private static void testFileAuditPair(String electionFile)
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	VotingSystem vs = votingSystemFromFile("../testing/OPLV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -68,11 +72,13 @@ public class TestOPLV {
      *
      * @param electionFile the election file
      * @param randomMsg    the random msg
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
-	    throws ParseException, IOException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	VotingSystem vs = votingSystemFromFile("../testing/OPLV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -153,9 +159,8 @@ public class TestOPLV {
     }
 
     /**
-     * Test OPLV.
+     * Testing OPLV() constructor which must fail.
      */
-    // Testing OPLV() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLV() {
 	try {
@@ -170,10 +175,12 @@ public class TestOPLV {
     /**
      * Test run election twice.
      *
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test(expected = RuntimeException.class)
-    public void testRunElectionTwice() throws IOException {
+    public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
 	this.testBallots.add(1);
 	final VotingSystem vs = new OPLV(this.testBallots.size(), 4, 1, candidates, parties, this.testBallots, false);
 	vs.runElection();
@@ -188,9 +195,12 @@ public class TestOPLV {
 
     /**
      * Test run election efficiency.
+     *
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException
      */
     @Test
-    public void testRunElectionEfficiency() {
+    public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException {
 	// Initialize Large OPLV Election
 	final String[] candidates_300 = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
 		"P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH",
@@ -256,11 +266,14 @@ public class TestOPLV {
     /**
      * Test an election where there is one seat and one winner with six candidates.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVOneSeatOneWinner() throws ParseException, IOException {
+    public void testOPLVOneSeatOneWinner()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("oneSeatOneWinner");
     }
 
@@ -268,11 +281,14 @@ public class TestOPLV {
      * Test an election where there is one seat and one winner with six candidates
      * with only a single vote cast.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVOneSeatOneWinnerOneVote() throws ParseException, IOException {
+    public void testOPLVOneSeatOneWinnerOneVote()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("oneSeatOneWinnerOneVote");
     }
 
@@ -280,11 +296,14 @@ public class TestOPLV {
      * Test an election where there is six seats and all candidates receive one
      * vote.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVSixSeatsSixCandidatesEqual() throws ParseException, IOException {
+    public void testOPLVSixSeatsSixCandidatesEqual()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("sixSeatsSixCandidatesEqual");
     }
 
@@ -292,12 +311,14 @@ public class TestOPLV {
      * Test an election where there is a consequential tie between candidates on the
      * same party.
      *
-     * @throws ParseException       the parse exception
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVConsequentialPartyTieTwoCandidates() throws ParseException, IOException, InterruptedException {
+    public void testOPLVConsequentialPartyTieTwoCandidates()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -315,8 +336,8 @@ public class TestOPLV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output));
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output));
 
     }
 
@@ -324,13 +345,14 @@ public class TestOPLV {
      * Test an election where there is a consequential tie between candidates on the
      * same party.
      *
-     * @throws ParseException       the parse exception
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testOPLVConsequentialPartyTieThreeCandidates()
-	    throws ParseException, IOException, InterruptedException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
@@ -348,21 +370,23 @@ public class TestOPLV {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n".equals(output)
-		|| "Election Winners:\n\tJake (Senju)\n".equals(output));
+	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output)
+		|| "Election Winners:\n\tJake (Senju)\n\n".equals(output));
 
     }
 
     /**
      * Test an election where there is a tie between candidates on the same party.
      *
-     * @throws ParseException       the parse exception
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVconsequentialTie() throws ParseException, IOException, InterruptedException {
+    public void testOPLVconsequentialTie()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -380,10 +404,35 @@ public class TestOPLV {
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
 	assertTrue(
-		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n"
+		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n\n"
 			.equals(output)
-			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n"
+			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n\n"
 				.equals(output));
+    }
+
+    /**
+     * Test an election where there is two seats with five candidates and the
+     * remaining seat goes to the party with the largest remainder .
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesTenVotes");
+    }
+
+    /**
+     * Test an election where there is two seats with five candidates and the party
+     * with the largest remainder does not have a candidate to fill seat so the seat
+     * is allocated to the next party with the next highest largest remainder.
+     *
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException {
+	testFileAuditPair("twoSeatsFiveCandidatesUnequal");
     }
 
 }

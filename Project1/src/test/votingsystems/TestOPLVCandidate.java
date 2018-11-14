@@ -35,9 +35,8 @@ public class TestOPLVCandidate {
     }
 
     /**
-     * Test OPLV candidate.
+     * Test OPLVCandidate() constructor which must fail.
      */
-    // Testing OPLVCandidate() constructor
     @Test(expected = IllegalArgumentException.class)
     public void testOPLVCandidate() {
 	try {
@@ -50,9 +49,8 @@ public class TestOPLVCandidate {
     }
 
     /**
-     * Test OPLV candidate name.
+     * Test OPLV candidate name is correct.
      */
-    // Testing if candidate name is correct
     @Test
     public void testOPLVCandidateName() {
 	OPLVCandidate candidate = initializeTestCandidate();
@@ -60,9 +58,8 @@ public class TestOPLVCandidate {
     }
 
     /**
-     * Test OPLV candidate party.
+     * Test OPLV candidate party is correct.
      */
-    // Testing if candidate party is correct
     @Test
     public void testOPLVCandidateParty() {
 	OPLVCandidate candidate = initializeTestCandidate();
@@ -72,7 +69,6 @@ public class TestOPLVCandidate {
     /**
      * Test OPLV candidate cast zero vote.
      */
-    // Testing casting zero vote
     @Test
     public void testOPLVCandidateCastZeroVote() {
 	OPLVCandidate candidate = initializeTestCandidate();
@@ -83,7 +79,6 @@ public class TestOPLVCandidate {
     /**
      * Test OPLV candidate cast one vote.
      */
-    // Testing casting one vote
     @Test
     public void testOPLVCandidateCastOneVote() {
 	OPLVCandidate candidate = initializeTestCandidate();
@@ -95,7 +90,6 @@ public class TestOPLVCandidate {
     /**
      * Test OPLV candidate cast five votes.
      */
-    // Testing casting five votes
     @Test
     public void testOPLVCandidateCastFiveVotes() {
 	OPLVCandidate candidate = initializeTestCandidate();
