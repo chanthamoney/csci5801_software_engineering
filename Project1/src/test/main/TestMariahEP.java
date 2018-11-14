@@ -317,4 +317,32 @@ public class TestMariahEP {
 			|| "Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)"
 				.equals(electionWinner));
     }
+
+    /**
+     * Test an election where there is two seats with five candidates and the
+     * remaining seat goes to the party with the largest remainder .
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
+     */
+    @Test
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/twoSeatsFiveCandidatesTenVotes");
+    }
+
+    /**
+     * Test an election where there is two seats with five candidates and the party
+     * with the largest remainder does not have a candidate to fill seat so the seat
+     * is allocated to the next party with the next highest largest remainder.
+     *
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InterruptedException the interrupted exception
+     */
+    @Test
+    public void testMainOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException, InterruptedException {
+	testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
+    }
+
 }
