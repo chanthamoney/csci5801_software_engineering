@@ -2,7 +2,7 @@
 /**
  * File: Candidate.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:25:30 AM
+ * Last Update: Nov 13, 2018 6:50:30 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */

@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:25:20 AM
+ * Last Update: Nov 13, 2018 6:50:36 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -263,12 +263,7 @@ public class IRV extends VotingSystem {
 				"Election Winner: " + lastCan + "\n");
 
 			// Ensures thread safety with GUI
-			SwingUtilities.invokeAndWait(new Runnable() {
-			    @Override
-			    public void run() {
-				frame.setVisible(true);
-			    }
-			});
+			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 		    }
 		    break;
 		}
@@ -296,12 +291,7 @@ public class IRV extends VotingSystem {
 				"Election Winner: " + winner + "\n");
 
 			// Ensures thread safety with GUI
-			SwingUtilities.invokeAndWait(new Runnable() {
-			    @Override
-			    public void run() {
-				frame.setVisible(true);
-			    }
-			});
+			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 		    }
 		    break;
 		} else {

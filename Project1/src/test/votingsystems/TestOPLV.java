@@ -2,8 +2,8 @@
 /**
  * File: TestOPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 5:45:54 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * Last Update: Nov 13, 2018 6:49:29 PM
+ * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -54,7 +54,7 @@ public class TestOPLV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     private static void testFileAuditPair(String electionFile)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
@@ -75,7 +75,7 @@ public class TestOPLV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
@@ -177,7 +177,7 @@ public class TestOPLV {
      *
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test(expected = RuntimeException.class)
     public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
@@ -197,7 +197,7 @@ public class TestOPLV {
      * Test run election efficiency.
      *
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException {
@@ -414,11 +414,14 @@ public class TestOPLV {
      * Test an election where there is two seats with five candidates and the
      * remaining seat goes to the party with the largest remainder .
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException      the interrupted exception
      */
     @Test
-    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException {
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes()
+	    throws ParseException, IOException, InvocationTargetException, InterruptedException {
 	testFileAuditPair("twoSeatsFiveCandidatesTenVotes");
     }
 
@@ -427,11 +430,14 @@ public class TestOPLV {
      * with the largest remainder does not have a candidate to fill seat so the seat
      * is allocated to the next party with the next highest largest remainder.
      *
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException      the interrupted exception
      */
     @Test
-    public void testOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException {
+    public void testOPLVtwoSeatsFiveCandidatesUnequal()
+	    throws ParseException, IOException, InvocationTargetException, InterruptedException {
 	testFileAuditPair("twoSeatsFiveCandidatesUnequal");
     }
 

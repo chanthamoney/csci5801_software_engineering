@@ -1,7 +1,7 @@
 /**
  * File: MariahFileChooser.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 2:05:13 PM
+ * Last Update: Nov 13, 2018 6:47:31 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * The GUI component which prompts the user to select an election file.
+ * The GUI component which prompts the user to select a file.
  *
  * @author janippert
  */
@@ -70,15 +70,20 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /** The manual open button. */
     private javax.swing.JButton manualOpenButton;
 
+    /** The text displayed to the user for selecting a file. */
+    private String filePrompt;
+
     // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form MariahGUI.
      *
-     * @param title the title to place in the header
+     * @param title      the title to place in the header
+     * @param filePrompt the file prompt
      */
-    public MariahFileChooser(String title) {
+    public MariahFileChooser(String title, String filePrompt) {
 	this.title = title;
+	this.filePrompt = filePrompt;
 	initComponents();
 	jFileChooser1.setAcceptAllFileFilterUsed(false);
 	FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file", "txt");
@@ -165,7 +170,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 			.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
 				.addContainerGap().addComponent(snowButton).addContainerGap()));
 
-	fcLabel.setText("Please select an election file from your file system or input the file path below.");
+	fcLabel.setText(this.filePrompt);
 	fcLabel.setOpaque(true);
 	fcLabel.setBackground(getBackground());
 
@@ -326,7 +331,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser("Title Here").setVisible(true));
+	java.awt.EventQueue.invokeLater(() -> new MariahFileChooser("Title Here", "File Prompt").setVisible(true));
     }
 
     /**
@@ -338,7 +343,12 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	this.filePath = path;
     }
 
-    public void invalidFile() {
-	JOptionPane.showMessageDialog(null, "Selected file is not a standardized IRV or OPLV election file.");
+    /**
+     * Opens a dialog box that the file selected could not be interpreted.
+     *
+     * @param error the text to display for the error
+     */
+    public void invalidFile(String error) {
+	JOptionPane.showMessageDialog(null, error);
     }
 }

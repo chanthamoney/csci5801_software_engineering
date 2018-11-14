@@ -2,7 +2,7 @@
 /**
  * File: TestAuditor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 1:26:28 PM
+ * Last Update: Nov 13, 2018 6:48:52 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -143,11 +143,11 @@ public class TestAuditor {
 	final Auditor aud = initializeTestAuditor();
 
 	// add strings to auditProcess, auditResult, and auditSetup
-	for (String el : testStrings) {
+	testStrings.forEach(el -> {
 	    aud.auditProcess("p_" + el);
 	    aud.auditResult("r_" + el);
 	    aud.auditSetup("s_" + el);
-	}
+	});
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -183,10 +183,10 @@ public class TestAuditor {
 	final Auditor aud = initializeTestAuditor();
 
 	// add strings to auditProcess, and auditSetup
-	for (String el : testStrings) {
+	testStrings.forEach(el -> {
 	    aud.auditProcess("p_" + el);
 	    aud.auditSetup("s_" + el);
-	}
+	});
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -220,10 +220,10 @@ public class TestAuditor {
 	final Auditor aud = initializeTestAuditor();
 
 	// add strings to auditSetup auditResult
-	for (String el : testStrings) {
+	testStrings.forEach(el -> {
 	    aud.auditResult("r_" + el);
 	    aud.auditSetup("s_" + el);
-	}
+	});
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);
@@ -257,10 +257,10 @@ public class TestAuditor {
 	final Auditor aud = initializeTestAuditor();
 
 	// add strings to auditSetup auditResult
-	for (String el : testStrings) {
+	testStrings.forEach(el -> {
 	    aud.auditProcess("p_" + el);
 	    aud.auditResult("r_" + el);
-	}
+	});
 
 	String fileName = String.format("TEST_AUDIT_%d", System.currentTimeMillis());
 	final File fileDNE = new File(fileName);

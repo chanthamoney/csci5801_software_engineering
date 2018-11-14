@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 5:58:33 PM
+ * Last Update: Nov 13, 2018 6:47:14 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -191,79 +191,95 @@ public class MariahEP {
 	}
 
 	if (gui) {
-	    MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR");
-	    SwingUtilities.invokeAndWait(new Runnable() {
-		@Override
-		public void run() {
-		    frame.setVisible(true);
-		}
-	    });
-	    while (true) {
-		// If user did not restrict GUI and filePath was not provided generate file
-		// chooser gui
-		if (filePath == null) {
-		    // Wait for user to input file
-		    while (frame.getFilePath() == null) {
-			Thread.sleep(500);
-		    }
-
-		    filePath = frame.getFilePath();
-		}
-
-		VotingSystem vs = null;
-
-		try {
-		    vs = votingSystemFromFile(filePath, true);
-		} catch (Exception e) {
-		    vs = null;
-
-		    // Thread safe way to open unsafe file dialog
-		    SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-			    frame.invalidFile();
-			}
-		    });
-		}
-
-		if (vs != null) {
-		    String auditFile = vs.runElection();
-		    System.out.print(String.format("Audit File: %s%n%n", auditFile));
-		}
-
-		// If there is a GUI we set the file name to null and open file chooser
-		// otherwise we return
-		filePath = null;
-
-		// Thread safe way to set file path
-		SwingUtilities.invokeAndWait(new Runnable() {
-		    @Override
-		    public void run() {
-			frame.setFilePath(null);
-		    }
-		});
-	    }
+	    runElectionGUI(filePath);
 	} else {
-	    File file = new File(filePath.trim());
-	    VotingSystem vs;
-	    final Scanner consoleReader = new Scanner(System.in);
-	    boolean first = true;
-	    while (file == null || !file.isFile()) {
-		if (!first) {
-		    System.out.print("Invalid file name. Please enter the name of the ballot file: ");
-		} else {
-		    System.out.print("Enter Name of Ballot File: ");
-		    first = false;
-		}
-		final String in_BallotFile = consoleReader.nextLine().trim();
-		file = new File(in_BallotFile);
-	    }
-	    consoleReader.close();
-
-	    vs = votingSystemFromFile(filePath, false);
-
-	    String auditFile = vs.runElection();
-	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
+	    runElectionCommandLine(filePath);
 	}
+    }
+
+    /**
+     * Runs the election processing without the use of the Graphical User Interface.
+     *
+     * @param filePath the file path
+     * @throws ParseException            the parse exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     */
+    private static void runElectionCommandLine(String filePath)
+	    throws ParseException, InvocationTargetException, IOException, InterruptedException {
+	File file = new File(filePath.trim());
+	VotingSystem vs;
+	final Scanner consoleReader = new Scanner(System.in);
+	boolean first = true;
+	while (file == null || !file.isFile()) {
+	    if (!first) {
+		System.out.print("Invalid file name. Please enter the name of the ballot file: ");
+	    } else {
+		System.out.print("Enter Name of Ballot File: ");
+		first = false;
+	    }
+	    final String in_BallotFile = consoleReader.nextLine().trim();
+	    file = new File(in_BallotFile);
+	}
+	consoleReader.close();
+
+	vs = votingSystemFromFile(filePath, false);
+
+	String auditFile = vs.runElection();
+	System.out.print(String.format("Audit File: %s%n%n", auditFile));
+
+    }
+
+    /**
+     * Runs the election processing utilizing the Mariah Graphical User Interface.
+     *
+     * @param filePath the file path
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException      the interrupted exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     */
+    private static void runElectionGUI(String filePath)
+	    throws InvocationTargetException, InterruptedException, IOException {
+	MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR",
+		"Please select an election file from your file system or input the file path below.");
+	SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
+	while (true) {
+	    // If user did not restrict GUI and filePath was not provided generate file
+	    // chooser gui
+	    if (filePath == null) {
+		// Wait for user to input file
+		while (frame.getFilePath() == null) {
+		    Thread.sleep(500);
+		}
+
+		filePath = frame.getFilePath();
+	    }
+
+	    VotingSystem vs = null;
+
+	    try {
+		vs = votingSystemFromFile(filePath, true);
+	    } catch (Exception e) {
+		vs = null;
+
+		// Thread safe way to open unsafe file dialog
+		SwingUtilities.invokeAndWait(
+			() -> frame.invalidFile("Selected file is not a standardized IRV or OPLV election file."));
+	    }
+
+	    if (vs != null) {
+		String auditFile = vs.runElection();
+		System.out.print(String.format("Audit File: %s%n%n", auditFile));
+	    }
+
+	    // If there is a GUI we set the file name to null and open file chooser
+	    // otherwise we return
+	    filePath = null;
+
+	    // Thread safe way to set file path
+	    SwingUtilities.invokeAndWait(() -> frame.setFilePath(null));
+	}
+
     }
 }

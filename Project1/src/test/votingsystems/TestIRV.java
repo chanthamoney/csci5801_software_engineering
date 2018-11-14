@@ -2,8 +2,8 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 5:43:00 PM
- * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * Last Update: Nov 13, 2018 6:48:44 PM
+ * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -36,6 +36,7 @@ import org.junit.Test;
 import votingsystems.IRV;
 import votingsystems.VotingSystem;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestIRV.
  */
@@ -248,7 +249,7 @@ public class TestIRV {
      * Test run election efficiency.
      *
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException {
@@ -315,7 +316,7 @@ public class TestIRV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testIRVMajorityPopularVote()
@@ -329,7 +330,7 @@ public class TestIRV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testIRVTenThousandVotes()
@@ -343,7 +344,7 @@ public class TestIRV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testIRVOneVote() throws ParseException, IOException, InterruptedException, InvocationTargetException {
@@ -356,7 +357,7 @@ public class TestIRV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testIRVOneCandidate()
@@ -370,7 +371,7 @@ public class TestIRV {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testIRVNoMajorityPopularVote()

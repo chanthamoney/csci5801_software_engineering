@@ -1,7 +1,7 @@
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 5:44:39 PM
+ * Last Update: Nov 13, 2018 6:48:48 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -57,8 +57,8 @@ public class TestMariahEP {
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
 	String[] splitOutput = output.split("\n\n");
-	for (int i = 0; i < splitOutput.length; i++) {
-	    String[] splitPair = splitOutput[i].split(":");
+	for (String aSplitOutput : splitOutput) {
+	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
 	}
 	Path auditFile = Paths.get(".", outputMap.get("Audit File"));
@@ -98,8 +98,8 @@ public class TestMariahEP {
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
 	String[] splitOutput = output.split("\n\n");
-	for (int i = 0; i < splitOutput.length; i++) {
-	    String[] splitPair = splitOutput[i].split(":");
+	for (String aSplitOutput : splitOutput) {
+	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
 	}
 	Path auditFile = Paths.get(".", outputMap.get("Audit File"));
@@ -298,7 +298,7 @@ public class TestMariahEP {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testMainIRVNoMajorityPopularVote()
@@ -313,7 +313,7 @@ public class TestMariahEP {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testMainIRVConsequentialTieTwoCandidates()
@@ -331,7 +331,7 @@ public class TestMariahEP {
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
     public void testOPLVconsequentialTie()
@@ -351,12 +351,14 @@ public class TestMariahEP {
      * Test an election where there is two seats with five candidates and the
      * remaining seat goes to the party with the largest remainder .
      *
-     * @throws ParseException       the parse exception
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testOPLVtwoSeatsFiveCandidatesTenVotes() throws ParseException, IOException, InterruptedException {
+    public void testOPLVtwoSeatsFiveCandidatesTenVotes()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("OPLV/twoSeatsFiveCandidatesTenVotes");
     }
 
@@ -365,12 +367,14 @@ public class TestMariahEP {
      * with the largest remainder does not have a candidate to fill seat so the seat
      * is allocated to the next party with the next highest largest remainder.
      *
-     * @throws ParseException       the parse exception
-     * @throws IOException          Signals that an I/O exception has occurred.
-     * @throws InterruptedException the interrupted exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testMainOPLVtwoSeatsFiveCandidatesUnequal() throws ParseException, IOException, InterruptedException {
+    public void testMainOPLVtwoSeatsFiveCandidatesUnequal()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("OPLV/twoSeatsFiveCandidatesUnequal");
     }
 

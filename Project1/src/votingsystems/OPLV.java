@@ -2,7 +2,7 @@
 /**
  * File: OPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 12, 2018 12:24:29 AM
+ * Last Update: Nov 13, 2018 6:51:04 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -248,12 +248,7 @@ public class OPLV extends VotingSystem {
 		MariahElectionResults frame = new MariahElectionResults("Election Results", auditFile, res.toString());
 
 		// Ensures thread safety with GUI
-		SwingUtilities.invokeAndWait(new Runnable() {
-		    @Override
-		    public void run() {
-			frame.setVisible(true);
-		    }
-		});
+		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 	    }
 	} else {
 	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
