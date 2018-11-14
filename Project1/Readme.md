@@ -24,3 +24,5 @@ Simply set the --no-gui flag on the command line:
 System Testers,
 To compile tests use the following:
 > \>\> javac -cp <JUNIT Jar> main/\*.java votingsystems/\*.java auditor/\*.java mariahgui/\*.java test/main/\*.java test/votingsystems/\*.java test/auditor/\*.java
+
+NOTE: Tests are dependent on the structure of how directories are positioned. Many tests for IRV, OPLV, and the main driver (MariahEP) require files that are in testing/OPLV or testing/IRV.
