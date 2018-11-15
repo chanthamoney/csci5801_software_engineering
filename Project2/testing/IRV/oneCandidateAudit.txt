@@ -1,0 +1,22 @@
+Voting System:	Instant Runoff Voting
+
+Number of Candidates: 1
+
+Candidates:
+	0 - Aizawa (Class 1-A)
+
+Number of Ballots: 2
+
+Ballots: [[0], [0]]
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+
+Processing Complete!
+Only one candidate has not been eliminated.
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Election Winner: Aizawa (Class 1-A)

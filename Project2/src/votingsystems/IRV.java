@@ -16,7 +16,7 @@ import java.util.Random;
 
 import javax.swing.SwingUtilities;
 
-import mariahgui.MariahProcessResults;
+import mariahgui.MariahResults;
 
 /**
  * Represents an Instant Runoff Voting System.
@@ -259,8 +259,9 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan + "\n\n");
 		    if (resultsGUI) {
-			MariahProcessResults frame = new MariahProcessResults("Election Results", auditFile,
-				"Election Winner: " + lastCan + "\n");
+			MariahResults frame = new MariahResults("Election Results", auditFile,
+				"TODO INVALID BALLOTS FILE", "Election Winner: " + lastCan + "\n",
+				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
 			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
@@ -287,8 +288,9 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n\n");
 		    if (resultsGUI) {
-			MariahProcessResults frame = new MariahProcessResults("Election Results", auditFile,
-				"Election Winner: " + winner + "\n");
+			MariahResults frame = new MariahResults("Election Results", auditFile,
+				"TODO INVALID BALLOTS FILE", "Election Winner: " + winner + "\n",
+				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
 			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));

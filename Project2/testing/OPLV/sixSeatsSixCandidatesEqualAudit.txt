@@ -1,0 +1,79 @@
+Voting System:	Open Party List Voting
+
+Parties:
+
+Senju
+	Candidates:
+		- Naruto
+		- Sasuke
+
+Akatsuki
+	Candidates:
+		- Sakura
+		- Kakashi
+
+Anbu
+	Candidates:
+		- Sai
+		- Tsunade
+
+Total Number of Candidates: 6
+
+Number of Ballots: 6
+
+Ballots: [0, 1, 2, 3, 4, 5]
+
+Ballot Candidates Key:
+	0 - Naruto
+	1 - Sasuke
+	2 - Sakura
+	3 - Kakashi
+	4 - Sai
+	5 - Tsunade
+
+Number of Seats: 6
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Ballot 1 cast a vote for Naruto in party Senju
+Ballot 2 cast a vote for Sasuke in party Senju
+Ballot 3 cast a vote for Sakura in party Akatsuki
+Ballot 4 cast a vote for Kakashi in party Akatsuki
+Ballot 5 cast a vote for Sai in party Anbu
+Ballot 6 cast a vote for Tsunade in party Anbu
+
+Seat Allocation Calculation:
+
+- 6 Seats Remaining
+Allocating Initial Seats [Floor(Number of Votes / Quota {1}) with Max as Number of Candidates]:
+	[Party: Senju, Votes: 2, Number of Candidates: 2, Initial Seats: 2, Remainder: 0]
+	[Party: Akatsuki, Votes: 2, Number of Candidates: 2, Initial Seats: 2, Remainder: 0]
+	[Party: Anbu, Votes: 2, Number of Candidates: 2, Initial Seats: 2, Remainder: 0]
+
+Final Seat Allocations:
+	Senju - 2
+	Akatsuki - 2
+	Anbu - 2
+
+Party Rankings [* - Allocated Party Seat]
+	Party Senju:
+		* Naruto [1 vote]
+		* Sasuke [1 vote]
+	Party Akatsuki:
+		* Sakura [1 vote]
+		* Kakashi [1 vote]
+	Party Anbu:
+		* Sai [1 vote]
+		* Tsunade [1 vote]
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Election Winners:
+	Naruto (Senju)
+	Sasuke (Senju)
+	Sakura (Akatsuki)
+	Kakashi (Akatsuki)
+	Sai (Anbu)
+	Tsunade (Anbu)

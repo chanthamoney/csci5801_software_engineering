@@ -129,6 +129,7 @@ public class MariahResults extends JDialog {
 	    }
 	});
 
+	jTextPane2.setEditable(false);
 	jScrollPane3.setViewportView(jTextPane2);
 
 	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

@@ -1,0 +1,9 @@
+OPL
+6
+[Naruto,Senju], [Sasuke,Senju],[Sakura,Akatsuki], [Kakashi,Akatsuki], [Sai,Anbu],[Tsunade,Anbu]
+1
+4
+1,,,,,
+1,,,,,
+,1,,,,
+,1,,,,
