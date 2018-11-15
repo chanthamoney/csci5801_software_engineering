@@ -1,0 +1,5 @@
+*.class
+/classes/
+AUDIT_*
+/bin/
+*.DS_STORE

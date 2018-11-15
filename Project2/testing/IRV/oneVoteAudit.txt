@@ -1,0 +1,29 @@
+Voting System:	Instant Runoff Voting
+
+Number of Candidates: 5
+
+Candidates:
+	0 - Deku (All Might)
+	1 - Kacchan (UA)
+	2 - Ochaco (Class 1-A)
+	3 - Todoroki (Class 1-B)
+	4 - Tokoyami (Dark) 
+
+Number of Ballots: 1
+
+Ballots: [[4]]
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Processing the following ballots:
+	1
+Ballot 1 cast a vote for Tokoyami (Dark) 
+
+Processing Complete!
+Candidate Tokoyami (Dark)  has a majority of votes (>= 1).
+
+
+- - - - - - - - - - - - - - - - - - - -
+
+Election Winner: Tokoyami (Dark) 
