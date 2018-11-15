@@ -260,8 +260,8 @@ public class IRV extends VotingSystem {
 		    System.out.print("Election Winner: " + lastCan + "\n\n");
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
-				"Election Winner: " + lastCan + "\n", "Official Mariah Election Processor Report",
-				"Print Report TODO");
+				"TODO INVALID BALLOTS FILE", "Election Winner: " + lastCan + "\n",
+				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
 			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
@@ -289,8 +289,8 @@ public class IRV extends VotingSystem {
 		    System.out.print("Election Winner: " + winner + "\n\n");
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
-				"Election Winner: " + winner + "\n", "Official Mariah Election Processor Report",
-				"Print Report TODO");
+				"TODO INVALID BALLOTS FILE", "Election Winner: " + winner + "\n",
+				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
 			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));

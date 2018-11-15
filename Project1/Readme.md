@@ -6,7 +6,7 @@ Please see the index page of the Javadocs documentation in the documentation fol
 Compilation
 
 To get started open the Terminal in the src directory. If it is the first time this program has been run on your machine, run the command:
-> \>\> javac main/\*.java votingsystems/\*.java mariahgui/\*.java auditor/\*.java
+> \>\> javac main/*.java votingsystems/*.java mariahgui/*.java auditor/*.java
 
 Basic Run
 To run the compiled application use the command:
