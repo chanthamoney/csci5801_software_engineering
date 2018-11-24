@@ -411,4 +411,32 @@ public class TestIRV {
 	assertTrue("Election Winner: Naruto (Senju)\n\n".equals(output)
 		|| "Election Winner: Sasuke (Senju)\n\n".equals(output));
     }
+    
+    /**
+     * Test performBallotValidation method.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     */
+    @Test
+    public void testPerformBallotValidation()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+
+    }
+    
+    /**
+     * Test isBallotValid method.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     */
+    @Test
+    public void testIsBallotValid()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+
+    }
 }
