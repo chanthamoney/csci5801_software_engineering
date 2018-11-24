@@ -25,6 +25,9 @@ public class IRV extends VotingSystem {
 
     /** The ballots being cast in the election. */
     private final IRVBallot[] ballots;
+    
+    /** The invalid ballots that will not be cast in the election. */
+    private final IRVBallot[] invalidBallots;
 
     /** The candidates participating in the election. */
     private final IRVCandidate[] candidates;
@@ -40,6 +43,12 @@ public class IRV extends VotingSystem {
 
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
+    
+    /** The number of valid ballots in the election. */
+    private int numValidBallots;
+    
+    /** The number of invalid ballots in the election. */
+    private int numInvalidBallots;
 
     /**
      * Instantiates a new instant runoff voting system.
@@ -62,20 +71,15 @@ public class IRV extends VotingSystem {
 		    this.candidates[i] = new IRVCandidate(candidates[i]);
 		}
 		remainingCandidates = numCandidates;
-	
-		// Initialize ballots
-		this.ballots = new IRVBallot[numBallots];
-		int i = 0;
-		for (final ArrayList<Integer> bal : ballots) {
-		    this.ballots[i] = new IRVBallot(bal, i + 1);
-		    i++;
-		}
+		
+		// Perform ballot validation process
+		performBallotValidation(numBallots, numCandidates, ballots);
 	
 		// Initialize voter pool to all ballots
 		this.voterPool = this.ballots;
 	
 		// Initialize quota
-		initializeQuota(numBallots);
+		initializeQuota(numValidBallots);
 	
 		// Produce audit file information
 		final StringBuilder setup = new StringBuilder(
@@ -84,7 +88,7 @@ public class IRV extends VotingSystem {
 		for (i = 0; i < this.numCandidates; i++) {
 		    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 		}
-		setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numBallots, ballots));
+		setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, ballots));
 		this.auditor.auditSetup(setup.toString());
     }
 
@@ -227,6 +231,26 @@ public class IRV extends VotingSystem {
 		this.auditor.auditProcess(processedBallots.toString());
 		return "";
     }
+
+    /**
+     * Performs ballot validation to separate all initial ballots into valid
+     * and invalid ballots as well as initializing numInvalidBallots and
+     * numValidBallots.
+     */
+    private void performBallotValidation(int numBallots, int numCandidates,
+    		LinkedList<ArrayList<Integer>> ballots) {
+    	
+    }
+    
+    /**
+     * Determines whether or not a ballot is valid. For a ballot to be valid,
+     * it must have at least half of the candidates ranked.
+     *
+     * @return the true if the ballot is valid and false otherwise.
+     */
+	private boolean isBallotValid(int numCandidates, ArrayList<Integer> ballot) {
+
+	}
 
     /*
      * (non-Javadoc)
