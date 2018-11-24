@@ -24,10 +24,10 @@ import mariahgui.MariahResults;
 public class IRV extends VotingSystem {
 
     /** The ballots being cast in the election. */
-    private final IRVBallot[] ballots;
+    private final ArrayList<IRVBallot> ballots;
     
     /** The invalid ballots that will not be cast in the election. */
-    private final IRVBallot[] invalidBallots;
+    private final ArrayList<IRVBallot> invalidBallots;
 
     /** The candidates participating in the election. */
     private final IRVCandidate[] candidates;
@@ -237,9 +237,24 @@ public class IRV extends VotingSystem {
      * and invalid ballots as well as initializing numInvalidBallots and
      * numValidBallots.
      */
-    private void performBallotValidation(int numBallots, int numCandidates,
-    		LinkedList<ArrayList<Integer>> ballots) {
+    private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots) {
+    	this.ballots = new ArrayList<IRVBallot>();
+    	this.invalidBallots = new ArrayList<IRVBallot>();
     	
+		int iVal = 0;
+		int iInval = 0;
+		for (final ArrayList<Integer> bal : ballots) {
+			if (isBallotValid(bal)) {
+				this.ballots.add(new IRVBallot(bal, iVal + 1));
+				iVal++;
+			} else {
+				this.invalidBallots.add(new IRVBallot(bal, iInval + 1));
+				iInval++;
+			}
+		}
+		
+		this.numValidBallots = iVal;
+		this.numInvalidBallots = iInval;
     }
     
     /**
@@ -248,7 +263,7 @@ public class IRV extends VotingSystem {
      *
      * @return the true if the ballot is valid and false otherwise.
      */
-	private boolean isBallotValid(int numCandidates, ArrayList<Integer> ballot) {
+	private boolean isBallotValid(ArrayList<Integer> bal, int numCandidates) {
 
 	}
 
