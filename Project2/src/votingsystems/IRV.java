@@ -101,11 +101,11 @@ public class IRV extends VotingSystem {
 	     * @param numBallots the number of ballots cast in the election
 	     */
 	    private void initializeQuota(final int numBallots) {
-		if ((numBallots % 2) == 0) {
-		    this.quota = (numBallots / 2) + 1;
-		} else {
-		    this.quota = (int) Math.ceil(numBallots * 0.5);
-		}
+			if ((numBallots % 2) == 0) {
+			    this.quota = (numBallots / 2) + 1;
+			} else {
+			    this.quota = (int) Math.ceil(numBallots * 0.5);
+			}
     }
 
     /**
@@ -118,9 +118,9 @@ public class IRV extends VotingSystem {
 		int numElim = 0;
 		for (final IRVCandidate curCan : this.candidates) {
 		    if (curCan.getNumVotes() == 0) {
-			curCan.eliminate();
-			numElim++;
-			eliminatedCandidates.add(curCan.getName());
+				curCan.eliminate();
+				numElim++;
+				eliminatedCandidates.add(curCan.getName());
 		    }
 		}
 	
@@ -147,14 +147,14 @@ public class IRV extends VotingSystem {
 		int minimum = Integer.MAX_VALUE;
 		for (final IRVCandidate curCan : this.candidates) {
 		    if (!curCan.isEliminated()) {
-			final int numVotes = curCan.getNumVotes();
-			if (curCan.getNumVotes() == minimum) {
-			    minCandidates.add(curCan);
-			} else if (numVotes < minimum) {
-			    minCandidates.clear();
-			    minCandidates.add(curCan);
-			    minimum = numVotes;
-			}
+		    	final int numVotes = curCan.getNumVotes();
+				if (curCan.getNumVotes() == minimum) {
+				    minCandidates.add(curCan);
+				} else if (numVotes < minimum) {
+				    minCandidates.clear();
+				    minCandidates.add(curCan);
+				    minimum = numVotes;
+				}
 		    }
 		}
 	
