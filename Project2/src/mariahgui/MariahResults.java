@@ -1,3 +1,10 @@
+/**
+ * File: MariahResults.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 26, 2018 5:29:20 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 
 package mariahgui;
 
@@ -16,6 +23,7 @@ import javax.swing.JDialog;
  */
 
 /**
+ * The Class MariahResults.
  *
  * @author janippert
  */
@@ -42,9 +50,12 @@ public class MariahResults extends JDialog {
     /**
      * Creates new form MariahProcessResults.
      *
-     * @param headerName     the header name
-     * @param auditFile      the name of the audit file produced
-     * @param processResults the results of the process
+     * @param headerName         the header name
+     * @param auditFile          the name of the audit file produced
+     * @param invalidBallotsFile the invalid ballots file
+     * @param processResults     the results of the process
+     * @param reportHeader       the report header
+     * @param reportText         the report text
      */
     public MariahResults(String headerName, String auditFile, String invalidBallotsFile, String processResults,
 	    String reportHeader, String reportText) {
@@ -178,15 +189,30 @@ public class MariahResults extends JDialog {
 	Desktop.getDesktop().open(new File(auditFile));
     }// GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * J button 2 action performed.
+     *
+     * @param evt the evt
+     * @throws PrinterException the printer exception
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws PrinterException {// GEN-FIRST:event_jButton2ActionPerformed
 	this.reportText.print(new MessageFormat(reportHeader), new MessageFormat("Page - {0}"), true, null, null, true);
     }// GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * J button 3 action performed.
+     *
+     * @param evt the evt
+     * @throws PrinterException the printer exception
+     * @throws IOException      Signals that an I/O exception has occurred.
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws PrinterException, IOException {// GEN-FIRST:event_jButton2ActionPerformed
 	Desktop.getDesktop().open(new File(invalidBallotsFile));
     }// GEN-LAST:event_jButton2ActionPerformed
 
     /**
+     * The main method.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -229,12 +255,23 @@ public class MariahResults extends JDialog {
 	});
     }
 
+    /** The j button 1. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+
+    /** The j button 2. */
     private javax.swing.JButton jButton2;
+
+    /** The j button 3. */
     private javax.swing.JButton jButton3;
+
+    /** The j panel 1. */
     private javax.swing.JPanel jPanel1;
+
+    /** The j scroll pane 3. */
     private javax.swing.JScrollPane jScrollPane3;
+
+    /** The j text pane 2. */
     private javax.swing.JTextPane jTextPane2;
     // End of variables declaration//GEN-END:variables
 }
