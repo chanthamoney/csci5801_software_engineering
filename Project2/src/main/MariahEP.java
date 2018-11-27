@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 27, 2018 12:37:23 PM
+ * Last Update: Nov 27, 2018 1:56:03 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -139,10 +139,10 @@ public class MariahEP {
 		in_NumSeats = Integer.valueOf(scanner.nextLine());
 	    } catch (NoSuchElementException e) {
 		scanner.close();
-		throw new InvalidFileException("No line of number of ballots found.");
+		throw new InvalidFileException("No line of number of seats found.");
 	    } catch (NumberFormatException e) {
 		scanner.close();
-		throw new InvalidFileException("Invalid number of ballots.");
+		throw new InvalidFileException("Invalid number of seats.");
 	    }
 
 	    // Retrieve number of ballots
@@ -193,9 +193,10 @@ public class MariahEP {
      * @param numCandidates the number of candidates participating in the election
      * @param scanner       the scanner reading the specified file
      * @return the list of ballots as a list of votes
+     * @throws InvalidFileException the invalid file exception
      */
-    private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates,
-	    Scanner scanner) {
+    private static LinkedList<ArrayList<Integer>> IRVBallotsFromFile(int numBallots, int numCandidates, Scanner scanner)
+	    throws InvalidFileException {
 	LinkedList<ArrayList<Integer>> in_Ballots = new LinkedList<>();
 
 	// For each ballot perform the following set of operations:
@@ -210,19 +211,31 @@ public class MariahEP {
 	// cast as the votes for that ballot
 	for (int i = 0; i < numBallots; i++) {
 	    final int[] balVotesOrg = new int[numCandidates];
-	    final String[] ballotInfo = scanner.nextLine().split(", *");
-	    int numVotes = 0;
-	    for (int j = 0; j < ballotInfo.length; j++) {
-		if (!"".equals(ballotInfo[j])) {
-		    balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
-		    numVotes++;
+	    final String[] ballotInfo;
+	    try {
+		ballotInfo = scanner.nextLine().split(", *");
+		int numVotes = 0;
+		for (int j = 0; j < ballotInfo.length; j++) {
+		    if (!"".equals(ballotInfo[j])) {
+			balVotesOrg[Integer.parseInt(ballotInfo[j]) - 1] = j;
+			numVotes++;
+		    }
 		}
+		final ArrayList<Integer> balVotes = new ArrayList<>();
+		for (int j = 0; j < numVotes; j++) {
+		    balVotes.add(balVotesOrg[j]);
+		}
+		in_Ballots.add(balVotes);
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException(String.format("Ballot %d does not exist.", i + 1));
+	    } catch (PatternSyntaxException e) {
+		scanner.close();
+		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
 	    }
-	    final ArrayList<Integer> balVotes = new ArrayList<>();
-	    for (int j = 0; j < numVotes; j++) {
-		balVotes.add(balVotesOrg[j]);
-	    }
-	    in_Ballots.add(balVotes);
 	}
 
 	return in_Ballots;
@@ -235,20 +248,29 @@ public class MariahEP {
      * @param numBallots the number of ballots cast in the election
      * @param scanner    the scanner reading the specified file
      * @return the list of ballots
+     * @throws InvalidFileException the invalid file exception
      */
-    private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner) {
+    private static LinkedList<Integer> OPLVBallotsFromFile(int numBallots, Scanner scanner)
+	    throws InvalidFileException {
 	LinkedList<Integer> in_Ballots = new LinkedList<>();
 	// For each ballot find the index of where the vote was cast and add as the vote
 	for (int i = 0; i < numBallots; i++) {
-	    final String[] ballotInfo = scanner.nextLine().split(", *");
-	    for (int j = 0; j < ballotInfo.length; j++) {
-		if (!"".equals(ballotInfo[j])) {
-		    in_Ballots.add(j);
-		    break;
+	    try {
+		final String[] ballotInfo = scanner.nextLine().split(", *");
+		for (int j = 0; j < ballotInfo.length; j++) {
+		    if (!"".equals(ballotInfo[j])) {
+			in_Ballots.add(j);
+			break;
+		    }
 		}
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException(String.format("Ballot %d does not exist.", i + 1));
+	    } catch (PatternSyntaxException e) {
+		scanner.close();
+		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
 	    }
 	}
-
 	return in_Ballots;
     }
 
