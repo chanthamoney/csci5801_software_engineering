@@ -140,20 +140,20 @@ public class MariahResults extends JDialog {
 	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 	jPanel1.setLayout(jPanel1Layout);
 	jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel1Layout.createSequentialGroup().addGap(10, 10, 10).addGroup(jPanel1Layout
-			.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-			.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jScrollPane4).addGap(10, 10, 10))
-			.addGroup(jPanel1Layout.createSequentialGroup()
-				.addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500,
-					javax.swing.GroupLayout.PREFERRED_SIZE)
-				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))));
+		.addGroup(jPanel1Layout.createSequentialGroup().addGap(10, 10, 10)
+			.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 496,
+						Short.MAX_VALUE)
+					.addGap(10, 10, 10))
+				.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jScrollPane5)
+					.addContainerGap()))));
 	jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 		.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
-			.addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
-				javax.swing.GroupLayout.PREFERRED_SIZE)
-			.addGap(20, 20, 20).addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
-				javax.swing.GroupLayout.PREFERRED_SIZE)
-			.addContainerGap(10, Short.MAX_VALUE)));
+			.addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+			.addGap(20, 20, 20)
+			.addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+			.addGap(10, 10, 10)));
 
 	jMenu1.setText("File");
 
@@ -178,7 +178,7 @@ public class MariahResults extends JDialog {
 
 	jMenuItem1.setAccelerator(
 		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.META_MASK));
-	jMenuItem1.setText("Print...");
+	jMenuItem1.setText("Print Report...");
 	jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
 	    public void actionPerformed(java.awt.event.ActionEvent evt) {
 		try {
