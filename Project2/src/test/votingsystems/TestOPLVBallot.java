@@ -2,7 +2,7 @@
 /**
  * File: TestOPLVBallot.java
  * Date Created: 11/08/2018
- * Last Update: Nov 13, 2018 6:49:49 PM
+ * Last Update: Nov 26, 2018 5:30:49 PM
  * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import votingsystems.OPLVBallot;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TestOPLV.
  */
