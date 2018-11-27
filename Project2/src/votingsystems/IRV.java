@@ -64,8 +64,6 @@ public class IRV extends VotingSystem {
 		super(numBallots, numCandidates);
 		this.resultsGUI = resultsGUI;
 
-		// TODO: initialize number of candidates
-		
 		// Initialize candidates
 		this.candidates = new IRVCandidate[numCandidates];
 		for (int i = 0; i < numCandidates; i++) {
@@ -89,8 +87,8 @@ public class IRV extends VotingSystem {
 		for (i = 0; i < this.numCandidates; i++) {
 			setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 		}
-		// TODO: update ballots?
-		setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, ballots));
+
+		setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, validBallots));
 		this.auditor.auditSetup(setup.toString());
 	}
 
@@ -265,8 +263,16 @@ public class IRV extends VotingSystem {
 	 *
 	 * @return the true if the ballot is valid and false otherwise.
 	 */
-	private boolean isBallotValid(ArrayList<Integer> bal) {
-
+	private boolean isBallotValid(ArrayList<Integer> bal, int numCandidates) {
+	    int rankedCandidates = 0;
+	    for (int i = 0; i < bal.size(); i++) {
+	        if (bal.get(i) > 0) {
+	            rankedCandidates++;
+	        }
+	    }
+	    
+	    // + 1 takes care of odd number of candidates
+	    return rankedCandidates > (numCandidates + 1 / 2);
 	}
 
 	/*
