@@ -205,6 +205,7 @@ public class MariahEP {
      * @throws InvocationTargetException the invocation target exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
+     * @throws InvalidFileException      the invalid file exception
      */
     private static void runElectionCommandLine(String filePath)
 	    throws ParseException, InvocationTargetException, IOException, InterruptedException {
@@ -224,11 +225,18 @@ public class MariahEP {
 	}
 	consoleReader.close();
 
-	vs = votingSystemFromFile(filePath, false);
-	System.out.print(String.format("Election File: %s%n%n", filePath));
-	String auditFile = vs.runElection();
-	System.out.print(String.format("Audit File: %s%n%n", auditFile));
-
+	try {
+	    vs = votingSystemFromFile(filePath, false);
+	} catch (ParseException e) {
+	    vs = null;
+	    throw InvalidFileException("Invalid file found while parsing");
+	}
+    }
+    
+    if (vs != null) {
+        System.out.print(String.format("Election File: %s%n%n", filePath));
+        String auditFile = vs.runElection();
+        System.out.print(String.format("Audit File: %s%n%n", auditFile));
     }
 
     /**
@@ -260,8 +268,9 @@ public class MariahEP {
 
 	    try {
 		vs = votingSystemFromFile(filePath, true);
-	    } catch (Exception e) {
+	    } catch (ParseException e) {
 		vs = null;
+		throw InvalidFileException("Invalid file found while parsing");
 
 		// Thread safe way to open unsafe file dialog
 		SwingUtilities.invokeAndWait(
