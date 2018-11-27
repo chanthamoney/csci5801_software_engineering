@@ -20,7 +20,6 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.swing.SwingUtilities;
 
-import mariahgui.MariahFileChooser;
 import votingsystems.IRV;
 import votingsystems.OPLV;
 import votingsystems.VotingSystem;
@@ -356,7 +355,7 @@ public class MariahEP {
      */
     private static void runElectionGUI(String filePath)
 	    throws InvocationTargetException, InterruptedException, IOException {
-	MariahFileChooser frame = new MariahFileChooser("MARIAH ELECTION PROCESSOR",
+	MariahElectionProcessor frame = new MariahElectionProcessor("MARIAH ELECTION PROCESSOR",
 		"Please select an election file from your file system or input the file path below.");
 	SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 	while (true) {
