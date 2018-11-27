@@ -55,7 +55,7 @@ public class MariahResults extends JDialog {
      * @param reportText         the report text
      */
     public MariahResults(String headerName, String auditFile, String[] otherOpenFileNames, String[] otherOpenFiles,
-	    String processResults, String[][] resultRows, String[] columnTitles, String reportHeader,
+	    String processResults, String[][] resultData, String[] columnTitles, String reportHeader,
 	    String reportText) {
 	super();
 	this.headerName = headerName;
@@ -66,7 +66,19 @@ public class MariahResults extends JDialog {
 	this.reportHeader = reportHeader;
 	this.reportText = new javax.swing.JTextArea();
 	this.reportText.setText(reportText);
-	this.jTable2.setModel(new javax.swing.table.DefaultTableModel(resultRows, columnTitles));
+
+	javax.swing.table.DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(resultData,
+		columnTitles) {
+	    private static final long serialVersionUID = -4502218943713256620L;
+
+	    @Override
+	    public boolean isCellEditable(int row, int column) {
+		// all cells false
+		return false;
+	    }
+	};
+	this.jTable2.setModel(tableModel);
+	this.jTable2.getTableHeader().setReorderingAllowed(false);
 
 	// add other open files
 	for (int i = 0; i < otherOpenFiles.length; i++) {
