@@ -267,8 +267,8 @@ public class MariahResults extends JDialog {
 	/* Create and display the form */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		new MariahResults("header title", "audit file", new String[] { "invalid data file path" },
-			new String[] { "invalid data file" }, "process results",
+		new MariahResults("header title", "audit file", new String[] { "invalid data file" },
+			new String[] { "invalid data file path" }, "process results",
 			new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
 			new String[] { "Title 1", "Title 2", "Title 3" }, "Print Header", "Print example")
 				.setVisible(true);
