@@ -26,7 +26,7 @@ import org.junit.Test;
 import main.MariahEP;
 
 /**
- * The Class TestOPLV.
+ * The Class TestMariahEP.
  */
 public class TestMariahEP {
 
