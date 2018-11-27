@@ -229,7 +229,7 @@ public class MariahEP {
 	    vs = votingSystemFromFile(filePath, false);
 	} catch (ParseException e) {
 	    vs = null;
-	    throw InvalidFileException("Invalid file found while parsing");
+	    throw new InvalidFileException("Invalid file found while parsing");
 	}
     
     if (vs != null) {
@@ -245,6 +245,7 @@ public class MariahEP {
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
      * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InvalidFileException      the invalid file exception
      */
     private static void runElectionGUI(String filePath)
 	    throws InvocationTargetException, InterruptedException, IOException {
@@ -269,7 +270,7 @@ public class MariahEP {
 		vs = votingSystemFromFile(filePath, true);
 	    } catch (ParseException e) {
 		vs = null;
-		throw InvalidFileException("Invalid file found while parsing");
+		throw new InvalidFileException("Invalid file found while parsing");
 
 		// Thread safe way to open unsafe file dialog
 		SwingUtilities.invokeAndWait(
