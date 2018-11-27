@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.regex.PatternSyntaxException;
 
 import javax.swing.SwingUtilities;
 
@@ -45,33 +47,116 @@ public class MariahEP {
 	final String in_VotingSystem = scanner.nextLine();
 	if ("IR".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve instant runoff voting information from file
+
+	    // Retrieve number of candidates
 	    final int in_NumCandidates;
 	    try {
 		in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of number of candidates found.");
 	    } catch (NumberFormatException e) {
 		scanner.close();
 		throw new InvalidFileException("Invalid number of candidates");
 	    }
 
-	    final String in_Candidates = scanner.nextLine();
-	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
-	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    // Retrieve list of candidates
+	    final String in_Candidates;
+	    try {
+		in_Candidates = scanner.nextLine();
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of candidates found.");
+	    }
+
+	    // Split candidates
+	    final String[] cpPairs;
+	    try {
+		cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+	    } catch (PatternSyntaxException e) {
+		scanner.close();
+		throw new InvalidFileException("Line of candidates was not parseable.");
+	    }
+
+	    // Retrieve number of ballots
+	    final int in_NumBallots;
+	    try {
+		in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of number of ballots found.");
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException("Invalid number of ballots.");
+	    }
+
+	    // Retrieve all ballots
 	    final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates,
 		    scanner);
+
 	    scanner.close();
 	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, gui);
 	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve Open Party List Voting from file
-	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
-	    final String in_Candidates = scanner.nextLine();
-	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+
+	    // Retrieve number of candidates
+	    final int in_NumCandidates;
+	    try {
+		in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of number of candidates found.");
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException("Invalid number of candidates");
+	    }
+
+	    // Retrieve list of candidates
+	    final String in_Candidates;
+	    try {
+		in_Candidates = scanner.nextLine();
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of candidates found.");
+	    }
+
+	    // Split candidates
+	    final String[] cpPairs;
+	    try {
+		cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
+	    } catch (PatternSyntaxException e) {
+		scanner.close();
+		throw new InvalidFileException("Line of candidates was not parseable.");
+	    }
 
 	    final String[] candidates = new String[in_NumCandidates];
 	    final String[] parties = new String[in_NumCandidates];
 	    CandidateParyPairsSeparator(in_NumCandidates, cpPairs, candidates, parties);
 
-	    final int in_NumSeats = Integer.valueOf(scanner.nextLine());
-	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    // Retrieve number of seats
+	    final int in_NumSeats;
+	    try {
+		in_NumSeats = Integer.valueOf(scanner.nextLine());
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of number of ballots found.");
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException("Invalid number of ballots.");
+	    }
+
+	    // Retrieve number of ballots
+	    final int in_NumBallots;
+	    try {
+		in_NumBallots = Integer.valueOf(scanner.nextLine());
+	    } catch (NoSuchElementException e) {
+		scanner.close();
+		throw new InvalidFileException("No line of number of ballots found.");
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException("Invalid number of ballots.");
+	    }
+
 	    final LinkedList<Integer> in_Ballots = OPLVBallotsFromFile(in_NumBallots, scanner);
 	    scanner.close();
 	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, gui);
@@ -175,10 +260,8 @@ public class MariahEP {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
-     * @throws InvalidFileException      the invalid file exception
      */
-    public static void main(String[] args)
-	    throws IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+    public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
 	String filePath = null;
 	boolean gui = true;
 	// Determine if optional command line arguments of file name and indicator for
