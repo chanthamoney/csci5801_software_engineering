@@ -1,7 +1,7 @@
 /**
  * File: MariahResults.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:29:20 PM
+ * Last Update: Nov 27, 2018 12:06:07 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -49,8 +49,11 @@ public class MariahResults extends JDialog {
      *
      * @param headerName         the header name
      * @param auditFile          the name of the audit file produced
-     * @param invalidBallotsFile the invalid ballots file
+     * @param otherOpenFileNames the other open file names
+     * @param otherOpenFiles     the other open files
      * @param processResults     the results of the process
+     * @param resultData         the result data
+     * @param columnTitles       the column titles
      * @param reportHeader       the report header
      * @param reportText         the report text
      */
@@ -264,8 +267,8 @@ public class MariahResults extends JDialog {
 	/* Create and display the form */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		new MariahResults("header title", "audit file", new String[] { "invalid ballots file path" },
-			new String[] { "invalid ballots file" }, "process results",
+		new MariahResults("header title", "audit file", new String[] { "invalid data file path" },
+			new String[] { "invalid data file" }, "process results",
 			new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
 			new String[] { "Title 1", "Title 2", "Title 3" }, "Print Header", "Print example")
 				.setVisible(true);
