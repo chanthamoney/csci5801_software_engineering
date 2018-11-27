@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:29:11 PM
+ * Last Update: Nov 27, 2018 12:37:23 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -36,18 +35,24 @@ public class MariahEP {
      * @param gui      maintains if the GUI should be utilized
      * @return the voting system
      * @throws FileNotFoundException the file not found exception
-     * @throws ParseException        the parse exception
+     * @throws InvalidFileException  the invalid file exception
      */
     private static VotingSystem votingSystemFromFile(String filePath, boolean gui)
-	    throws FileNotFoundException, ParseException {
+	    throws FileNotFoundException, InvalidFileException {
 	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
-
 	if ("IR".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve instant runoff voting information from file
-	    final int in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    final int in_NumCandidates;
+	    try {
+		in_NumCandidates = Integer.valueOf(scanner.nextLine());
+	    } catch (NumberFormatException e) {
+		scanner.close();
+		throw new InvalidFileException("Invalid number of candidates");
+	    }
+
 	    final String in_Candidates = scanner.nextLine();
 	    final String[] cpPairs = in_Candidates.split(",(?![^\\(\\[]*[\\]\\)]) *");
 	    final int in_NumBallots = Integer.valueOf(scanner.nextLine());
@@ -72,7 +77,7 @@ public class MariahEP {
 	    return new OPLV(in_NumBallots, in_NumCandidates, in_NumSeats, candidates, parties, in_Ballots, gui);
 	} else {
 	    scanner.close();
-	    throw new ParseException("Invalid Election Type", 0);
+	    throw new InvalidFileException("Invalid Election Type");
 	}
     }
 
@@ -170,10 +175,10 @@ public class MariahEP {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
-     * @throws ParseException            the parse exception
+     * @throws InvalidFileException      the invalid file exception
      */
     public static void main(String[] args)
-	    throws IOException, InterruptedException, InvocationTargetException, ParseException {
+	    throws IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	String filePath = null;
 	boolean gui = true;
 	// Determine if optional command line arguments of file name and indicator for
@@ -201,14 +206,12 @@ public class MariahEP {
      * Runs the election processing without the use of the Graphical User Interface.
      *
      * @param filePath the file path
-     * @throws ParseException            the parse exception
      * @throws InvocationTargetException the invocation target exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
-     * @throws InvalidFileException      the invalid file exception
      */
     private static void runElectionCommandLine(String filePath)
-	    throws ParseException, InvocationTargetException, IOException, InterruptedException {
+	    throws InvocationTargetException, IOException, InterruptedException {
 	File file = new File(filePath.trim());
 	VotingSystem vs;
 	final Scanner consoleReader = new Scanner(System.in);
@@ -227,15 +230,15 @@ public class MariahEP {
 
 	try {
 	    vs = votingSystemFromFile(filePath, false);
-	} catch (ParseException e) {
+	} catch (InvalidFileException e) {
 	    vs = null;
-	    throw new InvalidFileException("Invalid file found while parsing");
 	}
-    
-    if (vs != null) {
-        System.out.print(String.format("Election File: %s%n%n", filePath));
-        String auditFile = vs.runElection();
-        System.out.print(String.format("Audit File: %s%n%n", auditFile));
+
+	if (vs != null) {
+	    System.out.print(String.format("Election File: %s%n%n", filePath));
+	    String auditFile = vs.runElection();
+	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
+	}
     }
 
     /**
@@ -245,7 +248,6 @@ public class MariahEP {
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
      * @throws IOException               Signals that an I/O exception has occurred.
-     * @throws InvalidFileException      the invalid file exception
      */
     private static void runElectionGUI(String filePath)
 	    throws InvocationTargetException, InterruptedException, IOException {
@@ -268,9 +270,8 @@ public class MariahEP {
 
 	    try {
 		vs = votingSystemFromFile(filePath, true);
-	    } catch (ParseException e) {
+	    } catch (InvalidFileException e) {
 		vs = null;
-		throw new InvalidFileException("Invalid file found while parsing");
 
 		// Thread safe way to open unsafe file dialog
 		SwingUtilities.invokeAndWait(
