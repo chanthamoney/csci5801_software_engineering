@@ -231,7 +231,6 @@ public class MariahEP {
 	    vs = null;
 	    throw InvalidFileException("Invalid file found while parsing");
 	}
-    }
     
     if (vs != null) {
         System.out.print(String.format("Election File: %s%n%n", filePath));
