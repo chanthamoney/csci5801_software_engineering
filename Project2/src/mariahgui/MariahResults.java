@@ -38,9 +38,6 @@ public class MariahResults extends JDialog {
     /** The header name. */
     private String headerName;
 
-    /** The audit file. */
-    private String invalidBallotsFile = null;
-
     /** The report header. */
     private String reportHeader;
 
@@ -57,19 +54,37 @@ public class MariahResults extends JDialog {
      * @param reportHeader       the report header
      * @param reportText         the report text
      */
-    public MariahResults(String headerName, String auditFile, String invalidBallotsFile, String processResults,
-	    String[][] resultRows, String[] columnTitles, String reportHeader, String reportText) {
+    public MariahResults(String headerName, String auditFile, String[] otherOpenFileNames, String[] otherOpenFiles,
+	    String processResults, String[][] resultRows, String[] columnTitles, String reportHeader,
+	    String reportText) {
 	super();
 	this.headerName = headerName;
 	setModal(true);
 	initComponents();
 	this.auditFile = auditFile;
-	this.invalidBallotsFile = invalidBallotsFile;
 	jTextPane2.setText(processResults);
 	this.reportHeader = reportHeader;
 	this.reportText = new javax.swing.JTextArea();
 	this.reportText.setText(reportText);
 	this.jTable2.setModel(new javax.swing.table.DefaultTableModel(resultRows, columnTitles));
+
+	// add other open files
+	for (int i = 0; i < otherOpenFiles.length; i++) {
+	    javax.swing.JMenuItem tempMenuItem = new javax.swing.JMenuItem();
+	    tempMenuItem.setText(otherOpenFileNames[i]);
+	    String fileName = otherOpenFiles[i];
+	    tempMenuItem.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+		    try {
+			Desktop.getDesktop().open(new File(fileName));
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+		}
+	    });
+	    jMenu2.add(tempMenuItem);
+	}
     }
 
     /**
@@ -81,14 +96,15 @@ public class MariahResults extends JDialog {
     private void initComponents() {
 
 	jPanel1 = new javax.swing.JPanel();
-	jButton1 = new javax.swing.JButton();
-	jButton2 = new javax.swing.JButton();
-	jButton3 = new javax.swing.JButton();
 	jScrollPane4 = new javax.swing.JScrollPane();
 	jTable2 = new javax.swing.JTable();
 	jScrollPane5 = new javax.swing.JScrollPane();
 	jTextPane2 = new javax.swing.JTextPane();
-
+	jMenuBar1 = new javax.swing.JMenuBar();
+	jMenu1 = new javax.swing.JMenu();
+	jMenu2 = new javax.swing.JMenu();
+	jMenuItem3 = new javax.swing.JMenuItem();
+	jMenuItem1 = new javax.swing.JMenuItem();
 	setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 	setTitle(headerName);
@@ -98,42 +114,6 @@ public class MariahResults extends JDialog {
 	jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Results",
 		javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
 		new java.awt.Font("Lucida Grande", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
-
-	jButton1.setText("Open Audit File");
-	jButton1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jButton1ActionPerformed(evt);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-	    }
-	});
-
-	jButton2.setText("Print Report");
-	jButton2.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jButton2ActionPerformed(evt);
-		} catch (PrinterException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-	    }
-	});
-
-	jButton3.setText("Invalid Ballots");
-	jButton3.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jButton3ActionPerformed(evt);
-		} catch (PrinterException | IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
-	    }
-	});
 
 	jTable2.setModel(
 		new javax.swing.table.DefaultTableModel(
@@ -148,30 +128,60 @@ public class MariahResults extends JDialog {
 	javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 	jPanel1.setLayout(jPanel1Layout);
 	jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel1Layout.createSequentialGroup()
-			.addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE,
-				javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-			.addGap(20, 20, 20)
-			.addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-			.addGap(20, 20, 20).addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE,
-				javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		.addGroup(jPanel1Layout.createSequentialGroup().addGap(10, 10, 10)
-			.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jScrollPane5).addComponent(jScrollPane4))
-			.addContainerGap()));
+		.addGroup(jPanel1Layout.createSequentialGroup().addGap(10, 10, 10).addGroup(jPanel1Layout
+			.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+			.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jScrollPane4).addGap(10, 10, 10))
+			.addGroup(jPanel1Layout.createSequentialGroup()
+				.addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 500,
+					javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))));
 	jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(jPanel1Layout.createSequentialGroup().addGap(20, 20, 20)
-			.addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-			.addGap(20, 20, 20)
-			.addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-			.addGap(20, 20, 20)
-			.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-				.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-					javax.swing.GroupLayout.PREFERRED_SIZE)
-				.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-					javax.swing.GroupLayout.PREFERRED_SIZE)
-				.addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40,
-					javax.swing.GroupLayout.PREFERRED_SIZE))));
+		.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
+			.addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
+				javax.swing.GroupLayout.PREFERRED_SIZE)
+			.addGap(20, 20, 20).addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
+				javax.swing.GroupLayout.PREFERRED_SIZE)
+			.addContainerGap(10, Short.MAX_VALUE)));
+
+	jMenu1.setText("File");
+
+	jMenu2.setText("Open");
+
+	jMenuItem3.setAccelerator(
+		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.META_MASK));
+	jMenuItem3.setText("Audit File");
+	jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+	    public void actionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+		    jMenuItem3ActionPerformed(evt);
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+	    }
+	});
+	jMenu2.add(jMenuItem3);
+
+	jMenu1.add(jMenu2);
+
+	jMenuItem1.setAccelerator(
+		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.META_MASK));
+	jMenuItem1.setText("Print...");
+	jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+	    public void actionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+		    jMenuItem1ActionPerformed(evt);
+		} catch (PrinterException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+	    }
+	});
+	jMenu1.add(jMenuItem1);
+
+	jMenuBar1.add(jMenu1);
+
+	setJMenuBar(jMenuBar1);
 
 	javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 	getContentPane().setLayout(layout);
@@ -189,7 +199,7 @@ public class MariahResults extends JDialog {
      * @param evt the evt
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
 	Desktop.getDesktop().open(new File(auditFile));
     }// GEN-LAST:event_jButton1ActionPerformed
 
@@ -199,19 +209,8 @@ public class MariahResults extends JDialog {
      * @param evt the evt
      * @throws PrinterException the printer exception
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws PrinterException {// GEN-FIRST:event_jButton2ActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) throws PrinterException {// GEN-FIRST:event_jButton2ActionPerformed
 	this.reportText.print(new MessageFormat(reportHeader), new MessageFormat("Page - {0}"), true, null, null, true);
-    }// GEN-LAST:event_jButton2ActionPerformed
-
-    /**
-     * J button 3 action performed.
-     *
-     * @param evt the evt
-     * @throws PrinterException the printer exception
-     * @throws IOException      Signals that an I/O exception has occurred.
-     */
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws PrinterException, IOException {// GEN-FIRST:event_jButton2ActionPerformed
-	Desktop.getDesktop().open(new File(invalidBallotsFile));
     }// GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -253,7 +252,8 @@ public class MariahResults extends JDialog {
 	/* Create and display the form */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		new MariahResults("header title", "audit file", "invalid ballots file", "process results",
+		new MariahResults("header title", "audit file", new String[] { "invalid ballots file path" },
+			new String[] { "invalid ballots file" }, "process results",
 			new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
 			new String[] { "Title 1", "Title 2", "Title 3" }, "Print Header", "Print example")
 				.setVisible(true);
@@ -261,12 +261,12 @@ public class MariahResults extends JDialog {
 	});
     }
 
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable2;
