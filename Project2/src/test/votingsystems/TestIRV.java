@@ -87,6 +87,10 @@ public class TestIRV {
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/IRV/", electionFile + "Audit.txt"));
+
+	final File file = auditFile.toFile();
+	file.delete();
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -108,6 +112,10 @@ public class TestIRV {
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	testOutput.replaceAll(String::trim);
+
+	final File file = auditFile.toFile();
+	file.delete();
+
 	assertTrue(testOutput.contains(randomMsg));
     }
 
@@ -188,13 +196,18 @@ public class TestIRV {
     @Test(expected = RuntimeException.class)
     public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
 	final VotingSystem vs = initializeTestIRV();
-	vs.runElection();
+	Path auditFile = Paths.get(".", vs.runElection());
 	try {
-	    vs.runElection();
+	    final File file = auditFile.toFile();
+	    file.delete();
+	    auditFile = Paths.get(".", vs.runElection());
 	} catch (RuntimeException rte) {
 	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
 	    throw rte;
 	}
+
+	final File file = auditFile.toFile();
+	file.delete();
 	fail("Runtime exception for running election more than once did not throw!");
     }
 
@@ -292,7 +305,10 @@ public class TestIRV {
 
 	// Run election on vs
 	try {
-	    vs.runElection();
+	    Path auditFile = Paths.get(".", vs.runElection());
+
+	    final File file = auditFile.toFile();
+	    file.delete();
 	} catch (final IOException e) {
 	    e.printStackTrace();
 	}

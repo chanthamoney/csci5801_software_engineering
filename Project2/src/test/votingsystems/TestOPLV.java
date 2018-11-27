@@ -64,6 +64,10 @@ public class TestOPLV {
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/OPLV", electionFile + "Audit.txt"));
+
+	final File file = auditFile.toFile();
+	file.delete();
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -85,6 +89,10 @@ public class TestOPLV {
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	testOutput.replaceAll(String::trim);
+
+	final File file = auditFile.toFile();
+	file.delete();
+
 	assertTrue(testOutput.contains(randomMsg));
     }
 
@@ -183,13 +191,18 @@ public class TestOPLV {
     public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
 	this.testBallots.add(1);
 	final VotingSystem vs = new OPLV(this.testBallots.size(), 4, 1, candidates, parties, this.testBallots, false);
-	vs.runElection();
+	Path auditFile = Paths.get(".", vs.runElection());
 	try {
-	    vs.runElection();
+	    final File file = auditFile.toFile();
+	    file.delete();
+	    auditFile = Paths.get(".", vs.runElection());
 	} catch (RuntimeException rte) {
 	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
 	    throw rte;
 	}
+
+	final File file = auditFile.toFile();
+	file.delete();
 	fail("Runtime exception for running election more than once did not throw!");
     }
 
@@ -251,7 +264,10 @@ public class TestOPLV {
 
 	// Run election on vs
 	try {
-	    vs.runElection();
+	    Path auditFile = Paths.get(".", vs.runElection());
+
+	    final File file = auditFile.toFile();
+	    file.delete();
 	} catch (final IOException e) {
 	    e.printStackTrace();
 	}

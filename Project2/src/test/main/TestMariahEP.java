@@ -10,6 +10,7 @@ package test.main;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
@@ -66,6 +67,10 @@ public class TestMariahEP {
 	// Retrieve audit output and expected output.
 	List<String> testOutput = Files.readAllLines(auditFile);
 	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/", electionFile + "Audit.txt"));
+
+	final File file = auditFile.toFile();
+	file.delete();
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -108,6 +113,9 @@ public class TestMariahEP {
 	List<String> testOutput = Files.readAllLines(auditFile);
 	testOutput.replaceAll(String::trim);
 	assertTrue(testOutput.contains(randomMsg));
+
+	final File file = auditFile.toFile();
+	file.delete();
 
 	if (outputMap.get("Election Winner") != null) {
 	    return outputMap.get("Election Winner");
