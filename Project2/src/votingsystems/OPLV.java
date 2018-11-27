@@ -246,7 +246,9 @@ public class OPLV extends VotingSystem {
 	    System.out.print(res.toString() + "\n");
 	    if (this.resultsGUI) {
 		MariahResults frame = new MariahResults("Election Results", auditFile, "TODO INVALID BALLOTS FILE",
-			res.toString(), "Official Mariah Election Processor Report", "Print Report TODO");
+			res.toString(), new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+			new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
+			"Print Report TODO");
 
 		// Ensures thread safety with GUI
 		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));

@@ -261,6 +261,8 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				"TODO INVALID BALLOTS FILE", "Election Winner: " + lastCan + "\n",
+				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+				new String[] { "Title 1", "Title 2", "Title 3" },
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
@@ -290,6 +292,8 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				"TODO INVALID BALLOTS FILE", "Election Winner: " + winner + "\n",
+				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+				new String[] { "Title 1", "Title 2", "Title 3" },
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
