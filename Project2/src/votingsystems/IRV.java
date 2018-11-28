@@ -88,6 +88,7 @@ public class IRV extends VotingSystem {
 			setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 		}
 
+		// TODO: UPDATE PRINTING OF VALIDBALLOTS to reflect arraylist data structure
 		setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, validBallots));
 		this.auditor.auditSetup(setup.toString());
 	}
@@ -241,20 +242,25 @@ public class IRV extends VotingSystem {
 		this.validBallots = new ArrayList<IRVBallot>();
 		this.invalidBallots = new ArrayList<IRVBallot>();
 
+		int id = 1;
 		int val = 0;
 		int inval = 0;
 		for (final ArrayList<Integer> bal : ballots) {
 			if (isBallotValid(bal)) {
-				this.validBallots.add(new IRVBallot(bal, val + 1));
+				this.validBallots.add(new IRVBallot(bal, id));
 				val++;
 			} else {
-				this.invalidBallots.add(new IRVBallot(bal, inval + 1));
+				this.invalidBallots.add(new IRVBallot(bal, id));
 				inval++;
 			}
+			id++;
 		}
 
 		this.numValidBallots = val;
 		this.numInvalidBallots = inval;
+
+		String fileName = String.format("invalidated_dateofelection", GETDATEOFELECTION());
+		createInvalidAuditFile(fileName, this.invalidBallots);
 	}
 
 	/**
@@ -264,15 +270,39 @@ public class IRV extends VotingSystem {
 	 * @return the true if the ballot is valid and false otherwise.
 	 */
 	private boolean isBallotValid(ArrayList<Integer> bal, int numCandidates) {
-	    int rankedCandidates = 0;
-	    for (int i = 0; i < bal.size(); i++) {
-	        if (bal.get(i) > 0) {
-	            rankedCandidates++;
-	        }
-	    }
-	    
+	    int rankedCandidates = bal.size();
+
+			if (percentCandidates == 50) {
+				return
+			}
+
 	    // + 1 takes care of odd number of candidates
 	    return rankedCandidates > (numCandidates + 1 / 2);
+	}
+
+	/**
+	 * Generates an audit file in the current directory under a specified name. This
+	 * file contains invalid ballot audit information.
+	 *
+	 * @param name the name of the output file
+	 * @param ballots the invalid ballots that will be put into the output file
+	 * @return the name of the file that was created
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public String createInvalidAuditFile(final String name,
+		ArrayList<IRVBallot> ballots) throws IOException {
+			final File file = new File(name);
+			final FileWriter writer = new FileWriter(file);
+			final StringBuilder fileOutput = new StringBuilder();
+
+			for (IRVBallot bal : ballots) {
+				fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
+			}
+
+			writer.write(fileOutput.toString());
+			writer.close();
+
+			return name;
 	}
 
 	/*
