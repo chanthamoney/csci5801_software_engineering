@@ -41,6 +41,11 @@ public class IRV extends VotingSystem {
     /** The electionTableData passed into constructor of jTable */
     private ArrayList<ArrayList<String>> electionDataList;
 
+    /** The electionTableTitles passed into constructor of jTable */
+    private ArrayList<String> electionTableTitles;
+
+    private int roundNumber = 0;
+
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
@@ -111,7 +116,16 @@ public class IRV extends VotingSystem {
 	}
     }
 
+    /**
+     * Initialize title arraylist and electiondata arraylist<arraylist<string>>
+     *
+     * @return the number of candidates with no votes eliminated
+     */
     private void initializeElectionDataList() {
+	// initialize titles of table with first column = 'Candidates'
+	electionTableTitles = new ArrayList<String>();
+	electionTableTitles.add("Candidates");
+
 	// initialize electionData arrayList
 	electionDataList = new ArrayList<ArrayList<String>>();
 
@@ -123,8 +137,27 @@ public class IRV extends VotingSystem {
 	}
     }
 
+    private void addVoteDataElectionTableArrayList() {
+	roundNumber++;
+	// Update Title For Rounds
+	electionTableTitles.add("Round" + roundNumber);
+
+	int candidateIndex = 0;
+
+	// For each candidate in election and in table
+	for (final IRVCandidate curCan : this.candidates) {
+	    electionDataList.get(candidateIndex).add(Integer.toString(curCan.getNumVotes()));
+	    System.out.println(curCan.getName() + curCan.getNumVotes());
+	    candidateIndex++;
+	}
+    }
+
+    /**
+     * Convert arraylist of arraylist to two dimensional array
+     *
+     * @return the number of candidates with no votes eliminated
+     */
     private String[][] getElectionTableArg() {
-	// To do fix
 	String[][] electionTableArg = new String[electionDataList.size()][];
 	for (int i = 0; i < electionDataList.size(); i++) {
 	    ArrayList<String> row = electionDataList.get(i);
@@ -253,6 +286,8 @@ public class IRV extends VotingSystem {
 		return can.getName();
 	    }
 	}
+	System.out.print("Get Here");
+	addVoteDataElectionTableArrayList();
 	this.auditor.auditProcess(processedBallots.toString());
 	return "";
     }
@@ -270,9 +305,6 @@ public class IRV extends VotingSystem {
 	initializeElectionDataList();
 
 	// To Do: functionality to dynamically update with votes for each round
-
-	// convert electionDataArrayList to 2-dimensional array
-	String[][] electionData2DArray = getElectionTableArg();
 
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
@@ -297,10 +329,14 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + lastCan + "\n\n");
 		    if (resultsGUI) {
+			// convert election Array Lists to Actual Arrays to pass as args
+			String[][] electionData2DArray = getElectionTableArg();
+			String[] electionTableTitlesArray = new String[electionTableTitles.size()];
+			electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
+
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + lastCan + "\n", electionData2DArray,
-				new String[] { "Title 1", "Title 2", "Title 3" },
+				"Election Winner: " + lastCan + "\n", electionData2DArray, electionTableTitlesArray,
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
@@ -328,10 +364,14 @@ public class IRV extends VotingSystem {
 		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 		    System.out.print("Election Winner: " + winner + "\n\n");
 		    if (resultsGUI) {
+			// convert election Array Lists to Actual Arrays to pass as args
+			String[][] electionData2DArray = getElectionTableArg();
+			String[] electionTableTitlesArray = new String[electionTableTitles.size()];
+			electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
+
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + winner + "\n", electionData2DArray,
-				new String[] { "Title 1", "Title 2", "Title 3" },
+				"Election Winner: " + winner + "\n", electionData2DArray, electionTableTitlesArray,
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
 			// Ensures thread safety with GUI
