@@ -38,6 +38,9 @@ public class IRV extends VotingSystem {
     /** Indicates if the results should be output to the GUI. */
     private boolean resultsGUI;
 
+    /** The electionTableData passed into constructor of jTable */
+    private ArrayList<ArrayList<String>> electionDataList;
+
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
@@ -106,6 +109,29 @@ public class IRV extends VotingSystem {
 	} else {
 	    this.quota = (int) Math.ceil(numBallots * 0.5);
 	}
+    }
+
+    private void initializeElectionDataList() {
+	// initialize electionData arrayList
+	electionDataList = new ArrayList<ArrayList<String>>();
+
+	for (final IRVCandidate curCan : this.candidates) {
+	    // create arraylist with first item being candidate name
+	    ArrayList<String> row = new ArrayList<String>();
+	    row.add(curCan.getName());
+	    electionDataList.add(row);
+	}
+    }
+
+    private String[][] getElectionTableArg() {
+	// To do fix
+	String[][] electionTableArg = new String[electionDataList.size()][];
+	for (int i = 0; i < electionDataList.size(); i++) {
+	    ArrayList<String> row = electionDataList.get(i);
+	    electionTableArg[i] = row.toArray(new String[row.size()]);
+	}
+
+	return electionTableArg;
     }
 
     /**
@@ -209,19 +235,22 @@ public class IRV extends VotingSystem {
 		    can.addBallot(bal);
 		    processedBallots
 			    .append(String.format("Ballot %d cast a vote for %s%n", bal.getID(), can.getName()));
-		    if (isMajority(can.getNumVotes())) {
-			processedBallots.append(
-				String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
-					can.getName(), this.quota));
-			this.auditor.auditProcess(processedBallots.toString());
-			return can.getName();
-		    }
+
 		    wasExhausted = false;
 		    break;
 		}
 	    }
 	    if (wasExhausted) {
 		processedBallots.append(String.format("Ballot %d has exhausted all of its votes.%n", bal.getID()));
+	    }
+	}
+	for (final IRVCandidate can : this.candidates) {
+	    if (isMajority(can.getNumVotes())) {
+		processedBallots
+			.append(String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
+				can.getName(), this.quota));
+		this.auditor.auditProcess(processedBallots.toString());
+		return can.getName();
 	    }
 	}
 	this.auditor.auditProcess(processedBallots.toString());
@@ -236,6 +265,15 @@ public class IRV extends VotingSystem {
     @Override
     public String runElection() throws IOException, InterruptedException, InvocationTargetException {
 	String auditFile;
+
+	// initialize ArrayList with candidates
+	initializeElectionDataList();
+
+	// To Do: functionality to dynamically update with votes for each round
+
+	// convert electionDataArrayList to 2-dimensional array
+	String[][] electionData2DArray = getElectionTableArg();
+
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
 	if (!this.wasRun.getAndSet(true)) {
@@ -261,8 +299,7 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + lastCan + "\n",
-				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+				"Election Winner: " + lastCan + "\n", electionData2DArray,
 				new String[] { "Title 1", "Title 2", "Title 3" },
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
@@ -293,8 +330,7 @@ public class IRV extends VotingSystem {
 		    if (resultsGUI) {
 			MariahResults frame = new MariahResults("Election Results", auditFile,
 				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + winner + "\n",
-				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+				"Election Winner: " + winner + "\n", electionData2DArray,
 				new String[] { "Title 1", "Title 2", "Title 3" },
 				"Official Mariah Election Processor Report", "Print Report TODO");
 
