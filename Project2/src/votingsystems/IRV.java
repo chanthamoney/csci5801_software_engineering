@@ -259,6 +259,7 @@ public class IRV extends VotingSystem {
 		this.numValidBallots = val;
 		this.numInvalidBallots = inval;
 
+		// TODO: add correct date of election for file name
 		String fileName = String.format("invalidated_dateofelection", GETDATEOFELECTION());
 		createInvalidAuditFile(fileName, this.invalidBallots);
 	}
