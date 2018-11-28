@@ -228,6 +228,24 @@ public class IRV extends VotingSystem {
 	return "";
     }
 
+    private String completeElection(String lastCan)
+	    throws IOException, InvocationTargetException, InterruptedException {
+	this.auditor.auditResult("Election Winner: " + lastCan);
+	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
+	System.out.print("Election Winner: " + lastCan + "\n\n");
+	if (resultsGUI) {
+	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
+		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + lastCan + "\n",
+		    new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+		    new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
+		    "Print Report TODO");
+
+	    // Ensures thread safety with GUI
+	    SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
+	}
+	return auditFile;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -255,20 +273,7 @@ public class IRV extends VotingSystem {
 		    // Audit winner found and break;
 		    this.auditor.auditProcess(
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
-		    this.auditor.auditResult("Election Winner: " + lastCan);
-		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + lastCan + "\n\n");
-		    if (resultsGUI) {
-			MariahResults frame = new MariahResults("Election Results", auditFile,
-				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + lastCan + "\n",
-				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
-				new String[] { "Title 1", "Title 2", "Title 3" },
-				"Official Mariah Election Processor Report", "Print Report TODO");
-
-			// Ensures thread safety with GUI
-			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
-		    }
+		    auditFile = completeElection(lastCan);
 		    break;
 		}
 
@@ -287,20 +292,7 @@ public class IRV extends VotingSystem {
 
 		if (!"".equals(winner)) {
 		    // Audit winner found and break;
-		    this.auditor.auditResult("Election Winner: " + winner);
-		    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-		    System.out.print("Election Winner: " + winner + "\n\n");
-		    if (resultsGUI) {
-			MariahResults frame = new MariahResults("Election Results", auditFile,
-				new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-				"Election Winner: " + winner + "\n",
-				new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
-				new String[] { "Title 1", "Title 2", "Title 3" },
-				"Official Mariah Election Processor Report", "Print Report TODO");
-
-			// Ensures thread safety with GUI
-			SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
-		    }
+		    auditFile = completeElection(winner);
 		    break;
 		} else {
 		    // Audit the current party votes
