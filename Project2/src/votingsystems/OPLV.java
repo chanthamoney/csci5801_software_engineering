@@ -220,16 +220,21 @@ public class OPLV extends VotingSystem {
     }
 
     private String createQuickPrintSum() {
-	this.quickPrintSum.append(new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()));
+	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
 	this.quickPrintSum.append("\n");
 	this.quickPrintSum.append("Election Type: OPL\n");
-	this.quickPrintSum.append("Candidates:" + this.candidates + "\n");
+	this.quickPrintSum.append("Candidates:\n");
+	for (OPLVCandidate curCan : this.candidates) {
+	    this.quickPrintSum.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName()));
+	}
 	this.quickPrintSum.append(String.format("Number of seats: %d\n", this.numSeats));
-	this.quickPrintSum.append("Election Winner(s): ");
+	this.quickPrintSum.append("Election Winner(s): " + "\n");
 	this.seats.forEach(curCan -> this.quickPrintSum
 		.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	this.quickPrintSum.append("\n");
+	System.out.println(this.quickPrintSum.toString());
 	return this.quickPrintSum.toString();
+
     }
 
     /*
