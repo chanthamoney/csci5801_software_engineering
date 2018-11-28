@@ -35,6 +35,8 @@ abstract public class VotingSystem {
     /** Maintains whether the election has been run before. */
     protected AtomicBoolean wasRun = new AtomicBoolean(false);
 
+    protected StringBuilder quickPrintSum = new StringBuilder();
+
     /** Throws an error for default constructor. */
     public VotingSystem() {
 	throw new IllegalArgumentException("Default constructor is not allowed.");
