@@ -219,6 +219,9 @@ public class OPLV extends VotingSystem {
 	this.auditor.auditProcess(rankings.toString());
     }
 
+    /**
+     * Creates the quick summary report that can be printed.
+     */
     private String createQuickPrintSum() {
 	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
 	this.quickPrintSum.append("\n");
@@ -232,7 +235,6 @@ public class OPLV extends VotingSystem {
 	this.seats.forEach(curCan -> this.quickPrintSum
 		.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	this.quickPrintSum.append("\n");
-	System.out.println(this.quickPrintSum.toString());
 	return this.quickPrintSum.toString();
 
     }

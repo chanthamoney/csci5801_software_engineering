@@ -10,7 +10,9 @@ package votingsystems;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -228,17 +230,32 @@ public class IRV extends VotingSystem {
 	return "";
     }
 
-    private String completeElection(String lastCan)
-	    throws IOException, InvocationTargetException, InterruptedException {
-	this.auditor.auditResult("Election Winner: " + lastCan);
+    /**
+     * Creates the quick summary report that can be printed.
+     */
+    private String createQuickPrintSum(String winner) {
+	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+	this.quickPrintSum.append("\n");
+	this.quickPrintSum.append("Election Type: IRV\n");
+	this.quickPrintSum.append("Candidates:\n");
+	for (IRVCandidate curCan : this.candidates) {
+	    this.quickPrintSum.append(String.format("\t%s%n", curCan.getName()));
+	}
+	this.quickPrintSum.append("Election Winner: " + winner + "\n");
+	this.quickPrintSum.append("\n");
+	return this.quickPrintSum.toString();
+    }
+
+    private String completeElection(String winner) throws IOException, InvocationTargetException, InterruptedException {
+	this.auditor.auditResult("Election Winner: " + winner);
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-	System.out.print("Election Winner: " + lastCan + "\n\n");
+	System.out.print("Election Winner: " + winner + "\n\n");
 	if (resultsGUI) {
 	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
-		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + lastCan + "\n",
+		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + winner + "\n",
 		    new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
 		    new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
-		    "Print Report TODO");
+		    createQuickPrintSum(winner));
 
 	    // Ensures thread safety with GUI
 	    SwingUtilities.invokeAndWait(() -> frame.setVisible(true));

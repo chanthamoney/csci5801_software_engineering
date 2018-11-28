@@ -35,6 +35,7 @@ abstract public class VotingSystem {
     /** Maintains whether the election has been run before. */
     protected AtomicBoolean wasRun = new AtomicBoolean(false);
 
+    /** The quick summary that can print. */
     protected StringBuilder quickPrintSum = new StringBuilder();
 
     /** Throws an error for default constructor. */
