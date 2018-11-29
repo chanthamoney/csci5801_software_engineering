@@ -51,4 +51,14 @@ abstract public class Candidate {
     public int getNumVotes() {
 	return this.numVotes;
     }
+
+    /**
+     * Sets number of votes for candidate to 0 in the case of being eliminated in an
+     * IRV election
+     *
+     * @return nothing
+     */
+    public void zeroNumVotes() {
+	this.numVotes = 0;
+    }
 }
