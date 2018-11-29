@@ -223,6 +223,10 @@ public class IRV extends VotingSystem {
 	    final IRVCandidate mcan = minCandidates.get(0);
 	    this.auditor.auditProcess(String.format("%nCandidate %s is eliminated with only %d votes.%n",
 		    mcan.getName(), mcan.getNumVotes()));
+
+	    // zero out eliminated candidates votes
+	    mcan.zeroNumVotes();
+
 	    return mcan;
 	} else {
 	    // Return and audit randomly selected winner
@@ -231,6 +235,10 @@ public class IRV extends VotingSystem {
 	    this.auditor.auditProcess(String.format(
 		    "Candidate %s is eliminated with only %d votes.%nNOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.%n",
 		    rcan.getName(), rcan.getNumVotes()));
+
+	    // zero out eliminated candidates votes
+	    rcan.zeroNumVotes();
+
 	    return rcan;
 	}
     }
@@ -283,6 +291,9 @@ public class IRV extends VotingSystem {
 			.append(String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
 				can.getName(), this.quota));
 		this.auditor.auditProcess(processedBallots.toString());
+
+		// capture current data into election table
+		addVoteDataElectionTableArrayList();
 		return can.getName();
 	    }
 	}
