@@ -1,0 +1,5 @@
+Invalid Ballots
+
+Ballot 8: [1, , , ]
+Ballot 9: [, 1, , ]
+Ballot 10: [, , , 1]
