@@ -21,14 +21,11 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 	jMenuItem3.setAccelerator(
 		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.META_MASK));
 	jMenuItem3.setText("New Dynamic Election");
-	jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jMenuItem3ActionPerformed(evt);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+	jMenuItem3.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jMenuItem3ActionPerformed(evt);
+	    } catch (IOException e) {
+		e.printStackTrace();
 	    }
 	});
 	jMenu1.add(jMenuItem3);

@@ -44,6 +44,26 @@ public class MariahResults extends JDialog {
     /** The text in the report to be printed. */
     private javax.swing.JTextArea reportText;
 
+    private javax.swing.JMenu jMenu1;
+
+    private javax.swing.JMenu jMenu2;
+
+    private javax.swing.JMenuBar jMenuBar1;
+
+    private javax.swing.JMenuItem jMenuItem1;
+
+    private javax.swing.JMenuItem jMenuItem3;
+
+    private javax.swing.JPanel jPanel1;
+
+    private javax.swing.JScrollPane jScrollPane4;
+
+    private javax.swing.JScrollPane jScrollPane5;
+
+    private javax.swing.JTable jTable2;
+
+    private javax.swing.JTextPane jTextPane2;
+
     /**
      * Creates new form MariahProcessResults.
      *
@@ -88,14 +108,12 @@ public class MariahResults extends JDialog {
 	    javax.swing.JMenuItem tempMenuItem = new javax.swing.JMenuItem();
 	    tempMenuItem.setText(otherOpenFileNames[i]);
 	    String fileName = otherOpenFiles[i];
-	    tempMenuItem.addActionListener(new java.awt.event.ActionListener() {
-		public void actionPerformed(java.awt.event.ActionEvent evt) {
-		    try {
-			Desktop.getDesktop().open(new File(fileName));
-		    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		    }
+	    tempMenuItem.addActionListener((java.awt.event.ActionEvent evt) -> {
+		try {
+		    Desktop.getDesktop().open(new File(fileName));
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
 		}
 	    });
 	    jMenu2.add(tempMenuItem);
@@ -165,14 +183,12 @@ public class MariahResults extends JDialog {
 	jMenuItem3.setAccelerator(
 		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.META_MASK));
 	jMenuItem3.setText("Audit File");
-	jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jMenuItem3ActionPerformed(evt);
-		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+	jMenuItem3.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jMenuItem3ActionPerformed(evt);
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	    }
 	});
 	jMenu2.add(jMenuItem3);
@@ -182,14 +198,12 @@ public class MariahResults extends JDialog {
 	jMenuItem1.setAccelerator(
 		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.META_MASK));
 	jMenuItem1.setText("Print Report...");
-	jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-	    public void actionPerformed(java.awt.event.ActionEvent evt) {
-		try {
-		    jMenuItem1ActionPerformed(evt);
-		} catch (PrinterException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
-		}
+	jMenuItem1.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jMenuItem1ActionPerformed(evt);
+	    } catch (PrinterException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	    }
 	});
 	jMenu1.add(jMenuItem1);
@@ -249,41 +263,17 @@ public class MariahResults extends JDialog {
 		    break;
 		}
 	    }
-	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(MariahResults.class.getName()).log(java.util.logging.Level.SEVERE, null,
-		    ex);
-	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(MariahResults.class.getName()).log(java.util.logging.Level.SEVERE, null,
-		    ex);
-	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(MariahResults.class.getName()).log(java.util.logging.Level.SEVERE, null,
-		    ex);
-	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+	} catch (javax.swing.UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+		| ClassNotFoundException ex) {
 	    java.util.logging.Logger.getLogger(MariahResults.class.getName()).log(java.util.logging.Level.SEVERE, null,
 		    ex);
 	}
 	// </editor-fold>
 
 	/* Create and display the form */
-	java.awt.EventQueue.invokeLater(new Runnable() {
-	    public void run() {
-		new MariahResults("header title", "audit file", new String[] { "invalid data file" },
-			new String[] { "invalid data file path" }, "process results",
-			new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
-			new String[] { "Title 1", "Title 2", "Title 3" }, "Print Header", "Print example")
-				.setVisible(true);
-	    }
-	});
+	java.awt.EventQueue.invokeLater(() -> new MariahResults("header title", "audit file",
+		new String[] { "invalid data file" }, new String[] { "invalid data file path" }, "process results",
+		new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
+		new String[] { "Title 1", "Title 2", "Title 3" }, "Print Header", "Print example").setVisible(true));
     }
-
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextPane jTextPane2;
 }

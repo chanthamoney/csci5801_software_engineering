@@ -125,15 +125,15 @@ public class IRV extends VotingSystem {
      */
     private void initializeElectionDataList() {
 	// initialize titles of table with first column = 'Candidates'
-	electionTableTitles = new ArrayList<String>();
+	electionTableTitles = new ArrayList<>();
 	electionTableTitles.add("Candidates");
 
 	// initialize electionData arrayList
-	electionDataList = new ArrayList<ArrayList<String>>();
+	electionDataList = new ArrayList<>();
 
 	for (final IRVCandidate curCan : this.candidates) {
 	    // create arraylist with first item being candidate name
-	    ArrayList<String> row = new ArrayList<String>();
+	    ArrayList<String> row = new ArrayList<>();
 	    row.add(curCan.getName());
 	    electionDataList.add(row);
 	}
