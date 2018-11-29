@@ -26,7 +26,10 @@ import mariahgui.MariahResults;
 public class IRV extends VotingSystem {
 
     /** The ballots being cast in the election. */
-    private final IRVBallot[] ballots;
+    private final ArrayList<IRVBallot> validBallots;
+
+    /** The invalid ballots that will not be cast in the election. */
+    private final ArrayList<IRVBallot> invalidBallots;
 
     /** The candidates participating in the election. */
     private final IRVCandidate[] candidates;
@@ -65,19 +68,14 @@ public class IRV extends VotingSystem {
 	}
 	remainingCandidates = numCandidates;
 
-	// Initialize ballots
-	this.ballots = new IRVBallot[numBallots];
-	int i = 0;
-	for (final ArrayList<Integer> bal : ballots) {
-	    this.ballots[i] = new IRVBallot(bal, i + 1);
-	    i++;
-	}
+  // Perform ballot validation process
+  performBallotValidation(ballots);
 
-	// Initialize voter pool to all ballots
-	this.voterPool = this.ballots;
+	// Initialize voter pool to all valid ballots
+	this.voterPool = this.validBallots;
 
 	// Initialize quota
-	initializeQuota(numBallots);
+	initializeQuota(numValidBallots);
 
 	// Produce audit file information
 	final StringBuilder setup = new StringBuilder(
@@ -86,7 +84,7 @@ public class IRV extends VotingSystem {
 	for (i = 0; i < this.numCandidates; i++) {
 	    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 	}
-	setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numBallots, ballots));
+	setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, validBallots));
 	this.auditor.auditSetup(setup.toString());
     }
 
@@ -262,6 +260,80 @@ public class IRV extends VotingSystem {
 	}
 	return auditFile;
     }
+
+    /**
+	 * Performs ballot validation to separate all initial ballots into valid and
+	 * invalid ballots as well as initializing numInvalidBallots and
+	 * numValidBallots. Once the separation process is complete, the invalid
+   * ballots audit file is created.
+	 */
+	private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots) {
+		this.validBallots = new ArrayList<IRVBallot>();
+		this.invalidBallots = new ArrayList<IRVBallot>();
+
+		int id = 1;
+		int val = 0;
+		int inval = 0;
+		for (final ArrayList<Integer> bal : ballots) {
+			if (isBallotValid(bal)) {
+				this.validBallots.add(new IRVBallot(bal, id));
+				val++;
+			} else {
+				this.invalidBallots.add(new IRVBallot(bal, id));
+				inval++;
+			}
+			id++;
+		}
+
+		this.numValidBallots = val;
+		this.numInvalidBallots = inval;
+
+		// TODO: add correct date of election for file name
+		String fileName = String.format("invalidated_dateofelection", GETDATEOFELECTION());
+		createInvalidAuditFile(fileName, this.invalidBallots);
+	}
+
+	/**
+	 * Determines whether or not a ballot is valid. For a ballot to be valid, it
+	 * must have at least half of the candidates ranked.
+	 *
+	 * @return the true if the ballot is valid and false otherwise.
+	 */
+	private boolean isBallotValid(ArrayList<Integer> bal, int numCandidates) {
+	    int rankedCandidates = bal.size();
+
+			if (percentCandidates == 50) {
+				return
+			}
+
+	    // + 1 takes care of odd number of candidates
+	    return rankedCandidates > (numCandidates + 1 / 2);
+	}
+
+	/**
+	 * Generates an audit file in the current directory under a specified name. This
+	 * file contains invalid ballot audit information.
+	 *
+	 * @param name the name of the output file
+	 * @param ballots the invalid ballots that will be put into the output file
+	 * @return the name of the file that was created
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public String createInvalidAuditFile(final String name,
+		ArrayList<IRVBallot> ballots) throws IOException {
+			final File file = new File(name);
+			final FileWriter writer = new FileWriter(file);
+			final StringBuilder fileOutput = new StringBuilder();
+
+			for (IRVBallot bal : ballots) {
+				fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
+			}
+
+			writer.write(fileOutput.toString());
+			writer.close();
+
+			return name;
+	}
 
     /*
      * (non-Javadoc)
