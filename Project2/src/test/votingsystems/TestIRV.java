@@ -69,6 +69,35 @@ public class TestIRV {
 
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false);
     }
+    
+    // Test Ballot Invalidation Process
+    /**
+     * Test an election where multiple ballots have less than half of the candidates ranked.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     */
+    @Test
+    public void testIRVLessThanHalfCandidatesRanked()
+        throws ParseException, IOException, InterruptedException, InvocationTargetException {
+    testFileAuditPair("invalidTestLessThanHalfCandidates");
+    }
+    
+    /**
+     * Test an election where multiple ballots have less than half of the candidates ranked.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     */
+    @Test
+    public void testIRVLessThanHalfCandidatesRanked()
+        throws ParseException, IOException, InterruptedException, InvocationTargetException {
+    testFileAuditPair("invalidTestLessThanHalfCandidates");
+    }
 
     /**
      * Test file audit pair.
