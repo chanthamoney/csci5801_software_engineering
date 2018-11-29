@@ -116,6 +116,7 @@ public class TestMariahEP {
 
 	final File file = auditFile.toFile();
 	file.delete();
+	System.out.println(outputMap);
 
 	if (outputMap.get("Election Winner") != null) {
 	    return outputMap.get("Election Winner");

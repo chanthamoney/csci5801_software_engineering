@@ -149,7 +149,6 @@ public class IRV extends VotingSystem {
 	// For each candidate in election and in table
 	for (final IRVCandidate curCan : this.candidates) {
 	    electionDataList.get(candidateIndex).add(Integer.toString(curCan.getNumVotes()));
-	    System.out.println(curCan.getName() + curCan.getNumVotes());
 	    candidateIndex++;
 	}
     }
@@ -299,7 +298,6 @@ public class IRV extends VotingSystem {
 		return can.getName();
 	    }
 	}
-	System.out.print("Get Here");
 	addVoteDataElectionTableArrayList();
 	this.auditor.auditProcess(processedBallots.toString());
 	return "";
@@ -326,15 +324,14 @@ public class IRV extends VotingSystem {
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	System.out.print("Election Winner: " + winner + "\n\n");
 	if (resultsGUI) {
-      // convert election Array Lists to Actual Arrays to pass as args
-			String[][] electionData2DArray = getElectionTableArg();
-			String[] electionTableTitlesArray = new String[electionTableTitles.size()];
-			electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
-  
+	    // convert election Array Lists to Actual Arrays to pass as args
+	    String[][] electionData2DArray = getElectionTableArg();
+	    String[] electionTableTitlesArray = new String[electionTableTitles.size()];
+	    electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
+
 	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
 		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + winner + "\n",
-		    electionData2DArray,
-		    electionTableTitlesArray, "Official Mariah Election Processor Report",
+		    electionData2DArray, electionTableTitlesArray, "Official Mariah Election Processor Report",
 		    createQuickPrintSum(winner));
 
 	    // Ensures thread safety with GUI
