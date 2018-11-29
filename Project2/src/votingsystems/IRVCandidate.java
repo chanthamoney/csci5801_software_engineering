@@ -57,6 +57,7 @@ public class IRVCandidate extends Candidate {
     public IRVBallot[] eliminate() {
 	this.eliminated = true;
 	final IRVBallot[] elimBallots = new IRVBallot[this.ballots.size()];
+	this.numVotes = 0;
 	return this.ballots.toArray(elimBallots);
     }
 
