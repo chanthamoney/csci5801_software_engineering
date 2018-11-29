@@ -344,11 +344,11 @@ public class MariahFileChooser extends javax.swing.JFrame {
     }
 
     /**
-     * Opens a dialog box that the file selected could not be interpreted.
+     * Opens a dialog box with the provided message.
      *
-     * @param error the text to display for the error
+     * @param message the text to display for the dialog
      */
-    public void invalidFile(String error) {
-	JOptionPane.showMessageDialog(null, error);
+    public void showDialog(String message) {
+	JOptionPane.showMessageDialog(null, message);
     }
 }

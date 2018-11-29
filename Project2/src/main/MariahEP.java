@@ -228,10 +228,7 @@ public class MariahEP {
 	    } catch (NoSuchElementException e) {
 		scanner.close();
 		throw new InvalidFileException(String.format("Ballot %d does not exist.", i + 1));
-	    } catch (PatternSyntaxException e) {
-		scanner.close();
-		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
-	    } catch (NumberFormatException e) {
+	    } catch (NumberFormatException | PatternSyntaxException e) {
 		scanner.close();
 		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
 	    }
@@ -378,8 +375,13 @@ public class MariahEP {
 		vs = null;
 
 		// Thread safe way to open unsafe file dialog
-		SwingUtilities.invokeAndWait(() -> frame.invalidFile(
+		SwingUtilities.invokeAndWait(() -> frame.showDialog(
 			"Selected file is not a standardized IRV or OPLV election file.\n\nERROR: " + e.getMessage()));
+	    } catch (Exception e) {
+		SwingUtilities.invokeAndWait(() -> frame.showDialog("An unexpected error has occured."));
+		SwingUtilities.invokeAndWait(() -> frame.dispose());
+		runElectionGUI(null);
+		break;
 	    }
 
 	    if (vs != null) {
