@@ -142,7 +142,7 @@ public class IRV extends VotingSystem {
     private void addVoteDataElectionTableArrayList() {
 	roundNumber++;
 	// Update Title For Rounds
-	electionTableTitles.add("Round" + roundNumber);
+	electionTableTitles.add("Round " + roundNumber);
 
 	int candidateIndex = 0;
 
