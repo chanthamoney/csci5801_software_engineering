@@ -69,7 +69,7 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
   // Perform ballot validation process
-  performBallotValidation(ballots);
+  performBallotValidation(ballots, 0.5);
 
 	// Initialize voter pool to all valid ballots
 	this.voterPool = this.validBallots;
@@ -267,7 +267,7 @@ public class IRV extends VotingSystem {
 	 * numValidBallots. Once the separation process is complete, the invalid
    * ballots audit file is created.
 	 */
-	private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots) {
+	private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates) {
 		this.validBallots = new ArrayList<IRVBallot>();
 		this.invalidBallots = new ArrayList<IRVBallot>();
 
@@ -275,7 +275,7 @@ public class IRV extends VotingSystem {
 		int val = 0;
 		int inval = 0;
 		for (final ArrayList<Integer> bal : ballots) {
-			if (isBallotValid(bal)) {
+			if (isBallotValid(bal, percentCandidates)) {
 				this.validBallots.add(new IRVBallot(bal, id));
 				val++;
 			} else {
@@ -299,15 +299,11 @@ public class IRV extends VotingSystem {
 	 *
 	 * @return the true if the ballot is valid and false otherwise.
 	 */
-	private boolean isBallotValid(ArrayList<Integer> bal, int numCandidates) {
+	private boolean isBallotValid(ArrayList<Integer> bal, double percentCandidates) {
 	    int rankedCandidates = bal.size();
+      double minNumCandidates = this.numCandidates * percentCandidates;
 
-			if (percentCandidates == 50) {
-				return
-			}
-
-	    // + 1 takes care of odd number of candidates
-	    return rankedCandidates > (numCandidates + 1 / 2);
+	    return rankedCandidates >= minNumCandidates;
 	}
 
 	/**
