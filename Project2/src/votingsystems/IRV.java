@@ -69,7 +69,14 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
   // Perform ballot validation process
-  performBallotValidation(ballots, 0.5);
+  //performBallotValidation(ballots, 0);
+	this.validBallots = new ArrayList<IRVBallot>();
+	   int i = 0;
+	   for (final ArrayList<Integer> bal : ballots) {
+	       this.validBallots.add(new IRVBallot(bal, i + 1));
+	       i++;
+	   }
+	   this.numValidBallots = numBallots;
 
 	// Initialize voter pool to all valid ballots
 	this.voterPool = this.validBallots;
@@ -321,6 +328,8 @@ public class IRV extends VotingSystem {
 			final FileWriter writer = new FileWriter(file);
 			final StringBuilder fileOutput = new StringBuilder();
 
+			fileOutput.append("Invalid Ballots\n\n");
+			
 			for (IRVBallot bal : ballots) {
 				fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
 			}
