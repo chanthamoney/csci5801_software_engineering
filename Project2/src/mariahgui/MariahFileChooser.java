@@ -102,6 +102,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
     /**
      * Inits the components.
      */
+    @SuppressWarnings("deprecation")
     private void initComponents() {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int height = (int) (screenSize.height * 0.667);
