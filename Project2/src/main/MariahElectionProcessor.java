@@ -1,38 +1,61 @@
+/**
+ * File: MariahElectionProcessor.java
+ * Date Created: 11/08/2018
+ * Last Update: Nov 29, 2018 8:27:47 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
+ * This code is copyright (c) 2018 University of Minnesota - Twin Cities
+ */
 package main;
 
 import java.io.IOException;
 
+/**
+ * The Class MariahElectionProcessor.
+ */
 public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1899308877580175870L;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
 
+    /** The j menu file. */
+    private javax.swing.JMenu jMenuFile;
+
+    /** The j menu bar. */
+    private javax.swing.JMenuBar jMenuBar;
+
+    /** The j menu item new dynamic election. */
+    private javax.swing.JMenuItem jMenuItemNewDynamicElection;
+
+    /**
+     * Instantiates a new mariah election processor.
+     *
+     * @param title      the title
+     * @param filePrompt the file prompt
+     */
     public MariahElectionProcessor(String title, String filePrompt) {
 	super(title, filePrompt);
 
-	jMenuBar1 = new javax.swing.JMenuBar();
-	jMenu1 = new javax.swing.JMenu();
-	jMenuItem3 = new javax.swing.JMenuItem();
+	jMenuBar = new javax.swing.JMenuBar();
+	jMenuFile = new javax.swing.JMenu();
+	jMenuItemNewDynamicElection = new javax.swing.JMenuItem();
 
-	jMenu1.setText("File");
+	jMenuFile.setText("File");
 
-	jMenuItem3.setAccelerator(
+	jMenuItemNewDynamicElection.setAccelerator(
 		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.META_MASK));
-	jMenuItem3.setText("New Dynamic Election");
-	jMenuItem3.addActionListener((java.awt.event.ActionEvent evt) -> {
+	jMenuItemNewDynamicElection.setText("New Dynamic Election");
+	jMenuItemNewDynamicElection.addActionListener((java.awt.event.ActionEvent evt) -> {
 	    try {
-		jMenuItem3ActionPerformed(evt);
+		jMenuItemNewDynamicElectionActionPerformed(evt);
 	    } catch (IOException e) {
 		e.printStackTrace();
 	    }
 	});
-	jMenu1.add(jMenuItem3);
+	jMenuFile.add(jMenuItemNewDynamicElection);
 
-	jMenuBar1.add(jMenu1);
+	jMenuBar.add(jMenuFile);
 
-	setJMenuBar(jMenuBar1);
+	setJMenuBar(jMenuBar);
     }
 
     /**
@@ -41,7 +64,7 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
      * @param evt the evt
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
+    private void jMenuItemNewDynamicElectionActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
 	// TODO OPEN JFRAME OF DYNAMIC ELECTION
     }// GEN-LAST:event_jButton1ActionPerformed
 }
