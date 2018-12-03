@@ -374,8 +374,7 @@ public class IRV extends VotingSystem {
      * @return the true if the ballot is valid and false otherwise.
      */
     private boolean isBallotValid(ArrayList<Integer> bal, double percentCandidates) {
-	return true;
-//	return bal.size() >= (this.numCandidates * percentCandidates);
+	return bal.size() >= (this.numCandidates * percentCandidates);
     }
 
     /**
