@@ -53,6 +53,10 @@ public class IRV extends VotingSystem {
 
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
+    
+    private int numValidBallots;
+    
+    private int numInvalidBallots;
 
     /**
      * Instantiates a new instant runoff voting system.
@@ -77,7 +81,8 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
   // Perform ballot validation process
-  //performBallotValidation(ballots, 0);
+  performBallotValidation(ballots, 0.5);
+  /*
 	this.validBallots = new ArrayList<IRVBallot>();
 	   int i = 0;
 	   for (final ArrayList<Integer> bal : ballots) {
@@ -85,12 +90,13 @@ public class IRV extends VotingSystem {
 	       i++;
 	   }
 	   this.numValidBallots = numBallots;
+	*/
 
 	// Initialize voter pool to all valid ballots
 	this.voterPool = this.validBallots;
 
 	// Initialize quota
-	initializeQuota(numValidBallots);
+	initializeQuota(this.numValidBallots);
 
 	// Produce audit file information
 	final StringBuilder setup = new StringBuilder(
@@ -341,7 +347,7 @@ public class IRV extends VotingSystem {
 	 * Performs ballot validation to separate all initial ballots into valid and
 	 * invalid ballots as well as initializing numInvalidBallots and
 	 * numValidBallots. Once the separation process is complete, the invalid
-   * ballots audit file is created.
+	 * ballots audit file is created.
 	 */
 	private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates) {
 		this.validBallots = new ArrayList<IRVBallot>();
