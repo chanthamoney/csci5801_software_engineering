@@ -1,7 +1,7 @@
 /**
  * File: MariahFileChooser.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:29:00 PM
+ * Last Update: Nov 29, 2018 8:23:36 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -100,7 +100,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
     }
 
     /**
-     * Netbeans generated and adapted Swing Jframe initialization.
+     * Inits the components.
      */
     @SuppressWarnings("deprecation")
     private void initComponents() {
@@ -344,11 +344,11 @@ public class MariahFileChooser extends javax.swing.JFrame {
     }
 
     /**
-     * Opens a dialog box that the file selected could not be interpreted.
+     * Opens a dialog box with the provided message.
      *
-     * @param error the text to display for the error
+     * @param message the text to display for the dialog
      */
-    public void invalidFile(String error) {
-	JOptionPane.showMessageDialog(null, error);
+    public void showDialog(String message) {
+	JOptionPane.showMessageDialog(null, message);
     }
 }

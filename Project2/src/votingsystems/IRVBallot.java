@@ -61,4 +61,13 @@ public class IRVBallot extends Ballot {
     public boolean isExhausted() {
 	return this.votes.size() <= this.curVoteIndex;
     }
+    
+    /**
+     * Returns votes on this ballot.
+     *
+     * @return votes
+     */
+    public ArrayList<Integer> getVotes() {
+    return this.votes;
+    }
 }

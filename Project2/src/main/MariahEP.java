@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 27, 2018 1:56:03 PM
+ * Last Update: Dec 3, 2018 2:41:52 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -9,7 +9,6 @@
 package main;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -35,11 +34,11 @@ public class MariahEP {
      * @param filePath the file name
      * @param gui      maintains if the GUI should be utilized
      * @return the voting system
-     * @throws FileNotFoundException the file not found exception
-     * @throws InvalidFileException  the invalid file exception
+     * @throws InvalidFileException the invalid file exception
+     * @throws IOException          Signals that an I/O exception has occurred.
      */
     private static VotingSystem votingSystemFromFile(String filePath, boolean gui)
-	    throws FileNotFoundException, InvalidFileException {
+	    throws InvalidFileException, IOException {
 	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
 
@@ -228,10 +227,7 @@ public class MariahEP {
 	    } catch (NoSuchElementException e) {
 		scanner.close();
 		throw new InvalidFileException(String.format("Ballot %d does not exist.", i + 1));
-	    } catch (PatternSyntaxException e) {
-		scanner.close();
-		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
-	    } catch (NumberFormatException e) {
+	    } catch (NumberFormatException | PatternSyntaxException e) {
 		scanner.close();
 		throw new InvalidFileException(String.format("Line of ballot %d was not parseable.", i + 1));
 	    }
@@ -378,8 +374,13 @@ public class MariahEP {
 		vs = null;
 
 		// Thread safe way to open unsafe file dialog
-		SwingUtilities.invokeAndWait(() -> frame.invalidFile(
+		SwingUtilities.invokeAndWait(() -> frame.showDialog(
 			"Selected file is not a standardized IRV or OPLV election file.\n\nERROR: " + e.getMessage()));
+	    } catch (Exception e) {
+		SwingUtilities.invokeAndWait(() -> frame.showDialog("An unexpected error has occured."));
+		SwingUtilities.invokeAndWait(() -> frame.dispose());
+		runElectionGUI(null);
+		break;
 	    }
 
 	    if (vs != null) {

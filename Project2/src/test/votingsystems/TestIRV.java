@@ -2,8 +2,8 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:30:09 PM
- * Author: <A HREF="mailto:silag001@umn.edu">Meghann Silagan</A>
+ * Last Update: Dec 3, 2018 2:41:33 PM
+ * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
@@ -15,7 +15,6 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
@@ -51,8 +50,9 @@ public class TestIRV {
      * Initialize test IRV.
      *
      * @return the irv
+     * @throws IOException Signals that an I/O exception has occurred.
      */
-    private IRV initializeTestIRV() {
+    private IRV initializeTestIRV() throws IOException {
 	final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
 	final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
 	final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
@@ -68,6 +68,22 @@ public class TestIRV {
 	this.testBallots.add(sixthBallot);
 
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false);
+    }
+
+    // Test Ballot Invalidation Process
+    /**
+     * Test an election where some of the original ballots have fewer than half of
+     * the candidates ranked.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     */
+    @Test
+    public void testIRVSomeInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	testFileAuditPair("invalidTestSomeInvalidBallots");
     }
 
     /**
@@ -124,10 +140,10 @@ public class TestIRV {
      *
      * @param fileName the file name
      * @return the voting system
-     * @throws FileNotFoundException the file not found exception
-     * @throws ParseException        the parse exception
+     * @throws ParseException the parse exception
+     * @throws IOException    Signals that an I/O exception has occurred.
      */
-    private static VotingSystem votingSystemFromFile(String fileName) throws FileNotFoundException, ParseException {
+    private static VotingSystem votingSystemFromFile(String fileName) throws ParseException, IOException {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
@@ -262,9 +278,10 @@ public class TestIRV {
      *
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws IOException               Signals that an I/O exception has occurred.
      */
     @Test
-    public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException {
+    public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException, IOException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();

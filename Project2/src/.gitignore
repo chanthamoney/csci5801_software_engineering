@@ -3,3 +3,4 @@
 AUDIT_*
 /bin/
 *.DS_STORE
+invalidated_*

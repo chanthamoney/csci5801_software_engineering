@@ -11,6 +11,8 @@ package votingsystems;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -217,6 +219,26 @@ public class OPLV extends VotingSystem {
 	this.auditor.auditProcess(rankings.toString());
     }
 
+    /**
+     * Creates the quick summary report that can be printed.
+     */
+    private String createQuickPrintSum() {
+	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
+	this.quickPrintSum.append("\n");
+	this.quickPrintSum.append("Election Type: OPL\n");
+	this.quickPrintSum.append("Candidates:\n");
+	for (OPLVCandidate curCan : this.candidates) {
+	    this.quickPrintSum.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName()));
+	}
+	this.quickPrintSum.append(String.format("Number of seats: %d%n", this.numSeats));
+	this.quickPrintSum.append("Election Winner(s): " + "\n");
+	this.seats.forEach(curCan -> this.quickPrintSum
+		.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
+	this.quickPrintSum.append("\n");
+	return this.quickPrintSum.toString();
+
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -249,7 +271,7 @@ public class OPLV extends VotingSystem {
 			new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
 			res.toString(), new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
 			new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
-			"Print Report TODO");
+			createQuickPrintSum());
 
 		// Ensures thread safety with GUI
 		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
