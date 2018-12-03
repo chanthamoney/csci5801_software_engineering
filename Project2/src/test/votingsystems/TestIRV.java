@@ -72,7 +72,8 @@ public class TestIRV {
     
     // Test Ballot Invalidation Process
     /**
-     * Test an election where multiple ballots have less than half of the candidates ranked.
+     * Test an election where some of the original ballots have fewer than
+     * half of the candidates ranked.
      *
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
@@ -80,23 +81,9 @@ public class TestIRV {
      * @throws InvocationTargetException the invocation target exception
      */
     @Test
-    public void testIRVLessThanHalfCandidatesRanked()
+    public void testIRVSomeInvalidBallots()
         throws ParseException, IOException, InterruptedException, InvocationTargetException {
-    testFileAuditPair("invalidTestLessThanHalfCandidates");
-    }
-    
-    /**
-     * Test an election where multiple ballots have less than half of the candidates ranked.
-     *
-     * @throws ParseException            the parse exception
-     * @throws IOException               Signals that an I/O exception has occurred.
-     * @throws InterruptedException      the interrupted exception
-     * @throws InvocationTargetException the invocation target exception
-     */
-    @Test
-    public void testIRVLessThanHalfCandidatesRanked()
-        throws ParseException, IOException, InterruptedException, InvocationTargetException {
-    testFileAuditPair("invalidTestLessThanHalfCandidates");
+    testFileAuditPair("invalidTestSomeInvalidBallots");
     }
 
     /**
