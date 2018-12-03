@@ -99,8 +99,7 @@ public class IRV extends VotingSystem {
 	for (int i = 0; i < this.numCandidates; i++) {
 	    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 	}
-	setup.append(
-		String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.validBallots.size(), this.voterPool));
+	setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", numBallots, ballots));
 	this.auditor.auditSetup(setup.toString());
     }
 
