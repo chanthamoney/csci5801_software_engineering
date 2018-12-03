@@ -162,7 +162,6 @@ public class IRV extends VotingSystem {
 	for (final IRVCandidate curCan : this.candidates) {
 	    // current number of votes
 	    electionDataList.get(candidateIndex).add(Integer.toString(curCan.getNumVotes()));
-<<<<<<< HEAD
 
 	    // getting votes added and subtracted
 	    if (electionDataList.get(candidateIndex).size() < 3) {
@@ -192,8 +191,6 @@ public class IRV extends VotingSystem {
 	    }
 
 	    System.out.println(curCan.getName() + curCan.getNumVotes());
-=======
->>>>>>> master
 	    candidateIndex++;
 	}
     }
