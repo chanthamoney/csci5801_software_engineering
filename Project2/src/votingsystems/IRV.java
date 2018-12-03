@@ -146,6 +146,13 @@ public class IRV extends VotingSystem {
 	}
     }
 
+    private int getVotesAddedSubtracted(int previousRound, int currentRound) {
+	int voteDifference = 0;
+	voteDifference = currentRound - previousRound;
+
+	return voteDifference;
+    }
+
     private void addVoteDataElectionTableArrayList() {
 	roundNumber++;
 	// Update Title For Rounds
@@ -155,7 +162,36 @@ public class IRV extends VotingSystem {
 
 	// For each candidate in election and in table
 	for (final IRVCandidate curCan : this.candidates) {
+	    // current number of votes
 	    electionDataList.get(candidateIndex).add(Integer.toString(curCan.getNumVotes()));
+
+	    // getting votes added and subtracted
+	    if (electionDataList.get(candidateIndex).size() < 3) {
+		// for first round
+		// calculate difference: previous round vote = last item
+		int difference = getVotesAddedSubtracted(0, curCan.getNumVotes());
+
+		// add to arraylist
+		electionDataList.get(candidateIndex).add("+" + Integer.toString(difference));
+
+	    } else {
+		// other rounds, previous vote = number at index 3 before it
+		// calculate difference
+		int difference = getVotesAddedSubtracted(Integer.parseInt(
+			electionDataList.get(candidateIndex).get((electionDataList.get(candidateIndex).size()) - 3)),
+			curCan.getNumVotes());
+
+		// add difference to list
+		if (difference > 0) {
+		    // positive
+		    electionDataList.get(candidateIndex).add("+" + Integer.toString(difference));
+		} else {
+		    // negative
+		    electionDataList.get(candidateIndex).add(Integer.toString(difference));
+		}
+
+	    }
+
 	    candidateIndex++;
 	}
     }
