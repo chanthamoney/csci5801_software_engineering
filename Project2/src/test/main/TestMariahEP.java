@@ -71,6 +71,8 @@ public class TestMariahEP {
 	final File file = auditFile.toFile();
 	file.delete();
 
+	System.out.print(expectedOutput + "\n" + testOutput + "\n");
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 

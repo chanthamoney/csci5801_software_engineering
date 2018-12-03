@@ -1,13 +1,15 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:31:27 PM
+ * Last Update: Dec 3, 2018 2:41:59 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
 package votingsystems;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
@@ -26,10 +28,10 @@ import mariahgui.MariahResults;
 public class IRV extends VotingSystem {
 
     /** The ballots being cast in the election. */
-    private final ArrayList<IRVBallot> validBallots;
+    private ArrayList<IRVBallot> validBallots;
 
     /** The invalid ballots that will not be cast in the election. */
-    private final ArrayList<IRVBallot> invalidBallots;
+    private ArrayList<IRVBallot> invalidBallots;
 
     /** The candidates participating in the election. */
     private final IRVCandidate[] candidates;
@@ -53,10 +55,6 @@ public class IRV extends VotingSystem {
 
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
-    
-    private int numValidBallots;
-    
-    private int numInvalidBallots;
 
     /**
      * Instantiates a new instant runoff voting system.
@@ -67,10 +65,12 @@ public class IRV extends VotingSystem {
      * @param ballots       the ballots being cast in the election
      * @param resultsGUI    indicator for whether the results should be displaying
      *                      using the gui
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
-	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) {
+	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) throws IOException {
 	super(numBallots, numCandidates);
+
 	this.resultsGUI = resultsGUI;
 
 	// Initialize candidates
@@ -80,32 +80,27 @@ public class IRV extends VotingSystem {
 	}
 	remainingCandidates = numCandidates;
 
-  // Perform ballot validation process
-  performBallotValidation(ballots, 0.5);
-  /*
-	this.validBallots = new ArrayList<IRVBallot>();
-	   int i = 0;
-	   for (final ArrayList<Integer> bal : ballots) {
-	       this.validBallots.add(new IRVBallot(bal, i + 1));
-	       i++;
-	   }
-	   this.numValidBallots = numBallots;
-	*/
+	// Perform ballot validation process
+	performBallotValidation(ballots, 0.0);
+
+	this.numBallots = this.validBallots.size();
 
 	// Initialize voter pool to all valid ballots
-	this.voterPool = this.validBallots;
+	this.voterPool = new IRVBallot[this.numBallots];
+	this.voterPool = this.validBallots.toArray(this.voterPool);
 
 	// Initialize quota
-	initializeQuota(this.numValidBallots);
+	initializeQuota(this.numBallots);
 
 	// Produce audit file information
 	final StringBuilder setup = new StringBuilder(
 		String.format("Voting System:\tInstant Runoff Voting%n%nNumber of Candidates: %s%n%nCandidates:%n",
 			this.numCandidates));
-	for (i = 0; i < this.numCandidates; i++) {
+	for (int i = 0; i < this.numCandidates; i++) {
 	    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 	}
-	setup.append(String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.numValidBallots, validBallots));
+	setup.append(
+		String.format("%nNumber of Ballots: %s%n%nBallots: %s%n", this.validBallots.size(), this.voterPool));
 	this.auditor.auditSetup(setup.toString());
     }
 
@@ -165,7 +160,7 @@ public class IRV extends VotingSystem {
     }
 
     /**
-     * Convert arraylist of arraylist to two dimensional array
+     * Convert arraylist of arraylist to two dimensional array.
      *
      * @return the number of candidates with no votes eliminated
      */
@@ -344,76 +339,71 @@ public class IRV extends VotingSystem {
     }
 
     /**
-	 * Performs ballot validation to separate all initial ballots into valid and
-	 * invalid ballots as well as initializing numInvalidBallots and
-	 * numValidBallots. Once the separation process is complete, the invalid
-	 * ballots audit file is created.
-	 */
-	private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates) {
-		this.validBallots = new ArrayList<IRVBallot>();
-		this.invalidBallots = new ArrayList<IRVBallot>();
+     * Performs ballot validation to separate all initial ballots into valid and
+     * invalid ballots as well as initializing numInvalidBallots and
+     * numValidBallots. Once the separation process is complete, the invalid ballots
+     * audit file is created.
+     *
+     * @param ballots           the ballots
+     * @param percentCandidates the percent candidates
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates)
+	    throws IOException {
+	this.validBallots = new ArrayList<IRVBallot>();
+	this.invalidBallots = new ArrayList<IRVBallot>();
 
-		int id = 1;
-		int val = 0;
-		int inval = 0;
-		for (final ArrayList<Integer> bal : ballots) {
-			if (isBallotValid(bal, percentCandidates)) {
-				this.validBallots.add(new IRVBallot(bal, id));
-				val++;
-			} else {
-				this.invalidBallots.add(new IRVBallot(bal, id));
-				inval++;
-			}
-			id++;
-		}
+	int id = 1;
 
-		this.numValidBallots = val;
-		this.numInvalidBallots = inval;
-
-    String electionDate = new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime());
-		String fileName = String.format("invalidated_%s", electionDate);
-		createInvalidAuditFile(fileName, this.invalidBallots);
+	for (final ArrayList<Integer> bal : ballots) {
+	    if (isBallotValid(bal, percentCandidates)) {
+		this.validBallots.add(new IRVBallot(bal, id));
+	    } else {
+		this.invalidBallots.add(new IRVBallot(bal, id));
+	    }
+	    id++;
 	}
 
-	/**
-	 * Determines whether or not a ballot is valid. For a ballot to be valid, it
-	 * must have at least half of the candidates ranked.
-	 *
-	 * @return the true if the ballot is valid and false otherwise.
-	 */
-	private boolean isBallotValid(ArrayList<Integer> bal, double percentCandidates) {
-	    int rankedCandidates = bal.size();
-      double minNumCandidates = this.numCandidates * percentCandidates;
+	createInvalidAuditFile();
+    }
 
-	    return rankedCandidates >= minNumCandidates;
+    /**
+     * Determines whether or not a ballot is valid. For a ballot to be valid, it
+     * must have at least half of the candidates ranked.
+     *
+     * @return the true if the ballot is valid and false otherwise.
+     */
+    private boolean isBallotValid(ArrayList<Integer> bal, double percentCandidates) {
+	return true;
+//	return bal.size() >= (this.numCandidates * percentCandidates);
+    }
+
+    /**
+     * Generates an audit file in the current directory under a specified name. This
+     * file contains invalid ballot audit information.
+     *
+     * @return the name of the file that was created
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private String createInvalidAuditFile() throws IOException {
+	String electionDate = new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime());
+	String name = String.format("invalidated_%s", electionDate);
+
+	final File file = new File(name);
+	final FileWriter writer = new FileWriter(file);
+	final StringBuilder fileOutput = new StringBuilder();
+
+	fileOutput.append("Invalid Ballots\n\n");
+
+	for (IRVBallot bal : this.invalidBallots) {
+	    fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
 	}
 
-	/**
-	 * Generates an audit file in the current directory under a specified name. This
-	 * file contains invalid ballot audit information.
-	 *
-	 * @param name the name of the output file
-	 * @param ballots the invalid ballots that will be put into the output file
-	 * @return the name of the file that was created
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public String createInvalidAuditFile(final String name,
-		ArrayList<IRVBallot> ballots) throws IOException {
-			final File file = new File(name);
-			final FileWriter writer = new FileWriter(file);
-			final StringBuilder fileOutput = new StringBuilder();
+	writer.write(fileOutput.toString());
+	writer.close();
 
-			fileOutput.append("Invalid Ballots\n\n");
-			
-			for (IRVBallot bal : ballots) {
-				fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
-			}
-
-			writer.write(fileOutput.toString());
-			writer.close();
-
-			return name;
-	}
+	return name;
+    }
 
     /*
      * (non-Javadoc)
