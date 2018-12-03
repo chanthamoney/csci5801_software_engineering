@@ -56,6 +56,8 @@ public class IRV extends VotingSystem {
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
+    private String invalidAuditFilename;
+
     /**
      * Instantiates a new instant runoff voting system.
      *
@@ -81,7 +83,7 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
 	// Perform ballot validation process
-	performBallotValidation(ballots, 0.0);
+	performBallotValidation(ballots, 0.5);
 
 	this.numBallots = this.validBallots.size();
 
@@ -327,7 +329,7 @@ public class IRV extends VotingSystem {
 	    electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
 
 	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
-		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + winner + "\n",
+		    new String[] { this.invalidAuditFilename }, "Election Winner: " + winner + "\n",
 		    electionData2DArray, electionTableTitlesArray, "Official Mariah Election Processor Report",
 		    createQuickPrintSum(winner));
 
@@ -353,7 +355,6 @@ public class IRV extends VotingSystem {
 	this.invalidBallots = new ArrayList<IRVBallot>();
 
 	int id = 1;
-
 	for (final ArrayList<Integer> bal : ballots) {
 	    if (isBallotValid(bal, percentCandidates)) {
 		this.validBallots.add(new IRVBallot(bal, id));
@@ -383,7 +384,7 @@ public class IRV extends VotingSystem {
      * @return the name of the file that was created
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private String createInvalidAuditFile() throws IOException {
+    private void createInvalidAuditFile() throws IOException {
 	String electionDate = new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime());
 	String name = String.format("invalidated_%s", electionDate);
 
@@ -391,16 +392,16 @@ public class IRV extends VotingSystem {
 	final FileWriter writer = new FileWriter(file);
 	final StringBuilder fileOutput = new StringBuilder();
 
-	fileOutput.append("Invalid Ballots\n\n");
+	fileOutput.append(String.format("Invalid Ballots%n"));
 
 	for (IRVBallot bal : this.invalidBallots) {
-	    fileOutput.append(String.format("Ballot %d: %s\n", bal.getID(), bal.getVotes()));
+	    fileOutput.append(String.format("Ballot %d: %s%n", bal.getID(), bal.getVotes()));
 	}
 
 	writer.write(fileOutput.toString());
 	writer.close();
 
-	return name;
+	this.invalidAuditFilename = name;
     }
 
     /*
