@@ -190,7 +190,6 @@ public class IRV extends VotingSystem {
 
 	    }
 
-	    System.out.println(curCan.getName() + curCan.getNumVotes());
 	    candidateIndex++;
 	}
     }
