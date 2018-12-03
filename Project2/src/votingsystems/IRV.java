@@ -40,6 +40,14 @@ public class IRV extends VotingSystem {
     /** Indicates if the results should be output to the GUI. */
     private boolean resultsGUI;
 
+    /** The electionTableData passed into constructor of jTable */
+    private ArrayList<ArrayList<String>> electionDataList;
+
+    /** The electionTableTitles passed into constructor of jTable */
+    private ArrayList<String> electionTableTitles;
+
+    private int roundNumber = 0;
+
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
@@ -108,6 +116,56 @@ public class IRV extends VotingSystem {
 	} else {
 	    this.quota = (int) Math.ceil(numBallots * 0.5);
 	}
+    }
+
+    /**
+     * Initialize title arraylist and electiondata arraylist<arraylist<string>>
+     *
+     * @return the number of candidates with no votes eliminated
+     */
+    private void initializeElectionDataList() {
+	// initialize titles of table with first column = 'Candidates'
+	electionTableTitles = new ArrayList<>();
+	electionTableTitles.add("Candidates");
+
+	// initialize electionData arrayList
+	electionDataList = new ArrayList<>();
+
+	for (final IRVCandidate curCan : this.candidates) {
+	    // create arraylist with first item being candidate name
+	    ArrayList<String> row = new ArrayList<>();
+	    row.add(curCan.getName());
+	    electionDataList.add(row);
+	}
+    }
+
+    private void addVoteDataElectionTableArrayList() {
+	roundNumber++;
+	// Update Title For Rounds
+	electionTableTitles.add("Round " + roundNumber);
+
+	int candidateIndex = 0;
+
+	// For each candidate in election and in table
+	for (final IRVCandidate curCan : this.candidates) {
+	    electionDataList.get(candidateIndex).add(Integer.toString(curCan.getNumVotes()));
+	    candidateIndex++;
+	}
+    }
+
+    /**
+     * Convert arraylist of arraylist to two dimensional array
+     *
+     * @return the number of candidates with no votes eliminated
+     */
+    private String[][] getElectionTableArg() {
+	String[][] electionTableArg = new String[electionDataList.size()][];
+	for (int i = 0; i < electionDataList.size(); i++) {
+	    ArrayList<String> row = electionDataList.get(i);
+	    electionTableArg[i] = row.toArray(new String[row.size()]);
+	}
+
+	return electionTableArg;
     }
 
     /**
@@ -211,13 +269,7 @@ public class IRV extends VotingSystem {
 		    can.addBallot(bal);
 		    processedBallots
 			    .append(String.format("Ballot %d cast a vote for %s%n", bal.getID(), can.getName()));
-		    if (isMajority(can.getNumVotes())) {
-			processedBallots.append(
-				String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
-					can.getName(), this.quota));
-			this.auditor.auditProcess(processedBallots.toString());
-			return can.getName();
-		    }
+
 		    wasExhausted = false;
 		    break;
 		}
@@ -226,6 +278,19 @@ public class IRV extends VotingSystem {
 		processedBallots.append(String.format("Ballot %d has exhausted all of its votes.%n", bal.getID()));
 	    }
 	}
+	for (final IRVCandidate can : this.candidates) {
+	    if (isMajority(can.getNumVotes())) {
+		processedBallots
+			.append(String.format("%nProcessing Complete!%nCandidate %s has a majority of votes (>= %d).%n",
+				can.getName(), this.quota));
+		this.auditor.auditProcess(processedBallots.toString());
+
+		// capture current data into election table
+		addVoteDataElectionTableArrayList();
+		return can.getName();
+	    }
+	}
+	addVoteDataElectionTableArrayList();
 	this.auditor.auditProcess(processedBallots.toString());
 	return "";
     }
@@ -251,10 +316,14 @@ public class IRV extends VotingSystem {
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	System.out.print("Election Winner: " + winner + "\n\n");
 	if (resultsGUI) {
+	    // convert election Array Lists to Actual Arrays to pass as args
+	    String[][] electionData2DArray = getElectionTableArg();
+	    String[] electionTableTitlesArray = new String[electionTableTitles.size()];
+	    electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
+
 	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
 		    new String[] { "TODO INVALID BALLOTS FILE" }, "Election Winner: " + winner + "\n",
-		    new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
-		    new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
+		    electionData2DArray, electionTableTitlesArray, "Official Mariah Election Processor Report",
 		    createQuickPrintSum(winner));
 
 	    // Ensures thread safety with GUI
@@ -271,6 +340,12 @@ public class IRV extends VotingSystem {
     @Override
     public String runElection() throws IOException, InterruptedException, InvocationTargetException {
 	String auditFile;
+
+	// initialize ArrayList with candidates
+	initializeElectionDataList();
+
+	// To Do: functionality to dynamically update with votes for each round
+
 	// Atomically determine if election was run before. Throw error if run before as
 	// an election can only be run once!
 	if (!this.wasRun.getAndSet(true)) {
@@ -290,7 +365,9 @@ public class IRV extends VotingSystem {
 		    // Audit winner found and break;
 		    this.auditor.auditProcess(
 			    String.format("%nProcessing Complete!%nOnly one candidate has not been eliminated.%n"));
+
 		    auditFile = completeElection(lastCan);
+
 		    break;
 		}
 
@@ -309,6 +386,7 @@ public class IRV extends VotingSystem {
 
 		if (!"".equals(winner)) {
 		    // Audit winner found and break;
+
 		    auditFile = completeElection(winner);
 		    break;
 		} else {

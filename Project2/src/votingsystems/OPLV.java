@@ -230,7 +230,7 @@ public class OPLV extends VotingSystem {
 	for (OPLVCandidate curCan : this.candidates) {
 	    this.quickPrintSum.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName()));
 	}
-	this.quickPrintSum.append(String.format("Number of seats: %d\n", this.numSeats));
+	this.quickPrintSum.append(String.format("Number of seats: %d%n", this.numSeats));
 	this.quickPrintSum.append("Election Winner(s): " + "\n");
 	this.seats.forEach(curCan -> this.quickPrintSum
 		.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
