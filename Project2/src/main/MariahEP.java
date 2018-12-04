@@ -283,7 +283,7 @@ public class MariahEP {
 	String filePath = handleArgument("filePath", args);
 	boolean gui = handleArgument("gui", args) == "true";
 	String vbq = handleArgument("validBallotQuotient", args);
-	double validBallotQuotient = vbq == "" ? 0.5 : Double.parseDouble(vbq);
+	double validBallotQuotient = vbq == "" ? 50 : Double.parseDouble(vbq);
 	System.out.println(filePath + "\n" + gui + "\n" + validBallotQuotient);
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
@@ -369,7 +369,8 @@ public class MariahEP {
     private static void runElectionGUI(String filePath, double validBallotQuotient)
 	    throws InvocationTargetException, InterruptedException, IOException {
 	MariahElectionProcessor frame = new MariahElectionProcessor("MARIAH ELECTION PROCESSOR",
-		"Please select an election file from your file system or input the file path below.");
+		"Please select an election file from your file system or input the file path below.",
+		validBallotQuotient);
 	SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 	while (true) {
 	    // If user did not restrict GUI and filePath was not provided generate file
@@ -386,6 +387,8 @@ public class MariahEP {
 	    VotingSystem vs = null;
 
 	    try {
+		validBallotQuotient = frame.getValidBallotQuotient();
+
 		vs = votingSystemFromFile(filePath, true, validBallotQuotient);
 	    } catch (InvalidFileException e) {
 		vs = null;
