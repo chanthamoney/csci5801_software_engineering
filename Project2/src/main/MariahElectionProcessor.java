@@ -8,6 +8,7 @@
 package main;
 
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 
 /**
@@ -53,7 +54,7 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 
 	jMenuEdit.setText("Edit");
 
-	slider = new javax.swing.JSlider(JSlider.HORIZONTAL, 100);
+	slider = new javax.swing.JSlider(SwingConstants.HORIZONTAL, 100);
 	ChangeListener cl = e -> {
 	    JSlider x = (JSlider) e.getSource();
 	    this.validBallotQuotient = x.getValue();
