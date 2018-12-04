@@ -49,7 +49,7 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui", "--valid-ballot-quotient=0" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -96,7 +96,7 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui", "--valid-ballot-quotient=0" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);

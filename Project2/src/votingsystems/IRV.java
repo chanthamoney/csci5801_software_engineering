@@ -85,7 +85,7 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
 	// Perform ballot validation process
-	performBallotValidation(ballots, validBallotQuotient * 0.01);
+	performBallotValidation(ballots, Math.floor(validBallotQuotient * 0.01));
 
 	this.numBallots = this.validBallots.size();
 

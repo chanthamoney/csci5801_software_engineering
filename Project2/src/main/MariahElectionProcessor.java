@@ -32,7 +32,7 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 
     private javax.swing.JLabel sliderLabel;
 
-    private double validBallotQuotient;
+    private int validBallotQuotient;
 
     /**
      * Instantiates a new mariah election processor.
@@ -40,7 +40,7 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
      * @param title      the title
      * @param filePrompt the file prompt
      */
-    public MariahElectionProcessor(String title, String filePrompt, double validBallotQuotient) {
+    public MariahElectionProcessor(String title, String filePrompt, int validBallotQuotient) {
 	super(title, filePrompt);
 
 	jMenuBar = new javax.swing.JMenuBar();
@@ -83,7 +83,7 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 	// TODO OPEN JFRAME OF DYNAMIC ELECTION
     }// GEN-LAST:event_jButton1ActionPerformed
 
-    public double getValidBallotQuotient() {
+    public int getValidBallotQuotient() {
 	return this.validBallotQuotient;
     }
 }

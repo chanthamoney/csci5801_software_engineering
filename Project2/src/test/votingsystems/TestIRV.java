@@ -268,6 +268,7 @@ public class TestIRV {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 
+	System.out.println(output);
 	// check if winner is as expected
 	assertTrue("Election Winner: Sasuke\n\n".equals(output) || "Election Winner: Naruto\n\n".equals(output)
 		|| "Election Winner: Sakura\n\n".equals(output));

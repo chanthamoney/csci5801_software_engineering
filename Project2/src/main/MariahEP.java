@@ -38,7 +38,7 @@ public class MariahEP {
      * @throws InvalidFileException the invalid file exception
      * @throws IOException          Signals that an I/O exception has occurred.
      */
-    private static VotingSystem votingSystemFromFile(String filePath, boolean gui, double validBallotQuotient)
+    private static VotingSystem votingSystemFromFile(String filePath, boolean gui, int validBallotQuotient)
 	    throws InvalidFileException, IOException {
 	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
@@ -283,7 +283,7 @@ public class MariahEP {
 	String filePath = handleArgument("filePath", args);
 	boolean gui = handleArgument("gui", args) == "true";
 	String vbq = handleArgument("validBallotQuotient", args);
-	double validBallotQuotient = vbq == "" ? 50 : Double.parseDouble(vbq);
+	int validBallotQuotient = vbq == "" ? 50 : Integer.parseInt(vbq);
 	System.out.println(filePath + "\n" + gui + "\n" + validBallotQuotient);
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
@@ -326,7 +326,7 @@ public class MariahEP {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      */
-    private static void runElectionCommandLine(String filePath, double validBallotQuotient)
+    private static void runElectionCommandLine(String filePath, int validBallotQuotient)
 	    throws InvocationTargetException, IOException, InterruptedException {
 	File file = new File(filePath.trim());
 	VotingSystem vs;
@@ -366,7 +366,7 @@ public class MariahEP {
      * @throws InterruptedException      the interrupted exception
      * @throws IOException               Signals that an I/O exception has occurred.
      */
-    private static void runElectionGUI(String filePath, double validBallotQuotient)
+    private static void runElectionGUI(String filePath, int validBallotQuotient)
 	    throws InvocationTargetException, InterruptedException, IOException {
 	MariahElectionProcessor frame = new MariahElectionProcessor("MARIAH ELECTION PROCESSOR",
 		"Please select an election file from your file system or input the file path below.",
