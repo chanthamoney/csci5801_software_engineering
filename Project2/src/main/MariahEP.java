@@ -281,9 +281,10 @@ public class MariahEP {
      */
     public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
 	String filePath = handleArgument("filePath", args);
-	boolean gui = handleArgument("gui", args) == "true";
+	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
 	int validBallotQuotient = vbq == "" ? 50 : Integer.parseInt(vbq);
+
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
 	} else {
@@ -292,22 +293,22 @@ public class MariahEP {
     }
 
     private static String handleArgument(String setup, String[] args) {
-	if (setup == "gui") {
+	if ("gui".equals(setup)) {
 	    for (int i = 0; i < args.length; i++) {
 		if (args[i] == "--no-gui") {
 		    return "false";
 		}
 	    }
 	    return "true";
-	} else if (setup == "filePath") {
+	} else if ("filePath".equals(setup)) {
 	    for (int i = 0; i < args.length; i++) {
 		if (!args[i].startsWith("--")) {
 		    return args[i];
 		}
 	    }
-	} else if (setup == "validBallotQuotient") {
+	} else if ("validBallotQuotient".equals(setup)) {
 	    for (int i = 0; i < args.length; i++) {
-		if (args[i] == "--valid-ballot-quotient=") {
+		if (args[i].startsWith("--valid-ballot-quotient=")) {
 		    return args[i].substring(24);
 		}
 	    }
