@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 11:52:08 AM
+ * Last Update: Dec 4, 2018 5:49:39 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -46,17 +46,19 @@ public class IRV extends VotingSystem {
     /** Indicates if the results should be output to the GUI. */
     private boolean resultsGUI;
 
-    /** The electionTableData passed into constructor of jTable */
+    /** The electionTableData passed into constructor of jTable. */
     private ArrayList<ArrayList<String>> electionDataList;
 
-    /** The electionTableTitles passed into constructor of jTable */
+    /** The electionTableTitles passed into constructor of jTable. */
     private ArrayList<String> electionTableTitles;
 
+    /** The round number. */
     private int roundNumber = 0;
 
     /** Maintains the number of candidates who have not been eliminated. */
     private int remainingCandidates;
 
+    /** The invalid audit filename. */
     private String invalidAuditFilename;
 
     /**
@@ -116,13 +118,6 @@ public class IRV extends VotingSystem {
 
     /**
      * Throws an error for default constructor.
-     *
-     * @param validBallotQuotient
-     * @param gui
-     * @param in_Ballots
-     * @param cpPairs
-     * @param in_NumCandidates
-     * @param in_NumBallots
      */
     public IRV() {
 	super();
@@ -144,7 +139,7 @@ public class IRV extends VotingSystem {
     }
 
     /**
-     * Initialize title arraylist and electiondata arraylist<arraylist<string>>
+     * Initialize title arraylist and electiondata arraylist<arraylist<string>>.
      *
      * @return the number of candidates with no votes eliminated
      */
@@ -164,6 +159,13 @@ public class IRV extends VotingSystem {
 	}
     }
 
+    /**
+     * Gets the votes added subtracted.
+     *
+     * @param previousRound the previous round
+     * @param currentRound  the current round
+     * @return the votes added subtracted
+     */
     private int getVotesAddedSubtracted(int previousRound, int currentRound) {
 	int voteDifference = 0;
 	voteDifference = currentRound - previousRound;
@@ -171,6 +173,9 @@ public class IRV extends VotingSystem {
 	return voteDifference;
     }
 
+    /**
+     * Adds the vote data election table array list.
+     */
     private void addVoteDataElectionTableArrayList() {
 	roundNumber++;
 	// Update Title For Rounds
@@ -358,6 +363,9 @@ public class IRV extends VotingSystem {
 
     /**
      * Creates the quick summary report that can be printed.
+     *
+     * @param winner the winner
+     * @return the string
      */
     private String createQuickPrintSum(String winner) {
 	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
@@ -369,6 +377,15 @@ public class IRV extends VotingSystem {
 	return this.quickPrintSum.toString();
     }
 
+    /**
+     * Complete election.
+     *
+     * @param winner the winner
+     * @return the string
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InterruptedException      the interrupted exception
+     */
     private String completeElection(String winner) throws IOException, InvocationTargetException, InterruptedException {
 	this.auditor.auditResult("Election Winner: " + winner);
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
@@ -422,6 +439,8 @@ public class IRV extends VotingSystem {
      * Determines whether or not a ballot is valid. For a ballot to be valid, it
      * must have at least half of the candidates ranked.
      *
+     * @param bal               the bal
+     * @param percentCandidates the percent candidates
      * @return the true if the ballot is valid and false otherwise.
      */
     private boolean isBallotValid(ArrayList<Integer> bal, double percentCandidates) {
@@ -436,7 +455,7 @@ public class IRV extends VotingSystem {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private void createInvalidAuditFile() throws IOException {
-	String electionDate = new SimpleDateFormat("MM-dd-yyyy").format(Calendar.getInstance().getTime());
+	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 	String name = String.format("invalidated_%s", electionDate);
 
 	final File file = new File(name);

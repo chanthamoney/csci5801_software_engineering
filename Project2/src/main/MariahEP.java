@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 9:45:35 AM
+ * Last Update: Dec 4, 2018 5:46:40 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -33,7 +33,7 @@ public class MariahEP {
      *
      * @param filePath            the file name
      * @param gui                 maintains if the GUI should be utilized
-     * @param validBallotQuotient
+     * @param validBallotQuotient the valid ballot quotient
      * @return the voting system
      * @throws InvalidFileException the invalid file exception
      * @throws IOException          Signals that an I/O exception has occurred.
@@ -283,7 +283,7 @@ public class MariahEP {
 	String filePath = handleArgument("filePath", args);
 	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
-	int validBallotQuotient = vbq.equals("") ? 50 : Integer.parseInt(vbq);
+	int validBallotQuotient = "".equals(vbq) ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
@@ -292,10 +292,17 @@ public class MariahEP {
 	}
     }
 
+    /**
+     * Handle argument.
+     *
+     * @param setup the setup
+     * @param args  the args
+     * @return the string
+     */
     private static String handleArgument(String setup, String[] args) {
 	if ("gui".equals(setup)) {
 	    for (String arg : args) {
-		if (arg.equals("--no-gui")) {
+		if ("--no-gui".equals(arg)) {
 		    return "false";
 		}
 	    }
@@ -321,7 +328,7 @@ public class MariahEP {
      * Runs the election processing without the use of the Graphical User Interface.
      *
      * @param filePath            the file path
-     * @param validBallotQuotient
+     * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
@@ -361,7 +368,7 @@ public class MariahEP {
      * Runs the election processing utilizing the Mariah Graphical User Interface.
      *
      * @param filePath            the file path
-     * @param validBallotQuotient
+     * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
      * @throws IOException               Signals that an I/O exception has occurred.

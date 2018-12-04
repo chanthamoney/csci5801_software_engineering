@@ -1,13 +1,11 @@
 /**
  * File: MariahElectionProcessor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 29, 2018 8:27:47 PM
+ * Last Update: Dec 4, 2018 5:46:45 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 package main;
-
-import java.io.IOException;
 
 import javax.swing.JSlider;
 import javax.swing.event.ChangeListener;
@@ -26,19 +24,24 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
     /** The j menu bar. */
     private javax.swing.JMenuBar jMenuBar;
 
+    /** The slider. */
     private javax.swing.JSlider slider;
 
+    /** The slider panel. */
     private javax.swing.JPanel sliderPanel;
 
+    /** The slider label. */
     private javax.swing.JLabel sliderLabel;
 
+    /** The valid ballot quotient. */
     private int validBallotQuotient;
 
     /**
      * Instantiates a new mariah election processor.
      *
-     * @param title      the title
-     * @param filePrompt the file prompt
+     * @param title               the title
+     * @param filePrompt          the file prompt
+     * @param validBallotQuotient the valid ballot quotient
      */
     public MariahElectionProcessor(String title, String filePrompt, int validBallotQuotient) {
 	super(title, filePrompt);
@@ -74,15 +77,10 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
     }
 
     /**
-     * J button 1 action performed.
+     * Gets the valid ballot quotient.
      *
-     * @param evt the evt
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @return the valid ballot quotient
      */
-    private void jMenuItemNewDynamicElectionActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
-	// TODO OPEN JFRAME OF DYNAMIC ELECTION
-    }// GEN-LAST:event_jButton1ActionPerformed
-
     public int getValidBallotQuotient() {
 	return this.validBallotQuotient;
     }

@@ -1,8 +1,7 @@
-
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 11:53:52 AM
+ * Last Update: Dec 4, 2018 5:48:05 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -72,9 +71,16 @@ public class TestIRV {
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false, 0);
     }
 
-    /****************************************
-     * Test Ballot Invalidation Process
-     ****************************************/
+    /**
+     * ************************************** Test Ballot Invalidation Process
+     * **************************************.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
     /**
      * Test an election where there are an even number of candidates and no invalid
      * ballots.
@@ -203,7 +209,16 @@ public class TestIRV {
 	testFileAuditPair("oddCandidatesAllInvalidBallots");
     }
 
-    /********************************************/
+    /**
+     * *****************************************.
+     *
+     * @param electionFile the election file
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
 
     /**
      * Test file audit pair.
