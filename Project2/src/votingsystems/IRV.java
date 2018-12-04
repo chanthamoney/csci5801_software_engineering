@@ -61,16 +61,18 @@ public class IRV extends VotingSystem {
     /**
      * Instantiates a new instant runoff voting system.
      *
-     * @param numBallots    the number of ballots in the election
-     * @param numCandidates the number of candidates in the election
-     * @param candidates    the candidates running in the election
-     * @param ballots       the ballots being cast in the election
-     * @param resultsGUI    indicator for whether the results should be displaying
-     *                      using the gui
+     * @param numBallots          the number of ballots in the election
+     * @param numCandidates       the number of candidates in the election
+     * @param candidates          the candidates running in the election
+     * @param ballots             the ballots being cast in the election
+     * @param resultsGUI          indicator for whether the results should be
+     *                            displaying using the gui
+     * @param validBallotQuotient
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
-	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI) throws IOException {
+	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI, double validBallotQuotient)
+	    throws IOException {
 	super(numBallots, numCandidates);
 
 	this.resultsGUI = resultsGUI;
@@ -83,7 +85,7 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
 	// Perform ballot validation process
-	performBallotValidation(ballots, 0.5);
+	performBallotValidation(ballots, validBallotQuotient * 0.01);
 
 	this.numBallots = this.validBallots.size();
 
@@ -105,7 +107,16 @@ public class IRV extends VotingSystem {
 	this.auditor.auditSetup(setup.toString());
     }
 
-    /** Throws an error for default constructor. */
+    /**
+     * Throws an error for default constructor.
+     * 
+     * @param validBallotQuotient
+     * @param gui
+     * @param in_Ballots
+     * @param cpPairs
+     * @param in_NumCandidates
+     * @param in_NumBallots
+     */
     public IRV() {
 	super();
 	throw new IllegalArgumentException("Default constructor is not allowed.");

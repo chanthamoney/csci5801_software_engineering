@@ -67,7 +67,7 @@ public class TestIRV {
 	this.testBallots.add(fifthBallot);
 	this.testBallots.add(sixthBallot);
 
-	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false);
+	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false, 0);
     }
 
     // Test Ballot Invalidation Process
@@ -157,7 +157,7 @@ public class TestIRV {
 	final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates, scanner);
 	scanner.close();
-	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false);
+	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false, 0);
     }
 
     /**
@@ -315,7 +315,7 @@ public class TestIRV {
 	    Collections.shuffle(newBallot, randomizer);
 	    this.testBallots.add(newBallot);
 	}
-	final VotingSystem vs = new IRV(this.testBallots.size(), 300, candidates_300, this.testBallots, false);
+	final VotingSystem vs = new IRV(this.testBallots.size(), 300, candidates_300, this.testBallots, false, 0);
 
 	// Record current time in milliseconds immediately before election run
 	final long timeBefore = System.currentTimeMillis();
