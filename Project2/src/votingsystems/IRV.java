@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 3, 2018 2:41:59 PM
+ * Last Update: Dec 4, 2018 11:52:08 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -20,6 +20,7 @@ import java.util.Random;
 
 import javax.swing.SwingUtilities;
 
+import main.InvalidFileException;
 import mariahgui.MariahResults;
 
 /**
@@ -67,12 +68,13 @@ public class IRV extends VotingSystem {
      * @param ballots             the ballots being cast in the election
      * @param resultsGUI          indicator for whether the results should be
      *                            displaying using the gui
-     * @param validBallotQuotient
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @param validBallotQuotient the valid ballot quotient
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InvalidFileException the invalid file exception
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
 	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI, double validBallotQuotient)
-	    throws IOException {
+	    throws IOException, InvalidFileException {
 	super(numBallots, numCandidates);
 
 	this.resultsGUI = resultsGUI;
@@ -85,9 +87,13 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
 	// Perform ballot validation process
-	performBallotValidation(ballots, Math.floor(validBallotQuotient * 0.01));
+	performBallotValidation(ballots, validBallotQuotient / 100.0);
 
 	this.numBallots = this.validBallots.size();
+
+	if (this.numBallots == 0) {
+	    throw new InvalidFileException("There are not enough valid ballots.");
+	}
 
 	// Initialize voter pool to all valid ballots
 	this.voterPool = new IRVBallot[this.numBallots];
@@ -97,9 +103,9 @@ public class IRV extends VotingSystem {
 	initializeQuota(this.numBallots);
 
 	// Produce audit file information
-	final StringBuilder setup = new StringBuilder(
-		String.format("Voting System:\tInstant Runoff Voting%n%nNumber of Candidates: %s%n%nCandidates:%n",
-			this.numCandidates));
+	final StringBuilder setup = new StringBuilder(String.format(
+		"Voting System:\tInstant Runoff Voting%n%nValid Ballot Quotient: %s%%%n%nNumber of Candidates: %s%n%nCandidates:%n",
+		validBallotQuotient, this.numCandidates));
 	for (int i = 0; i < this.numCandidates; i++) {
 	    setup.append(String.format("\t%d - %s%n", i, candidates[i]));
 	}

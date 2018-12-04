@@ -2,7 +2,7 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 3, 2018 2:41:33 PM
+ * Last Update: Dec 4, 2018 11:53:52 AM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -32,6 +32,7 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+import main.InvalidFileException;
 import votingsystems.IRV;
 import votingsystems.VotingSystem;
 
@@ -50,9 +51,10 @@ public class TestIRV {
      * Initialize test IRV.
      *
      * @return the irv
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InvalidFileException the invalid file exception
      */
-    private IRV initializeTestIRV() throws IOException {
+    private IRV initializeTestIRV() throws IOException, InvalidFileException {
 	final ArrayList<Integer> firstBallot = new ArrayList<>(Arrays.asList(0, 1, 2, 3));
 	final ArrayList<Integer> secondBallot = new ArrayList<>(Arrays.asList(1, 0, 2, 3));
 	final ArrayList<Integer> thirdBallot = new ArrayList<>(Arrays.asList(3, 2, 1, 0));
@@ -79,10 +81,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVSomeInvalidBallots()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("invalidTestSomeInvalidBallots");
     }
 
@@ -94,9 +97,10 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     private static void testFileAuditPair(String electionFile)
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -119,9 +123,10 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
 	Path auditFile = Paths.get(".", vs.runElection());
 
@@ -140,10 +145,12 @@ public class TestIRV {
      *
      * @param fileName the file name
      * @return the voting system
-     * @throws ParseException the parse exception
-     * @throws IOException    Signals that an I/O exception has occurred.
+     * @throws ParseException       the parse exception
+     * @throws IOException          Signals that an I/O exception has occurred.
+     * @throws InvalidFileException the invalid file exception
      */
-    private static VotingSystem votingSystemFromFile(String fileName) throws ParseException, IOException {
+    private static VotingSystem votingSystemFromFile(String fileName)
+	    throws ParseException, IOException, InvalidFileException {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
 
@@ -208,9 +215,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test(expected = RuntimeException.class)
-    public void testRunElectionTwice() throws IOException, InterruptedException, InvocationTargetException {
+    public void testRunElectionTwice()
+	    throws IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	final VotingSystem vs = initializeTestIRV();
 	Path auditFile = Paths.get(".", vs.runElection());
 	try {
@@ -248,10 +257,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVRandomWinner()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -280,9 +290,11 @@ public class TestIRV {
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
      * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
-    public void testRunElectionEfficiency() throws InterruptedException, InvocationTargetException, IOException {
+    public void testRunElectionEfficiency()
+	    throws InterruptedException, InvocationTargetException, IOException, InvalidFileException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -350,10 +362,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVMajorityPopularVote()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("majorityPopularVote");
     }
 
@@ -364,10 +377,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVTenThousandVotes()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("tenThousandVotes");
     }
 
@@ -378,9 +392,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
-    public void testIRVOneVote() throws ParseException, IOException, InterruptedException, InvocationTargetException {
+    public void testIRVOneVote()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("oneVote");
     }
 
@@ -391,10 +407,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVOneCandidate()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("OneCandidate");
     }
 
@@ -405,10 +422,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVNoMajorityPopularVote()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	testFileAuditPair("noMajorityPopularVote");
     }
 
@@ -420,10 +438,11 @@ public class TestIRV {
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
      */
     @Test
     public void testIRVConsequentialTieTwoCandidates()
-	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	// Keep current System.out
 	final PrintStream oldOut = System.out;
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();

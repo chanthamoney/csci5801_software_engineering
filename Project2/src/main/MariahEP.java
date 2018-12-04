@@ -284,7 +284,6 @@ public class MariahEP {
 	boolean gui = handleArgument("gui", args) == "true";
 	String vbq = handleArgument("validBallotQuotient", args);
 	int validBallotQuotient = vbq == "" ? 50 : Integer.parseInt(vbq);
-	System.out.println(filePath + "\n" + gui + "\n" + validBallotQuotient);
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
 	} else {
