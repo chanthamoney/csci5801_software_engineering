@@ -69,11 +69,11 @@ public class Auditor {
 	fileOutput.append(this.auditSetup);
 	if ((this.auditSetup.length() != 0)
 		&& ((this.auditProcess.length() != 0) || (this.auditResult.length() != 0))) {
-	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+	    fileOutput.append(String.format("%n%n- - - - - - - - - - - - - - - - - - - -%n%n"));
 	}
 	fileOutput.append(this.auditProcess);
 	if ((this.auditProcess.length() != 0) && (this.auditResult.length() != 0)) {
-	    fileOutput.append("\n\n- - - - - - - - - - - - - - - - - - - -\n\n");
+	    fileOutput.append(String.format("%n%n- - - - - - - - - - - - - - - - - - - -%n%n"));
 	}
 	fileOutput.append(this.auditResult);
 	writer.write(fileOutput.toString());

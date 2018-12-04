@@ -227,7 +227,8 @@ public class TestIRV {
 	    file.delete();
 	    auditFile = Paths.get(".", vs.runElection());
 	} catch (RuntimeException rte) {
-	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
+	    assertEquals(String.format("An election can only be run once for a given voting system.%n"),
+		    rte.getMessage());
 	    throw rte;
 	}
 
@@ -280,8 +281,9 @@ public class TestIRV {
 
 	System.out.println(output);
 	// check if winner is as expected
-	assertTrue("Election Winner: Sasuke\n\n".equals(output) || "Election Winner: Naruto\n\n".equals(output)
-		|| "Election Winner: Sakura\n\n".equals(output));
+	assertTrue(String.format("Election Winner: Sasuke%n%n").equals(output)
+		|| String.format("Election Winner: Naruto%n%n").equals(output)
+		|| String.format("Election Winner: Sakura%n%n").equals(output));
     }
 
     /**
@@ -460,7 +462,7 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winner: Naruto (Senju)\n\n".equals(output)
-		|| "Election Winner: Sasuke (Senju)\n\n".equals(output));
+	assertTrue(String.format("Election Winner: Naruto (Senju)%n%n").equals(output)
+		|| String.format("Election Winner: Sasuke (Senju)%n%n").equals(output));
     }
 }

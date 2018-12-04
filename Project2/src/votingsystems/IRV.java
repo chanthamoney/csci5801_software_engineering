@@ -248,7 +248,7 @@ public class IRV extends VotingSystem {
 	// Audit elimination of candidates with no votes
 	if (numElim > 0) {
 	    final StringBuilder eliminatedCandidateNames = new StringBuilder(
-		    "Eliminated the following candidates who received no votes:\n");
+		    String.format("Eliminated the following candidates who received no votes:%n"));
 	    eliminatedCandidates
 		    .forEach(curCanName -> eliminatedCandidateNames.append(String.format("\t%s%n", curCanName)));
 	    this.auditor.auditProcess(eliminatedCandidateNames.toString());
@@ -361,21 +361,18 @@ public class IRV extends VotingSystem {
      */
     private String createQuickPrintSum(String winner) {
 	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
-	this.quickPrintSum.append("\n");
-	this.quickPrintSum.append("Election Type: IRV\n");
-	this.quickPrintSum.append("Candidates:\n");
+	this.quickPrintSum.append(String.format("%nElection Type: IRV%nCandidates:%n"));
 	for (IRVCandidate curCan : this.candidates) {
 	    this.quickPrintSum.append(String.format("\t%s%n", curCan.getName()));
 	}
-	this.quickPrintSum.append("Election Winner: " + winner + "\n");
-	this.quickPrintSum.append("\n");
+	this.quickPrintSum.append(String.format("Election Winner: %s%n%n", winner));
 	return this.quickPrintSum.toString();
     }
 
     private String completeElection(String winner) throws IOException, InvocationTargetException, InterruptedException {
 	this.auditor.auditResult("Election Winner: " + winner);
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-	System.out.print("Election Winner: " + winner + "\n\n");
+	System.out.print(String.format("Election Winner: %s%n%n", winner));
 	if (resultsGUI) {
 	    // convert election Array Lists to Actual Arrays to pass as args
 	    String[][] electionData2DArray = getElectionTableArg();
@@ -383,7 +380,7 @@ public class IRV extends VotingSystem {
 	    electionTableTitlesArray = electionTableTitles.toArray(electionTableTitlesArray);
 
 	    MariahResults frame = new MariahResults("Election Results", auditFile, new String[] { "Invalid Ballots" },
-		    new String[] { this.invalidAuditFilename }, "Election Winner: " + winner + "\n",
+		    new String[] { this.invalidAuditFilename }, String.format("Election Winner: %s%n", winner),
 		    electionData2DArray, electionTableTitlesArray, "Official Mariah Election Processor Report",
 		    createQuickPrintSum(winner));
 
@@ -505,7 +502,8 @@ public class IRV extends VotingSystem {
 		    }
 		    ballotsProcessed.append(curBallot.getID());
 		}
-		this.auditor.auditProcess("Processing the following ballots:\n\t" + ballotsProcessed.toString() + "\n");
+		this.auditor.auditProcess(
+			String.format("Processing the following ballots:%n\t%s%n", ballotsProcessed.toString()));
 
 		final String winner = processVoterPool();
 
@@ -522,7 +520,8 @@ public class IRV extends VotingSystem {
 			    curPartyVotes.append(String.format("\t%s - %d%n", curCan.getName(), curCan.getNumVotes()));
 			}
 		    }
-		    this.auditor.auditProcess("\nRemaining Candidate - Votes:\n" + curPartyVotes.toString());
+		    this.auditor.auditProcess(
+			    String.format("%nRemaining Candidate - Votes:%n%s", curPartyVotes.toString()));
 
 		    // On the first run only eliminate all candidates who did not receive votes
 		    if (firstRun) {
@@ -538,7 +537,7 @@ public class IRV extends VotingSystem {
 		}
 	    }
 	} else {
-	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
+	    throw new RuntimeException(String.format("An election can only be run once for a given voting system.%n"));
 	}
 	return auditFile;
     }

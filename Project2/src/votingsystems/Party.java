@@ -156,9 +156,9 @@ public class Party {
 	    final OPLVCandidate curCan = this.candidates.get(i);
 	    ret += String.format("%s [%d vote", curCan.getName(), curCan.getNumVotes());
 	    if (curCan.getNumVotes() == 1) {
-		ret += "]\n";
+		ret += String.format("]%n");
 	    } else {
-		ret += "s]\n";
+		ret += String.format("s]%n");
 	    }
 	    final int numVotes = can.getNumVotes();
 	    if ((firstIndx == -1) && (numVotes == minVotes)) {

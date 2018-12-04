@@ -86,7 +86,8 @@ public class OPLV extends VotingSystem {
 	}
 	calculateQuota(numBallots, numSeats);
 
-	final StringBuilder setup = new StringBuilder("Voting System:\tOpen Party List Voting\n\nParties:\n");
+	final StringBuilder setup = new StringBuilder(
+		String.format("Voting System:\tOpen Party List Voting%n%nParties:%n"));
 	this.parties.forEach(curParty -> {
 	    setup.append(String.format("%n%s%n\tCandidates:%n", curParty.getName()));
 	    curParty.getCandidates().forEach(curCan -> setup.append(String.format("\t\t- %s%n", curCan.getName())));
@@ -163,17 +164,17 @@ public class OPLV extends VotingSystem {
 	    if (this.wasRandomRanking && (seatsLeft < rankedRemainders.size())
 		    && (rankedRemainders.get(newSeats - 1).getNumVotes()
 			    % this.quota == rankedRemainders.get(newSeats).getNumVotes() % this.quota)) {
-		seatAllocations
-			.append("NOTE: There was a consequential tie in remainders which was resolved randomly.\n");
+		seatAllocations.append(String
+			.format("NOTE: There was a consequential tie in remainders which was resolved randomly.%n"));
 		this.wasRandomRanking = false;
 	    }
 	    seatsLeft -= newSeats;
 	}
-	seatAllocations.append("\nFinal Seat Allocations:\n");
+	seatAllocations.append(String.format("%nFinal Seat Allocations:%n"));
 	this.parties.forEach(curParty -> seatAllocations
 		.append(String.format("\t%s - %d%n", curParty.getName(), curParty.getNumSeats())));
 
-	this.auditor.auditProcess(seatAllocations.toString() + "\n");
+	this.auditor.auditProcess(seatAllocations.toString() + String.format("%n"));
     }
 
     /**
@@ -214,7 +215,7 @@ public class OPLV extends VotingSystem {
      * Ranks the candidates in each party participating in the election.
      */
     private void rankPartyCandidates() {
-	final StringBuilder rankings = new StringBuilder("Party Rankings [* - Allocated Party Seat]\n");
+	final StringBuilder rankings = new StringBuilder(String.format("Party Rankings [* - Allocated Party Seat]%n"));
 	this.parties.forEach(curParty -> rankings.append(curParty.rankCandidates()));
 	this.auditor.auditProcess(rankings.toString());
     }
@@ -224,17 +225,14 @@ public class OPLV extends VotingSystem {
      */
     private String createQuickPrintSum() {
 	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
-	this.quickPrintSum.append("\n");
-	this.quickPrintSum.append("Election Type: OPL\n");
-	this.quickPrintSum.append("Candidates:\n");
+	this.quickPrintSum.append(String.format("%nElection Type: OPL%nCandidates:%n"));
 	for (OPLVCandidate curCan : this.candidates) {
 	    this.quickPrintSum.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName()));
 	}
-	this.quickPrintSum.append(String.format("Number of seats: %d%n", this.numSeats));
-	this.quickPrintSum.append("Election Winner(s): " + "\n");
+	this.quickPrintSum.append(String.format("Number of seats: %d%nElection Winner(s):%n", this.numSeats));
 	this.seats.forEach(curCan -> this.quickPrintSum
 		.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
-	this.quickPrintSum.append("\n");
+	this.quickPrintSum.append(String.format("%n"));
 	return this.quickPrintSum.toString();
 
     }
@@ -260,12 +258,12 @@ public class OPLV extends VotingSystem {
 	    rankPartyCandidates();
 	    assignSeats();
 
-	    final StringBuilder res = new StringBuilder("Election Winners:\n");
+	    final StringBuilder res = new StringBuilder(String.format("Election Winners:%n"));
 	    this.seats.forEach(
 		    curCan -> res.append(String.format("\t%s (%s)%n", curCan.getName(), curCan.getParty().getName())));
 	    this.auditor.auditResult(res.toString());
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
-	    System.out.print(res.toString() + "\n");
+	    System.out.print(res.toString() + String.format("%n"));
 	    if (this.resultsGUI) {
 		MariahResults frame = new MariahResults("Election Results", auditFile,
 			new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
@@ -277,7 +275,7 @@ public class OPLV extends VotingSystem {
 		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 	    }
 	} else {
-	    throw new RuntimeException("An election can only be run once for a given voting system.\n");
+	    throw new RuntimeException(String.format("An election can only be run once for a given voting system.%n"));
 	}
 	return auditFile;
     }

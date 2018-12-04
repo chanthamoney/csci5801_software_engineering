@@ -35,11 +35,11 @@ public class TestAuditor {
      * @return the auditor
      */
     private Auditor initializeTestAuditor() {
-	testStrings.add("Audit line 1\n");
-	testStrings.add("Audit line 2\n");
-	testStrings.add("Audit line 3\n");
-	testStrings.add("Audit line 4\n");
-	testStrings.add("Audit line 5\n");
+	testStrings.add(String.format("Audit line 1%n"));
+	testStrings.add(String.format("Audit line 2%n"));
+	testStrings.add(String.format("Audit line 3%n"));
+	testStrings.add(String.format("Audit line 4%n"));
+	testStrings.add(String.format("Audit line 5%n"));
 	return new Auditor();
     }
 

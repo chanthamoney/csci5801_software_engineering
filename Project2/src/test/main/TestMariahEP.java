@@ -57,7 +57,7 @@ public class TestMariahEP {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
-	String[] splitOutput = output.split("\n\n");
+	String[] splitOutput = output.split(String.format("%n%n"));
 	for (String aSplitOutput : splitOutput) {
 	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
@@ -105,7 +105,7 @@ public class TestMariahEP {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
-	String[] splitOutput = output.split("\n\n");
+	String[] splitOutput = output.split(String.format("%n%n"));
 	for (String aSplitOutput : splitOutput) {
 	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
@@ -352,11 +352,12 @@ public class TestMariahEP {
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
 
 	// check if winner is as expected
-	assertTrue(
-		"Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)"
-			.equals(electionWinner)
-			|| "Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)"
-				.equals(electionWinner));
+	assertTrue(String.format(
+		"Katsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tMomo (EraserHead)")
+		.equals(electionWinner)
+		|| String.format(
+			"Katsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tFroppy (EraserHead)")
+			.equals(electionWinner));
     }
 
     /**

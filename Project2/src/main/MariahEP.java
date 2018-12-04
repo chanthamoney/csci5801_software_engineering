@@ -394,8 +394,8 @@ public class MariahEP {
 		vs = null;
 
 		// Thread safe way to open unsafe file dialog
-		SwingUtilities.invokeAndWait(() -> frame.showDialog(
-			"Selected file is not a standardized IRV or OPLV election file.\n\nERROR: " + e.getMessage()));
+		SwingUtilities.invokeAndWait(() -> frame.showDialog(String.format(
+			"Selected file is not a standardized IRV or OPLV election file.%n%nERROR: ", e.getMessage())));
 	    } catch (Exception e) {
 		SwingUtilities.invokeAndWait(() -> frame.showDialog("An unexpected error has occured."));
 		SwingUtilities.invokeAndWait(frame::dispose);
