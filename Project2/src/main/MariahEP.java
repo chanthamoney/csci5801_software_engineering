@@ -283,7 +283,7 @@ public class MariahEP {
 	String filePath = handleArgument("filePath", args);
 	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
-	int validBallotQuotient = vbq == "" ? 50 : Integer.parseInt(vbq);
+	int validBallotQuotient = vbq.equals("") ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
 	    runElectionGUI(filePath, validBallotQuotient);
@@ -294,22 +294,22 @@ public class MariahEP {
 
     private static String handleArgument(String setup, String[] args) {
 	if ("gui".equals(setup)) {
-	    for (int i = 0; i < args.length; i++) {
-		if (args[i] == "--no-gui") {
+	    for (String arg : args) {
+		if (arg.equals("--no-gui")) {
 		    return "false";
 		}
 	    }
 	    return "true";
 	} else if ("filePath".equals(setup)) {
-	    for (int i = 0; i < args.length; i++) {
-		if (!args[i].startsWith("--")) {
-		    return args[i];
+	    for (String arg : args) {
+		if (!arg.startsWith("--")) {
+		    return arg;
 		}
 	    }
 	} else if ("validBallotQuotient".equals(setup)) {
-	    for (int i = 0; i < args.length; i++) {
-		if (args[i].startsWith("--valid-ballot-quotient=")) {
-		    return args[i].substring(24);
+	    for (String arg : args) {
+		if (arg.startsWith("--valid-ballot-quotient=")) {
+		    return arg.substring(24);
 		}
 	    }
 	    return "";
@@ -398,7 +398,7 @@ public class MariahEP {
 			"Selected file is not a standardized IRV or OPLV election file.\n\nERROR: " + e.getMessage()));
 	    } catch (Exception e) {
 		SwingUtilities.invokeAndWait(() -> frame.showDialog("An unexpected error has occured."));
-		SwingUtilities.invokeAndWait(() -> frame.dispose());
+		SwingUtilities.invokeAndWait(frame::dispose);
 		runElectionGUI(null, validBallotQuotient);
 		break;
 	    }

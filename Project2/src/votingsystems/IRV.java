@@ -116,7 +116,7 @@ public class IRV extends VotingSystem {
 
     /**
      * Throws an error for default constructor.
-     * 
+     *
      * @param validBallotQuotient
      * @param gui
      * @param in_Ballots
@@ -405,8 +405,8 @@ public class IRV extends VotingSystem {
      */
     private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates)
 	    throws IOException {
-	this.validBallots = new ArrayList<IRVBallot>();
-	this.invalidBallots = new ArrayList<IRVBallot>();
+	this.validBallots = new ArrayList<>();
+	this.invalidBallots = new ArrayList<>();
 
 	int id = 1;
 	for (final ArrayList<Integer> bal : ballots) {
@@ -448,9 +448,8 @@ public class IRV extends VotingSystem {
 
 	fileOutput.append(String.format("Invalid Ballots%n"));
 
-	for (IRVBallot bal : this.invalidBallots) {
-	    fileOutput.append(String.format("Ballot %d: %s%n", bal.getID(), bal.getVotes()));
-	}
+	this.invalidBallots
+		.forEach(bal -> fileOutput.append(String.format("Ballot %d: %s%n", bal.getID(), bal.getVotes())));
 
 	writer.write(fileOutput.toString());
 	writer.close();
