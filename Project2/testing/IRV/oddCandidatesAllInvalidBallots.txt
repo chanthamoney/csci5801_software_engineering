@@ -1,0 +1,10 @@
+IR
+5
+Naruto (Senju), Sasuke (Senju), Kakashi (Akatsuki), Sai (Anbu), Tsunade (Anbu)
+6
+1,,,,
+1,,,,
+,1,,,2
+,1,,,
+,,1,2,
+,,2,1,

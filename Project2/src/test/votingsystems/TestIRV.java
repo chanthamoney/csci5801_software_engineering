@@ -72,10 +72,12 @@ public class TestIRV {
 	return new IRV(this.testBallots.size(), this.candidates.length, this.candidates, this.testBallots, false, 0);
     }
 
-    // Test Ballot Invalidation Process
+    /****************************************
+     * Test Ballot Invalidation Process
+     ****************************************/
     /**
-     * Test an election where some of the original ballots have fewer than half of
-     * the candidates ranked.
+     * Test an election where there are an even number of candidates and no invalid
+     * ballots.
      *
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
@@ -84,10 +86,124 @@ public class TestIRV {
      * @throws InvalidFileException      the invalid file exception
      */
     @Test
-    public void testIRVSomeInvalidBallots()
+    public void testIRVEvenCandidatesNoInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("invalidTestSomeInvalidBallots");
+	testFileAuditPair("evenCandidatesNoInvalidBallots");
     }
+
+    /**
+     * Test an election where there are an even number of candidates and some
+     * invalid ballots.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVEvenCandidatesSomeInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("evenCandidatesSomeInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an even number of candidates and all but one
+     * of the ballots is invalid.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVEvenCandidatesAllButOneInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("evenCandidatesAllButOneInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an even number of candidates and all ballots
+     * are invalid.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVEvenCandidatesAllInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("evenCandidatesAllInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an odd number of candidates and no invalid
+     * ballots.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVOddCandidatesNoInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("oddCandidatesNoInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an odd number of candidates and some invalid
+     * ballots.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVOddCandidatesSomeInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("oddCandidatesSomeInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an odd number of candidates and all but one
+     * of the ballots is invalid.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVOddCandidatesAllButOneInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("oddCandidatesAllButOneInvalidBallots");
+    }
+
+    /**
+     * Test an election where there are an odd number of candidates and all ballots
+     * are invalid.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVOddCandidatesAllInvalidBallots()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	testFileAuditPair("oddCandidatesAllInvalidBallots");
+    }
+
+    /********************************************/
 
     /**
      * Test file audit pair.
