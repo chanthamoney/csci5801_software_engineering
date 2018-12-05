@@ -1,7 +1,7 @@
 /**
  * File: TestIRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 5:48:05 PM
+ * Last Update: Dec 5, 2018 3:09:38 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -35,6 +35,7 @@ import main.InvalidFileException;
 import votingsystems.IRV;
 import votingsystems.VotingSystem;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TestIRV.
  */
@@ -94,7 +95,7 @@ public class TestIRV {
     @Test
     public void testIRVEvenCandidatesNoInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("evenCandidatesNoInvalidBallots");
+	testInvalidBallotsFile("evenCandidatesNoInvalidBallots", 50);
     }
 
     /**
@@ -110,7 +111,7 @@ public class TestIRV {
     @Test
     public void testIRVEvenCandidatesSomeInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("evenCandidatesSomeInvalidBallots");
+	testInvalidBallotsFile("evenCandidatesSomeInvalidBallots", 50);
     }
 
     /**
@@ -126,7 +127,7 @@ public class TestIRV {
     @Test
     public void testIRVEvenCandidatesAllButOneInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("evenCandidatesAllButOneInvalidBallots");
+	testInvalidBallotsFile("evenCandidatesAllButOneInvalidBallots", 50);
     }
 
     /**
@@ -142,7 +143,27 @@ public class TestIRV {
     @Test
     public void testIRVEvenCandidatesAllInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("evenCandidatesAllInvalidBallots");
+	testInvalidBallotsFile("evenCandidatesAllInvalidBallots", 50);
+    }
+
+    /**
+     * Test invalid ballots file.
+     *
+     * @param string the string
+     * @throws InvocationTargetException the invocation target exception
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    private void testInvalidBallotsFile(String string, int percent)
+	    throws InvocationTargetException, ParseException, IOException, InterruptedException, InvalidFileException {
+	testFileAuditPair(string, percent);
+	testFileInvalidAuditPair(string);
+    }
+
+    private void testFileInvalidAuditPair(String string) {
+	return;
     }
 
     /**
@@ -158,7 +179,7 @@ public class TestIRV {
     @Test
     public void testIRVOddCandidatesNoInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("oddCandidatesNoInvalidBallots");
+	testInvalidBallotsFile("oddCandidatesNoInvalidBallots", 50);
     }
 
     /**
@@ -174,7 +195,7 @@ public class TestIRV {
     @Test
     public void testIRVOddCandidatesSomeInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("oddCandidatesSomeInvalidBallots");
+	testInvalidBallotsFile("oddCandidatesSomeInvalidBallots", 50);
     }
 
     /**
@@ -190,7 +211,7 @@ public class TestIRV {
     @Test
     public void testIRVOddCandidatesAllButOneInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("oddCandidatesAllButOneInvalidBallots");
+	testInvalidBallotsFile("oddCandidatesAllButOneInvalidBallots", 50);
     }
 
     /**
@@ -206,7 +227,7 @@ public class TestIRV {
     @Test
     public void testIRVOddCandidatesAllInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("oddCandidatesAllInvalidBallots");
+	testInvalidBallotsFile("oddCandidatesAllInvalidBallots", 50);
     }
 
     /**
@@ -230,9 +251,9 @@ public class TestIRV {
      * @throws InvocationTargetException the invocation target exception
      * @throws InvalidFileException      the invalid file exception
      */
-    private static void testFileAuditPair(String electionFile)
+    private static void testFileAuditPair(String electionFile, int percent)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
+	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt", percent);
 	Path auditFile = Paths.get(".", vs.runElection());
 
 	// Retrieve audit output and expected output.
@@ -257,9 +278,9 @@ public class TestIRV {
      * @throws InvocationTargetException the invocation target exception
      * @throws InvalidFileException      the invalid file exception
      */
-    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg)
+    private static void testFileAuditPairRandomMsg(String electionFile, String randomMsg, int percent)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt");
+	VotingSystem vs = votingSystemFromFile("../testing/IRV/" + electionFile + ".txt", percent);
 	Path auditFile = Paths.get(".", vs.runElection());
 
 	// Retrieve audit output and expected output.
@@ -268,7 +289,6 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
-
 	assertTrue(testOutput.contains(randomMsg));
     }
 
@@ -281,7 +301,7 @@ public class TestIRV {
      * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InvalidFileException the invalid file exception
      */
-    private static VotingSystem votingSystemFromFile(String fileName)
+    private static VotingSystem votingSystemFromFile(String fileName, int percent)
 	    throws ParseException, IOException, InvalidFileException {
 	File file = new File(fileName);
 	final Scanner scanner = new Scanner(file);
@@ -296,7 +316,7 @@ public class TestIRV {
 	final int in_NumBallots = Integer.valueOf(scanner.nextLine());
 	final LinkedList<ArrayList<Integer>> in_Ballots = IRVBallotsFromFile(in_NumBallots, in_NumCandidates, scanner);
 	scanner.close();
-	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false, 0);
+	return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, false, percent);
     }
 
     /**
@@ -403,7 +423,8 @@ public class TestIRV {
 	System.setOut(new PrintStream(baos));
 
 	testFileAuditPairRandomMsg("randomWinner",
-		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.",
+		0);
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -501,7 +522,7 @@ public class TestIRV {
     @Test
     public void testIRVMajorityPopularVote()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("majorityPopularVote");
+	testFileAuditPair("majorityPopularVote", 0);
     }
 
     /**
@@ -516,7 +537,7 @@ public class TestIRV {
     @Test
     public void testIRVTenThousandVotes()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("tenThousandVotes");
+	testFileAuditPair("tenThousandVotes", 0);
     }
 
     /**
@@ -531,7 +552,7 @@ public class TestIRV {
     @Test
     public void testIRVOneVote()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("oneVote");
+	testFileAuditPair("oneVote", 0);
     }
 
     /**
@@ -546,7 +567,7 @@ public class TestIRV {
     @Test
     public void testIRVOneCandidate()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("OneCandidate");
+	testFileAuditPair("OneCandidate", 0);
     }
 
     /**
@@ -561,7 +582,7 @@ public class TestIRV {
     @Test
     public void testIRVNoMajorityPopularVote()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileAuditPair("noMajorityPopularVote");
+	testFileAuditPair("noMajorityPopularVote", 0);
     }
 
     /**
@@ -585,7 +606,8 @@ public class TestIRV {
 	System.setOut(new PrintStream(baos));
 
 	testFileAuditPairRandomMsg("consequentialTieTwoCandidates",
-		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.");
+		"NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.",
+		0);
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
