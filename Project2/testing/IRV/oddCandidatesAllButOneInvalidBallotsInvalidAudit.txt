@@ -1,0 +1,6 @@
+Invalid Ballots
+Ballot 1: [0]
+Ballot 3: [1, 4]
+Ballot 4: [1]
+Ballot 5: [2, 3]
+Ballot 6: [3, 2]

@@ -241,7 +241,8 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
-
+	System.out.println(testOutput);
+	System.out.println(expectedOutput);
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
