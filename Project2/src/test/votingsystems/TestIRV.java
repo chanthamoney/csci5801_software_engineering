@@ -146,23 +146,7 @@ public class TestIRV {
 	testInvalidBallotsFile("evenCandidatesAllInvalidBallots", 50);
     }
 
-    /**
-     * Test invalid ballots file.
-     *
-     * @param string the string
-     * @throws InvocationTargetException the invocation target exception
-     * @throws ParseException            the parse exception
-     * @throws IOException               Signals that an I/O exception has occurred.
-     * @throws InterruptedException      the interrupted exception
-     * @throws InvalidFileException      the invalid file exception
-     */
-    private void testInvalidBallotsFile(String string, int percent)
-	    throws InvocationTargetException, ParseException, IOException, InterruptedException, InvalidFileException {
-	testFileAuditPair(string, percent);
-	testFileInvalidAuditPair(string);
-    }
-
-    private void testFileInvalidAuditPair(String string) {
+    private void testInvalidBallotsFile(String electionFile, int percent) {
 	return;
     }
 
@@ -262,8 +246,6 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
-	System.out.println(testOutput);
-	System.out.println(expectedOutput);
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
