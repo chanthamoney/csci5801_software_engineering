@@ -13,7 +13,7 @@ Candidates:
 
 Number of Ballots: 6
 
-Ballots: [[0, 1, 2, 3, 4], [0, 1, 4, 3, 2], [1, 4], [1, 0, 3], [2, 3, 4, 0], [3, 2]]
+Ballots: [[0, 1, 2, 3, 4], [0, 1, 4, 3, 2], [1, 4], [0, 4, 3], [2, 0, 4, 3], [3, 2]]
 
 
 - - - - - - - - - - - - - - - - - - - -
@@ -22,23 +22,8 @@ Processing the following ballots:
 	1, 2, 4, 5
 Ballot 1 cast a vote for Naruto (Senju)
 Ballot 2 cast a vote for Naruto (Senju)
-Ballot 4 cast a vote for Sasuke (Senju)
+Ballot 4 cast a vote for Naruto (Senju)
 Ballot 5 cast a vote for Kakashi (Akatsuki)
-
-Remaining Candidate - Votes:
-	Naruto (Senju) - 2
-	Sasuke (Senju) - 1
-	Kakashi (Akatsuki) - 1
-	Sai (Anbu) - 0
-	Tsunade (Anbu) - 0
-Eliminated the following candidates who received no votes:
-	Sai (Anbu)
-	Tsunade (Anbu)
-Candidate Kakashi (Akatsuki) is eliminated with only 1 votes.
-NOTE: This elimination was the result of a random toss due to a consequential tie in least amount of votes.
-Processing the following ballots:
-	5
-Ballot 5 cast a vote for Naruto (Senju)
 
 Processing Complete!
 Candidate Naruto (Senju) has a majority of votes (>= 3).

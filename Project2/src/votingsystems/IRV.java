@@ -62,6 +62,15 @@ public class IRV extends VotingSystem {
     private String invalidAuditFilename;
 
     /**
+     * Getter function for invalidAuditFilename.
+     * 
+     * @return invalidAuditFilename
+     */
+    public String getInvalidAuditFilename() {
+	return this.invalidAuditFilename;
+    }
+
+    /**
      * Instantiates a new instant runoff voting system.
      *
      * @param numBallots          the number of ballots in the election
