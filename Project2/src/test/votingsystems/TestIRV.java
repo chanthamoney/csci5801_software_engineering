@@ -229,9 +229,6 @@ public class TestIRV {
 	List<String> testOutput = Files.readAllLines(auditFile);
 	List<String> expectedOutput = Files.readAllLines(Paths.get("../testing/IRV/", electionFile + "Audit.txt"));
 
-	System.out.println(testOutput);
-	System.out.println(expectedOutput);
-
 	final File file = auditFile.toFile();
 	file.delete();
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
@@ -243,9 +240,6 @@ public class TestIRV {
 	List<String> invalidTestOutput = Files.readAllLines(invalidAuditFile);
 	List<String> invalidExpectedOutput = Files
 		.readAllLines(Paths.get("../testing/IRV/", electionFile + "InvalidAudit.txt"));
-
-	System.out.println(invalidTestOutput);
-	System.out.println(invalidExpectedOutput);
 
 	final File invalidFile = invalidAuditFile.toFile();
 	invalidFile.delete();
