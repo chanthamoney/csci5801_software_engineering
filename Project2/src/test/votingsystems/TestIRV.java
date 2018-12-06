@@ -136,7 +136,11 @@ public class TestIRV {
     @Test
     public void testIRVEvenCandidatesAllInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileInvalidAuditPair("evenCandidatesAllInvalidBallots", 50);
+	try {
+	    testFileInvalidAuditPair("evenCandidatesAllInvalidBallots", 50);
+	} catch (InvalidFileException e) {
+	    assertTrue("There are not enough valid ballots.".equals(e.getMessage()));
+	}
     }
 
     /**
@@ -200,7 +204,12 @@ public class TestIRV {
     @Test
     public void testIRVOddCandidatesAllInvalidBallots()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
-	testFileInvalidAuditPair("oddCandidatesAllInvalidBallots", 50);
+	try {
+	    testFileInvalidAuditPair("oddCandidatesAllInvalidBallots", 50);
+	} catch (InvalidFileException e) {
+	    assertTrue("There are not enough valid ballots.".equals(e.getMessage()));
+	}
+
     }
 
     /**
