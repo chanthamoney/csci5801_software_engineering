@@ -155,6 +155,7 @@ public class IRV extends VotingSystem {
 	roundNumber++;
 	// Update Title For Rounds
 	electionTableTitles.add("Round " + roundNumber);
+	electionTableTitles.add("+-");
 
 	int candidateIndex = 0;
 
@@ -180,7 +181,7 @@ public class IRV extends VotingSystem {
 			curCan.getNumVotes());
 
 		// add difference to list
-		if (difference > 0) {
+		if (difference >= 0) {
 		    // positive
 		    electionDataList.get(candidateIndex).add("+" + Integer.toString(difference));
 		} else {
