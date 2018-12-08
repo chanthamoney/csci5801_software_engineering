@@ -1,7 +1,7 @@
 /**
  * File: MariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Dec 3, 2018 2:41:52 PM
+ * Last Update: Dec 4, 2018 5:46:40 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -31,13 +31,14 @@ public class MariahEP {
     /**
      * Generates a voting system from a standardized voting system file.
      *
-     * @param filePath the file name
-     * @param gui      maintains if the GUI should be utilized
+     * @param filePath            the file name
+     * @param gui                 maintains if the GUI should be utilized
+     * @param validBallotQuotient the valid ballot quotient
      * @return the voting system
      * @throws InvalidFileException the invalid file exception
      * @throws IOException          Signals that an I/O exception has occurred.
      */
-    private static VotingSystem votingSystemFromFile(String filePath, boolean gui)
+    private static VotingSystem votingSystemFromFile(String filePath, boolean gui, int validBallotQuotient)
 	    throws InvalidFileException, IOException {
 	File file = new File(filePath);
 	final Scanner scanner = new Scanner(file);
@@ -93,7 +94,7 @@ public class MariahEP {
 		    scanner);
 
 	    scanner.close();
-	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, gui);
+	    return new IRV(in_NumBallots, in_NumCandidates, cpPairs, in_Ballots, gui, validBallotQuotient);
 	} else if ("OPL".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve Open Party List Voting from file
 
@@ -279,38 +280,60 @@ public class MariahEP {
      * @throws InvocationTargetException the invocation target exception
      */
     public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
-	String filePath = null;
-	boolean gui = true;
-	// Determine if optional command line arguments of file name and indicator for
-	// no gui were provided
-	if (args.length > 0) {
-	    if (args.length == 2 && "--no-gui".equals(args[0].toLowerCase())) {
-		gui = false;
-		filePath = args[1].trim();
-	    } else if (args.length == 2 && "--no-gui".equals(args[1].toLowerCase())) {
-		gui = false;
-		filePath = args[0].trim();
-	    } else {
-		filePath = args[0].trim();
-	    }
-	}
+	String filePath = handleArgument("filePath", args);
+	boolean gui = "true".equals(handleArgument("gui", args));
+	String vbq = handleArgument("validBallotQuotient", args);
+	int validBallotQuotient = "".equals(vbq) ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
-	    runElectionGUI(filePath);
+	    runElectionGUI(filePath, validBallotQuotient);
 	} else {
-	    runElectionCommandLine(filePath);
+	    runElectionCommandLine(filePath, validBallotQuotient);
 	}
+    }
+
+    /**
+     * Handle argument.
+     *
+     * @param setup the setup
+     * @param args  the args
+     * @return the string
+     */
+    private static String handleArgument(String setup, String[] args) {
+	if ("gui".equals(setup)) {
+	    for (String arg : args) {
+		if ("--no-gui".equals(arg)) {
+		    return "false";
+		}
+	    }
+	    return "true";
+	} else if ("filePath".equals(setup)) {
+	    for (String arg : args) {
+		if (!arg.startsWith("--")) {
+		    return arg;
+		}
+	    }
+	} else if ("validBallotQuotient".equals(setup)) {
+	    for (String arg : args) {
+		if (arg.startsWith("--valid-ballot-quotient=")) {
+		    return arg.substring(24);
+		}
+	    }
+	    return "";
+	}
+	return null;
     }
 
     /**
      * Runs the election processing without the use of the Graphical User Interface.
      *
-     * @param filePath the file path
+     * @param filePath            the file path
+     * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
      * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      */
-    private static void runElectionCommandLine(String filePath)
+    private static void runElectionCommandLine(String filePath, int validBallotQuotient)
 	    throws InvocationTargetException, IOException, InterruptedException {
 	File file = new File(filePath.trim());
 	VotingSystem vs;
@@ -329,7 +352,7 @@ public class MariahEP {
 	consoleReader.close();
 
 	try {
-	    vs = votingSystemFromFile(filePath, false);
+	    vs = votingSystemFromFile(filePath, false, validBallotQuotient);
 	} catch (InvalidFileException e) {
 	    vs = null;
 	}
@@ -344,15 +367,17 @@ public class MariahEP {
     /**
      * Runs the election processing utilizing the Mariah Graphical User Interface.
      *
-     * @param filePath the file path
+     * @param filePath            the file path
+     * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
      * @throws IOException               Signals that an I/O exception has occurred.
      */
-    private static void runElectionGUI(String filePath)
+    private static void runElectionGUI(String filePath, int validBallotQuotient)
 	    throws InvocationTargetException, InterruptedException, IOException {
 	MariahElectionProcessor frame = new MariahElectionProcessor("MARIAH ELECTION PROCESSOR",
-		"Please select an election file from your file system or input the file path below.");
+		"Please select an election file from your file system or input the file path below.",
+		validBallotQuotient);
 	SwingUtilities.invokeAndWait(() -> frame.setVisible(true));
 	while (true) {
 	    // If user did not restrict GUI and filePath was not provided generate file
@@ -369,17 +394,20 @@ public class MariahEP {
 	    VotingSystem vs = null;
 
 	    try {
-		vs = votingSystemFromFile(filePath, true);
+		validBallotQuotient = frame.getValidBallotQuotient();
+
+		vs = votingSystemFromFile(filePath, true, validBallotQuotient);
 	    } catch (InvalidFileException e) {
 		vs = null;
 
 		// Thread safe way to open unsafe file dialog
 		SwingUtilities.invokeAndWait(() -> frame.showDialog(
-			"Selected file is not a standardized IRV or OPLV election file.\n\nERROR: " + e.getMessage()));
+			String.format("Selected file is not a standardized IRV or OPLV election file.%n%nERROR: %s",
+				e.getMessage())));
 	    } catch (Exception e) {
 		SwingUtilities.invokeAndWait(() -> frame.showDialog("An unexpected error has occured."));
-		SwingUtilities.invokeAndWait(() -> frame.dispose());
-		runElectionGUI(null);
+		SwingUtilities.invokeAndWait(frame::dispose);
+		runElectionGUI(null, validBallotQuotient);
 		break;
 	    }
 

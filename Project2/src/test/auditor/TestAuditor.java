@@ -1,8 +1,7 @@
-
 /**
  * File: TestAuditor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:29:41 PM
+ * Last Update: Dec 4, 2018 5:47:22 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -35,11 +34,11 @@ public class TestAuditor {
      * @return the auditor
      */
     private Auditor initializeTestAuditor() {
-	testStrings.add("Audit line 1\n");
-	testStrings.add("Audit line 2\n");
-	testStrings.add("Audit line 3\n");
-	testStrings.add("Audit line 4\n");
-	testStrings.add("Audit line 5\n");
+	testStrings.add(String.format("Audit line 1%n"));
+	testStrings.add(String.format("Audit line 2%n"));
+	testStrings.add(String.format("Audit line 3%n"));
+	testStrings.add(String.format("Audit line 4%n"));
+	testStrings.add(String.format("Audit line 5%n"));
 	return new Auditor();
     }
 

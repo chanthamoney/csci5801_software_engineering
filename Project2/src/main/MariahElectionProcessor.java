@@ -1,13 +1,15 @@
 /**
  * File: MariahElectionProcessor.java
  * Date Created: 11/08/2018
- * Last Update: Nov 29, 2018 8:27:47 PM
+ * Last Update: Dec 4, 2018 5:46:45 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 package main;
 
-import java.io.IOException;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeListener;
 
 /**
  * The Class MariahElectionProcessor.
@@ -18,53 +20,69 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
     private static final long serialVersionUID = 1899308877580175870L;
 
     /** The j menu file. */
-    private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenu jMenuEdit;
 
     /** The j menu bar. */
     private javax.swing.JMenuBar jMenuBar;
 
-    /** The j menu item new dynamic election. */
-    private javax.swing.JMenuItem jMenuItemNewDynamicElection;
+    /** The slider. */
+    private javax.swing.JSlider slider;
+
+    /** The slider panel. */
+    private javax.swing.JPanel sliderPanel;
+
+    /** The slider label. */
+    private javax.swing.JLabel sliderLabel;
+
+    /** The valid ballot quotient. */
+    private int validBallotQuotient;
 
     /**
      * Instantiates a new mariah election processor.
      *
-     * @param title      the title
-     * @param filePrompt the file prompt
+     * @param title               the title
+     * @param filePrompt          the file prompt
+     * @param validBallotQuotient the valid ballot quotient
      */
-    public MariahElectionProcessor(String title, String filePrompt) {
+    public MariahElectionProcessor(String title, String filePrompt, int validBallotQuotient) {
 	super(title, filePrompt);
 
 	jMenuBar = new javax.swing.JMenuBar();
-	jMenuFile = new javax.swing.JMenu();
-	jMenuItemNewDynamicElection = new javax.swing.JMenuItem();
+	jMenuEdit = new javax.swing.JMenu();
+	sliderLabel = new javax.swing.JLabel("IRV Valid Ballot Quotient: " + validBallotQuotient + "%");
+	this.validBallotQuotient = validBallotQuotient;
 
-	jMenuFile.setText("File");
+	jMenuEdit.setText("Edit");
 
-	jMenuItemNewDynamicElection.setAccelerator(
-		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.META_MASK));
-	jMenuItemNewDynamicElection.setText("New Dynamic Election");
-	jMenuItemNewDynamicElection.addActionListener((java.awt.event.ActionEvent evt) -> {
-	    try {
-		jMenuItemNewDynamicElectionActionPerformed(evt);
-	    } catch (IOException e) {
-		e.printStackTrace();
-	    }
-	});
-	jMenuFile.add(jMenuItemNewDynamicElection);
+	slider = new javax.swing.JSlider(SwingConstants.HORIZONTAL, 100);
+	ChangeListener cl = e -> {
+	    JSlider x = (JSlider) e.getSource();
+	    this.validBallotQuotient = x.getValue();
+	    sliderLabel.setText("IRV Valid Ballot Quotient: " + this.validBallotQuotient + "%");
+	};
+	slider.addChangeListener(cl);
 
-	jMenuBar.add(jMenuFile);
+	sliderPanel = new javax.swing.JPanel();
+
+	sliderPanel.add(new javax.swing.JLabel("0%"));
+	sliderPanel.add(slider);
+	sliderPanel.add(new javax.swing.JLabel("100%"));
+
+	jMenuEdit.add(sliderLabel);
+
+	jMenuEdit.add(sliderPanel);
+
+	jMenuBar.add(jMenuEdit);
 
 	setJMenuBar(jMenuBar);
     }
 
     /**
-     * J button 1 action performed.
+     * Gets the valid ballot quotient.
      *
-     * @param evt the evt
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @return the valid ballot quotient
      */
-    private void jMenuItemNewDynamicElectionActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_jButton1ActionPerformed
-	// TODO OPEN JFRAME OF DYNAMIC ELECTION
-    }// GEN-LAST:event_jButton1ActionPerformed
+    public int getValidBallotQuotient() {
+	return this.validBallotQuotient;
+    }
 }

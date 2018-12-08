@@ -1,14 +1,14 @@
-
 /**
  * File: Ballot.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:31:19 PM
+ * Last Update: Dec 4, 2018 5:49:24 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
 
 package votingsystems;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents an abstract ballot.
  */

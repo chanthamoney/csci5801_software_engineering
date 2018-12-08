@@ -1,8 +1,7 @@
-
 /**
  * File: OPLVCandidate.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:31:46 PM
+ * Last Update: Dec 4, 2018 5:50:19 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */

@@ -1,8 +1,7 @@
-
 /**
  * File: TestOPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:30:38 PM
+ * Last Update: Dec 4, 2018 5:48:44 PM
  * Author: <A HREF="mailto:chant077@umn.edu">Cassandra Chanthamontry</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -197,7 +196,8 @@ public class TestOPLV {
 	    file.delete();
 	    auditFile = Paths.get(".", vs.runElection());
 	} catch (RuntimeException rte) {
-	    assertEquals("An election can only be run once for a given voting system.\n", rte.getMessage());
+	    assertEquals(String.format("An election can only be run once for a given voting system.%n"),
+		    rte.getMessage());
 	    throw rte;
 	}
 
@@ -352,8 +352,8 @@ public class TestOPLV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output));
+	assertTrue(String.format("Election Winners:%n\tNaruto (Senju)%n%n").equals(output)
+		|| String.format("Election Winners:%n\tSasuke (Senju)%n%n").equals(output));
 
     }
 
@@ -386,9 +386,9 @@ public class TestOPLV {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
-	assertTrue("Election Winners:\n\tNaruto (Senju)\n\n".equals(output)
-		|| "Election Winners:\n\tSasuke (Senju)\n\n".equals(output)
-		|| "Election Winners:\n\tJake (Senju)\n\n".equals(output));
+	assertTrue(String.format("Election Winners:%n\tNaruto (Senju)%n%n").equals(output)
+		|| String.format("Election Winners:%n\tSasuke (Senju)%n%n").equals(output)
+		|| String.format("Election Winners:%n\tJake (Senju)%n%n").equals(output));
 
     }
 
@@ -419,11 +419,12 @@ public class TestOPLV {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	// check if winner is as expected
-	assertTrue(
-		"Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)\n\n"
-			.equals(output)
-			|| "Election Winners:\n\tKatsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)\n\n"
-				.equals(output));
+	assertTrue(String.format(
+		"Election Winners:%n\tKatsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tMomo (EraserHead)%n%n")
+		.equals(output)
+		|| String.format(
+			"Election Winners:%n\tKatsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tFroppy (EraserHead)%n%n")
+			.equals(output));
     }
 
     /**

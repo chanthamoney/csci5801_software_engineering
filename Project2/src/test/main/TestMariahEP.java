@@ -1,7 +1,7 @@
 /**
  * File: TestMariahEP.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:29:56 PM
+ * Last Update: Dec 4, 2018 5:47:51 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -49,7 +49,7 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui", "--valid-ballot-quotient=0" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -57,7 +57,7 @@ public class TestMariahEP {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
-	String[] splitOutput = output.split("\n\n");
+	String[] splitOutput = output.split(String.format("%n%n"));
 	for (String aSplitOutput : splitOutput) {
 	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
@@ -70,8 +70,6 @@ public class TestMariahEP {
 
 	final File file = auditFile.toFile();
 	file.delete();
-
-	System.out.print(expectedOutput + "\n" + testOutput + "\n");
 
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
@@ -96,7 +94,7 @@ public class TestMariahEP {
 	// Change so System.out saved in baos
 	System.setOut(new PrintStream(baos));
 
-	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui" });
+	MariahEP.main(new String[] { "../testing/" + electionFile + ".txt", "--no-gui", "--valid-ballot-quotient=0" });
 
 	// Reset the System.out to console
 	System.setOut(oldOut);
@@ -104,7 +102,7 @@ public class TestMariahEP {
 	// baos contains winner printed from the runElection function
 	final String output = new String(baos.toByteArray());
 	Map<String, String> outputMap = new HashMap<>();
-	String[] splitOutput = output.split("\n\n");
+	String[] splitOutput = output.split(String.format("%n%n"));
 	for (String aSplitOutput : splitOutput) {
 	    String[] splitPair = aSplitOutput.split(":");
 	    outputMap.put(splitPair[0].trim(), splitPair[1].trim());
@@ -118,7 +116,6 @@ public class TestMariahEP {
 
 	final File file = auditFile.toFile();
 	file.delete();
-	System.out.println(outputMap);
 
 	if (outputMap.get("Election Winner") != null) {
 	    return outputMap.get("Election Winner");
@@ -351,11 +348,12 @@ public class TestMariahEP {
 		"NOTE: Randomly ranked candidates 1 to 2 due to a consequential tie in Party seat allocations.");
 
 	// check if winner is as expected
-	assertTrue(
-		"Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tMomo (EraserHead)"
-			.equals(electionWinner)
-			|| "Katsuki (All Might)\n\tDeku (All Might)\n\tTodoroki (Endeavor)\n\tDabi (Endeavor)\n\tFroppy (EraserHead)"
-				.equals(electionWinner));
+	assertTrue(String.format(
+		"Katsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tMomo (EraserHead)")
+		.equals(electionWinner)
+		|| String.format(
+			"Katsuki (All Might)%n\tDeku (All Might)%n\tTodoroki (Endeavor)%n\tDabi (Endeavor)%n\tFroppy (EraserHead)")
+			.equals(electionWinner));
     }
 
     /**

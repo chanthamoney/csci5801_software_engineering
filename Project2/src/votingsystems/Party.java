@@ -1,8 +1,7 @@
-
 /**
  * File: Party.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:31:49 PM
+ * Last Update: Dec 4, 2018 5:50:27 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -156,9 +155,9 @@ public class Party {
 	    final OPLVCandidate curCan = this.candidates.get(i);
 	    ret += String.format("%s [%d vote", curCan.getName(), curCan.getNumVotes());
 	    if (curCan.getNumVotes() == 1) {
-		ret += "]\n";
+		ret += String.format("]%n");
 	    } else {
-		ret += "s]\n";
+		ret += String.format("s]%n");
 	    }
 	    final int numVotes = can.getNumVotes();
 	    if ((firstIndx == -1) && (numVotes == minVotes)) {

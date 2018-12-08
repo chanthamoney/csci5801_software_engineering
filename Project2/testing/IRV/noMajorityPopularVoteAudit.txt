@@ -1,5 +1,7 @@
 Voting System:	Instant Runoff Voting
 
+Valid Ballot Quotient: 0.0%
+
 Number of Candidates: 6
 
 Candidates:
