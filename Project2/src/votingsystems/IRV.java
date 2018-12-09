@@ -489,6 +489,7 @@ public class IRV extends VotingSystem {
 	}
 
 	this.invalidAuditFilename = name;
+	System.out.print(String.format("Invalid Ballots File: %s%n%n", name));
     }
 
     /*

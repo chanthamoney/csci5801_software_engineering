@@ -71,6 +71,14 @@ public class TestMariahEP {
 	final File file = auditFile.toFile();
 	file.delete();
 
+	// Invalid audit file comparison
+	String audFileName = outputMap.get("Invalid Ballots File");
+	if (audFileName != null) {
+	    Path invalidAuditFile = Paths.get(".", audFileName);
+	    final File invalidFile = invalidAuditFile.toFile();
+	    invalidFile.delete();
+	}
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -136,6 +144,7 @@ public class TestMariahEP {
     public void testMainOPLVOneSeatOneWinner()
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException {
 	testFileAuditPair("OPLV/oneSeatOneWinner");
+
     }
 
     /**

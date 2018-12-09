@@ -226,10 +226,6 @@ public class TestIRV {
     private void testFileInvalidAuditPair(String electionFile, int percent)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	IRV vs = (IRV) votingSystemFromFile("../testing/IRV/" + electionFile + ".txt", percent);
-//
-//	if (vs.getInvalidAuditFilename() == NULL) {
-//
-//	}
 
 	// Audit file comparison
 	Path auditFile = Paths.get(".", vs.runElection());
@@ -277,6 +273,13 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
+
+	// Invalid audit file comparison
+	Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	final File invalidFile = invalidAuditFile.toFile();
+	invalidFile.delete();
+
 	assertTrue(expectedOutput.containsAll(testOutput) && expectedOutput.size() == testOutput.size());
     }
 
@@ -302,6 +305,13 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
+
+	// Invalid audit file comparison
+	Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	final File invalidFile = invalidAuditFile.toFile();
+	invalidFile.delete();
+
 	assertTrue(testOutput.contains(randomMsg));
     }
 
@@ -390,6 +400,13 @@ public class TestIRV {
 	try {
 	    final File file = auditFile.toFile();
 	    file.delete();
+
+	    // Invalid audit file comparison
+	    Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	    final File invalidFile = invalidAuditFile.toFile();
+	    invalidFile.delete();
+
 	    auditFile = Paths.get(".", vs.runElection());
 	} catch (RuntimeException rte) {
 	    assertEquals(String.format("An election can only be run once for a given voting system.%n"),
@@ -399,6 +416,13 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
+
+	// Invalid audit file comparison
+	Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	final File invalidFile = invalidAuditFile.toFile();
+	invalidFile.delete();
+
 	fail("Runtime exception for running election more than once did not throw!");
     }
 
@@ -447,9 +471,9 @@ public class TestIRV {
 
 	System.out.println(output);
 	// check if winner is as expected
-	assertTrue(String.format("Election Winner: Sasuke%n%n").equals(output)
-		|| String.format("Election Winner: Naruto%n%n").equals(output)
-		|| String.format("Election Winner: Sakura%n%n").equals(output));
+	assertTrue(output.contains(String.format("Election Winner: Sasuke%n%n"))
+		|| output.contains(String.format("Election Winner: Naruto%n%n"))
+		|| output.contains(String.format("Election Winner: Sakura%n%n")));
     }
 
     /**
@@ -505,6 +529,12 @@ public class TestIRV {
 
 	final File file = auditFile.toFile();
 	file.delete();
+
+	// Invalid audit file comparison
+	Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	final File invalidFile = invalidAuditFile.toFile();
+	invalidFile.delete();
 
 	// Record time immediately after election
 	final long timeAfter = System.currentTimeMillis();
@@ -624,7 +654,7 @@ public class TestIRV {
 	final String output = new String(baos.toByteArray());
 
 	// check if winner is as expected
-	assertTrue(String.format("Election Winner: Naruto (Senju)%n%n").equals(output)
-		|| String.format("Election Winner: Sasuke (Senju)%n%n").equals(output));
+	assertTrue(output.contains(String.format("Election Winner: Naruto (Senju)%n%n"))
+		|| output.contains(String.format("Election Winner: Sasuke (Senju)%n%n")));
     }
 }
