@@ -88,6 +88,7 @@ public class MariahFileChooser extends javax.swing.JFrame {
 	jFileChooser1.setAcceptAllFileFilterUsed(false);
 	FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file", "txt");
 	jFileChooser1.addChoosableFileFilter(filter);
+	pack();
     }
 
     /**

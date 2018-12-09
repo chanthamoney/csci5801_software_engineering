@@ -119,6 +119,8 @@ public class MariahResults extends JDialog {
 	    });
 	    jMenuOpen.add(tempMenuItem);
 	}
+
+	pack();
     }
 
     /**

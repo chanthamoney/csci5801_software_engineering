@@ -75,6 +75,8 @@ public class MariahElectionProcessor extends mariahgui.MariahFileChooser {
 	jMenuBar.add(jMenuEdit);
 
 	setJMenuBar(jMenuBar);
+
+	pack();
     }
 
     /**

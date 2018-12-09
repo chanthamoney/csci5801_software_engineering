@@ -41,7 +41,7 @@ public class MariahEP {
     private static VotingSystem votingSystemFromFile(String filePath, boolean gui, int validBallotQuotient)
 	    throws InvalidFileException, IOException {
 	File file = new File(filePath);
-  System.out.println(filePath);
+	System.out.println(filePath);
 	final Scanner scanner = new Scanner(file);
 
 	final String in_VotingSystem = scanner.nextLine();
@@ -282,12 +282,13 @@ public class MariahEP {
      */
     public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
 	String filePath = handleArgument("filePath", args);
+	filePath = filePath == "" ? null : filePath;
 	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
 	int validBallotQuotient = "".equals(vbq) ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
-	    runElectionGUI(filePath == "" ? null : filePath, validBallotQuotient);
+	    runElectionGUI(filePath, validBallotQuotient);
 	} else {
 	    runElectionCommandLine(filePath, validBallotQuotient);
 	}
@@ -348,7 +349,7 @@ public class MariahEP {
 		first = false;
 	    }
 	    final String in_BallotFile = consoleReader.nextLine().trim();
-      filePath = in_BallotFile;
+	    filePath = in_BallotFile;
 	    file = new File(in_BallotFile);
 	}
 	consoleReader.close();
