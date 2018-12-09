@@ -21,8 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -210,6 +212,35 @@ public class TestIRV {
 	    assertTrue("There are not enough valid ballots.".equals(e.getMessage()));
 	}
 
+    }
+
+    /**
+     * Test that the name of the invalid ballots file is set to the current date.
+     *
+     * @throws ParseException            the parse exception
+     * @throws IOException               Signals that an I/O exception has occurred.
+     * @throws InterruptedException      the interrupted exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InvalidFileException      the invalid file exception
+     */
+    @Test
+    public void testIRVInvalidBallotFileName()
+	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
+	IRV vs = (IRV) votingSystemFromFile("../testing/IRV/evenCandidatesNoInvalidBallots.txt", 50);
+
+	// Audit file comparison
+	Path auditFile = Paths.get(".", vs.runElection());
+
+	final File file = auditFile.toFile();
+	file.delete();
+
+	// Invalid audit file comparison
+	Path invalidAuditFile = Paths.get(".", ((IRV) vs).getInvalidAuditFilename());
+
+	final File invalidFile = invalidAuditFile.toFile();
+	invalidFile.delete();
+	assertTrue(vs.getInvalidAuditFilename()
+		.contains(new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime())));
     }
 
     /**

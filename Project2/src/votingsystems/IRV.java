@@ -59,7 +59,7 @@ public class IRV extends VotingSystem {
     private int remainingCandidates;
 
     /** The invalid audit filename. */
-    private String invalidAuditFilename;
+    private String invalidAuditFilename = null;
 
     /**
      * Getter function for invalidAuditFilename.
@@ -460,7 +460,7 @@ public class IRV extends VotingSystem {
      * @return the name of the file that was created
      */
     private void createInvalidAuditFile() {
-	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(Calendar.getInstance().getTime());
 	String name = String.format("invalidated_%s", electionDate);
 
 	final File file = new File(name);
@@ -469,7 +469,7 @@ public class IRV extends VotingSystem {
 	    writer = new FileWriter(file);
 	} catch (IOException e) {
 	    e.printStackTrace();
-	    this.invalidAuditFilename = "";
+	    this.invalidAuditFilename = null;
 	    return;
 	}
 	final StringBuilder fileOutput = new StringBuilder();
@@ -484,7 +484,7 @@ public class IRV extends VotingSystem {
 	    writer.close();
 	} catch (IOException e) {
 	    e.printStackTrace();
-	    this.invalidAuditFilename = "";
+	    this.invalidAuditFilename = null;
 	    return;
 	}
 
