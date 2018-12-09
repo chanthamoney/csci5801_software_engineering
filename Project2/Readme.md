@@ -17,7 +17,7 @@ You have the option of running the application with a pre-defined file:
 > \>\> java main/MariahEP <election file>
 
 Run without GUI
-You have the option of running the application without the use of the GUI.
+You have the option of running the application without the use of the GUI. When entering the election file you can either drag the file to the terminal or enter the absolute path. 
 Simply set the --no-gui flag on the command line:
 > \>\> java main/MariahEP --no-gui <election file>
 
