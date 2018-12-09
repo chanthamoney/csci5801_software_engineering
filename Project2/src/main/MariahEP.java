@@ -282,13 +282,12 @@ public class MariahEP {
      */
     public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
 	String filePath = handleArgument("filePath", args);
-	filePath = filePath == "" ? null : filePath;
 	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
 	int validBallotQuotient = "".equals(vbq) ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
-	    runElectionGUI(filePath, validBallotQuotient);
+	    runElectionGUI(filePath == "" ? null : filePath, validBallotQuotient);
 	} else {
 	    runElectionCommandLine(filePath, validBallotQuotient);
 	}
