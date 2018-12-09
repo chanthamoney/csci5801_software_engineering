@@ -286,7 +286,7 @@ public class MariahEP {
 	int validBallotQuotient = "".equals(vbq) ? 50 : Integer.parseInt(vbq);
 
 	if (gui) {
-	    runElectionGUI(filePath, validBallotQuotient);
+	    runElectionGUI(filePath == "" ? null : filePath, validBallotQuotient);
 	} else {
 	    runElectionCommandLine(filePath, validBallotQuotient);
 	}
@@ -321,7 +321,7 @@ public class MariahEP {
 	    }
 	    return "";
 	}
-	return null;
+	return "";
     }
 
     /**
