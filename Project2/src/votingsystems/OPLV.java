@@ -264,11 +264,8 @@ public class OPLV extends VotingSystem {
 	    auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	    System.out.print(res.toString() + String.format("%n"));
 	    if (this.resultsGUI) {
-		MariahResults frame = new MariahResults("Election Results", auditFile,
-			new String[] { "Invalid Ballots" }, new String[] { "TODO INVALID BALLOTS FILE" },
-			res.toString(), new String[][] { { "A1", "B1", "C1" }, { "A2", "B2", "C2" } },
-			new String[] { "Title 1", "Title 2", "Title 3" }, "Official Mariah Election Processor Report",
-			createQuickPrintSum());
+		MariahResults frame = new MariahResults("Election Results", auditFile, null, null, res.toString(), null,
+			null, "Official Mariah Election Processor Report", createQuickPrintSum());
 
 		// Ensures thread safety with GUI
 		SwingUtilities.invokeAndWait(() -> frame.setVisible(true));

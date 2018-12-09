@@ -1,7 +1,7 @@
 /**
  * File: MariahResults.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 5:47:02 PM
+ * Last Update: Dec 9, 2018 3:50:07 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -9,6 +9,8 @@
 package mariahgui;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
@@ -83,50 +85,148 @@ public class MariahResults extends JDialog {
 	    String processResults, String[][] resultData, String[] columnTitles, String reportHeader,
 	    String reportText) {
 	super();
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int height = (int) (screenSize.height * 0.5);
+	int width = (int) (screenSize.width * 0.5);
+	setSize(new Dimension(width, height));
+	setPreferredSize(new Dimension(width, height));
+	this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+		screenSize.height / 2 - this.getSize().height / 2);
+
 	this.headerName = headerName;
 	setModal(true);
-	initComponents();
+
+	if (resultData != null || columnTitles != null) {
+	    initComponentsResultsTable();
+	    javax.swing.table.DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(resultData,
+		    columnTitles) {
+		private static final long serialVersionUID = -4502218943713256620L;
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+		    // all cells false
+		    return false;
+		}
+	    };
+	    this.jTable.setModel(tableModel);
+	    this.jTable.getTableHeader().setReorderingAllowed(false);
+	} else {
+	    initComponents();
+
+	}
+
 	this.auditFile = auditFile;
 	jTextPane.setText(processResults);
 	this.reportHeader = reportHeader;
 	this.reportText = new javax.swing.JTextArea();
 	this.reportText.setText(reportText);
 
-	javax.swing.table.DefaultTableModel tableModel = new javax.swing.table.DefaultTableModel(resultData,
-		columnTitles) {
-	    private static final long serialVersionUID = -4502218943713256620L;
-
-	    @Override
-	    public boolean isCellEditable(int row, int column) {
-		// all cells false
-		return false;
-	    }
-	};
-	this.jTable.setModel(tableModel);
-	this.jTable.getTableHeader().setReorderingAllowed(false);
-
 	// add other open files
-	for (int i = 0; i < otherOpenFiles.length; i++) {
-	    javax.swing.JMenuItem tempMenuItem = new javax.swing.JMenuItem();
-	    tempMenuItem.setText(otherOpenFileNames[i]);
-	    String fileName = otherOpenFiles[i];
-	    tempMenuItem.addActionListener((java.awt.event.ActionEvent evt) -> {
-		try {
-		    Desktop.getDesktop().open(new File(fileName));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    });
-	    jMenuOpen.add(tempMenuItem);
+	if (otherOpenFileNames != null) {
+	    for (int i = 0; i < otherOpenFiles.length; i++) {
+		javax.swing.JMenuItem tempMenuItem = new javax.swing.JMenuItem();
+		tempMenuItem.setText(otherOpenFileNames[i]);
+		String fileName = otherOpenFiles[i];
+		tempMenuItem.addActionListener((java.awt.event.ActionEvent evt) -> {
+		    try {
+			Desktop.getDesktop().open(new File(fileName));
+		    } catch (IOException e) {
+			e.printStackTrace();
+		    }
+		});
+		jMenuOpen.add(tempMenuItem);
+	    }
 	}
 
 	pack();
     }
 
     /**
-     * Inits the components.
+     * Inits the components without a results table.
      */
     private void initComponents() {
+
+	jPanel = new javax.swing.JPanel();
+	jScrollPaneResults = new javax.swing.JScrollPane();
+	jTextPane = new javax.swing.JTextPane();
+	jMenuBar = new javax.swing.JMenuBar();
+	jMenuFile = new javax.swing.JMenu();
+	jMenuOpen = new javax.swing.JMenu();
+	jMenuItemAuditFile = new javax.swing.JMenuItem();
+	jMenuItemPrintReport = new javax.swing.JMenuItem();
+	setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+	setTitle(headerName);
+	setBackground(new java.awt.Color(0, 51, 102));
+
+	jPanel.setBackground(new java.awt.Color(0, 51, 102));
+	jPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Results",
+		javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+		new java.awt.Font("Lucida Grande", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+
+	jTextPane.setEditable(false);
+	jScrollPaneResults.setViewportView(jTextPane);
+
+	javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+	jPanel.setLayout(jPanelLayout);
+	jPanelLayout.setHorizontalGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		.addGroup(jPanelLayout.createSequentialGroup().addGap(10, 10, 10)
+			.addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanelLayout.createSequentialGroup()).addGap(10, 10, 10))
+			.addGroup(jPanelLayout.createSequentialGroup().addComponent(jScrollPaneResults)
+				.addContainerGap())));
+	jPanelLayout.setVerticalGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		.addGroup(jPanelLayout.createSequentialGroup().addContainerGap().addComponent(jScrollPaneResults)
+			.addGap(20, 20, 20)));
+
+	jMenuFile.setText("File");
+
+	jMenuOpen.setText("Open");
+
+	jMenuItemAuditFile.setAccelerator(
+		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.META_MASK));
+	jMenuItemAuditFile.setText("Audit File");
+	jMenuItemAuditFile.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jMenuItemAuditFileActionPerformed(evt);
+	    } catch (IOException e) {
+		e.printStackTrace();
+	    }
+	});
+	jMenuOpen.add(jMenuItemAuditFile);
+
+	jMenuFile.add(jMenuOpen);
+
+	jMenuItemPrintReport.setAccelerator(
+		javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.META_MASK));
+	jMenuItemPrintReport.setText("Print Report...");
+	jMenuItemPrintReport.addActionListener((java.awt.event.ActionEvent evt) -> {
+	    try {
+		jMenuItemPrintReportActionPerformed(evt);
+	    } catch (PrinterException e) {
+		e.printStackTrace();
+	    }
+	});
+	jMenuFile.add(jMenuItemPrintReport);
+
+	jMenuBar.add(jMenuFile);
+
+	setJMenuBar(jMenuBar);
+
+	javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+	getContentPane().setLayout(layout);
+	layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+		jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+	layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+		jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+
+	pack();
+    }
+
+    /**
+     * Inits the components with a results table.
+     */
+    private void initComponentsResultsTable() {
 
 	jPanel = new javax.swing.JPanel();
 	jScrollPaneTable = new javax.swing.JScrollPane();
@@ -148,11 +248,7 @@ public class MariahResults extends JDialog {
 		javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
 		new java.awt.Font("Lucida Grande", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-	jTable.setModel(
-		new javax.swing.table.DefaultTableModel(
-			new Object[][] { { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null } },
-			new String[] { "Title 1", "Title 2", "Title 3", "Title 4" }));
+	jTable.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {}, new String[] {}));
 	jScrollPaneTable.setViewportView(jTable);
 
 	jTextPane.setEditable(false);
