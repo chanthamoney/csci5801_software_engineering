@@ -9,7 +9,7 @@
 package main;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -36,15 +36,28 @@ public class MariahEP {
      * @param validBallotQuotient the valid ballot quotient
      * @return the voting system
      * @throws InvalidFileException the invalid file exception
-     * @throws IOException          Signals that an I/O exception has occurred.
      */
     private static VotingSystem votingSystemFromFile(String filePath, boolean gui, int validBallotQuotient)
-	    throws InvalidFileException, IOException {
-	File file = new File(filePath);
-	System.out.println(filePath);
-	final Scanner scanner = new Scanner(file);
-
-	final String in_VotingSystem = scanner.nextLine();
+	    throws InvalidFileException {
+	File file;
+	try {
+	    file = new File(filePath);
+	} catch (NullPointerException e1) {
+	    return null;
+	}
+	Scanner scanner;
+	try {
+	    scanner = new Scanner(file);
+	} catch (FileNotFoundException e1) {
+	    return null;
+	}
+	String in_VotingSystem = null;
+	try {
+	    in_VotingSystem = scanner.nextLine();
+	} catch (NoSuchElementException e) {
+	    scanner.close();
+	    throw new InvalidFileException("No line of election type found.");
+	}
 	if ("IR".equals(in_VotingSystem.toUpperCase())) {
 	    // Retrieve instant runoff voting information from file
 
@@ -276,11 +289,10 @@ public class MariahEP {
      * command line argument or input upon running) and runs the election.
      *
      * @param args Optional command line file name argument and flag for no gui
-     * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
      */
-    public static void main(String[] args) throws IOException, InterruptedException, InvocationTargetException {
+    public static void main(String[] args) throws InterruptedException, InvocationTargetException {
 	String filePath = handleArgument("filePath", args);
 	boolean gui = "true".equals(handleArgument("gui", args));
 	String vbq = handleArgument("validBallotQuotient", args);
@@ -331,11 +343,10 @@ public class MariahEP {
      * @param filePath            the file path
      * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
-     * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      */
     private static void runElectionCommandLine(String filePath, int validBallotQuotient)
-	    throws InvocationTargetException, IOException, InterruptedException {
+	    throws InvocationTargetException, InterruptedException {
 	File file = new File(filePath.trim());
 	VotingSystem vs;
 	final Scanner consoleReader = new Scanner(System.in);
@@ -363,6 +374,8 @@ public class MariahEP {
 	    System.out.print(String.format("Election File: %s%n%n", filePath));
 	    String auditFile = vs.runElection();
 	    System.out.print(String.format("Audit File: %s%n%n", auditFile));
+	} else {
+	    file = null;
 	}
     }
 
@@ -373,10 +386,9 @@ public class MariahEP {
      * @param validBallotQuotient the valid ballot quotient
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
-     * @throws IOException               Signals that an I/O exception has occurred.
      */
     private static void runElectionGUI(String filePath, int validBallotQuotient)
-	    throws InvocationTargetException, InterruptedException, IOException {
+	    throws InvocationTargetException, InterruptedException {
 	MariahElectionProcessor frame = new MariahElectionProcessor("MARIAH ELECTION PROCESSOR",
 		"Please select an election file from your file system or input the file path below.",
 		validBallotQuotient);

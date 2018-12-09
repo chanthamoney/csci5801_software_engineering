@@ -59,11 +59,16 @@ public class Auditor {
      *
      * @param name the name of the output file
      * @return the name of the file that was created
-     * @throws IOException Signals that an I/O exception has occurred.
      */
-    public String createAuditFile(final String name) throws IOException {
+    public String createAuditFile(final String name) {
 	final File file = new File(name);
-	final FileWriter writer = new FileWriter(file);
+	FileWriter writer;
+	try {
+	    writer = new FileWriter(file);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    return "";
+	}
 	final StringBuilder fileOutput = new StringBuilder();
 
 	fileOutput.append(this.auditSetup);
@@ -76,8 +81,13 @@ public class Auditor {
 	    fileOutput.append(String.format("%n%n- - - - - - - - - - - - - - - - - - - -%n%n"));
 	}
 	fileOutput.append(this.auditResult);
-	writer.write(fileOutput.toString());
-	writer.close();
+	try {
+	    writer.write(fileOutput.toString());
+	    writer.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    return "";
+	}
 	return name;
     }
 }

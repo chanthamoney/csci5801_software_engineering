@@ -8,7 +8,6 @@
 
 package votingsystems;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -58,9 +57,8 @@ abstract public class VotingSystem {
      * Run election.
      *
      * @return the name of the Audit file produced
-     * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InterruptedException      the interrupted exception
      * @throws InvocationTargetException the invocation target exception
      */
-    public abstract String runElection() throws IOException, InterruptedException, InvocationTargetException;
+    public abstract String runElection() throws InterruptedException, InvocationTargetException;
 }

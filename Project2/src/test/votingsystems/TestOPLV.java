@@ -262,15 +262,10 @@ public class TestOPLV {
 	// Record current time in milliseconds immediately before election run
 	final long timeBefore = System.currentTimeMillis();
 
-	// Run election on vs
-	try {
-	    Path auditFile = Paths.get(".", vs.runElection());
+	Path auditFile = Paths.get(".", vs.runElection());
 
-	    final File file = auditFile.toFile();
-	    file.delete();
-	} catch (final IOException e) {
-	    e.printStackTrace();
-	}
+	final File file = auditFile.toFile();
+	file.delete();
 
 	// Record time immediately after election
 	final long timeAfter = System.currentTimeMillis();

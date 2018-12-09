@@ -9,7 +9,6 @@
 
 package votingsystems;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -243,7 +242,7 @@ public class OPLV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public String runElection() throws IOException, InterruptedException, InvocationTargetException {
+    public String runElection() throws InterruptedException, InvocationTargetException {
 	String auditFile = null;
 	if (!this.wasRun.getAndSet(true)) {
 	    final StringBuilder processedBallots = new StringBuilder();

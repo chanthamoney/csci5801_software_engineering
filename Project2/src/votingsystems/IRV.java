@@ -80,12 +80,11 @@ public class IRV extends VotingSystem {
      * @param resultsGUI          indicator for whether the results should be
      *                            displaying using the gui
      * @param validBallotQuotient the valid ballot quotient
-     * @throws IOException          Signals that an I/O exception has occurred.
      * @throws InvalidFileException the invalid file exception
      */
     public IRV(final int numBallots, final int numCandidates, final String[] candidates,
 	    final LinkedList<ArrayList<Integer>> ballots, boolean resultsGUI, double validBallotQuotient)
-	    throws IOException, InvalidFileException {
+	    throws InvalidFileException {
 	super(numBallots, numCandidates);
 
 	this.resultsGUI = resultsGUI;
@@ -392,11 +391,10 @@ public class IRV extends VotingSystem {
      *
      * @param winner the winner
      * @return the string
-     * @throws IOException               Signals that an I/O exception has occurred.
      * @throws InvocationTargetException the invocation target exception
      * @throws InterruptedException      the interrupted exception
      */
-    private String completeElection(String winner) throws IOException, InvocationTargetException, InterruptedException {
+    private String completeElection(String winner) throws InvocationTargetException, InterruptedException {
 	this.auditor.auditResult("Election Winner: " + winner);
 	String auditFile = this.auditor.createAuditFile(String.format("AUDIT_%d", System.currentTimeMillis()));
 	System.out.print(String.format("Election Winner: %s%n%n", winner));
@@ -425,10 +423,8 @@ public class IRV extends VotingSystem {
      *
      * @param ballots           the ballots
      * @param percentCandidates the percent candidates
-     * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates)
-	    throws IOException {
+    private void performBallotValidation(LinkedList<ArrayList<Integer>> ballots, double percentCandidates) {
 	this.validBallots = new ArrayList<>();
 	this.invalidBallots = new ArrayList<>();
 
@@ -462,14 +458,20 @@ public class IRV extends VotingSystem {
      * file contains invalid ballot audit information.
      *
      * @return the name of the file that was created
-     * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void createInvalidAuditFile() throws IOException {
+    private void createInvalidAuditFile() {
 	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 	String name = String.format("invalidated_%s", electionDate);
 
 	final File file = new File(name);
-	final FileWriter writer = new FileWriter(file);
+	FileWriter writer;
+	try {
+	    writer = new FileWriter(file);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    this.invalidAuditFilename = "";
+	    return;
+	}
 	final StringBuilder fileOutput = new StringBuilder();
 
 	fileOutput.append(String.format("Invalid Ballots%n"));
@@ -477,8 +479,14 @@ public class IRV extends VotingSystem {
 	this.invalidBallots
 		.forEach(bal -> fileOutput.append(String.format("Ballot %d: %s%n", bal.getID(), bal.getVotes())));
 
-	writer.write(fileOutput.toString());
-	writer.close();
+	try {
+	    writer.write(fileOutput.toString());
+	    writer.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    this.invalidAuditFilename = "";
+	    return;
+	}
 
 	this.invalidAuditFilename = name;
     }
@@ -489,7 +497,7 @@ public class IRV extends VotingSystem {
      * @see VotingSystem#runElection()
      */
     @Override
-    public String runElection() throws IOException, InterruptedException, InvocationTargetException {
+    public String runElection() throws InterruptedException, InvocationTargetException {
 	String auditFile;
 
 	// initialize ArrayList with candidates
