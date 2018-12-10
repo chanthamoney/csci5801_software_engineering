@@ -1,7 +1,7 @@
 /**
  * File: IRV.java
  * Date Created: 11/08/2018
- * Last Update: Dec 4, 2018 5:49:39 PM
+ * Last Update: Dec 9, 2018 5:28:04 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 import main.InvalidFileException;
 import mariahgui.MariahResults;
 
+// TODO: Auto-generated Javadoc
 /**
  * Represents an Instant Runoff Voting System.
  */
@@ -148,8 +149,6 @@ public class IRV extends VotingSystem {
 
     /**
      * Initialize title arraylist and electiondata arraylist<arraylist<string>>.
-     *
-     * @return the number of candidates with no votes eliminated
      */
     private void initializeElectionDataList() {
 	// initialize titles of table with first column = 'Candidates'
@@ -231,7 +230,7 @@ public class IRV extends VotingSystem {
     /**
      * Convert arraylist of arraylist to two dimensional array.
      *
-     * @return the number of candidates with no votes eliminated
+     * @return the election table arg
      */
     private String[][] getElectionTableArg() {
 	String[][] electionTableArg = new String[electionDataList.size()][];
@@ -456,8 +455,6 @@ public class IRV extends VotingSystem {
     /**
      * Generates an audit file in the current directory under a specified name. This
      * file contains invalid ballot audit information.
-     *
-     * @return the name of the file that was created
      */
     private void createInvalidAuditFile() {
 	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(Calendar.getInstance().getTime());

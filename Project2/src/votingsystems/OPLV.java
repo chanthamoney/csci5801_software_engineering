@@ -2,7 +2,7 @@
 /**
  * File: OPLV.java
  * Date Created: 11/08/2018
- * Last Update: Nov 26, 2018 5:31:39 PM
+ * Last Update: Dec 9, 2018 5:33:50 PM
  * Author: <A HREF="mailto:nippe014@umn.edu">Jake Nippert</A>
  * This code is copyright (c) 2018 University of Minnesota - Twin Cities
  */
@@ -221,6 +221,8 @@ public class OPLV extends VotingSystem {
 
     /**
      * Creates the quick summary report that can be printed.
+     *
+     * @return the quick print summary
      */
     private String createQuickPrintSum() {
 	this.quickPrintSum.append(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(Calendar.getInstance().getTime()));
