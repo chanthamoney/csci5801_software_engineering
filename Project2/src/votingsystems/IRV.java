@@ -98,7 +98,6 @@ public class IRV extends VotingSystem {
 	remainingCandidates = numCandidates;
 
 	// Perform ballot validation process
-
 	performBallotValidation(ballots, validBallotQuotient / 100.0);
 
 	this.numBallots = this.validBallots.size();
@@ -416,8 +415,7 @@ public class IRV extends VotingSystem {
 
     /**
      * Performs ballot validation to separate all initial ballots into valid and
-     * invalid ballots as well as initializing numInvalidBallots and
-     * numValidBallots. Once the separation process is complete, the invalid ballots
+     * invalid ballots. Once the separation process is complete, the invalid ballots
      * audit file is created.
      *
      * @param ballots           the ballots
@@ -454,9 +452,11 @@ public class IRV extends VotingSystem {
 
     /**
      * Generates an audit file in the current directory under a specified name. This
-     * file contains invalid ballot audit information.
+     * file contains all of the invalid ballots that were removed during the ballot
+     * validation process.
      */
     private void createInvalidAuditFile() {
+	// getting name of the invalid audit file based on the election time/date
 	String electionDate = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(Calendar.getInstance().getTime());
 	String name = String.format("invalidated_%s", electionDate);
 

@@ -244,8 +244,10 @@ public class TestIRV {
     }
 
     /**
-     * *****************************************.
-     *
+     * Test file audit pair for invalid ballot test cases. Tests both the audit file
+     * that is returned and the invalid audit file that is returned from running the
+     * election.
+     * 
      * @param electionFile the election file
      * @throws ParseException            the parse exception
      * @throws IOException               Signals that an I/O exception has occurred.
@@ -253,7 +255,6 @@ public class TestIRV {
      * @throws InvocationTargetException the invocation target exception
      * @throws InvalidFileException      the invalid file exception
      */
-
     private void testFileInvalidAuditPair(String electionFile, int percent)
 	    throws ParseException, IOException, InterruptedException, InvocationTargetException, InvalidFileException {
 	IRV vs = (IRV) votingSystemFromFile("../testing/IRV/" + electionFile + ".txt", percent);
