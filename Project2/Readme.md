@@ -1,4 +1,4 @@
-Project 1 Task 3
+Project 2 – Agile Scrum
 Team 14
 
 Please see the index page of the Javadocs documentation in the documentation folder.
