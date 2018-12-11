@@ -21,7 +21,7 @@ You have the option of running the application with a pre-defined valid ballot q
 NOTE: replace <valid ballot quotient> with a value from 0-100 indicating the percentage of votes required on a ballot for IRV
 
 Run without GUI
-You have the option of running the application without the use of the GUI. When entering the election file you can either drag the file to the terminal or enter the absolute path. 
+You have the option of running the application without the use of the GUI. When entering the election file you can either drag the file to the terminal or enter the absolute or relative path. 
 Simply set the --no-gui flag on the command line:
 > \>\> java main/MariahEP --no-gui <election file>
 
