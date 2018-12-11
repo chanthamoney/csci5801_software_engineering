@@ -1,5 +1,4 @@
-Project 2 – Agile Scrum
-Team 14
+Project 2 – Agile Scrum - Team 14
 
 Please see the index page of the Javadocs documentation in the documentation folder.
 
@@ -15,6 +14,11 @@ To run the compiled application use the command:
 Run with File
 You have the option of running the application with a pre-defined file:
 > \>\> java main/MariahEP <election file>
+
+Run with a specific Valid Ballot Quotient
+You have the option of running the application with a pre-defined valid ballot quotient:
+> \>\> java main/MariahEP --valid-ballot-quotient=<valid ballot quotient>
+NOTE: replace <valid ballot quotient> with a value from 0-100 indicating the percentage of votes required on a ballot for IRV
 
 Run without GUI
 You have the option of running the application without the use of the GUI. When entering the election file you can either drag the file to the terminal or enter the absolute path. 
